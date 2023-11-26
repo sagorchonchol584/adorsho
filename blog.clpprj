@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project name="C:\xampp\htdocs\adorsho\blog.clpprj">
+ <settings>
+  <PM_URL><![CDATA[http://localhost/C:/xampp/htdocs/blog]]></PM_URL>
+  <PM_HOME_URL><![CDATA[http://localhost/C:/xampp/htdocs/blog]]></PM_HOME_URL>
+  <PM_LIBS><![CDATA[]]></PM_LIBS>
+  <PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION>
+  <PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR>
+  <PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE>
+  <PM_LANGUAGE><![CDATA[]]></PM_LANGUAGE>
+ </settings>
+ <removed value=";C:\xampp\htdocs\blog\public\frontend\css\style.css;C:\xampp\htdocs\blog\public\frontend\js\sidebar.js;"/>
+ <added value=""/>
+ <lastopfiles>
+  <lastactivefile name=""/>
+ </lastopfiles>
+ <todoblock/>
+ <dbgurls/>
+ <lasttime value="1701020038"/>
+</project>
