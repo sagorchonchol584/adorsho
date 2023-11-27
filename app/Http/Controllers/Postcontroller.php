@@ -54,8 +54,7 @@ echo($hashed );
   
   
    public function customer_Date_add(Request $req){
-   	
-          
+        
    	 	
            $dates['customer_name']=$req->customer_name;
            $dates['mobile']=$req->mobile;
@@ -96,6 +95,8 @@ echo($hashed );
 
   public function ggg(){
   	
+  	$value = session('key', 'default');
+  	echo($data);
   
   
   }
@@ -103,7 +104,7 @@ echo($hashed );
  
  
   
-   public function employeadd(Request $require)
+   public function employeadddemo(Request $require)
     {  
         
        $require->validate([
@@ -131,26 +132,70 @@ echo($hashed );
       try {	
       	
        DB::table('users')->insert($date);  
-     // employ_update() ; 
-     
+        
+      $this->employ_update();;
         return redirect("createnewprofile");           
           } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
             echo('Duplicate Entry');
               }
-          }     
-
-
-
-      
-    }  
+          }      
+    }   
+    
+    
+    
+    
+    
+   public function employeadd(Request $require)
+    {  
+        
+       $require->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6', 
+            'Mobile' => 'required|min:11', 
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            
+        ]);
+        
+        
+         $imageName = time().'.'.$require->image->extension();    
+         $require->image->move(public_path('images'), $imageName);
+         
+         $date['AdminKey']=Auth::user()->id;
+         $date['Shopname']=Auth::user()->Shopname;
+         $date['ShopAddress']=Auth::user()->ShopAddress;
+         $date['email']=$require->email; 
+         $date['password']=Hash::make($require->password); 
+         $date['StrafCount']=5; 
+         $date['AdminCat']=$require->AdminCat; 
+         $date['Mobile']=$require->Mobile;
+         $date['MobileVerifa']="OK";  
+         $date['CreateDate']=date("Y-m-d");
+         $date['image']=$imageName;    
+         $date['UpdateProfileCout']="20";
+         $date['Name']=$require->name;                 
+    try {	
+      	
+       DB::table('users')->insert($date);      
+      $this->employ_update();
+        return redirect("createnewprofile");           
+          } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+            echo('Duplicate Entry');
+              }
+          }      
+    } 
+    
+     
     
    public function employ_update(){
 	
     $id = Auth::user()->id;	
     $StrafCount = Auth::user()->StrafCount;	
-    $dat['StrafCount']=$StrafCount;
+    $dat['StrafCount']=$StrafCount+1;
     DB::table('users')->where('id',$id)->update($dat);
     
   }

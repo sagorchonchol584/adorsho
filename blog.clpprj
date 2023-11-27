@@ -12,9 +12,53 @@
  <removed value=";C:\xampp\htdocs\blog\public\frontend\css\style.css;C:\xampp\htdocs\blog\public\frontend\js\sidebar.js;"/>
  <added value=""/>
  <lastopfiles>
+  <file name="C:\xampp\htdocs\adorsho\routes\web.php"/>
+  <file name="C:\xampp\htdocs\adorsho\app\Http\Controllers\Postcontroller.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\customer.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\newprofile.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\public\frontend\css\style.css"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\layout\master.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\deshboard.blade.php"/>
   <lastactivefile name=""/>
  </lastopfiles>
- <todoblock/>
+ <todoblock>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\dflydev\dot-access-data\src\Data.php">
+   <todo pos="13;66" name="TODO: Is this really what we want to do"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\ORM\CakePHP\EntityPopulator.php">
+   <todo pos="9;121" name="TODO check if TreeBehavior attached to modify lft/rgt cols"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\Provider\Base.php">
+   <todo pos="9;642" name="TODO: remove in v2"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\Provider\kk_KZ\Address.php">
+   <todo pos="5;15" name="TODO list all country names in the world"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Exception\Frame.php">
+   <todo pos="10;51" name="todo: This can be made more reliable by checking if we've entered"/>
+   <todo pos="9;51" name="@todo: This can be made more reliable by checking if we've entered"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Handler\PrettyPageHandler.php">
+   <todo pos="14;186" name="todo: Make this more robust"/>
+   <todo pos="13;186" name="@todo: Make this more robust"/>
+   <todo pos="14;225" name="todo: Asset compiler"/>
+   <todo pos="13;225" name="@todo: Asset compiler"/>
+   <todo pos="10;282" name="todo: Consolidate addDataTable and addDataTableCallback"/>
+   <todo pos="9;282" name="@todo: Consolidate addDataTable and addDataTableCallback"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Run.php">
+   <todo pos="14;420" name="todo Might be able to clean this up a bit better"/>
+   <todo pos="13;420" name="@todo Might be able to clean this up a bit better"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\guzzlehttp\guzzle\src\Client.php">
+   <todo pos="22;410" name="todo: Do not rely on curl"/>
+   <todo pos="21;410" name="@todo: Do not rely on curl"/>
+   <todo pos="13;435" name="TODO: Add more sink validation"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\adorsho\vendor\hamcrest\hamcrest-php\hamcrest\Hamcrest\Arrays\IsArray.php">
+   <todo pos="1;10" name="TODO: Allow this to take matchers or values within the array"/>
+  </todofile>
+ </todoblock>
  <dbgurls/>
- <lasttime value="1701020038"/>
+ <lasttime value="1701076341"/>
 </project>

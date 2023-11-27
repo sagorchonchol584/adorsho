@@ -340,8 +340,8 @@
 	float: left;
 }
 .onetoess{
-	 width: 200px;
-	height: 10px;
+	 width: 310px;
+	height: 60px;
 	float: right;
  text-align: right;
 }
@@ -439,14 +439,16 @@
   	
   </div>
   
-  	<div class="onetoess">
+  	<div class="onetoess border">
+  	
+  	
   		<nav class="navbar">
         <div class="container-fluid"> 
                 <ul class="nav navbar-nav ms-auto">        	
                     <li class="nav-item dropdown">       
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 							<span style="font-weight: bold;">{{auth()->user()->Name}} </span> 
-							<img src="{{ asset('frontend/img/profile.jpg') }}" width="40px" height="40px" class="rounded-circle"/>
+							<img src="{{ asset('images') }}/{{auth()->user()->image}}" width="40px" height="40px" class="rounded-circle"/>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a href="#" class="dropdown-item">Reports</a>
@@ -538,7 +540,9 @@
 						<div id="Account">		
 						<div class="Acountss">		
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line">
-					<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>
+								@if(auth()->user()->AdminCat =='Admin')	
+								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>        
+		                   		 @endif
 								<li><a href="#" class="link-dark rounded menu-width">Profile</a></li>
 								<li><a href="#" class="link-dark rounded menu-width">Settings</a></li>
 								<li><a href="{{route('loginout')}}" class="link-dark rounded menu-width">Sign out</a></li>
