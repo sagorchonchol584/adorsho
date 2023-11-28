@@ -543,7 +543,7 @@
 								@if(auth()->user()->AdminCat =='Admin')	
 								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>        
 		                   		 @endif
-								<li><a href="#" class="link-dark rounded menu-width">Profile</a></li>
+								<li><a href="{{route('profileView')}}" class="link-dark rounded menu-width">Profile</a></li>
 								<li><a href="#" class="link-dark rounded menu-width">Settings</a></li>
 								<li><a href="{{route('loginout')}}" class="link-dark rounded menu-width">Sign out</a></li>
 							</ul>

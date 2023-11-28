@@ -9,6 +9,8 @@ use App\Models\Systeminfom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class Postcontroller extends Controller
 {
@@ -53,7 +55,7 @@ echo($hashed );
   
   
   
-   public function customer_Date_add(Request $req){
+   public function customer_Data_add(Request $req){
         
    	 	
            $dates['customer_name']=$req->customer_name;
@@ -187,6 +189,14 @@ echo($hashed );
             echo('Duplicate Entry');
               }
           }      
+    }    
+    
+     
+   public function profileView()
+    {  
+        
+       return view('profile.profile') ;            
+       
     } 
     
      
@@ -388,6 +398,21 @@ echo($hashed );
     	}
     	else{return view('login');}
 	}
+	
+	
+	
+	 public function userOnlineStatus()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-online' . $user->id))
+                echo $user->name . " is online. <br>";
+            else
+                echo $user->name . " is offline <br>";
+        }
+    }
+	
+	
 		
 }
 

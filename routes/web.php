@@ -21,7 +21,7 @@ use App\Http\Controllers\Postcontroller;
 Route::view('/meagge','frontend.message')->name('reg');
 //Route::view('/home','frontend.deshboard')->name('home');
 
-
+Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
 
 
 
@@ -29,7 +29,10 @@ Route::get('/home', [Postcontroller::class,'home'])->name('home');
 Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
 Route::get('/product', [Postcontroller::class,'product'])->name('product');
 Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
+
+
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');
+Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');
 
 
 
@@ -77,7 +80,7 @@ Route::get('/customerdatanew',[Postcontroller::class,'customerinfonew']);
 Route::get('/datashow',[Postcontroller::class,'twodatashow']);
 Route::get('/customerinfo',[Postcontroller::class,'customerinfo'])->name('customer');
 Route::get('/customerdeletinfo/{id}',[Postcontroller::class,'customerdelete'])->name('customerdelet');
-Route::post('/customeradd',[Postcontroller::class,'customer_Date_add'])->name("customerdateAdd");
+Route::post('/customeradd',[Postcontroller::class,'customer_Data_add'])->name("customerdateAdd");
 
 
 

@@ -231,10 +231,8 @@
       <th scope="col">States</th>
     </tr>
   </thead>
-  
-  
-  	@foreach($posts as $post)
 
+  	@foreach($posts as $post)
     <tr>
     <script>
     
@@ -245,8 +243,14 @@
 		<img src="{{ asset('images') }}/{{$post->image}}" width="32px" height="32px" class="rounded-circle"/>                  
       </th>
       <td>{{$post->Name}}</td>
-      <td><span id="dayid" style="color: gray;"> <script> document.write(" Days ago"); </script></span></td>
-      <td><span style="color: green; font-weight: bold;">
+      <td><span id="dayid" style="color: gray;"> {{ \Carbon\Carbon::parse($post->last_seen)->diffForHumans() }}</span></td>
+      <td>
+            
+                   @if(Cache::has('is_online' . $post->id))
+                      <span style="color:#008000;   font-weight: bold;"">Online</span>
+                   @else
+                   <span class="text-gray-500">Offline</span>
+                   @endif
       </td>
     </tr>
     
