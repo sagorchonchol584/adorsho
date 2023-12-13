@@ -106,7 +106,7 @@
    
   
 	 	
-	 	@if($errors->all())
+	@if($errors->all())
     @foreach ($errors->all() as $error)
      <div class="col-12 h-80">
     <div class="mbg-3 alert alert-info alert-dismissible fade show" role="alert">
@@ -117,7 +117,7 @@
         </div>
         </div>
     @endforeach
-@endif
+    @endif
 
 
  <div class="col-8 h-500">

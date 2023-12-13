@@ -21,14 +21,45 @@ use App\Http\Controllers\Postcontroller;
 Route::view('/meagge','frontend.message')->name('reg');
 //Route::view('/home','frontend.deshboard')->name('home');
 
+
+//--this route is login users use time show like how much time loging  user for login id--
 Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
+
+
+
+//--product add route this --
+Route::get('/product', [Postcontroller::class,'product'])->name('product');
+
+Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
+Route::post('/productloaddata', [Postcontroller::class,'product_add'])->name('loader');
+
+
+
+
+Route::post('/catagoryloaddata', [Postcontroller::class,'catagory_add'])->name('loader_catagory');
+Route::post('/subcatagoryloaddata', [Postcontroller::class,'sub_catagory_add'])->name('sub_loader_catagory');
+Route::post('/subtosubcatagoryloaddata', [Postcontroller::class,'sub_to_sub_catagory_add'])->name('sub_to_sub_loader_catagory');
+Route::get('/catagoryshowdata', [Postcontroller::class,'catagoryshow']);
+
+
+
+//--this is product catagory add ,you can selete to sub catagory loading data route this --
+Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainstMain']);
+Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
+
+
+
+
+Route::get('/stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+
 
 
 
 Route::get('/home', [Postcontroller::class,'home'])->name('home');
 Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
-Route::get('/product', [Postcontroller::class,'product'])->name('product');
-Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
+
+
+
 
 
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');

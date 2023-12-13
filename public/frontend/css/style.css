@@ -86,8 +86,21 @@
 .h-450{
 	height: 450px;
 }
+
+.h-750{
+	height: 750px;
+}
+
+.h-800{
+	height: 800px;
+}
+
 .h-900{
 	height: 900px;
+}
+
+.h-1000{
+	height: 1000px;
 }
 
 

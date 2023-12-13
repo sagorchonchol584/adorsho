@@ -142,10 +142,10 @@
 		
 	<div class="center">
 	<span style="color: #0D6EFD; font-size: 18px;">This form is new employee  users create with email</span>
-			<form action="{{route('Employee')}}" id="myForm" method="post" enctype="multipart/form-data">
+	<form action="{{route('Employee')}}" id="myForm" method="post" enctype="multipart/form-data">
+ 
   <?php echo csrf_field(); ?>
 
-  
   <div class="form-group">
     <input type="text" class="form-control" id="Name" name="name"  placeholder="Name" required>
   </div> <br/>

@@ -24,7 +24,7 @@ class EmployeeActivity
     {
     	 	
     	if (Auth::check()) {
-            $expireTime = Carbon::now()->addSeconds(30);  // keep online for 1 min
+            $expireTime = Carbon::now()->addSeconds(300);  // keep online for 1 min
             Cache::put('is_online'.Auth::user()->id, true, $expireTime);
             User::where('id', Auth::user()->id)->update(['last_seen' => Carbon::now()]);
         }

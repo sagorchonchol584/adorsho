@@ -15,11 +15,11 @@
   <file name="C:\xampp\htdocs\adorsho\routes\web.php"/>
   <file name="C:\xampp\htdocs\adorsho\app\Http\Controllers\Postcontroller.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\customer.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\product_info.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\newprofile.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\public\frontend\css\style.css"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\layout\master.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\deshboard.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\app\Http\Middleware\EmployeeActivity.php"/>
   <file name="C:\xampp\htdocs\adorsho\app\Http\Kernel.php"/>
   <file name="C:\xampp\htdocs\adorsho\app\Models\User.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\profile\profile.blade.php"/>
@@ -64,5 +64,5 @@
   </todofile>
  </todoblock>
  <dbgurls/>
- <lasttime value="1701101040"/>
+ <lasttime value="1702461387"/>
 </project>

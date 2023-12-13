@@ -104,7 +104,7 @@
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
-    <li class="breadcrumb-item"><a class="breade" href="#">Deshbord</a></li>
+    <li class="breadcrumb-item"><a class="breade" href="#">Page</a></li>
     @foreach(Request::segments() as $segment)
     <li  class="breadcrumb-item"> <a href="#" class="breade">{{$segment}} </a> </li>
     @endforeach
@@ -323,9 +323,7 @@ function datachack( datec,datecc){
     </tr> 
     	@endforeach
   </tbody>
-</table>
-	
-		
+</table>	
 	</div>
 	</div>
 	<div class="col-6 h-300">

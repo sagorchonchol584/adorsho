@@ -6,9 +6,10 @@
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"> </script>	
 		<script src="{{ asset('frontend/js/sweetalert.min.js') }}"> </script>	
+	    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 		<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-		<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	
 
@@ -520,7 +521,7 @@
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
 					    <li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
 						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>				
-						<li><a href="#" class="link-dark rounded menu-width">Reports</a></li>
+						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width">Stock Add</a></li>
 					</ul>
 				 </div>
 				</div>
