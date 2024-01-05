@@ -18,6 +18,27 @@ use App\Http\Controllers\Postcontroller;
      return view('welcome');
  });
 
+
+
+
+// test perpos user route
+
+
+Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
+
+
+
+
+
+Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
+
+
+
+
+
+
+
+
 Route::view('/meagge','frontend.message')->name('reg');
 //Route::view('/home','frontend.deshboard')->name('home');
 
@@ -25,90 +46,76 @@ Route::view('/meagge','frontend.message')->name('reg');
 //--this route is login users use time show like how much time loging  user for login id--
 Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
 
-
+Route::get('/tests', [Postcontroller::class,'testssss'])->name('tests');
 
 //--product add route this --
 Route::get('/product', [Postcontroller::class,'product'])->name('product');
-
 Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
+Route::get('/productdeletedata/{id}',[Postcontroller::class,'productdelete'])->name('productdeleteda');
+Route::post('/prsearch',[Postcontroller::class,'productInfo_search'])->name('pro_info_search');
 Route::post('/productloaddata', [Postcontroller::class,'product_add'])->name('loader');
+Route::post('/productloaddatatest', [Postcontroller::class,'product_add_test'])->name('loadertest');
+Route::post('/imagesss', [Postcontroller::class,'imagesss'])->name('loaderimage');
 
 
 
 
+
+//--catagory route --
 Route::post('/catagoryloaddata', [Postcontroller::class,'catagory_add'])->name('loader_catagory');
 Route::post('/subcatagoryloaddata', [Postcontroller::class,'sub_catagory_add'])->name('sub_loader_catagory');
 Route::post('/subtosubcatagoryloaddata', [Postcontroller::class,'sub_to_sub_catagory_add'])->name('sub_to_sub_loader_catagory');
 Route::get('/catagoryshowdata', [Postcontroller::class,'catagoryshow']);
-
-
-
 //--this is product catagory add ,you can selete to sub catagory loading data route this --
 Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainstMain']);
 Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
 
 
-
-
-Route::get('/stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
-
-
-
-
-Route::get('/home', [Postcontroller::class,'home'])->name('home');
-Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
+//--stock inforamtion route --
+Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add'])->name('stockload');
 
 
 
 
-
+//user create or regstition  function
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');
-Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');
-
-
-
-
-//Route::view('/login', 'login')->name('login');
-Route::get('/login', [Postcontroller::class,'login'])->name('login');
-
-
-
-
-Route::post('/loginpage',[Postcontroller::class,'loginPageFunc'])->name('loginpage');
-Route::get('/loginout',[Postcontroller::class,'logout'])->name('loginout');
-Route::get('/chonchol',[Postcontroller::class,'datasho'])->name('chonchol');
-
-
-
-
-Route::post('/reverse-me', function (Request $request) {
-  $reversed = strrev($request->input('reverse_this'));
-  return $reversed;
-});
-
-
-
-
- Route::get('/hello', function () {
-     return "nooooo";
- });
-
-
-
-//login function
-
-
 Route::post('/registaion',[Postcontroller::class,'customRegistration'])->name('regdata');
 Route::post('/employecreate',[Postcontroller::class,'employeadd'])->name('Employee');
 
 
 
+//login function
+Route::get('/login', [Postcontroller::class,'login'])->name('login');
+Route::post('/loginpage',[Postcontroller::class,'loginPageFunc'])->name('loginpage');
+Route::get('/loginout',[Postcontroller::class,'logout'])->name('loginout');
+
+
+
+
+//page system  function
+Route::get('/home', [Postcontroller::class,'home'])->name('home');
+Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
+Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');
+Route::get('/chonchol',[Postcontroller::class,'datasho'])->name('chonchol');
+Route::post('/reverse-me', function (Request $request) {
+  $reversed = strrev($request->input('reverse_this'));
+  return $reversed;
+});
+Route::get('/hello', function () {
+     return "nooooo";
+ });
 Route::get('/shw',[Postcontroller::class,'ggg'])->name('gggg');
 
 
 
-Route::get('/customerdatanew',[Postcontroller::class,'customerinfonew']);
+//Route::get('/customerdatanew',[Postcontroller::class,'customerinfonew']);
+
+//this page onlice log cout data
 Route::get('/datashow',[Postcontroller::class,'twodatashow']);
+
+
+//this page customre date read write 
 Route::get('/customerinfo',[Postcontroller::class,'customerinfo'])->name('customer');
 Route::get('/customerdeletinfo/{id}',[Postcontroller::class,'customerdelete'])->name('customerdelet');
 Route::post('/customeradd',[Postcontroller::class,'customer_Data_add'])->name("customerdateAdd");
@@ -117,27 +124,12 @@ Route::post('/customeradd',[Postcontroller::class,'customer_Data_add'])->name("c
 
 
 
-Route::get('/kamla', function () { echo " hello world";});
-Route::get('/user/{id?}/{name?}',function($usersid="1",$userName="rohim"){
-     	return view('test',[
-            'userid'=>$usersid,
-            'userName'=>$userName
-      ]);
-});
-
-
-
-
-
-
-Route::controller(Postcontroller::class)->name('post.')->group(function(){
-
+ //Route::get('/kamla', function () { echo " hello world";});
+  Route::controller(Postcontroller::class)->name('post.')->group(function(){
   Route::get('/test',function(){ return view("testt");})->name('boss');
   Route::get('/post/create','showMasge')->name('create'); //this test.blande.php
   Route::post('/post/store','Index')->name('store');   //this index.php
-  
-   Route::post('/post/systems','systemInfo')->name('systemInfodd');   //this index.php
-  
+  Route::post('/post/systems','systemInfo')->name('systemInfodd');   //this index.php
   Route::get('/post/showdata','datashow')->name('showdata');
   Route::get('/post/show/{id}','single_data_show')->name('show');
   //Route::get('/post/update/{id}',[Postcontroller::class,'single_data_show_update'])->name('post.create');

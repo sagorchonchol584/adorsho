@@ -11,24 +11,41 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
 
 class Postcontroller extends Controller
 {
 
-  public function showMasge(){
+
+
+public function showMasge(){
     return view('test');
  
   }
-  
-  
-   public function option_show(){
-    $data['posts']=DB::table('sub_sub_catgory_info')->get();
-    return view('post/show',$data);
+    
+ 
+ 
+ 
+public function barcodes($id){
+	  if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    		$reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
+    		if(count($reults) === 0){
+    			
+    			 $datess['message']='Exit';
+    			 echo json_encode($datess);
+    		}else{
+    			echo json_encode($reults);
+    		}	
+       }
   }
+    
+    
   
-  
-  
-  public function test(){
+public function test(){
    $hashed = Hash::make('password', [
     'rounds' => 12,
 ]);
@@ -37,36 +54,123 @@ echo($hashed );
  
   }
 
- public function customerinfo(){	
+public function customerinfo(){	
      $data['posts']=DB::table('customer_info')->orderBy('total_purches_count', 'DESC')->limit(45)->paginate(9);
      $datatwo['poststwo']=DB::table('customer_info')->orderBy('id', 'DESC')->limit(8)->get();
     return view('frontend.customer',$data, $datatwo)->with('messages','false');
   }
-  
-  
- public function customerdelete($id){	
+   
+public function customerdelete($id){	
   
     DB::table('customer_info')->where('id',$id)->delete();
     return redirect("customerinfo");
  
   }
-  
-  
-  
-  
- public function stockaddfuntion(){	
-  
- if(Auth::check()){return view('deshboard.stock_add');}else{return view('login');}
-  }
+    
+    
+    
+ // this just stock add and info show   
+public function stockaddfuntion(){	
+ 
 
- public function customerinfonew(){
+ if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    	$data = DB::table('catgory_info')->where('Shop_cat_id', $ids)->get();
+        return view('deshboard.stock_add')->with('data', $data);
+    	//$data['posts']=DB::table('catgory_info')->get();
+    	//	return view('deshboard.product_info',$data);
+    		
+    }else{
+    	return view('login');
+    	}
+ 
+ 
+ //if(Auth::check()){return view('deshboard.stock_add');}else{return view('login');}
+  }
+  
+public function Stock_Info_add(Request $reqs){
+  	
+  
+  $validator = Validator::make($reqs->all(), [	
+	'Product_barcode_id' => ['required',Rule::unique('stock_info')],
+
+]);
+
+if ($validator->fails()) {
+	
+	
+	$data = DB::table('stock_info')->where('Product_barcode_id',$reqs->Product_barcode_id)->get();
+	 
+	 
+	  $total_row = $data->count();
+	  $Total_product;
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $Total_product=$row->Total_product;
+       }
+      }
+	
+	
+	 $datess['message']="Exit";
+	echo json_encode($Total_product); 
+	
+	
+
+	
+		
+} else {
+	
+	   $datess['Product_Name']=$reqs->Product_Name;
+       $datess['Product_barcode_id']=$reqs->Product_barcode_id;
+       $datess['Facility_Product_for_internet']=FALSE;
+       $datess['Total_product']=$reqs->Product_units;  
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id; 
+       $datess['Outlet_Id']=Auth::user()->ShopID;
+       $datess['Outlet_Name']=Auth::user()->Shopname;
+       $datess['Image']=$reqs->Image;  
+       $datess['Expire_date']=$reqs->Expire_date;
+       $datess['Weight']=$reqs->Weight;
+       $datess['Add_date']=date("Y-m-d");
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate;     
+       $datess['catagory_id']=$reqs->catagory_id;
+       $datess['Sub_catagory_id']=$reqs->Sub_catagory_id;
+       $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
+       $datess['Top_rating_range']=0; 
+      // echo json_encode($datess);
+	 DB::table('stock_info')->insert($datess); 
+	 echo json_encode($datess);
+}
+
+  
+  
+   
+    
+       
+    
+//echo json_encode($datess); 
+ 
+	
+   
+  	
+
+          
+  } 
+
+
+
+public function customerinfonew(){
     $data['posts']=DB::table('customer_info')->get();
      return $data;
      
      // return "hello";
   }
   
- public function customer_Data_add(Request $req){
+public function customer_Data_add(Request $req){
         
    	 	
            $dates['customer_name']=$req->customer_name;
@@ -95,64 +199,148 @@ echo($hashed );
          // return view('customerinfo')->with('messages','true');
 	}
  
-  public function datashow(){
-
-    $data['posts']=DB::table('users')->get();
-    return view('post/index',$data);
  
-  }
-   
-  public function product_add(Request $reqs){
-  	
-  	 $imageName = time().'.'.$reqs->Image->extension();    
-         $reqs->Image->move(public_path('imagesss'), $imageName);
-         
-         
-         
+ //this purpose this product add and show update etc  
+public function product_add(Request $reqs){	
+
+if(Auth::check()){
+$id = Auth::user()->Shop_cat_id;
+
+$validator = Validator::make($reqs->all(), [	
+	'Barcode' => ['required',Rule::unique('product_info'.$id)],
+
+]);
+
+if ($validator->fails()) {
+	
+	
+	 $datess['message']="Exit";
+	echo json_encode($datess); 
+		
+} else {
+	  	
+  	   $imageName = time().'.'.$reqs->Productimage->extension();  
+  	   $naaa=time();    
+       $datess['Barcode']=$reqs->Barcode;
        $datess['Product_name']=$reqs->Product_name;
-       $datess['Add_date']=date("Y-m-d");
-       $datess['Update_Date']=date("Y-m-d");
-       $datess['product_barcode']=$reqs->product_barcode;
-       $datess['Outlet_Id']=Auth::user()->ShopID;
-       $datess['Outlet_Name']=Auth::user()->ShopAddress;
-       $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Image']=$imageName;
-       $datess['Weight']=$reqs->Weight;
-       $datess['Expire_date']=$reqs->Expire_date;
-       $datess['Product_rate']=$reqs->Product_rate;
-       $datess['Sales_rate']=$reqs->Sales_rate; 
-       $datess['Descount_rate']=$reqs->Descount_rate;     
-       $datess['catagory_id']=$reqs->catagory_id;
-       $datess['Sub_catagory_id']=$reqs->Sub_catagory_id;
+       
+       if($reqs->Weight=="empty"){
+       	$datess['Weight']=" ";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+       
+       $datess['Image']=$naaa."/".$imageName; 
+       $datess['Catagory']=$reqs->Catagory;
+       $datess['Sub_Catagory']=$reqs->Sub_Catagory;
        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory; 
-       $datess['Product_units']=$reqs->Product_units; 
-       $datess['Top_rating_range']=$reqs->Top_rating_range;
-     
-   
-     
-print_r($datess);
-  
+       $datess['Create_date']=date("Y-m-d");    
+       $datess['Update_date']=date("Y-m-d");   
+       $datess['Product_add_user_id']=Auth::user()->id;
+       $datess['Shop_cat_id']=Auth::user()->Shop_cat_id;
+
+     try {	 	
+      $reqs->Productimage->move(public_path('product/'.$naaa), $imageName); 
+      DB::table('product_info'.$id)->insert($datess);  
+     	echo json_encode($datess); 
+      //  return redirect("productInfo");           
+          } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+            echo('Duplicate Entry');
+              }
+          }
+        } 
+		}   
+                
   } 
+   
+public function productdelete($id){	
   
-  
-   public function catagory_add(Request $request){
+    DB::table('product_info')->where('Product_ID',$id)->delete();
+    return redirect("productInfo");
+ 
+  }  
+          
+public function product_add_test(Request $request){
+  	
+
+ 
+  //	$reqs->validate(['product_barcode' => 'required|product_barcode|unique:product_info',]);
+  	
+//$test=$request->validate(['product_barcode' => 'required|unique:product_info',]);
+           
+
+$validator = Validator::make($request->all(), [
+   'product_barcode' => 'required|unique:product_info',
+]);
+
+if ($validator->fails()) {
+	
+	echo("ase");
+} else {
+   echo("nai");
+}
+
+  } 
+      
+public function imagesss(Request $request){
+    	
+    $validator = Validator::make($request->all(), ['image' => 'required|image|mimes:png,jpg,jpeg|max:200',]);
+
+        if ($validator->fails()) {
+            return response()
+                ->json([
+                    'success' => false,
+                    'error' =>  $validation->errors()->first()
+                ]);
+        }
+
+     
+    
+    }     
+    
+    
+    
+    
+ //this all catagory system show   
+ 
+public function GetSubCatAgainstMain($id){
+	if(Auth::check()){
+    		$ids = Auth::user()->Shop_cat_id;
+        echo json_encode(DB::table('subcatgory_info')->where('Shop_cat_id', $ids)->where('catagory_id', $id)->get());
+		}
+    } 
+    
+public function GetSubCatAgainstMainmulti($id){
+	   if(Auth::check()){
+    		$ids = Auth::user()->Shop_cat_id;
+        echo json_encode(DB::table('sub_sub_catgory_info')->where('Shop_cat_id', $ids)->where('sub_catagory_id', $id)->get());
+       }
+	}
+     
+public function catagory_add(Request $request){
   	
       $response = array(
-          'catagory_name' => $request->catagory_name,
+          'catagory_name' =>$request->catagory_name,
           'date' =>date("Y-m-d"),
+          'Shop_cat_id'=>Auth::user()->Shop_cat_id
       );
 
  		DB::table('catgory_info')->insert($response);          
-        return response()->json($response);
-    
+        return response()->json($response);  
   } 
-  
-  
-    public function sub_catagory_add(Request $request){	
+    
+public function sub_catagory_add(Request $request){	
   	 for($i=0;$i<count($request->catagory_id);$i++)
  { 
 	 // echo $request->catagory_name[$i].'<br>';        
-       $arr = array('catagory_id' =>$request->catagory_id[$i],'catagory_name' =>$request->catagory_name[$i],'date' =>date("Y-m-d"));
+       $arr = array(
+       'catagory_id' =>$request->catagory_id[$i],
+       'catagory_name' =>$request->catagory_name[$i],
+       'date' =>date("Y-m-d"),
+       'Shop_cat_id'=>Auth::user()->Shop_cat_id);
 		DB::table('subcatgory_info')->insert($arr); 
  }
   	      try {	
@@ -166,12 +354,16 @@ print_r($datess);
     
   }
   
-  
-   public function sub_to_sub_catagory_add(Request $request){	
+public function sub_to_sub_catagory_add(Request $request){	
   	 for($i=0;$i<count($request->catagory_id);$i++)
  { 
 	 // echo $request->catagory_name[$i].'<br>';        
-$arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$request->sub_catagory_id[$i],'sub_catagory_name' =>$request->sub_catagory_name[$i],'date' =>date("Y-m-d"));
+$arr = array(
+'catagory_id' =>$request->catagory_id[$i],
+'sub_catagory_id' =>$request->sub_catagory_id[$i],
+'sub_catagory_name' =>$request->sub_catagory_name[$i],
+'date' =>date("Y-m-d"),
+'Shop_cat_id'=>Auth::user()->Shop_cat_id);
 		DB::table('sub_sub_catgory_info')->insert($arr); 
  }
   	      try {	
@@ -185,14 +377,69 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
     
   }
   
-    public function catagoryshow(){
-
-  echo json_encode(DB::table('catgory_info')->orderBy('id', 'DESC')->limit(10)->get());
+public function catagoryshow(){
+            if(Auth::check()){
+    		$ids = Auth::user()->Shop_cat_id;
+  echo json_encode(DB::table('catgory_info')->where('Shop_cat_id', $ids)->orderBy('id', 'DESC')->limit(10)->get());
+		}
   }
+ 
+
+
+
+   
+    
+    
+    
+ // customer info and loging user data info
+ 		
+public function createnewprofile(){
+    	if(Auth::check()){				
+    	$id = Auth::user()->id;	
+        $data['posts']=DB::table('users')->where('AdminKey',$id)->paginate(9);
+        return view('frontend.newprofile',$data);
+    	}
+    	else{return view('login');}
+	}
+			
+public function userOnlineStatus(){
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-online' . $user->id))
+                echo $user->name . " is online. <br>";
+            else
+                echo $user->name . " is offline <br>";
+        }
+    }
+	
+public function loginPageFunc(Request $request):RedirectResponse{
+    	
+    	 $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+    	  
+       if (Auth::attempt($credentials)) {
+        	 $request->session()->regenerate();
+            return redirect()->intended('home')->withSuccess('You have Successfully loggedin');
+        }
   
+       // return redirect('login')->with("error",'Oppes! You have entered invalid credentials');
+       
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
   
-  public function employeadddemo(Request $require)
-    {  
+	}   
+		
+public function logout(Request $request): RedirectResponse{
+    	Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    	return redirect('login');
+	}
+	 
+public function employeadddemo(Request $require){  
         
        $require->validate([
             'name' => 'required',
@@ -230,8 +477,7 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
           }      
     }   
        
-   public function employeadd(Request $require)
-    {  
+public function employeadd(Request $require){  
         
        $require->validate([
             'name' => 'required',
@@ -273,15 +519,8 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
               }
           }      
     }    
-        
-   public function profileView()
-    {  
-        
-       return view('profile.profile') ;            
-       
-    } 
-       
-   public function employ_update(){
+           
+public function employ_update(){
 	
     $id = Auth::user()->id;	
     $StrafCount = Auth::user()->StrafCount;	
@@ -290,8 +529,7 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
     
   }
        
-   public function customRegistration(Request $require)
-    {  
+public function customRegistration(Request $require){  
         $require->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -333,14 +571,22 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
           
     }
 
-  public function delete($id){	
+
+
+
+
+
+
+
+//test purpose 
+public function delete($id){	
   
     DB::table('users')->where('Adminid',$id)->delete();
     return redirect("/post/showdata");
  
   }
 
-  public function single_data_update(Request $require, $id){
+public function single_data_update(Request $require, $id){
 
      $date['name']=$require->Name;
     $date['email']=$require->email;
@@ -349,17 +595,17 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
     
   }
 
-  public function single_data_show_update($id){
+public function single_data_show_update($id){
     $data['posts']=DB::table('users')->where('Adminid',$id)->get();
     return view('post/update',$data);
   }
 
-  public function single_data_show($id){
+public function single_data_show($id){
     $data['posts']=DB::table('users')->where('Adminid',$id)->get();
     return view('post/show',$data);
   }
 
-  public function Index(Request $require){
+public function Index(Request $require){
           $date['name']=$require->name;
          $date['email']=$require->email;    
         $date['password']=Hash::make($require->password);
@@ -377,8 +623,25 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
               }
           }
     }
+ 
+public function option_show(){
+    $data['posts']=DB::table('sub_sub_catgory_info')->get();
+    return view('post/show',$data);
+  }
+
+public function datashow(){
+
+    $data['posts']=DB::table('users')->get();
+    return view('post/index',$data);
+ 
+  }
+   
+
+ 
      
-  public function systemInfo(Request $req){
+     
+ // test purpose but main projcet reletive        
+public function systemInfo(Request $req){
             $dates['company_Id']=$req->company_Id;
             $dates['company_Name']=$req->company_Name;
             $dates['date']=$req->date;
@@ -386,114 +649,140 @@ $arr = array('catagory_id' =>$request->catagory_id[$i],'sub_catagory_id' =>$requ
             return redirect("/productInfo");
 	}
   
-  public function loginPageFunc(Request $request):RedirectResponse
-    {
-    	
-    	 $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-    	
-    	
-    	
-   
-       if (Auth::attempt($credentials)) {
-        	 $request->session()->regenerate();
-            return redirect()->intended('home')->withSuccess('You have Successfully loggedin');
-        }
-  
-       // return redirect('login')->with("error",'Oppes! You have entered invalid credentials');
-       
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-  
-	}   
+
+	
+	
+	
+//this all page show with date pass	
+
 		
-   public function logout(Request $request): RedirectResponse
-    {
-    	Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    	return redirect('login');
-	}
-	
-	
-	
-	public function login()
-    {
+public function login(){
     	if(Auth::check()){return redirect('home');}else{return view('login');}
 	}
-	
-	
-	 public function home()
-    {    
+		
+public function home(){    
         if(Auth::check()){return view('frontend.deshboard');}else{return view('login');}
+	}
+				
+public function testssss(){    
+        if(Auth::check()){return view('frontend.test');}else{return view('login');}
 	} 
 	
-		public function oder()
-		
-    {
+public function oder(){
     	if(Auth::check()){return view('frontend.oder');}else{return view('login');}
 	}
 	
-		public function product()
-    {
+public function product(){
     	if(Auth::check()){return view('frontend.product');}else{return view('login');}
 	}
+
+public function profileView(){  
+        
+       return view('profile.profile') ;            
+       
+    } 	
 	
-		public function productInfo()
-    {
+			
+public function productInfo(){
     	if(Auth::check()){
-    		
-    		$data = DB::table('catgory_info')->get();
-        return view('deshboard.product_info')->with('data', $data);
-    	//$data['posts']=DB::table('catgory_info')->get();
-    	//	return view('deshboard.product_info',$data);
-    		
+    		$id = Auth::user()->Shop_cat_id;
+    		$data = DB::table('catgory_info')->where('Shop_cat_id', $id)->get();
+    		$product = DB::table('product_info'.$id)->orderBy('Product_ID', 'DESC')->limit(11)->get();
+          return view('deshboard.product_info')->with('data', $data)->with('product', $product);
+
     		}else{return view('login');}
 	}
-	
-	  public function GetSubCatAgainstMain($id){
-        echo json_encode(DB::table('subcatgory_info')->where('catagory_id', $id)->get());
-    } 
-    
-     public function GetSubCatAgainstMainmulti($id){
-        echo json_encode(DB::table('sub_sub_catgory_info')->where('sub_catagory_id', $id)->get());
-    }
 		
-	 public function createnewprofile()		
-    {
-    	if(Auth::check()){				
-    	$id = Auth::user()->id;	
-        $data['posts']=DB::table('users')->where('AdminKey',$id)->paginate(9);
-        return view('frontend.newprofile',$data);
-    	}
-    	else{return view('login');}
+public function productInfo_search(Request $request){
+    	
+    	
+    	 if(Auth::check()){	
+    		   $data = DB::table('catgory_info')->get();
+    		$product = DB::table('product_info')->where('Barcode', $request->search)->get();	
+         //  return view('deshboard.product_info')->with('data', $data)->with('product', $product);		
+        echo($product);
+    		}else{return view('login');}
+    	
+    	
 	}
-	
-	
-	
-	 public function userOnlineStatus()
-    {
-        $users = User::all();
-        foreach ($users as $user) {
-            if (Cache::has('user-online' . $user->id))
-                echo $user->name . " is online. <br>";
-            else
-                echo $user->name . " is offline <br>";
-        }
-    }
-	
-	
 		
+		
+				
+public function action(Request $request){
+		
+//	$data = DB::table('catgory_info')->get();
+	
+	
+	if(Auth::check()){
+	
+	$id = Auth::user()->Shop_cat_id;
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      if($query != '')
+      {
+       $data = DB::table('product_info'.$id)
+         ->where('Barcode', 'like', '%'.$query.'%')
+         ->orWhere('Product_name', 'like', '%'.$query.'%')
+         ->get();
+         
+      }
+      else
+      {
+       $data = DB::table('product_info'.$id)
+         ->orderBy('Product_ID', 'desc')
+         ->get();
+      }
+      
+      $total_row = $data->count();
+      
+      
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+       //	$actual_link = "https://$_SERVER[HTTP_HOST]/product/";
+        $output .= '
+        <tr>
+      
+       
+         <td>'.$row->Product_ID.'</td>
+         <td>'.$row->Barcode.'</td>
+         <td>'.$row->Product_name."".$row->Weight.'</td>
+        </tr>
+        ';
+       }
+      }
+      else
+      {
+      	
+      	
+       $output = '
+       <tr>
+        <td align="center" colspan="5">No Data Found</td>
+       </tr>
+       ';
+      }
+      
+      
+      $data = array(
+       'table_data'  => $output,
+       'total_data'  => $total_row
+      );
+
+      echo json_encode($data);
+      
+	
+		}
+		
+		
+		//echo("hello");		
 }
 
+	}
 
-
-
-
-
+}
 
 
 /*

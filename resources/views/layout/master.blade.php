@@ -522,6 +522,7 @@
 					    <li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
 						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>				
 						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width">Stock Add</a></li>
+						<li><a href="{{ route('tests')}}" class="link-dark rounded menu-width">test</a></li>
 					</ul>
 				 </div>
 				</div>

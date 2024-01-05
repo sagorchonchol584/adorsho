@@ -19,7 +19,28 @@
 
 	<div class="col-3 h-500">
 		
+
+</head>
+<body>
+
+<div class="bgColor">
+<form action="{{route('loadertest')}}" method="post">
+ <?php echo csrf_field(); ?>
+<div id="targetOuter">
+	<div id="targetLayer"></div>
+	<div class="icon-choose-image" >
+	<input name="product_barcode" id="product_barcode" type="text" class="inputFile" />
+	 
 	</div>
+</div>
+<div>
+<input type="submit" value="Submit" class="btnSubmit" />
+</form>
+
+</div>
+
+		
+</div>
 </div>
 
 

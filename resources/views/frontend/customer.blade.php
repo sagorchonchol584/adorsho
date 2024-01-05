@@ -88,8 +88,6 @@
 	}
 	.searchbar{
 		padding-left: 180px;
-	  
-	
 	}
 	
 	.shodows{
@@ -249,7 +247,7 @@ function datachack( datec,datecc){
 
 </script>
 
-
+ 
   
   	@foreach($posts as $post)
 
@@ -288,11 +286,11 @@ function datachack( datec,datecc){
   </tbody>
    
 </table>
-	     </div>	
+</div>	
 	    <div class="d-flex justify-content-center p-1">{{$posts->onEachSide(0)->links()}}</div>	
-		   </div>
-	        </div>
-             </div>
+ </div>
+</div>
+ </div>
 
 
 <div class="row">

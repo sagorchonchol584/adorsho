@@ -1,7 +1,6 @@
 @extends('layout.master')
 @section('content')
-<div class="col-12 h-900">
-	
+
 
 <style>
 	
@@ -175,7 +174,7 @@
 	</div>
 	<div class="col-4 h-400">
 		<div class="fromadd">
-		 <img id="frame" src="{{asset('frontend/img/demo.jpg')}}" class="img-fluid" width="150px" height="150px" />
+		 <img id="frame" src="{{asset('frontend/img/demopro.jpg')}}" class="img-fluid" width="150px" height="150px" />
 		<div class="fromaddtwo">
         
 			<div class="container">
@@ -227,7 +226,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
-      <th scope="col">Last Purches</th>
+      <th scope="col">Last see page</th>
       <th scope="col">States</th>
     </tr>
   </thead>

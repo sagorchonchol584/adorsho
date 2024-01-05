@@ -26,6 +26,9 @@
 
 {{ route('customerdateAdd')}}
 
+
+<img alt="logo" src="{{ asset('images/1701069294.jpg') }}">
+<script src="{{ asset('text.js') }}"> </script>	
 <form action="#"  onsubmit="suct()">
   <?php echo csrf_field(); ?>
   <div class="form-group">
