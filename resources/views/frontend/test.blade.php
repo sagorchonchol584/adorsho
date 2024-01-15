@@ -304,9 +304,8 @@
 		Product_name=obj[key].Product_name;
 		productname.value=Product_name;
 		//productname.disabled=true;
-		Product_ID=obj[key].Product_ID;
+		//Product_ID=obj[key].Product_ID;
 		Barcode=obj[key].Barcode;
-		Product_name=obj[key].Product_name;
 		Weight=obj[key].Weight;
 		Image=obj[key].Image;
 		

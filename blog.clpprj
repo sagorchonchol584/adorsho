@@ -22,120 +22,121 @@
   <file name="C:\xampp\htdocs\adorsho\resources\views\layout\master.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\customer.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\stock_add.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\product.blade.php"/>
   <lastactivefile name=""/>
  </lastopfiles>
  <todoblock>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\@ampproject\remapping\dist\remapping.umd.js">
-   <todo name="TODO: Eventually support sourceRoot, which has to be removed because the sources are already" pos="9;38"/>
-   <todo name="TODO: We should eventually support async loading of sourcemap files." pos="13;133"/>
+   <todo pos="9;38" name="TODO: Eventually support sourceRoot, which has to be removed because the sources are already"/>
+   <todo pos="13;133" name="TODO: We should eventually support async loading of sourcemap files."/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\@babel\compat-data\corejs2-built-ins.js">
-   <todo name="Todo (Babel 8): remove this file as Babel 8 drop support of core-js 2" pos="1;0"/>
+   <todo pos="1;0" name="Todo (Babel 8): remove this file as Babel 8 drop support of core-js 2"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\@babel\compat-data\corejs3-shipped-proposals.js">
-   <todo name="Todo (Babel 8): remove this file now that it is included in babel-plugin-polyfill-corejs3" pos="1;0"/>
+   <todo pos="1;0" name="Todo (Babel 8): remove this file now that it is included in babel-plugin-polyfill-corejs3"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\@babel\parser\typings\babel-parser.d.ts">
-   <todo name="todo(flow->ts) real token type" pos="3;237"/>
+   <todo pos="3;237" name="todo(flow->ts) real token type"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\axios\lib\adapters\http.js">
-   <todo name="todo remove" pos="8;603"/>
-   <todo name="@todo remove" pos="7;603"/>
+   <todo pos="8;603" name="todo remove"/>
+   <todo pos="7;603" name="@todo remove"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\debug\src\browser.js">
-   <todo name="TODO: add a `localStorage` variable to explicitly enable/disable colors" pos="2;110"/>
+   <todo pos="2;110" name="TODO: add a `localStorage` variable to explicitly enable/disable colors"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\form-data\lib\form_data.js">
-   <todo name="TODO: Looks like there is bug in Node fs.createReadStream" pos="5;121"/>
+   <todo pos="5;121" name="TODO: Looks like there is bug in Node fs.createReadStream"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\mime-types\index.js">
-   <todo name="TODO: use media-typer" pos="3;53"/>
-   <todo name="TODO: should this even be in this module?" pos="3;77"/>
-   <todo name="TODO: use content-type or other module" pos="3;90"/>
-   <todo name="TODO: use media-typer" pos="3;111"/>
+   <todo pos="3;53" name="TODO: use media-typer"/>
+   <todo pos="3;77" name="TODO: should this even be in this module?"/>
+   <todo pos="3;90" name="TODO: use content-type or other module"/>
+   <todo pos="3;111" name="TODO: use media-typer"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\proxy-from-env\test.js">
-   <todo name="TODO: Should we be stricter and perform validation?" pos="5;104"/>
+   <todo pos="5;104" name="TODO: Should we be stricter and perform validation?"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\react-refresh\cjs\react-refresh-babel.development.js">
-   <todo name="TODO: We could use an arrow here to be more compact." pos="18;371"/>
-   <todo name="TODO: if there is no LHS, consider some other heuristic." pos="9;454"/>
+   <todo pos="18;371" name="TODO: We could use an arrow here to be more compact."/>
+   <todo pos="9;454" name="TODO: if there is no LHS, consider some other heuristic."/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\react-refresh\cjs\react-refresh-runtime.development.js">
-   <todo name="TODO: rename these fields to something more meaningful." pos="9;201"/>
-   <todo name="TODO: delete this after removing dependency in RN." pos="3;519"/>
+   <todo pos="9;201" name="TODO: rename these fields to something more meaningful."/>
+   <todo pos="3;519" name="TODO: delete this after removing dependency in RN."/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\rollup\dist\es\shared\node-entry.js">
-   <todo name="TODO is this block necessary?..." pos="4;297"/>
-   <todo name="TODO last chunk in the array may not be the last chunk, if it's moved..." pos="4;956"/>
-   <todo name="TODO deprecate this? not really very useful" pos="2;1114"/>
-   <todo name="TODO there's a bunch of this sort of thing, needs cleaning up" pos="4;1394"/>
-   <todo name="TODO we are pretending it was not found while it should behave like &quot;undefined&quot;" pos="13;14384"/>
-   <todo name="TODO" pos="5;14762"/>
+   <todo pos="4;297" name="TODO is this block necessary?..."/>
+   <todo pos="4;956" name="TODO last chunk in the array may not be the last chunk, if it's moved..."/>
+   <todo pos="2;1114" name="TODO deprecate this? not really very useful"/>
+   <todo pos="4;1394" name="TODO there's a bunch of this sort of thing, needs cleaning up"/>
+   <todo pos="13;14384" name="TODO we are pretending it was not found while it should behave like &quot;undefined&quot;"/>
+   <todo pos="5;14762" name="TODO"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\rollup\dist\es\shared\watch.js">
-   <todo name="TODO: emit errors properly. Example: EMFILE on Macos." pos="1;2462"/>
-   <todo name="TODO" pos="5;2674"/>
-   <todo name="TODO: real check" pos="3;3088"/>
-   <todo name="TODO: Strange thing: &quot;should not choke on an ignored watch path&quot; will be failed without 2 ready cal" pos="7;3574"/>
-   <todo name="TODO: this is not equal to path-normalize module - investigate why" pos="1;3717"/>
-   <todo name="TODO: throws or warn? Currently just ignore, uses new event" pos="17;4680"/>
+   <todo pos="1;2462" name="TODO: emit errors properly. Example: EMFILE on Macos."/>
+   <todo pos="5;2674" name="TODO"/>
+   <todo pos="3;3088" name="TODO: real check"/>
+   <todo pos="7;3574" name="TODO: Strange thing: &quot;should not choke on an ignored watch path&quot; will be failed without 2 ready cal"/>
+   <todo pos="1;3717" name="TODO: this is not equal to path-normalize module - investigate why"/>
+   <todo pos="17;4680" name="TODO: throws or warn? Currently just ignore, uses new event"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\rollup\dist\shared\index.js">
-   <todo name="TODO: emit errors properly. Example: EMFILE on Macos." pos="1;2458"/>
-   <todo name="TODO" pos="5;2670"/>
-   <todo name="TODO: real check" pos="3;3084"/>
-   <todo name="TODO: Strange thing: &quot;should not choke on an ignored watch path&quot; will be failed without 2 ready cal" pos="7;3570"/>
-   <todo name="TODO: this is not equal to path-normalize module - investigate why" pos="1;3713"/>
+   <todo pos="1;2458" name="TODO: emit errors properly. Example: EMFILE on Macos."/>
+   <todo pos="5;2670" name="TODO"/>
+   <todo pos="3;3084" name="TODO: real check"/>
+   <todo pos="7;3570" name="TODO: Strange thing: &quot;should not choke on an ignored watch path&quot; will be failed without 2 ready cal"/>
+   <todo pos="1;3713" name="TODO: this is not equal to path-normalize module - investigate why"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\rollup\dist\shared\rollup.js">
-   <todo name="TODO is this block necessary?..." pos="4;2686"/>
-   <todo name="TODO last chunk in the array may not be the last chunk, if it's moved..." pos="4;3345"/>
-   <todo name="TODO deprecate this? not really very useful" pos="2;3503"/>
-   <todo name="TODO there's a bunch of this sort of thing, needs cleaning up" pos="4;3783"/>
-   <todo name="TODO we are pretending it was not found while it should behave like &quot;undefined&quot;" pos="13;15876"/>
-   <todo name="TODO" pos="5;16254"/>
+   <todo pos="4;2686" name="TODO is this block necessary?..."/>
+   <todo pos="4;3345" name="TODO last chunk in the array may not be the last chunk, if it's moved..."/>
+   <todo pos="2;3503" name="TODO deprecate this? not really very useful"/>
+   <todo pos="4;3783" name="TODO there's a bunch of this sort of thing, needs cleaning up"/>
+   <todo pos="13;15876" name="TODO we are pretending it was not found while it should behave like &quot;undefined&quot;"/>
+   <todo pos="5;16254" name="TODO"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\node_modules\rollup\dist\shared\watch.js">
-   <todo name="TODO: throws or warn? Currently just ignore, uses new event" pos="17;137"/>
+   <todo pos="17;137" name="TODO: throws or warn? Currently just ignore, uses new event"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\dflydev\dot-access-data\src\Data.php">
-   <todo name="TODO: Is this really what we want to do" pos="13;66"/>
+   <todo pos="13;66" name="TODO: Is this really what we want to do"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\ORM\CakePHP\EntityPopulator.php">
-   <todo name="TODO check if TreeBehavior attached to modify lft/rgt cols" pos="9;121"/>
+   <todo pos="9;121" name="TODO check if TreeBehavior attached to modify lft/rgt cols"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\Provider\Base.php">
-   <todo name="TODO: remove in v2" pos="9;642"/>
+   <todo pos="9;642" name="TODO: remove in v2"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\fakerphp\faker\src\Faker\Provider\kk_KZ\Address.php">
-   <todo name="TODO list all country names in the world" pos="5;15"/>
+   <todo pos="5;15" name="TODO list all country names in the world"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Exception\Frame.php">
-   <todo name="todo: This can be made more reliable by checking if we've entered" pos="10;51"/>
-   <todo name="@todo: This can be made more reliable by checking if we've entered" pos="9;51"/>
+   <todo pos="10;51" name="todo: This can be made more reliable by checking if we've entered"/>
+   <todo pos="9;51" name="@todo: This can be made more reliable by checking if we've entered"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Handler\PrettyPageHandler.php">
-   <todo name="todo: Make this more robust" pos="14;186"/>
-   <todo name="@todo: Make this more robust" pos="13;186"/>
-   <todo name="todo: Asset compiler" pos="14;225"/>
-   <todo name="@todo: Asset compiler" pos="13;225"/>
-   <todo name="todo: Consolidate addDataTable and addDataTableCallback" pos="10;282"/>
-   <todo name="@todo: Consolidate addDataTable and addDataTableCallback" pos="9;282"/>
+   <todo pos="14;186" name="todo: Make this more robust"/>
+   <todo pos="13;186" name="@todo: Make this more robust"/>
+   <todo pos="14;225" name="todo: Asset compiler"/>
+   <todo pos="13;225" name="@todo: Asset compiler"/>
+   <todo pos="10;282" name="todo: Consolidate addDataTable and addDataTableCallback"/>
+   <todo pos="9;282" name="@todo: Consolidate addDataTable and addDataTableCallback"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\filp\whoops\src\Whoops\Run.php">
-   <todo name="todo Might be able to clean this up a bit better" pos="14;420"/>
-   <todo name="@todo Might be able to clean this up a bit better" pos="13;420"/>
+   <todo pos="14;420" name="todo Might be able to clean this up a bit better"/>
+   <todo pos="13;420" name="@todo Might be able to clean this up a bit better"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\guzzlehttp\guzzle\src\Client.php">
-   <todo name="todo: Do not rely on curl" pos="22;410"/>
-   <todo name="@todo: Do not rely on curl" pos="21;410"/>
-   <todo name="TODO: Add more sink validation" pos="13;435"/>
+   <todo pos="22;410" name="todo: Do not rely on curl"/>
+   <todo pos="21;410" name="@todo: Do not rely on curl"/>
+   <todo pos="13;435" name="TODO: Add more sink validation"/>
   </todofile>
   <todofile name="C:\xampp\htdocs\adorsho\vendor\hamcrest\hamcrest-php\hamcrest\Hamcrest\Arrays\IsArray.php">
-   <todo name="TODO: Allow this to take matchers or values within the array" pos="1;10"/>
+   <todo pos="1;10" name="TODO: Allow this to take matchers or values within the array"/>
   </todofile>
  </todoblock>
  <dbgurls/>
- <lasttime value="1704392259"/>
+ <lasttime value="1705312830"/>
 </project>

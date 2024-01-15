@@ -32,14 +32,25 @@ public function showMasge(){
 public function barcodes($id){
 	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
-    		$reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
-    		if(count($reults) === 0){
-    			
+    	$outlet_Id_user = Auth::user()->ShopID;
+    				
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+         $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
+      
+    		if(count($stockinfo) === 0){
+    			if(count($reults) === 0){		
     			 $datess['message']='Exit';
-    			 echo json_encode($datess);
+    			 echo json_encode($datess);		 
+    		    }else{	
+    		    	echo json_encode($reults);
+    		    	}
+    		    
     		}else{
-    			echo json_encode($reults);
-    		}	
+    			echo json_encode($stockinfo);
+    		}
+    		
+    		
+    			
        }
   }
     
@@ -74,6 +85,7 @@ public function stockaddfuntion(){
  
 
  if(Auth::check()){
+ 	
     	$ids = Auth::user()->Shop_cat_id;
     	$data = DB::table('catgory_info')->where('Shop_cat_id', $ids)->get();
         return view('deshboard.stock_add')->with('data', $data);
@@ -91,39 +103,87 @@ public function stockaddfuntion(){
 public function Stock_Info_add(Request $reqs){
   	
   
-  $validator = Validator::make($reqs->all(), [	
-	'Product_barcode_id' => ['required',Rule::unique('stock_info')],
+  
+  if(Auth::check()){ 
+  
+  
+     $ShopID = Auth::user()->ShopID;
+  
+      $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
 
-]);
-
-if ($validator->fails()) {
-	
-	
-	$data = DB::table('stock_info')->where('Product_barcode_id',$reqs->Product_barcode_id)->get();
-	 
-	 
 	  $total_row = $data->count();
 	  $Total_product;
+	  $loadeddate;
+	  $shopidload;
+	  $barcodes;
+	  $ndate=date_create($reqs->Expire_date);	
+	  $newdate=date_format($ndate,"Y-m-d");
+
       if($total_row > 0)
       {
        foreach($data as $row)
        {
         $Total_product=$row->Total_product;
+        $loadeddate=$row->Expire_date;
+        $shopidload=$row->Outlet_Id;
+        $barcodes=$row->Barcode;
        }
-      }
-	
-	
-	 $datess['message']="Exit";
-	echo json_encode($Total_product); 
-	
-	
+       
+       if($Total_product==0){
+       	 	
+       $datess['Total_product']=$reqs->Product_units;  
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id;
+       $datess['Weight']=$reqs->Weight;
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate; 
 
+      if($reqs->pieces=="empty"){
+	   $datess['pieces']="0";
+        }
+       else{
+	 $datess['pieces']=$reqs->pieces;
+       }
+       
+      DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
+      echo json_encode($barcodes); 	
+      //echo json_encode("working this funcation");
+    
+       }
+       
+       else if($loadeddate==$newdate){
+       		
+       $total_pr=$Total_product+$reqs->Product_units;
+       $datess['Total_product']=$total_pr;  
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id;
+       $datess['Weight']=$reqs->Weight;
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate; 
+
+      if($reqs->pieces=="empty"){
+	   $datess['pieces']="0";
+        }
+       else{
+	 $datess['pieces']=$reqs->pieces;
+       }
+       
+      DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
+      echo json_encode($barcodes);
 	
-		
-} else {
-	
-	   $datess['Product_Name']=$reqs->Product_Name;
-       $datess['Product_barcode_id']=$reqs->Product_barcode_id;
+       }else{
+       	 
+       	 $datess['message']='Exit';
+    	 echo json_encode($datess);		 
+       	
+       }
+       
+       }else{
+       				     		
+       $datess['Product_name']=$reqs->Product_name;
+       $datess['Barcode']=$reqs->Barcode;
        $datess['Facility_Product_for_internet']=FALSE;
        $datess['Total_product']=$reqs->Product_units;  
        $datess['Purches_Price']=$reqs->Purches_Price;  
@@ -137,29 +197,27 @@ if ($validator->fails()) {
        $datess['Add_date']=date("Y-m-d");
        $datess['Update_Date']=date("Y-m-d");
        $datess['Descount_rate']=$reqs->Descount_rate;     
-       $datess['catagory_id']=$reqs->catagory_id;
-       $datess['Sub_catagory_id']=$reqs->Sub_catagory_id;
+       $datess['Catagory']=$reqs->Catagory;
+       $datess['Sub_Catagory']=$reqs->Sub_Catagory;
        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
        $datess['Top_rating_range']=0; 
-      // echo json_encode($datess);
-	 DB::table('stock_info')->insert($datess); 
-	 echo json_encode($datess);
-}
-
-  
-  
-   
-    
        
-    
-//echo json_encode($datess); 
- 
-	
-   
-  	
-
-          
-  } 
+       if($reqs->pieces=="empty"){
+       	$datess['pieces']="0";
+       }
+       else{
+       	$datess['pieces']=$reqs->pieces;
+       }
+      
+	   DB::table('stock_info')->insert($datess); 
+	   echo json_encode($datess);
+       }
+  
+    }else{
+    	return view('login');
+    	}
+  	      
+} 
 
 
 
@@ -208,7 +266,7 @@ $id = Auth::user()->Shop_cat_id;
 
 $validator = Validator::make($reqs->all(), [	
 	'Barcode' => ['required',Rule::unique('product_info'.$id)],
-
+   
 ]);
 
 if ($validator->fails()) {
@@ -216,6 +274,8 @@ if ($validator->fails()) {
 	
 	 $datess['message']="Exit";
 	echo json_encode($datess); 
+	
+
 		
 } else {
 	  	
@@ -223,13 +283,13 @@ if ($validator->fails()) {
   	   $naaa=time();    
        $datess['Barcode']=$reqs->Barcode;
        $datess['Product_name']=$reqs->Product_name;
-       
+          
        if($reqs->Weight=="empty"){
        	$datess['Weight']=" ";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
-       }
+       } 
        
        $datess['Image']=$naaa."/".$imageName; 
        $datess['Catagory']=$reqs->Catagory;
@@ -238,17 +298,17 @@ if ($validator->fails()) {
        $datess['Create_date']=date("Y-m-d");    
        $datess['Update_date']=date("Y-m-d");   
        $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Shop_cat_id']=Auth::user()->Shop_cat_id;
+       $datess['Outlet_Id']=Auth::user()->ShopID;
 
      try {	 	
       $reqs->Productimage->move(public_path('product/'.$naaa), $imageName); 
       DB::table('product_info'.$id)->insert($datess);  
-     	echo json_encode($datess); 
+      echo json_encode($datess);
       //  return redirect("productInfo");           
           } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-            echo('Duplicate Entry');
+        
               }
           }
         } 
@@ -715,7 +775,8 @@ public function action(Request $request){
 	
 	if(Auth::check()){
 	
-	$id = Auth::user()->Shop_cat_id;
+	 $id = Auth::user()->Shop_cat_id;
+	 $ShopID = Auth::user()->ShopID;
      if($request->ajax())
      {
       $output = '';
@@ -723,6 +784,7 @@ public function action(Request $request){
       if($query != '')
       {
        $data = DB::table('product_info'.$id)
+        ->where('Outlet_Id', $ShopID)
          ->where('Barcode', 'like', '%'.$query.'%')
          ->orWhere('Product_name', 'like', '%'.$query.'%')
          ->get();
@@ -731,6 +793,7 @@ public function action(Request $request){
       else
       {
        $data = DB::table('product_info'.$id)
+         ->where('Outlet_Id', $ShopID)
          ->orderBy('Product_ID', 'desc')
          ->get();
       }

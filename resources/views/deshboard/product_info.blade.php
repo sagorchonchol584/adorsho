@@ -17,7 +17,7 @@
    
    
  
-<div class="col-8 h-650">
+<div class="col-8 h-700">
 <!--This is a follder opening show -->
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb"> 
@@ -95,6 +95,7 @@
     <input type="text"  class="form-control" id="productname"  name="Product_name" placeholder="Product name"  required>
   </div> <br/>
  
+ 
 <div class="form-group">
   <label for="exampleInputName">Weight</label>
 	<div class="input-group mb-2">
@@ -106,7 +107,8 @@
           <div class="input-group-text"><span class="text-primary" id="weightshow">gm</span></div>
        </div>
    </div>
-</div><br/>
+</div><br/> 
+
 
  
  <div id="adddome">
@@ -250,9 +252,7 @@ var inputtt=document.getElementById("search");
 
 <div class="headto " id="ddd">
      <div id="showss">
-     
         
-       
 <div class="container box">
    <div class="panel panel-default">
     <div class="panel-body">
@@ -473,7 +473,7 @@ fetch_customer_data();
    	var productname=document.getElementById('productname'); 
    	var radiosss=document.getElementById('radiosss'); 	
     var showt=document.getElementById('weightshow');  
-    var placehol=document.getElementById('Weight');     
+    var placehol=document.getElementById('Weight');   
     var sub_category_name=document.getElementById('sub_category_name');
     var sub_category=document.getElementById('sub_category'); 
    	var subtosutcatagory=document.getElementById('subtosutcatagory');
@@ -491,6 +491,33 @@ fetch_customer_data();
      $(document).ready(function (e) {
 	$("#uploadForm").on('submit',(function(e) {
 		e.preventDefault();		
+		
+	  //------this image vailded chack-----
+		var reader = new FileReader();
+		var size = formFile.files[0].size;
+		var extn = formFile.files[0].type.split('/')[1];
+	    var maxSize = 100000;
+	  	var valid = ["gif", "png", "jpg", "jpeg"];
+	
+	     if (!valid.includes(extn)){
+		 
+		 
+		 errrrr("invaild "+extn);
+	     // console.log("image formet not match");
+		  
+          }
+		  else if(size > maxSize){
+		  
+		 errrrr("Image size less then 100kb");
+		   
+		  }
+		  else
+		  {
+	  //------this image vailded chack-----
+		 
+	
+	
+	
 			
 		//----------------------------------
 	  const formData = new FormData(this);
@@ -504,7 +531,8 @@ fetch_customer_data();
        }else{
        	 formData.append("Weight", "± "+placehol.value+" gm");
        }
-      	
+       
+      
 			//	console.log("hello ");
 				
 		$.ajax({
@@ -516,11 +544,12 @@ fetch_customer_data();
 		success: function(data)
 	    {  	    	
 		//$("#targetLayer").html(data);	
+		console.log(data);
 		const obj = JSON.parse(data);	
 		
 		
 		if(obj.message=="Exit"){
-	    console.log(obj.message);	
+	 //   console.log(obj.message);	
 		orrning("Barcode allready exit");
 	
 		}else{	
@@ -535,6 +564,11 @@ fetch_customer_data();
     	} 	        
         });							
 		
+        //------this image vailded chack-----
+          //console.log("all right");
+		  
+		  }
+         //------this image vailded chack-----
  
 		//----------------------------------
 		
