@@ -148,8 +148,10 @@
 
 
 
-<div class="p-5 col-6 card">
+<div class="px-4 col-6 card p-3">
 
+
+<span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
 
  <form id="uploadFormbar">
  <?php echo csrf_field(); ?>
@@ -160,28 +162,51 @@
  </form>
   
 <div class="form-group">
- <div class="addvist animate-charctertwo">
-<h4 id="imgSpinner1">Product per unite load</h4>
 
-
-
+<div class="form-row">
+	<div class="form-group col-md-8 p-2 "> 
+		<div class="form-group">
+			<div class="addvist animate-charctertwo">
+			<span class="h5">Product per unite load</span>
+			</div>
+		</div> 
+	</div>
+ 
+ <div class="form-group col-md-4 "> 
+  <div class="form-group">
+  
+<div class="form-row pricsss">
+	<div class="form-group col-md-3 p-1"> 
+		<div class="form-group">
+		  <input type="checkbox"  id="checkboxpises" class="form-check-input" style="width: 25px; height: 25px;">
+		</div> 
+	</div>
+ 
+ <div class="form-group col-md-9 p-1 "> 
+ <div class="form-group" style="height: 30px;">
+  <input type="hidden" class="form-control" placeholder="pieces" name="pieces" id="pieces"/>
+ </div> 
+ </div>
 
 
 </div>
+  
+  
+  
+ </div> 
+ </div>
+
+
+</div>
+
 </div> 
     
 
 
 
     
-    
-    
-    
-    
-    
-    
 <form id="uploadFormstock">
-  	 <?php echo csrf_field(); ?>
+  <?php echo csrf_field();?>
    
 <div class="form-row">
 <div class="form-group col-md-6 p-1"> 
@@ -192,17 +217,17 @@
  </div>
     <div class="form-group col-md-6 p-1">
    <label for="exampleInputName">Purchase Units</label>
-    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product"  required>
+    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product" value="4" required>
   <br/>
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="PurchesPrice">Purchase Price</label>
-      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price" required>
+      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price" value="6" required>
        <br/> 
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-      <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" required>
+      <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" value="8" required>
        <br/> 
     </div>
  
@@ -218,7 +243,7 @@
     <div class="form-group col-md-6">
     <div class="addd">
     	<label for="PurchesPrice" class="animate-charcter" style="color: red;">Unlimited date</label>
-     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 30px; height: 30px">
+     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 25px; height: 25px">
 
     </div>  
        <br/> 
@@ -228,10 +253,15 @@
 
 <div class="col-6 h-600 card">
 <div id="testt">
-<div class="form-group p-5">
+<div class="form-group px-5 pt-1">
   <div class="form-group">
+   <label style="color: blue; font-size: 27px; height: 27px;" id="available"> </label>
+  </div>
+
+ 
+   <div class="form-group pt-2">
    <label for="exampleInputName">Product Name</label>
-    <input type="text" class="form-control" id="productname"  name="Product_Name" placeholder="Product name" readonly >
+    <input type="text" class="form-control" id="productname"  name="Product_name" placeholder="Product name" readonly >
   </div>
   <br/>
 	
@@ -265,11 +295,21 @@
      	var idddd=document.getElementById('product_barcode');
      	var productname=document.getElementById('productname');	
      	var frame=document.getElementById('frame');
-     	var ischeckbox1=document.getElementById('inlineCheckbox1');  
-     	var esxpire_date=document.getElementById('expire_date');	
-     	   var inputdd=document.getElementById('inputdd'); 
-     	var Product_ID ,Product_name, Barcode, Product_name, Weight,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-     	idddd.focus();
+     	var ischeckbox1=document.getElementById('inlineCheckbox1'); 
+     	
+     	
+     	 var checkboxpises=document.getElementById('checkboxpises'); 
+     	  var pieces=document.getElementById('pieces'); 
+     	   var available=document.getElementById('available'); 
+     	 
+     	  
+     	  var esxpire_date=document.getElementById('expire_date');	
+     	  var inputdd=document.getElementById('inputdd'); 
+          var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
+          var total_product,prises,exprie_date;
+          
+          
+     idddd.focus();
 
 
      
@@ -292,7 +332,6 @@
 	    {
 		   	 
 		var obj = JSON.parse(data);
-
 		if(obj.message=="Exit"){
 				frame.src = "{{asset('frontend/img/demo.jpg')}}";
 				orrning("Not Found Data");
@@ -303,21 +342,51 @@
 		for(var key in obj){
 		Product_name=obj[key].Product_name;
 		productname.value=Product_name;
-		//productname.disabled=true;
-		//Product_ID=obj[key].Product_ID;
 		Barcode=obj[key].Barcode;
-		Weight=obj[key].Weight;
+		Weights=obj[key].Weight;
 		Image=obj[key].Image;
-		
-		console.log(Image);
         frame.src = "{{asset('product')}}/"+Image;
 		Catagory=obj[key].Catagory;
 		Sub_Catagory=obj[key].Sub_Catagory;
 		Sub_to_sub_catagory=obj[key].Sub_to_sub_catagory;
-	
-		console.log(obj[key].Product_name);
-		
+	    total_product=obj[key].Total_product; 
+	    prises=obj[key].pieces; 
+	    exprie_date=obj[key].Expire_date;
+        console.log(total_product);
 		}
+		
+		
+		
+		
+	    if(total_product==null){
+		//console.log(total_product);
+		available.innerHTML="";
+	    }else{
+	    	
+	    	available.innerHTML="Product is Available: "+total_product;
+	    	esxpire_date.value=exprie_date;
+	    	
+	    	
+	    	if(total_product=="0"){
+	    		esxpire_date.disabled=false;
+	    	}else{
+	    	    esxpire_date.disabled=true;
+	    	    $(".addd").hide();
+	    	}
+	    		
+	    	
+	    	if(prises=="0"){
+	    		
+	    		//esxpire_date.disabled=false;
+	    		
+	    	}else{
+	    		pieces.type="text";
+	    		pieces.value=prises;
+	    		checkboxpises.checked=true;
+	    	}
+	    }
+	
+	    
 	
 		}
 		
@@ -334,9 +403,7 @@
         
         
         
-        
-        
-        
+            
         
         
         var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
@@ -351,25 +418,49 @@
 		//----------------------------------
 
 	  const formData = new FormData(this);
-		console.log("test "+unlimitesdate);
+		//console.log("test "+unlimitesdate);
+	
+	if(!productname.value==""){
+		
+	
+	
+	
+	if(!idddd.value==" "){
+		console.log("date ");
+		
 	
 	if(PurchesPrice.value<Selesprice.value)
 	{
 		total_prire=(PurchesPrice.value*productunity.value);
-	if(unlimitesdate==null){	
+	if(unlimitesdate==""){	
 		console.log("Unlimited inviled");
 		}else{	
 		
-	   formData.append("Product_barcode_id", Barcode); 
-	   formData.append("catagory_id", Catagory);
-       formData.append("Sub_catagory_id",Sub_Catagory); 
+	   formData.append("Barcode", idddd.value); 
+	   formData.append("Catagory", Catagory);
+       formData.append("Sub_Catagory",Sub_Catagory); 
        formData.append("Sub_to_sub_catagory", Sub_to_sub_catagory);
        formData.append("Expire_date", unlimitesdate);
-       formData.append("Weight", Weight);
        formData.append("Image", Image); 
-      // formData.append("Product_Name", Product_name);
+       formData.append("Weight", Weights);
+      
+      
+      if(Weights==" "){
+       	 formData.append("Weight", "empty");
+       }else{
+          formData.append("Weight", Weights);
+          console.log(Weights);
+       }
+    
+    
+	   if(pieces.value==""){
+       	 formData.append("pieces", "empty");
+       }else{
+         formData.append("pieces", pieces.value);
+       }
 	
-				
+
+			
 		$.ajax({
         url: "{{route('stockload')}}",
 		type: "POST",
@@ -378,7 +469,10 @@
         processData:false,      
 		success: function(data)
 	    {
-		const obj = JSON.parse(data);	
+	    	console.log(data);
+		const obj = JSON.parse(data);
+			
+		
 		if(obj.message=="Exit"){
 			 orrning("Barcode allready exit");	
 			  allclear();
@@ -386,6 +480,7 @@
 		    successfull("Product Load");
 	         allclear();  
 		}
+		
 		},
 	  	error: function() 
     	{
@@ -397,6 +492,22 @@
 		 { 
 		 errrrr("Purchase price more than sales price");
 		 }
+		 
+		 
+		 //this chack empty ofr barcode
+		 }else{
+		 	
+		console.log("empty ");
+		orrningbar("Please Input Barcode with Scanner");
+	   }
+	
+	}
+	else{
+		orrningbarrr("Can't found product name ");
+	}
+		 
+		 
+		 
         }));});   
         
           
@@ -411,6 +522,7 @@
       }else if(productdiscout.value==""){
       	errrrr("Product Discout Empty");
       }else if(esxpire_date.value=="" && ischeckbox1.checked  == false){
+      	unlimitesdate="";
       	errrrr("Expire Date Empty");
       }else{ 
       
@@ -427,12 +539,12 @@
 
 			if(cont_currentdata.getTime()<inputs.getTime()){
 	          unlimitesdate=esxpire_date.value;
-			console.log("right"); // 👉️ true
+			  console.log(unlimitesdate); // 👉️ true
 			}else{
-			console.log("this not right"); // 👉️ true
+			//console.log("this not right"); // 👉️ true
 			errrrr("Expire date Inviled")
 			}
-               console.log(esxpire_date.value);
+             //  console.log(esxpire_date.value);
 						
 			}else{
 				
@@ -442,7 +554,7 @@
 			let year = date.getFullYear()+2;
 			let currentDate = `${year}-${month}-${day}`;
 			
-			//console.log(currentDate);
+			console.log(currentDate);
 			unlimitesdate=currentDate;
 			
 			
@@ -453,16 +565,30 @@
           
    
         
-     ischeckbox1.onclick = function() {
+ischeckbox1.onclick = function() {
    	
   if(ischeckbox1.checked  == true){
   	 esxpire_date.disabled=true;
   }else{
   	 esxpire_date.disabled=false;
   	// esxpire_date.innerHTML="0000-00-00";
-  }
-   		
-   }  
+  } 		
+   } 
+   
+   
+   
+   checkboxpises.onclick = function() {
+   	
+  if(checkboxpises.checked  == true){
+  	 pieces.type="text";
+  	
+  }else{
+  	 pieces.type="hidden";
+  	// esxpire_date.innerHTML="0000-00-00";
+  } 		
+   } 
+   
+    
  
  
  	function hiddden(){
@@ -487,7 +613,11 @@
      	  idddd.value="";
      	  frame.src = "{{asset('frontend/img/demo.jpg')}}";
           esxpire_date.disabled=false;     
-         ischeckbox1.checked = false;
+          ischeckbox1.checked = false;
+          available.innerHTML="";
+          pieces.type="hidden";
+          checkboxpises.checked=false;
+          esxpire_date.value="";
    }
    
  
@@ -511,6 +641,22 @@
 		    swal({
 		 	      title: ""+varr+"",
 		  	     text: "Chack this Barcode ?",
+		 	      icon: "info",
+		       });
+		 }  
+		 
+	function orrningbar(varr){
+		    swal({
+		 	      title: ""+varr+"",
+		  	     text: "Search Barcode?",
+		 	      icon: "info",
+		       });
+		 }
+		 
+ function orrningbarrr(varr){
+		    swal({
+		 	      title: ""+varr+"",
+		  	     text: "Scan Barcode with scanner !",
 		 	      icon: "info",
 		       });
 		 }     

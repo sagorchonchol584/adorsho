@@ -8,7 +8,6 @@
 		<script src="{{ asset('frontend/js/sweetalert.min.js') }}"> </script>	
 	    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 		<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
-		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	

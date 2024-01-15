@@ -135,10 +135,17 @@ public function Stock_Info_add(Request $reqs){
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;
        $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Weight']=$reqs->Weight;
        $datess['Update_Date']=date("Y-m-d");
        $datess['Descount_rate']=$reqs->Descount_rate; 
-
+       $datess['Expire_date']=$reqs->Expire_date; 
+        
+        if($reqs->Weight=="empty"){
+       	$datess['Weight']=" ";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+       
       if($reqs->pieces=="empty"){
 	   $datess['pieces']="0";
         }
@@ -146,8 +153,9 @@ public function Stock_Info_add(Request $reqs){
 	 $datess['pieces']=$reqs->pieces;
        }
        
-      DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-      echo json_encode($barcodes); 	
+       
+       DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
+      echo json_encode($datess); 	
       //echo json_encode("working this funcation");
     
        }
@@ -159,9 +167,16 @@ public function Stock_Info_add(Request $reqs){
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;
        $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Weight']=$reqs->Weight;
        $datess['Update_Date']=date("Y-m-d");
        $datess['Descount_rate']=$reqs->Descount_rate; 
+
+ 
+       if($reqs->Weight=="empty"){
+       	$datess['Weight']=" ";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
 
       if($reqs->pieces=="empty"){
 	   $datess['pieces']="0";
@@ -170,8 +185,9 @@ public function Stock_Info_add(Request $reqs){
 	 $datess['pieces']=$reqs->pieces;
        }
        
+       
       DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-      echo json_encode($barcodes);
+      echo json_encode($datess);
 	
        }else{
        	 
@@ -192,8 +208,7 @@ public function Stock_Info_add(Request $reqs){
        $datess['Outlet_Id']=Auth::user()->ShopID;
        $datess['Outlet_Name']=Auth::user()->Shopname;
        $datess['Image']=$reqs->Image;  
-       $datess['Expire_date']=$reqs->Expire_date;
-       $datess['Weight']=$reqs->Weight;
+       $datess['Expire_date']=$reqs->Expire_date;  
        $datess['Add_date']=date("Y-m-d");
        $datess['Update_Date']=date("Y-m-d");
        $datess['Descount_rate']=$reqs->Descount_rate;     
@@ -201,6 +216,16 @@ public function Stock_Info_add(Request $reqs){
        $datess['Sub_Catagory']=$reqs->Sub_Catagory;
        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
        $datess['Top_rating_range']=0; 
+       
+       
+         
+      if($reqs->Weight=="empty"){
+       	$datess['Weight']=" ";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+       
        
        if($reqs->pieces=="empty"){
        	$datess['pieces']="0";
@@ -210,6 +235,8 @@ public function Stock_Info_add(Request $reqs){
        }
       
 	   DB::table('stock_info')->insert($datess); 
+	   
+	   
 	   echo json_encode($datess);
        }
   

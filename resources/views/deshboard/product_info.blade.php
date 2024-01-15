@@ -83,13 +83,15 @@
 <div class="p-5 col-6 card ">
 
 
-<form id="uploadForm"  method="post">
+<form id="gg"  method="post">
 <?php echo csrf_field(); ?>
   <div class="form-group">
       <label for="exampleInputName">Barcode</label>
       <input type="text" class="form-control" id="Barcode" name="Barcode" aria-describedby="emailHelp" placeholder="Barcode" required>
   </div> <br/>
-
+ </form>
+<form id="uploadForm"  method="post">
+<?php echo csrf_field(); ?>
   <div class="form-group">
     <label for="exampleInputName">Product Name</label>
     <input type="text"  class="form-control" id="productname"  name="Product_name" placeholder="Product name"  required>
@@ -485,23 +487,24 @@ fetch_customer_data();
      var dd=document.getElementById('uploadForm'); 
      var seleteclear=document.getElementById('adddome'); 
      
-  
- 
+ product_barcode.focus();
    
      $(document).ready(function (e) {
 	$("#uploadForm").on('submit',(function(e) {
 		e.preventDefault();		
 		
+		
+		
+		if(!formFile.value==""){
 	  //------this image vailded chack-----
 		var reader = new FileReader();
 		var size = formFile.files[0].size;
 		var extn = formFile.files[0].type.split('/')[1];
 	    var maxSize = 100000;
 	  	var valid = ["gif", "png", "jpg", "jpeg"];
+	    if (!valid.includes(extn)){
+		 
 	
-	     if (!valid.includes(extn)){
-		 
-		 
 		 errrrr("invaild "+extn);
 	     // console.log("image formet not match");
 		  
@@ -516,13 +519,14 @@ fetch_customer_data();
 	  //------this image vailded chack-----
 		 
 	
-	
+	}
 	
 			
 		//----------------------------------
 	  const formData = new FormData(this);
 		
-	   formData.append("Catagory", sub_category_name.value);
+	   formData.append("Barcode", product_barcode.value);
+	   formData.append("Catagory", sub_category_name.value);  
        formData.append("Sub_Catagory", sub_category.value); 
        formData.append("Sub_to_sub_catagory", subtosutcatagory.value);
        
@@ -577,6 +581,23 @@ fetch_customer_data();
         
         
   
+    
+        
+    $(document).ready(function (e) {
+	$("#gg").on('submit',(function(e) {
+		e.preventDefault();		
+		
+	console.log("ok")
+	productname.focus();
+        }));});   
+        
+     
+        
+        
+        
+        
+        
+        
          
    inputdd.onclick = function() {
    	
