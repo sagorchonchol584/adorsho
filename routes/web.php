@@ -32,6 +32,8 @@ Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_
 
 Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
 
+Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
+
 
 
 
@@ -94,6 +96,7 @@ Route::get('/loginout',[Postcontroller::class,'logout'])->name('loginout');
 
 
 //page system  function
+Route::get('/sales', [Postcontroller::class,'sales'])->name('sales');
 Route::get('/home', [Postcontroller::class,'home'])->name('home');
 Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
 Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');

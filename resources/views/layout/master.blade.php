@@ -417,11 +417,26 @@
 </svg>
 
 
-
+<script>
+document.addEventListener("keydown", e => {
+    if(e.key === "A" || e.key === "a" ) {
+      console.log("jghdfjghj");
+      window.location.href = "{{ route('sales')}}";
+      e.preventDefault()
+    }
+    
+     if(e.key === "H" || e.key === "h" ) {
+      console.log("jghdfjghj");
+      window.location.href = "{{ route('home')}}";
+      e.preventDefault()
+    }
+    
+  })
+</script>
 
 <header class="header body-pd " id="header">
 
-<div class="ami" id="icons" ><h4>Adrsho shop</h4></div>
+<div class="ami" id="icons" ><h5>{{auth()->user()->Shopname}}</h5></div>
 		<div class="header_toggle">
 		
 		<div class="hh h-25">
@@ -433,7 +448,7 @@
 		
   <div class="ones">
   	
-  	<h1>fdfd</h1>
+  	<h1>{{auth()->user()->Shopname}}</h1>
   	
   	
   	
@@ -498,6 +513,8 @@
 						<li><a href="{{ route('home')}}" class="link-dark rounded menu-width"> Overview</a></li>
 						<li><a href="{{ route('product')}}" class="link-dark rounded menu-width">Updates</a></li>
 						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">Reports</a></li>
+						<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width">Sales</a></li>
+						
 					</ul>
 					</div>
 				</div>
@@ -520,8 +537,8 @@
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
 					    <li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
 						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>				
-						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width">Stock Add</a></li>
-						<li><a href="{{ route('tests')}}" class="link-dark rounded menu-width">test</a></li>
+						<li><a href="{{ route('tests')}}" class="link-dark rounded menu-width">Stock Add</a></li>
+						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width">test</a></li>
 					</ul>
 				 </div>
 				</div>

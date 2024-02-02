@@ -9,7 +9,7 @@
 [class*='col-']
 {
 	float: left;
-	border: 1px solid #FFFFFF;
+	border: 0px solid #aa0000ff;
 }
 .row:after
 {

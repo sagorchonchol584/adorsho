@@ -217,17 +217,17 @@
  </div>
     <div class="form-group col-md-6 p-1">
    <label for="exampleInputName">Purchase Units</label>
-    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product" value="4" required>
+    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product"  required>
   <br/>
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="PurchesPrice">Purchase Price</label>
-      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price" value="6" required>
+      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price"  required>
        <br/> 
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-      <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" value="8" required>
+      <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" required>
        <br/> 
     </div>
  
@@ -314,7 +314,7 @@
 
      
      $(document).ready(function (e) {
-	$("#uploadFormbar").on('submit',(function(e) {
+ 	 $("#uploadFormbar").on('submit',(function(e) {
 		e.preventDefault();		
 	
 		$.ajax({
@@ -337,6 +337,7 @@
 				orrning("Not Found Data");
 				productname.value="";
 				idddd.value="";
+				//idddd.focus();
 		}else{
 					
 		for(var key in obj){
@@ -353,6 +354,9 @@
 	    prises=obj[key].pieces; 
 	    exprie_date=obj[key].Expire_date;
         console.log(total_product);
+        
+        Selesprice.value=obj[key].Sales_Price; 
+        PurchesPrice.value=obj[key].Purches_Price;
 		}
 		
 		
@@ -404,9 +408,7 @@
         
         
             
-        
-        
-        var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
+ var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
       
     
         
@@ -499,11 +501,13 @@
 		 	
 		console.log("empty ");
 		orrningbar("Please Input Barcode with Scanner");
+		idddd.focus();
 	   }
 	
 	}
 	else{
 		orrningbarrr("Can't found product name ");
+		idddd.focus();
 	}
 		 
 		 

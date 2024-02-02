@@ -29,6 +29,38 @@ public function showMasge(){
  
  
  
+public function searchidcan($id){
+	
+	  if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    	$outlet_Id_user = Auth::user()->ShopID;
+    				
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+    		if(count($stockinfo) === 0){				
+    			 $datess['message']='Exit';
+    			 echo json_encode($datess);	   
+    		}else{
+    		$Total_product;	
+         	foreach($stockinfo as $row)
+          {
+           $Total_product=$row->Total_product;
+           }
+           
+           if($Total_product==0){
+           	     $datess['message']='Exit';
+           	     $datess['data']='NO';
+    			 echo json_encode($datess);	 
+           }
+           
+    			//echo json_encode($stockinfo);
+    		}
+    		
+    		
+    			
+       }
+  }
+  
+  
 public function barcodes($id){
 	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
@@ -80,7 +112,7 @@ public function customerdelete($id){
     
     
     
- // this just stock add and info show   
+// this just stock add and info show   
 public function stockaddfuntion(){	
  
 
@@ -285,7 +317,7 @@ public function customer_Data_add(Request $req){
 	}
  
  
- //this purpose this product add and show update etc  
+//this purpose this product add and show update etc  
 public function product_add(Request $reqs){	
 
 if(Auth::check()){
@@ -478,7 +510,7 @@ public function catagoryshow(){
     
     
     
- // customer info and loging user data info
+// customer info and loging user data info
  		
 public function createnewprofile(){
     	if(Auth::check()){				
@@ -741,12 +773,15 @@ public function systemInfo(Request $req){
 	
 	
 //this all page show with date pass	
-
 		
 public function login(){
     	if(Auth::check()){return redirect('home');}else{return view('login');}
 	}
 		
+public function sales(){    
+        if(Auth::check()){return view('deshboard.sales');}else{return view('login');}
+	}
+	
 public function home(){    
         if(Auth::check()){return view('frontend.deshboard');}else{return view('login');}
 	}
