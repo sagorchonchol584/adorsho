@@ -134,24 +134,24 @@
     </div>
     <div class="form-group col-md-6 p-1">
    <label for="exampleInputName">Purchase Units</label>
-    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product"  required>
+    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product"  onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
   <br/>
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="PurchesPrice">Purchase Price</label>
-      <input type="number" class="form-control" id="PurchesPrice" name="Purchase_rate" placeholder="Price" required>
+      <input type="number" class="form-control" id="PurchesPrice" name="Purchase_rate" placeholder="Price" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
        <br/> 
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-      <input type="number" class="form-control" id="Selesprice" name="Sales_rate" placeholder="Rate" required>
+      <input type="number" class="form-control" id="Selesprice" name="Sales_rate" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
        <br/> 
     </div>
  
 
    <div class="form-group">
    <label for="exampleInputName">Product Discout %</label>
-    <input type="number" value="0"  class="form-control" id="productdiscout"  name="Descount_rate" placeholder="Product Discout"  required>
+    <input type="number" value="0"  class="form-control" id="productdiscout"  name="Descount_rate" placeholder="Product Discout" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"  required>
  </div>
  <br>
  

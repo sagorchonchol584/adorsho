@@ -17,11 +17,24 @@ use App\Http\Controllers\Postcontroller;
  Route::get('/', function () {
      return view('welcome');
  });
+ 
+ 
+ 
+ Route::get('/report', [Postcontroller::class,'report'])->name('report');
+ 
+ 
+
 
 
 
 
 // test perpos user route
+
+
+Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
+
+
+
 
 
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');

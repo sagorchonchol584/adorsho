@@ -31,13 +31,77 @@
 
 
 <style>
+
+.box {
+  height: 300px;
+  width: 400px;
+  text-align: center;
+  border: 3px solid red;
+background: white;
+}
+
+.black_overlay {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .80;
+  filter: alpha(opacity=80);
+}
+.white_content {
+ display: none;
+ position: absolute;
+ top:25%;
+ left:35%;
+ width: auto;
+ height: auto;
+ padding: 16px;
+ opacity: .80;
+ background-color:hsla(0,0%,0%,0.0);
+ opacity: .80;
+ z-index: 1002;
+
+}
 	
+</style>
+    
+    
+    
+
+  <div id="light" class="white_content">
+  <div class="box">
+  <div>
+  
+  
+  
+  </div>
+  </div>
+  </div>
+  <div id="fade" class="black_overlay">
+  	ggggg
+  </div> 
+    
+
+
+
+
+
+
+
+
+
+<style>
 	.breade_color{
 		font-size: 25px;
 		color: #484F56;
 	}
 	
-		.breade{
+	.breade{
 		font-size: 20px;
 		color: #484F56;
 	}
@@ -45,8 +109,6 @@
 		font-size: 13px;
 		color: #484F56;
 	}
-	
-
 	
 	.top_breadc{
 		height: 80px;
@@ -67,14 +129,11 @@
 		width:500px;
 		float: left;
 		padding-left:8px;	
-	
 	}
 	
 	.shodows{
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	
 	}
-	
 	
 </style>
 
@@ -86,16 +145,12 @@
 		<div class="row">
 		<div class="col-3">
 			<div class="p-2 float-left">
-				 <form id="searchid">
-				<?php echo csrf_field(); ?>
-				<input class="form-control" name="product_barcode" id="product_barcode" type="text" class="inputFile"/>
-			 </form>	
-		</div></div>	
-		
-		
-		
-		
-		
+		<form id="searchid">
+		<?php echo csrf_field(); ?>
+		<input class="form-control" name="product_barcode" id="product_barcode" type="text" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)">
+		</form>	
+		</div>
+		</div>	
 		<div class="col-3">
 		<div class="custom float-right">
 			 <span id="count" style=" font-size: 18px; font-weight: 600;"></span>
@@ -167,7 +222,7 @@ display: block;
 
 
 
-.tableFixHead          { overflow: auto; height: 520px; }
+.tableFixHead { overflow: auto; height: 520px; }
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
 
 
@@ -209,13 +264,12 @@ display: block;
 <hr>
 
 <div class="tatols">
-	
 </div>
-<button class="btn btn-outline-primary" onclick="add_row()">Clear</button>
+<button class="btn btn-outline-primary" id="clearbtn" onclick="add_row()">Clear</button>
 	<div class="float-right" >
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
-		<button class="btn btn-primary">Continuous</button>
+		<button  id="ajax" class="btn btn-primary" onclick="check()"  >Continuous</button>
 	</div>
 	
 </div>
@@ -231,15 +285,44 @@ display: block;
 <div class="col-4 h-750 ">
 <br><br>
 <div class="card saleslist">
-	gggg
+	ggg
 </div>
 </div>
   
   
 <script>
 
+
+
+function check(id,qty)
+    {
+    $.ajax({
+    type: 'GET', //THIS NEEDS TO BE GET
+    url: '/heo/'+id+"/"+qty,
+    success: function (data) {
+        console.log(data);
+       // $("#data").append(data);
+    },
+    error: function() { 
+        // console.log(data);
+    }
+});
+    }
+
+
+
+function continus(){
+	
+  
+
+
+}
+
+
+
   var Sales_Price,Product_name,produ_id,Image,pieces,product_tittle;
 var pro_bar =document.getElementById("product_barcode");
+var clearbtn =document.getElementById("clearbtn");
 
 
 let cart = {};
@@ -253,6 +336,9 @@ let qtps= 1;
 
 if (localStorage.getItem("count")) {
     count = parseInt(localStorage.getItem("count"));
+    clearbtn.disabled=false;
+}else{
+	clearbtn.disabled=true;
 }
 
 if (localStorage.getItem("sum")) {
@@ -273,7 +359,7 @@ if (localStorage.getItem("cart")) {
  	 $("#searchid").on('submit',(function(e) {
 		e.preventDefault();		
 	
-	
+	if(!pro_bar.value==""){
 	
 		$.ajax({
         type: 'GET',
@@ -309,7 +395,7 @@ if (localStorage.getItem("cart")) {
 		Image=obj[key].Image; 
 	    Sales_Price=obj[key].Sales_Price;  
 	    pieces=obj[key].pieces; 
-        console.log(obj[key].Product_name);
+      // console.log(obj[key].Product_name);
         add(Sales_Price,Product_name,produ_id,Image,product_tittle,1);
         
 		}
@@ -322,17 +408,16 @@ if (localStorage.getItem("cart")) {
 	  	error: function() 
     	{
     		console.log("network problem");
-    		testtt();
+    		//testtt();
     	} 	        
         });							
 	
 	
+	}else{
+		orrning("Empty Sales barcode","Plase check field")
+	}
+	
         }));});  
-
-
-
-
-
 
 
 
@@ -345,6 +430,7 @@ function add_row(){
 	tbody.remove();
 	document.getElementById("sum").textContent ="0 Tk";
     document.getElementById("count").textContent = "Total Product: 0";
+    clearbtn.disabled=true;
 	
 }
 
@@ -372,7 +458,7 @@ function add(prices,names,ids,imagess,pro_tit,oo) {
     sum += price;
 
 
-console.log(ids);
+//console.log(ids);
 	 
 if (id in cart) {
 	
@@ -380,11 +466,11 @@ if (id in cart) {
     qtps=cart[id].qty;
     var aa=document.getElementById("h"+ids);
     aa.innerHTML=qtps;
-    console.log("if the"+qtps);
+   // console.log("if the"+qtps);
  
 } else {
 	
-	console.log("else"+qtps);
+	//console.log("else"+qtps);
 	
     let cartItem = {
         Product: Product,
@@ -394,7 +480,7 @@ if (id in cart) {
     };
 	
     cart[id] = cartItem
-    
+    clearbtn.disabled=false;
     
     //---------hhhh----------------	
 	
@@ -464,15 +550,13 @@ if (id in cart) {
      
 	 
      newButton.addEventListener("click", function(){
-      some_function(id,item.price,item.qty);
+     // some_function(id,item.price,item.qty);
+      
      }, false);
 	 
 	 
 	 
-	 
-     newButton.addEventListener("click", function(){
-    //  some_function(id,item.price,item.qty);
-     }, false);
+	
 	
     tbody.appendChild(tr);
 	
@@ -487,7 +571,7 @@ if (id in cart) {
    
    
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(cart);
+   // console.log(cart);
     
     updateCart();
 }
@@ -606,6 +690,7 @@ if (localStorage.getItem("sum")) {
 	 
      newButton.addEventListener("click", function(){
       some_function(id,item.price,item.qty);
+      check(id,item.qty);
      }, false);
 	
     tbody.appendChild(tr);
@@ -626,8 +711,10 @@ function some_function(id,price,qty){
     count--;
     sum-=price*qty;
 	
-	console.log(sum);
-    updateCart()
+	//console.log(sum);
+    updateCart();
+    
+    
 }
 
 
@@ -646,6 +733,26 @@ function orrning(varr,varss){
 		 	      icon: "info",
 		       });
 		 } 
+
+
+
+
+ 
+function hiddden(){
+		document.getElementById('light').style.display='none';
+		document.getElementById('fade').style.display='none';
+	}	
+	
+function hidddenshow(){
+		document.getElementById('light').style.display='block';
+		 document.getElementById('fade').style.display='block';
+	}
+
+
+
+//hidddenshow();
+
+
 
 </script>
   

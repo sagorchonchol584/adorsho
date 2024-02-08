@@ -1,5 +1,4 @@
-*
-{
+*{
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
@@ -9,7 +8,7 @@
 [class*='col-']
 {
 	float: left;
-	border: 0px solid #aa0000ff;
+	border: 1px solid #0000ffff;
 }
 .row:after
 {
@@ -50,9 +49,6 @@
 }
 .col-11{
 	width: 85%;
-}
-.col-12{
-	width: 100%;
 }
 
 

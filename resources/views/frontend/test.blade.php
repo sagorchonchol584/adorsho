@@ -21,7 +21,7 @@
 	
 	
 	
-	<style>
+<style>
 
 .box {
   height: 100px;
@@ -157,7 +157,7 @@
  <?php echo csrf_field(); ?>
   <div class="form-group">
   <label for="exampleInputName">Barcode</label>
-<input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" required>
+<input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
   </div> 
  </form>
   
@@ -212,22 +212,22 @@
 <div class="form-group col-md-6 p-1"> 
   <div class="form-group">
    <label for="exampleInputName">Product Discout %</label>
-    <input type="number" value="0"  class="form-control" id="productdiscout"  name="Descount_rate" placeholder="Product Discout"  required>
+    <input type="number" value="0"  class="form-control" id="productdiscout"  name="Descount_rate" placeholder="Product Discout" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
  </div> 
  </div>
     <div class="form-group col-md-6 p-1">
    <label for="exampleInputName">Purchase Units</label>
-    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product"  required>
+    <input type="number"  class="form-control" id="productunity"  name="Product_units" placeholder="Total product" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
   <br/>
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="PurchesPrice">Purchase Price</label>
-      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price"  required>
+      <input type="number" class="form-control" id="PurchesPrice" name="Purches_Price" placeholder="Price" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"  required>
        <br/> 
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-      <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" required>
+<input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
        <br/> 
     </div>
  
@@ -250,6 +250,8 @@
     </div>
  </div>
 </div>
+
+
 
 <div class="col-6 h-600 card">
 <div id="testt">
@@ -317,6 +319,9 @@
  	 $("#uploadFormbar").on('submit',(function(e) {
 		e.preventDefault();		
 	
+
+	
+	
 		$.ajax({
         type: 'GET',
         url: 'barcode/' + idddd.value,
@@ -371,7 +376,7 @@
 	    	esxpire_date.value=exprie_date;
 	    	
 	    	
-	    	if(total_product=="0"){
+	    	if(total_product==0){
 	    		esxpire_date.disabled=false;
 	    	}else{
 	    	    esxpire_date.disabled=true;

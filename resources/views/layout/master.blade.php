@@ -82,13 +82,14 @@
 	}*, ::before, ::after{
 		box-sizing: border-box;
 	}
+	
 
 	body{
 		position: relative;
-		margin: var(--header-height) 0 0 0;
 		transition: .5s;
-		background: #F1F4F6;
+		background: red;
 		padding-left: 100px;
+	    margin: var(--header-height) 0 0 0;
 	}
 
 	a{
@@ -215,7 +216,7 @@
 	}
 
 	.height-100{
-		height: 100vh;
+		height: 100%;
 	}
 	
 	.nav-bar-mother{
@@ -258,7 +259,7 @@
 		width: 150px;
 	}
 		
-		.kek{
+ .kek{
 		
 		list-style-type: none;
 		width: 150px;
@@ -484,9 +485,6 @@ document.addEventListener("keydown", e => {
 
 
 <body id="body-pd" class="body-pd">
-	
-	
-	
 	<div class="l-navbar shows" id="nav-bar">
 		<nav class="nav">
 			<div>
@@ -512,7 +510,8 @@ document.addEventListener("keydown", e => {
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line Deshboard">
 						<li><a href="{{ route('home')}}" class="link-dark rounded menu-width"> Overview</a></li>
 						<li><a href="{{ route('product')}}" class="link-dark rounded menu-width">Updates</a></li>
-						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">Reports</a></li>
+						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>
+						<li><a href="{{ route('report')}}" class="link-dark rounded menu-width">Reports</a></li>
 						<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width">Sales</a></li>
 						
 					</ul>
@@ -598,7 +597,7 @@ document.addEventListener("keydown", e => {
 	
 	<!--Container Main end-->
 </body>
-
+</div>
 
 <script>
 

@@ -25,6 +25,57 @@ public function showMasge(){
     return view('test');
  
   }
+  
+public function report(){
+    return view('deshboard.report');
+ 
+  }
+   
+   
+   
+public function removedate($id,$qty){
+
+   // $datess['message']=$id;
+   // $datess['messagefff']=$qty;
+      
+  if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    	$outlet_Id_user = Auth::user()->ShopID;
+    				
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+    		if(count($stockinfo) === 0){				
+    			 $datess['message']='Exit';
+    			 echo json_encode($datess);	   
+    		}else{
+    		$Total_product;	
+    		$productt;
+    		
+           foreach($stockinfo as $row)
+           {
+           $Total_product=$row->Total_product;
+           }
+           
+           	$productt=$Total_product+$qty;
+           	$datesss['Total_product']=$productt; 
+           	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
+           	echo json_encode($stockinfo);
+           
+    		}
+    		
+    		
+    			
+       }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  }
     
  
  
@@ -41,18 +92,24 @@ public function searchidcan($id){
     			 echo json_encode($datess);	   
     		}else{
     		$Total_product;	
+    		$productt;
          	foreach($stockinfo as $row)
           {
            $Total_product=$row->Total_product;
            }
            
-           if($Total_product==0){
+           if($Total_product<=0){
            	     $datess['message']='Exit';
            	     $datess['data']='NO';
     			 echo json_encode($datess);	 
+           }else{
+           	
+           	$productt=$Total_product-1;
+           	$datesss['Total_product']=$productt; 
+           	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
+           	echo json_encode($stockinfo);
+           	
            }
-           
-    			//echo json_encode($stockinfo);
     		}
     		
     		
@@ -161,7 +218,7 @@ public function Stock_Info_add(Request $reqs){
         $barcodes=$row->Barcode;
        }
        
-       if($Total_product==0){
+       if($Total_product<=0){
        	 	
        $datess['Total_product']=$reqs->Product_units;  
        $datess['Purches_Price']=$reqs->Purches_Price;  
