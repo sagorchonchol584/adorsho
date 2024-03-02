@@ -265,11 +265,11 @@ display: block;
 
 <div class="tatols">
 </div>
-<button class="btn btn-outline-primary" id="clearbtn" onclick="add_row()">Clear</button>
+<button class="btn btn-outline-primary" id="clearbtn" onclick="confram()">Clear</button>
 	<div class="float-right" >
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
-		<button  id="ajax" class="btn btn-primary" onclick="check()"  >Continuous</button>
+		<button  id="ajax" class="btn btn-primary" onclick="tessst()"  >Continuous</button>
 	</div>
 	
 </div>
@@ -291,6 +291,17 @@ display: block;
   
   
 <script>
+
+function tessst(){
+		//var obj = JSON.parse(cart);	
+		for(var key in cart){
+			console.log(cart[key].qty);
+			console.log("hello"+key);
+		}
+		
+console.log(cart);
+}
+
 
 
 
@@ -347,14 +358,12 @@ if (localStorage.getItem("sum")) {
 
 if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
+    
 }
-
-
 
      pro_bar.focus();
 
 
-     
      $(document).ready(function (e) {
  	 $("#searchid").on('submit',(function(e) {
 		e.preventDefault();		
@@ -383,8 +392,8 @@ if (localStorage.getItem("cart")) {
 			}else{
 				orrning("Not Found Data","Plase search Again");
 			}
-				
-				 console.log("not found");
+			console.log("not found");
+			
 		}else{
 					
 		for(var key in obj){
@@ -423,15 +432,22 @@ if (localStorage.getItem("cart")) {
 
 
 
-function add_row(){
+function add_data(){
+	
+	for(var key in cart){
+			console.log(cart[key].qty);
+			console.log("hello"+key);
+			check(key,cart[key].qty);
+		}
+		
+console.log(cart);
+	
 	let tbody = document.getElementById("tbody");
 	localStorage.clear();
-	clearss();
 	tbody.remove();
 	document.getElementById("sum").textContent ="0 Tk";
     document.getElementById("count").textContent = "Total Product: 0";
     clearbtn.disabled=true;
-	
 }
 
 
@@ -550,13 +566,11 @@ if (id in cart) {
      
 	 
      newButton.addEventListener("click", function(){
-     // some_function(id,item.price,item.qty);
-      
+      some_function(id,item.price,item.qty);
+      console.log("clear alll");
      }, false);
 	 
 	 
-	 
-	
 	
     tbody.appendChild(tr);
 	
@@ -619,10 +633,9 @@ if (localStorage.getItem("sum")) {
 
     let tbody = document.getElementById("tbody");
 
-    for (let id in cart) {
-	
-    let item = cart[id];
 
+    for (let id in cart) {
+    let item = cart[id];
     let tr = document.createElement('tr')
 	tr.id = "n"+id;
 	
@@ -704,10 +717,10 @@ document.getElementById("count").textContent = "Total Product: "+count;;
 
 function some_function(id,price,qty){
 	
-   delete cart[id];
+     delete cart[id];
 	localStorage.setItem("cart", JSON.stringify(cart));
     var ffff=document.getElementById("n"+id);
-	ffff.remove();
+ 	ffff.remove();
     count--;
     sum-=price*qty;
 	
@@ -726,12 +739,43 @@ function clearss(){
 		        });
 		}
 
+
+function confram(){
+	
+swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary data!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Your data Deleted ", {
+      icon: "success",
+    });
+    console.log("deleta data");
+    add_data();
+  } else {
+    swal("Do you want Exit ?");
+    
+  }
+});
+
+		}
+		
+		
+		
+
 function orrning(varr,varss){
 		    swal({
 		 	      title: ""+varr+"",
 		  	     text: ""+varss+"!",
 		 	      icon: "info",
 		       });
+		       
+		       
+	       
 		 } 
 
 
