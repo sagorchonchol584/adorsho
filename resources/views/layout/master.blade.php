@@ -87,7 +87,7 @@
 	body{
 		position: relative;
 		transition: .5s;
-		background: red;
+		background: white;
 		padding-left: 100px;
 	    margin: var(--header-height) 0 0 0;
 	}

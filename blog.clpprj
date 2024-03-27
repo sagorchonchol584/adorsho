@@ -1,29 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project name="C:\xampp\htdocs\adorsho\blog.clpprj">
  <settings>
-  <PM_URL><![CDATA[http://localhost/C:/xampp/htdocs/blog]]></PM_URL>
-  <PM_HOME_URL><![CDATA[http://localhost/C:/xampp/htdocs/blog]]></PM_HOME_URL>
+  <PM_URL><![CDATA[]]></PM_URL>
+  <PM_HOME_URL><![CDATA[]]></PM_HOME_URL>
   <PM_LIBS><![CDATA[]]></PM_LIBS>
   <PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION>
   <PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR>
   <PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE>
   <PM_LANGUAGE><![CDATA[]]></PM_LANGUAGE>
  </settings>
- <removed value=";C:\xampp\htdocs\blog\public\frontend\css\style.css;C:\xampp\htdocs\blog\public\frontend\js\sidebar.js;"/>
+ <removed value=";"/>
  <added value=""/>
  <lastopfiles>
-  <file name="C:\xampp\htdocs\adorsho\routes\web.php"/>
-  <file name="C:\xampp\htdocs\adorsho\app\Http\Controllers\Postcontroller.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\product_info.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\stock_add.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\newprofile.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\oder.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\public\frontend\css\style.css"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\sales.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\layout\master.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\test.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\stock_add.blade.php"/>
   <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\product.blade.php"/>
-  <file name="C:\xampp\htdocs\adorsho\resources\views\deshboard\report.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\frontend\test.blade.php"/>
+  <file name="C:\xampp\htdocs\adorsho\public\frontend\css\style.css"/>
+  <file name="C:\xampp\htdocs\adorsho\resources\views\layout\master.blade.php"/>
   <lastactivefile name=""/>
  </lastopfiles>
  <todoblock>
@@ -301,5 +296,5 @@
   </todofile>
  </todoblock>
  <dbgurls/>
- <lasttime value="1709375245"/>
+ <lasttime value="1711534813"/>
 </project>
