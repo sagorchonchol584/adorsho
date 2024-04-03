@@ -36,9 +36,9 @@
   height: 450px;
   width: 600px;
   margin: auto;
-  border: 1px solid red;
+  border: 1px solid #555500ff;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 9px;
   background: white;
   position: relative;
   top:20%;
@@ -57,7 +57,7 @@
   background-color: black;
   z-index: 1001;
   -moz-opacity: 0.8;
-  opacity: .80;
+  opacity: .50;
   filter: alpha(opacity=80);
  
 }
@@ -81,12 +81,13 @@
 }
 
 .ddd{
-	height: 30px;
 	width: 30px;
+	height: 30px;
 	background-color: red;
-	text-align: center;
-	border-radius: 5px;
+	border: none;
 }
+
+
 @keyframes fadeIn {
 	
 	0% {
@@ -116,7 +117,7 @@
 	   
 	}
 .mainedd{
-		height: 350px;
+		height: 295px;
 		width: 100%;
 		border-top: 1px solid #a6a6a6ff;
 		background-color: #FFFFFF;
@@ -125,6 +126,14 @@
 		height: 50px;
 		width: 100%;
 		text-align: right;
+		padding-top: 5px;
+	}
+
+
+.info{
+		height: 50px;
+		width: 100%;
+		text-align: center;
 		padding-top: 5px;
 	}
 	
@@ -140,6 +149,10 @@ position: relative;
 top:20%;
 
 }
+
+.maindailoboax{
+	padding: 5px;
+}
 </style>
     
     
@@ -149,10 +162,11 @@ top:20%;
   <div class="box">
   
   
- <div>
+ <div class="maindailoboax">
   <div class="exitdd">
-  	<div class="ddd gggg" onclick="exit()">
-     <span style=" color: white; font-weight: bold; font-size:15px; ">x</span>
+  	<div class="gggg" onclick="exit()">
+  	<button class="ddd "><span style="color: white">X</span></button>
+    
    </div>
   </div>
    
@@ -170,25 +184,46 @@ top:20%;
     <tr>
     
       <td>Total price :</td> 
-      <td>500 tk</td>
+      <td><span id="totals""></span></td>
     </tr>
+    <tr id="trs">
+    
+      <td >Discount :
+      
+		<select id="discoutss" onchange="seletfun()">
+		  <option  value="percent">Percent(%)</option>
+		  <option value="Amount">Amount(tk)</option>
+		</select>
+      
+      
+      </td> 
+      <td>
+ 
+      <input type="number" value="0" id="disinput" style="width: 80px" min="0" max="99"/>
+      
+      </td>
+    </tr>
+   
     <tr>
     
-      <td>Discount :</td> 
-      <td>0 tk</td>
+      <td>Net price :</td> 
+      <td><span id="nets"></span></td>
     </tr>
    
   </tbody>
 </table>
 </div>
+
+
+<div class="info">
+	<h2 id="infomag">bangladeshahss</h2>
+</div>
+
 <div class="butttons">
-	<button type="button" class="btn btn-primary">Continus</button>
+	<button id="paymentbtm" type="button" class="btn btn-primary">Continus</button>&nbsp;
 </div>
 
   </div>
-  
-  
-  
   </div>
   </div>
   
@@ -388,7 +423,8 @@ display: block;
 
 
 
-<div class="col-4 h-750 ">
+<div class="col-4 h-750">
+
 <br><br>
 <div class="card saleslist">
 		
@@ -466,6 +502,17 @@ display: block;
 var Sales_Price,Product_name,produ_id,Image,pieces,product_tittle;
 var pro_bar =document.getElementById("product_barcode");
 var clearbtn =document.getElementById("clearbtn");
+var continubtn =document.getElementById("paymentbtm");
+var totalss=document.getElementById("totals");
+var selectElement = document.getElementById('discoutss');
+var disinput = document.getElementById('disinput');
+var netss = document.getElementById('nets');
+var trs = document.getElementById('trs');
+var infomag = document.getElementById('infomag');
+
+
+
+
 let cart = {};
 var addd;
 let count = 0;
@@ -473,6 +520,8 @@ let sum = 0;
 let qtps= 1;
 pro_bar.focus();
 
+var dis=false;
+let disconttk=0;
 
 if (localStorage.getItem("count")) {
 	
@@ -498,6 +547,95 @@ if (localStorage.getItem("sum")) {
 if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
    // console.log(JSON.stringify(cart));
+}
+
+
+
+
+
+
+function seletfun(){
+	
+	if(selectElement.value=="Amount"){
+		
+	dis=true;
+	disinput.value="0";
+	disinput.max="100000";
+	disconttk=0;
+	totalAc();
+	}else{
+		
+	dis=false;
+    disinput.value="0";
+    disinput.max="99";
+    disconttk=0;
+    totalAc();
+    correctgg();
+	}
+
+	
+}
+
+disinput.addEventListener("input", updateValue);
+
+function updateValue(e) {
+  disconttk = e.target.value; 
+  totalAc();
+}
+
+
+
+
+function popups(){
+totalss.textContent=sum+" Tk";
+		}
+
+function totalAc(){
+	let s=disconttk;
+ if(dis==false){
+  	let ass=s/100;
+  	let dc=sum*ass;
+  	let tatt=sum-dc;
+  	if(tatt<=0)
+  	{
+  		wronggg();
+  	}else{
+  	
+  		let g=Math.round(tatt);
+  		netss.textContent=g+"Tk";
+  		correctgg();
+  	}
+
+  }else{
+  	let d=s;
+  	let tatss=sum-d;
+  	if(tatss<=0)
+  	{
+  		wronggg();
+  	}else{
+  		netss.textContent=tatss+"Tk";
+  		correctgg();
+  	}
+  }
+}
+
+
+
+function wronggg(){
+	    netss.textContent="0 Tk";
+	    infomag.innerHTML="Wrong Discout amount";
+  		infomag.style.color="red";
+  		trs.style.borderBottom="1px solid red";
+  		disinput.style.border="1px solid red";
+  		continubtn.disabled=true;
+}
+
+function correctgg(){
+	    infomag.innerHTML="";
+  		infomag.style.color="black";
+  		trs.style.borderBottom="1px solid #c8c7c8ff";
+  		disinput.style.border="1px solid black";
+  		continubtn.disabled=false;
 }
 
 
@@ -596,14 +734,17 @@ function check(id,qty)
 function continus(){
 document.getElementById('light').style.display='block';
 document.getElementById('fade').style.display='block';
-
+popups();
+disinput.value="0";
+totalAc();
 }
 
 
 function exit(){
+	
 	document.getElementById('light').style.display='none';
 	document.getElementById('fade').style.display='none';
-
+    disinput.value="0";
 }
 
 
@@ -843,9 +984,9 @@ function allfuncaliondata(){
     tbody.appendChild(tr);
 }
 	
-	
+
 document.getElementById("sum").textContent = sum+" Tk";
-document.getElementById("count").textContent = "Total Product: "+count;;
+document.getElementById("count").textContent = "Total Product: "+count;
 
 }
 
@@ -871,6 +1012,7 @@ function some_function(id,price){
 	console.log("hello mewe");
     updateCart();
     check(id,a);
+    popups();
     
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2023 at 04:59 AM
+-- Generation Time: Apr 03, 2024 at 07:25 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,26 +24,44 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `catagory_adi`
+-- Table structure for table `catgory_info`
 --
 
-CREATE TABLE `catagory_adi` (
-  `cat_Id` varchar(50) NOT NULL,
-  `cat_Name` varchar(50) NOT NULL,
+CREATE TABLE `catgory_info` (
+  `id` int(11) NOT NULL,
+  `catagory_name` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `Shop_cat_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `catgory_info`
+--
+
+INSERT INTO `catgory_info` (`id`, `catagory_name`, `date`, `Shop_cat_id`) VALUES
+(1, 'Personal Care', '2023-12-11', '121'),
+(2, 'Cleaning Supplies', '2023-12-11', '121'),
+(11, 'bbb', '2023-12-12', '121'),
+(12, 'addd', '2023-12-12', '121'),
+(13, 'ttttt', '2023-12-12', '121'),
+(14, 'rrr', '2023-12-12', '121'),
+(15, 'gjghj', '2023-12-12', '121'),
+(18, 'bnmbm', '2023-12-12', '121'),
+(23, 'roshany', '2023-12-12', '121'),
+(27, 'hello', '2023-12-21', '121'),
+(30, 'me', '2024-01-04', '120');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_info`
+--
+
+CREATE TABLE `company_info` (
+  `company_id` int(11) NOT NULL,
+  `company_name` varchar(100) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `catagory_adi`
---
-
-INSERT INTO `catagory_adi` (`cat_Id`, `cat_Name`, `date`) VALUES
-('2', 'Mobile', '2023-11-29'),
-('3', 'Cake', '2023-11-16'),
-('2', 'Mobile', '2023-11-29'),
-('3', 'Cake', '2023-11-16'),
-('2', 'brower', '2023-11-29'),
-('13', '7up', '2023-11-16');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -112,7 +130,6 @@ INSERT INTO `customer_info` (`customer_name`, `mobile`, `address`, `joind_date`,
 ('Hanif amed', '01774255009', 'hatra', '0000-00-00', 10, '2023-11-01', 150, 'sagor', '4525', 12, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 1),
 ('rokey', '01774255010', 'hatra', '0000-00-00', 10, '2023-11-14', 150, 'sagor', '4525', 35, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 2),
 ('rofiqul islam', '01774255010', 'hatra', '0000-00-00', 10, '2023-11-01', 150, 'sagor', '4525', 1, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 3),
-('nirob', '01789457874', 'hatra', '0000-00-00', 10, '2023-10-01', 150, 'sagor', '4525', 30, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 4),
 ('ruble', '01774255009', 'hatra', '0000-00-00', 10, '2023-11-11', 150, 'sagor', '4525', 33, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 5),
 ('allamin', '01774255009', 'hatra', '0000-00-00', 10, '2023-11-01', 150, 'sagor', '4525', 20, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 6),
 ('faruk', '01774255009', 'hatra', '0000-00-00', 10, '2023-11-01', 150, 'sagor', '4525', 16, 'good', '458', '10', '4545', '4545', 'hamja', '30', 'adrosh', '5547dsda4f', 7),
@@ -131,13 +148,11 @@ INSERT INTO `customer_info` (`customer_name`, `mobile`, `address`, `joind_date`,
 ('alladuudin', '01701077584', 'hatra', '0000-00-00', 0, '2023-11-20', 0, '54578', '362', 9, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 23),
 ('SHAH', '01725181915', 'hatra', '0000-00-00', 5, '2023-11-05', 0, '54578', '362', 32, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 24),
 ('Roshany', '01725181915', 'gg', '2023-11-21', 5, '2023-11-11', 0, '54578', '362', 34, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 28),
-('Nadim', '0132356464', 'hatra', '2023-11-21', 5, '2023-11-21', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 29),
-('jibon', '1774255009', 'hatra', '2023-11-21', 5, '2023-11-21', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 30),
 ('rohan', '01789562325', 'Mokinpur', '2023-11-21', 0, '2023-11-21', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 31),
 ('Najmul', '01725181915', 'gg', '2023-11-22', 0, '2023-11-22', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 83),
 ('SHAHANARA', '01725181915', 'gg', '2023-11-22', 0, '2023-11-22', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 85),
 ('Roshany', '01725181915', 'gg', '2023-11-22', 0, '2023-11-22', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 97),
-('jibon', '01701077584', 'Mokinpur', '2023-11-22', 0, '2023-11-22', 0, '54578', '362', 0, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 115);
+('rifad', '01796587578', 'hatra', '2023-12-20', 0, '2023-12-20', 0, '54578', '362', 95, 'Good', '33455', '1212', '5632', '6985', '9685', '9658', '56', '965', 117);
 
 -- --------------------------------------------------------
 
@@ -253,24 +268,88 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_info`
+-- Table structure for table `product_info120`
 --
 
-CREATE TABLE `product_info` (
+CREATE TABLE `product_info120` (
+  `Product_ID` int(11) NOT NULL,
+  `Barcode` varchar(100) NOT NULL,
   `Product_name` varchar(100) NOT NULL,
-  `Product_cat` varchar(50) NOT NULL,
-  `Add_date` date NOT NULL,
-  `Update_Date` date NOT NULL,
-  `product_barcode` varchar(50) NOT NULL,
-  `product_compony` varchar(50) NOT NULL,
-  `product_compony_id` varchar(50) NOT NULL,
-  `Admin_Id` varchar(50) NOT NULL,
-  `Starf_Id` varchar(50) NOT NULL,
-  `Starf_Name` varchar(50) NOT NULL,
-  `Outlet_Id` varchar(50) NOT NULL,
-  `Outlet_Name` varchar(50) NOT NULL,
-  `Device_Info` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `Weight` varchar(50) NOT NULL,
+  `Image` varchar(100) NOT NULL,
+  `Catagory` varchar(50) NOT NULL,
+  `Sub_Catagory` varchar(50) NOT NULL,
+  `Sub_to_sub_catagory` varchar(50) NOT NULL,
+  `Create_date` date NOT NULL,
+  `Update_date` date NOT NULL,
+  `Product_add_user_id` varchar(50) NOT NULL,
+  `Outlet_Id` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `product_info120`
+--
+
+INSERT INTO `product_info120` (`Product_ID`, `Barcode`, `Product_name`, `Weight`, `Image`, `Catagory`, `Sub_Catagory`, `Sub_to_sub_catagory`, `Create_date`, `Update_date`, `Product_add_user_id`, `Outlet_Id`) VALUES
+(5, '4587976279998', 'Malta', '±50', '1703089000/1703089000.jpg', '1', '8', '1', '2023-12-20', '2023-12-20', '9', '4523'),
+(6, '4587979272998', 'Green Apple', '±40', '1703089075/1703089075.jpg', '1', '8', '4', '2023-12-20', '2023-12-20', '9', '4523'),
+(7, '4587979079998', 'Wood Apple', '± 20 gm', '1703089135/1703089135.jpg', '1', '8', '1', '2023-12-20', '2023-12-20', '9', '4523'),
+(8, '4587979770998', 'Dragon Fruit Local', '± 40 gm', '1703089271/1703089271.png', '1', '8', '4', '2023-12-20', '2023-12-20', '9', '4523'),
+(9, '4187979779998', 'Deshi Shosha', '± 500 gm', '1703090740/1703090740.webp', '1', '8', '2', '2023-12-20', '2023-12-20', '9', '4523'),
+(10, '4582979779998', 'Orange Indian', '± 60 gm', '1703090777/1703090777.webp', '1', '8', '2', '2023-12-20', '2023-12-20', '9', '4523');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_info121`
+--
+
+CREATE TABLE `product_info121` (
+  `Product_ID` int(11) NOT NULL,
+  `Barcode` varchar(100) NOT NULL,
+  `Product_name` varchar(100) NOT NULL,
+  `Weight` varchar(50) NOT NULL,
+  `Image` varchar(100) NOT NULL,
+  `Catagory` varchar(50) NOT NULL,
+  `Sub_Catagory` varchar(50) NOT NULL,
+  `Sub_to_sub_catagory` varchar(50) NOT NULL,
+  `Create_date` date NOT NULL,
+  `Update_date` date NOT NULL,
+  `Product_add_user_id` varchar(50) NOT NULL,
+  `Outlet_Id` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `product_info121`
+--
+
+INSERT INTO `product_info121` (`Product_ID`, `Barcode`, `Product_name`, `Weight`, `Image`, `Catagory`, `Sub_Catagory`, `Sub_to_sub_catagory`, `Create_date`, `Update_date`, `Product_add_user_id`, `Outlet_Id`) VALUES
+(6, '4587979272998', 'Green Apple', '±40', '1703089075/1703089075.jpg', '1', '8', '4', '2023-12-20', '2023-12-20', '9', '4523'),
+(7, '4587979079998', 'Wood Apple', '± 20 gm', '1703089135/1703089135.jpg', '1', '8', '1', '2023-12-20', '2023-12-20', '9', '4523'),
+(8, '4587979770998', 'Dragon Fruit Local', '± 40 gm', '1703089271/1703089271.png', '1', '8', '4', '2023-12-20', '2023-12-20', '9', '4523'),
+(10, '4582979779998', 'Orange Indian', '± 60 gm', '1703090777/1703090777.webp', '1', '8', '2', '2023-12-20', '2023-12-20', '9', '4520'),
+(11, '4587979379998', 'Quail Meat', '± 10 gm', '1703091036/1703091036.jpg', '1', '8', '1', '2023-12-20', '2023-12-20', '9', '4520'),
+(12, '4587979799998', 'Banana Chompa (Ready To Eat)', '± 44 gm', '1703091288/1703091288.webp', '1', '8', '2', '2023-12-20', '2023-12-20', '9', '4520'),
+(13, '4587996279998', 'China Fuji Apple', '± 30 gm', '1703091406/1703091406.jpg', '1', '7', '0', '2023-12-20', '2023-12-20', '9', '4520'),
+(14, '4587979779998', 'Narikel (Coconut)', '', '1703091440/1703091440.webp', '1', '8', '0', '2023-12-20', '2023-12-20', '9', '4520'),
+(15, '8941161011042', 'Kazi Farms Kitchen', '', '1703091688/1703091688.webp', '1', '9', '0', '2023-12-20', '2023-12-20', '9', '4520'),
+(16, '4587971779998', 'Deshi Shosha', '', '1703091772/1703091772.webp', '1', '8', '0', '2023-12-20', '2023-12-20', '9', '4523'),
+(17, '45879797710998', 'Pran Flattened Rice', ' ', '1703092021/1703092021.webp', '1', '7', '0', '2023-12-20', '2023-12-20', '9', '4523'),
+(18, '45879762730998', 'Pran Badam Bhaja', '± 10 gm', '1703092065/1703092065.webp', '1', '8', '0', '2023-12-20', '2023-12-20', '9', '4523'),
+(19, '45830979779998', 'Aarong Dairy Pure Ghee', ' ', '1703141040/1703141040.webp', '1', '8', '2', '2023-12-21', '2023-12-21', '9', '4523'),
+(20, '4587979779911', 'Sagor ol 2lt', ' ', '1704348517/1704348516.png', '1', '6', '9', '2024-01-04', '2024-01-04', '9', '4523'),
+(21, '458797927222', 'potato', '± 20 gm', '1704348738/1704348738.webp', '1', '6', '8', '2024-01-04', '2024-01-04', '9', '4523'),
+(22, '4587979771098', 'Mobile', '± 10 gm', '1705052895/1705052895.webp', '1', '6', '9', '2024-01-12', '2024-01-12', '9', '4523'),
+(25, '458797912998', 'Mobile', '± 10 gm', '1705053399/1705053399.webp', '1', '6', '10', '2024-01-12', '2024-01-12', '9', '4523'),
+(26, '12121212', 'uuuu', '± 120 gm', '1705053473/1705053473.webp', '1', '6', '9', '2024-01-12', '2024-01-12', '9', '4523'),
+(27, '22222', 'Deshi Shosha 11111', '± 1111 gm', '1705053555/1705053555.webp', '1', '6', '9', '2024-01-12', '2024-01-12', '9', '4523'),
+(29, '458797977991000', 'ds', '± 10 gm', '1705119406/1705119406.webp', '1', '6', '9', '2024-01-13', '2024-01-13', '9', '4523'),
+(30, '45879797412', 'banana', '± 10 gm', '1705121906/1705121906.jpg', '1', '6', '9', '2024-01-13', '2024-01-13', '9', '4523'),
+(31, '1111', 'murgi 1.5kg', ' ', '1705220845/1705220845.jpg', '1', '6', '9', '2024-01-14', '2024-01-14', '9', '4523'),
+(32, '1212121245', 'Mobile', '± 45 gm', '1705238289/1705238289.jpg', '1', '6', '9', '2024-01-14', '2024-01-14', '9', '4523'),
+(33, '11114', 'dseeeeeee', ' ', '1705238991/1705238991.jpg', '1', '6', '9', '2024-01-14', '2024-01-14', '9', '4523'),
+(34, '8941100500002', 'revive 100gm', ' ', '1705336342/1705336342.jpg', '1', '6', '9', '2024-01-15', '2024-01-15', '9', '4523'),
+(35, '6921734947994', 'EXAM ERASER DELI H099 20', ' ', '1705467711/1705467711.jpg', '1', '6', '10', '2024-01-17', '2024-01-17', '9', '4523');
 
 -- --------------------------------------------------------
 
@@ -306,21 +385,123 @@ CREATE TABLE `purches_list` (
 --
 
 CREATE TABLE `stock_info` (
-  `Product_barcode_id` varchar(50) NOT NULL,
-  `Product_Name` varchar(100) NOT NULL,
-  `Avilable_Product` varchar(50) NOT NULL,
-  `Facility_Product` varchar(50) NOT NULL,
+  `Barcode` varchar(50) NOT NULL,
+  `Product_name` varchar(100) NOT NULL,
+  `Facility_Product_for_internet` tinyint(1) NOT NULL,
   `Total_product` varchar(50) NOT NULL,
-  `Purches_Price` varchar(50) NOT NULL,
-  `Sales_Price` int(11) NOT NULL,
-  `Product_Expire_date` date NOT NULL,
-  `Admin_Id` varchar(50) NOT NULL,
-  `Starf_Id` varchar(50) NOT NULL,
-  `Starf_Name` varchar(50) NOT NULL,
+  `Purches_Price` int(50) NOT NULL,
+  `Sales_Price` int(50) NOT NULL,
+  `Product_add_user_id` varchar(50) NOT NULL,
   `Outlet_Id` varchar(50) NOT NULL,
   `Outlet_Name` varchar(50) NOT NULL,
-  `Device_Info` varchar(50) NOT NULL
+  `Image` varchar(100) NOT NULL,
+  `Catagory` varchar(50) NOT NULL,
+  `Sub_Catagory` varchar(50) NOT NULL,
+  `Sub_to_sub_catagory` varchar(50) NOT NULL,
+  `Expire_date` date NOT NULL,
+  `Weight` varchar(100) NOT NULL,
+  `Add_date` date NOT NULL,
+  `Update_Date` date NOT NULL,
+  `Descount_rate` int(50) NOT NULL,
+  `Top_rating_range` int(50) NOT NULL,
+  `id` int(50) NOT NULL,
+  `pieces` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `stock_info`
+--
+
+INSERT INTO `stock_info` (`Barcode`, `Product_name`, `Facility_Product_for_internet`, `Total_product`, `Purches_Price`, `Sales_Price`, `Product_add_user_id`, `Outlet_Id`, `Outlet_Name`, `Image`, `Catagory`, `Sub_Catagory`, `Sub_to_sub_catagory`, `Expire_date`, `Weight`, `Add_date`, `Update_Date`, `Descount_rate`, `Top_rating_range`, `id`, `pieces`) VALUES
+('4587979779998', 'Narikel (Coconut)', 0, '0', 4, 8, '9', '4520', 'Adrosho', '1703091440/1703091440.webp', '1', '8', '0', '2026-01-14', '', '2024-01-14', '2024-01-14', 0, 0, 19, '0'),
+('4587979779998', 'Narikel (Coconut)', 0, '13', 6, 15, '9', '4523', 'Adrosho', '1703091440/1703091440.webp', '1', '8', '0', '2026-01-14', '', '2024-01-14', '2024-01-15', 0, 0, 21, '200gm'),
+('4587979779998', 'Narikel (Coconut)', 0, '0', 4, 8, '9', '4521', 'Adrosho', '1703091440/1703091440.webp', '1', '8', '0', '2026-01-14', '', '2024-01-14', '2024-01-14', 0, 0, 22, '250gm'),
+('22222', 'Deshi Shosha', 0, '9', 6, 16, '9', '4523', 'Adrosho', '1705053555/1705053555.webp', '1', '6', '9', '2025-01-15', '± 1111 gm', '2024-01-15', '2024-01-15', 0, 0, 23, '0'),
+('8941161011042', 'Kazi Farms Kitchen', 0, '9', 6, 18, '9', '4523', 'Adrosho', '1703091688/1703091688.webp', '1', '9', '0', '2026-01-15', '', '2024-01-15', '2024-01-15', 0, 0, 32, '0'),
+('8941100500002', 'revive 100gm', 0, '0', 40, 51, '9', '4523', 'Adrosho', '1705336342/1705336342.jpg', '1', '6', '9', '2026-01-15', ' ', '2024-01-15', '2024-02-01', 0, 0, 33, '0'),
+('6921734947994', 'EXAM ERASER DELI H099 20', 0, '0', 6, 8, '9', '4523', 'Adorso Library', '1705467711/1705467711.jpg', '1', '6', '10', '2026-02-01', ' ', '2024-02-01', '2024-02-01', 0, 0, 34, '0'),
+('45879762730998', 'Pran Badam Bhaja', 0, '0', 20, 25, '9', '4523', 'Adorso Library', '1703092065/1703092065.webp', '1', '8', '0', '2026-02-02', '± 10 gm', '2024-02-02', '2024-02-02', 0, 0, 35, '0'),
+('4587979799998', 'Banana Chompa (Ready To Eat)', 0, '0', 120, 130, '9', '4523', 'Adorso Library', '1703091288/1703091288.webp', '1', '8', '2', '2024-02-29', '± 44 gm', '2024-02-02', '2024-02-02', 0, 0, 36, '0'),
+('45830979779998', 'Aarong Dairy Pure Ghee', 0, '0', 12, 15, '9', '4523', 'Adorso Library', '1703141040/1703141040.webp', '1', '8', '2', '2024-07-31', ' ', '2024-02-02', '2024-02-02', 0, 0, 37, '0'),
+('45879797412', 'banana', 0, '0', 10, 15, '9', '4523', 'Adorso Library', '1705121906/1705121906.jpg', '1', '6', '9', '2026-02-02', '± 10 gm', '2024-02-02', '2024-02-02', 0, 0, 38, '0'),
+('4587979079998', 'Wood Apple', 0, '0', 10, 12, '9', '4523', 'Adorso Library', '1703089135/1703089135.jpg', '1', '8', '1', '2026-02-02', '± 20 gm', '2024-02-02', '2024-02-02', 0, 0, 39, '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subcatgory_info`
+--
+
+CREATE TABLE `subcatgory_info` (
+  `id` int(11) NOT NULL,
+  `catagory_id` varchar(100) NOT NULL,
+  `catagory_name` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `Shop_cat_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `subcatgory_info`
+--
+
+INSERT INTO `subcatgory_info` (`id`, `catagory_id`, `catagory_name`, `date`, `Shop_cat_id`) VALUES
+(6, '1', 'Handwash', '2023-12-13', '121'),
+(7, '1', 'Tissue & Wipes', '2023-12-13', '121'),
+(8, '1', 'Women\'s Care', '2023-12-13', '121'),
+(9, '1', 'Men\'s Care', '2023-12-13', '121'),
+(19, '21', 'boss', '2023-12-13', '121'),
+(20, '21', 'ali', '2023-12-13', '121'),
+(21, '2', 'Dishwashing Supplies', '2023-12-21', '121'),
+(22, '2', 'Laundry', '2023-12-21', '121'),
+(23, '2', 'Toilet Cleaners', '2023-12-21', '121'),
+(24, '2', 'Napkins & Paper Products', '2023-12-21', '121'),
+(25, '2', 'Pest Control', '2023-12-21', '121'),
+(26, '2', 'Floor & Glass Cleaners', '2023-12-21', '121'),
+(27, '2', 'Cleaning Accessories', '2023-12-21', '121'),
+(28, '2', 'Air Fresheners', '2023-12-21', '121'),
+(29, '2', 'Disposables & Trash Bags', '2023-12-21', '121'),
+(30, '2', 'Trash Bin & Basket', '2023-12-21', '121'),
+(31, '2', 'Shoe Care', '2023-12-21', '121'),
+(32, '1', 'A', '2024-01-04', '121'),
+(33, '1', 'B', '2024-01-04', '121'),
+(34, '1', 'C', '2024-01-04', '121'),
+(35, '1', 'o', '2024-01-04', '120'),
+(36, '30', 'You', '2024-01-04', '120');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_sub_catgory_info`
+--
+
+CREATE TABLE `sub_sub_catgory_info` (
+  `id` int(11) NOT NULL,
+  `catagory_id` varchar(50) NOT NULL,
+  `sub_catagory_id` varchar(50) NOT NULL,
+  `sub_catagory_name` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `Shop_cat_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `sub_sub_catgory_info`
+--
+
+INSERT INTO `sub_sub_catgory_info` (`id`, `catagory_id`, `sub_catagory_id`, `sub_catagory_name`, `date`, `Shop_cat_id`) VALUES
+(1, '1', '8', 'Women\'s Soaps', '2023-12-11', '121'),
+(2, '1', '8', 'Hair Care', '2023-12-11', '121'),
+(3, '1', '8', 'Women\'s Shampoos & Conditioners', '2023-12-11', '121'),
+(4, '1', '8', 'Feminine Care', '2023-12-11', '121'),
+(5, '21', '19', 'sss', '2023-12-13', '121'),
+(6, '21', '19', 'ssdd', '2023-12-13', '121'),
+(7, '21', '19', 'sdsd', '2023-12-13', '121'),
+(8, '1', '6', 'a', '2024-01-04', '121'),
+(9, '1', '6', 'b', '2024-01-04', '121'),
+(10, '1', '6', 'c', '2024-01-04', '121'),
+(11, '1', '6', 'd', '2024-01-04', '120'),
+(12, '30', '36', 'I', '2024-01-04', '120'),
+(13, '30', '36', 'and', '2024-01-04', '120'),
+(14, '30', '36', 'Love', '2024-01-04', '120');
 
 -- --------------------------------------------------------
 
@@ -368,17 +549,20 @@ CREATE TABLE `users` (
   `Name` varchar(50) NOT NULL,
   `AdminKey` varchar(50) NOT NULL,
   `last_seen` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
-  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `ShopID` varchar(10) NOT NULL,
+  `Shop_cat_id` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `Shopname`, `ShopAddress`, `email`, `password`, `StrafCount`, `AdminCat`, `Mobile`, `MobileVerifa`, `CreateDate`, `image`, `UpdateProfileCout`, `Name`, `AdminKey`, `last_seen`, `updated_at`) VALUES
-(9, 'Adrosho', 'kamarapara', 'ferkey.net@gmail.com', '$2y$10$MUwk4g3w2REUSO8mXkkRz.dmgAU98SgWLLftxSAl64We2di4hf9Sm', 22, 'Admin', '01789658987', 'OK', '2023-11-24', '1701069398.jpg', '10', 'MD. SAGOR ALI', '420', '2023-11-27 09:49:38.000000', '2023-11-27 09:49:38.000000'),
-(34, 'Adrosho', 'kamarapara', 'nazmulhaque181915@gmail.com', '$2y$10$8yyPk86k.R3ty01I.PHCkuWW7Pa9AZQAAduAS2ebw5SHjzeoxuF92', 5, 'employee', '01789898777', 'OK', '2023-11-27', '1701071158.jpg', '20', 'MD. NAZMUL HAQUE', '9', '2023-11-27 08:23:54.000000', '2023-11-27 08:23:54.000000'),
-(35, 'Adrosho', 'kamarapara', 'fahmida.roshny.15@gmail.com', '$2y$10$oDGr3IU8NhOfv5gsC7G9Nu934EhDcyAgEyCB5Zgx.4tvg06ntgPhy', 5, 'employee', '01789898777', 'OK', '2023-11-27', '1701071385.jpg', '20', 'FAHMIDA  AKTER', '9', '2023-11-27 12:32:37.415916', '2023-11-27 14:14:20.874903');
+INSERT INTO `users` (`id`, `Shopname`, `ShopAddress`, `email`, `password`, `StrafCount`, `AdminCat`, `Mobile`, `MobileVerifa`, `CreateDate`, `image`, `UpdateProfileCout`, `Name`, `AdminKey`, `last_seen`, `updated_at`, `ShopID`, `Shop_cat_id`) VALUES
+(9, 'Adorso Shop', 'kamarapara', 'ferkey.net@gmail.com', '$2y$10$MUwk4g3w2REUSO8mXkkRz.dmgAU98SgWLLftxSAl64We2di4hf9Sm', 23, 'Admin', '01789658987', 'OK', '2023-11-24', '1701069398.jpg', '10', 'MD. SAGOR ALI', '420', '2024-04-02 23:23:49.000000', '2024-04-02 23:23:49.000000', '4523', '121'),
+(34, 'najmul shop', 'kamarapara', 'nazmulhaque181915@gmail.com', '$2y$10$8yyPk86k.R3ty01I.PHCkuWW7Pa9AZQAAduAS2ebw5SHjzeoxuF92', 5, 'employee', '01789898777', 'OK', '2023-11-27', '1701071158.jpg', '20', 'MD. NAZMUL HAQUE', '10', '2024-03-15 03:59:28.000000', '2024-03-15 03:59:28.000000', '4520', '120'),
+(35, 'Adrosho', 'kamarapara', 'fahmida.roshny.15@gmail.com', '$2y$10$oDGr3IU8NhOfv5gsC7G9Nu934EhDcyAgEyCB5Zgx.4tvg06ntgPhy', 5, 'employee', '01789898777', 'OK', '2023-11-27', '1701071385.jpg', '20', 'FAHMIDA  AKTER', '9', '2023-12-31 03:59:48.055303', '2023-11-27 14:14:20.874903', '4523', '121'),
+(36, 'Adrosho', 'kamarapara', 'asma@gmail.com', '$2y$10$q7RE91KROfbXpEZEtlavAeeIMAhPOT0.pkX/LEYFUoDq/qDjNk37.', 5, 'employee', '01789898777', 'OK', '2023-12-06', '1701875809.jpg', '20', 'MST ASMA', '9', '2024-03-15 04:02:19.000000', '2024-03-15 04:02:19.000000', '4523', '121');
 
 -- --------------------------------------------------------
 
@@ -408,6 +592,18 @@ INSERT INTO `usersxxxx` (`id`, `name`, `email`, `email_verified_at`, `password`,
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `catgory_info`
+--
+ALTER TABLE `catgory_info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `company_info`
+--
+ALTER TABLE `company_info`
+  ADD PRIMARY KEY (`company_id`);
 
 --
 -- Indexes for table `contact_frm`
@@ -454,6 +650,36 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `product_info120`
+--
+ALTER TABLE `product_info120`
+  ADD PRIMARY KEY (`Product_ID`);
+
+--
+-- Indexes for table `product_info121`
+--
+ALTER TABLE `product_info121`
+  ADD PRIMARY KEY (`Product_ID`);
+
+--
+-- Indexes for table `stock_info`
+--
+ALTER TABLE `stock_info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subcatgory_info`
+--
+ALTER TABLE `subcatgory_info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sub_sub_catgory_info`
+--
+ALTER TABLE `sub_sub_catgory_info`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -471,6 +697,18 @@ ALTER TABLE `usersxxxx`
 --
 
 --
+-- AUTO_INCREMENT for table `catgory_info`
+--
+ALTER TABLE `catgory_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `company_info`
+--
+ALTER TABLE `company_info`
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `contact_frm`
 --
 ALTER TABLE `contact_frm`
@@ -480,7 +718,7 @@ ALTER TABLE `contact_frm`
 -- AUTO_INCREMENT for table `customer_info`
 --
 ALTER TABLE `customer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `filght`
@@ -507,10 +745,40 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `product_info120`
+--
+ALTER TABLE `product_info120`
+  MODIFY `Product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `product_info121`
+--
+ALTER TABLE `product_info121`
+  MODIFY `Product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `stock_info`
+--
+ALTER TABLE `stock_info`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `subcatgory_info`
+--
+ALTER TABLE `subcatgory_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `sub_sub_catgory_info`
+--
+ALTER TABLE `sub_sub_catgory_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `usersxxxx`
