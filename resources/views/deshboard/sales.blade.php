@@ -159,30 +159,26 @@ top:20%;
     
 
   <div id="light" class="white_content">
-  <div class="box">
   
-  
+<div class="box" id="boxx">
  <div class="maindailoboax">
   <div class="exitdd">
   	<div class="gggg" onclick="exit()">
   	<button class="ddd "><span style="color: white">X</span></button>
-    
    </div>
   </div>
    
 <div class="mainedd">
-	
+
 <table class="table table-hover">
   <thead>
     <tr>
-     
       <th scope="col">Details Information</th>
        <th scope="col">Amount</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    
       <td>Total price :</td> 
       <td><span id="totals""></span></td>
     </tr>
@@ -208,34 +204,102 @@ top:20%;
     
       <td>Net price :</td> 
       <td><span id="nets"></span></td>
+    </tr> 
+     <tr>
+    
+      <td>Payment A :</td> 
+      <td> <input type="number" value="" id="Payment" style="width: 100%; font-size: 20px; font-weight: bold;" min="0" max="99"/></td>
+    </tr>  <tr>
+    
+      <td>States :</td> 
+      <td><span id="States" style="color: red; font-weight:bold; font-size:20px ">gggg</span></td>
     </tr>
    
   </tbody>
 </table>
 </div>
 
-
 <div class="info">
 	<h2 id="infomag">bangladeshahss</h2>
 </div>
 
 <div class="butttons">
-	<button id="paymentbtm" type="button" class="btn btn-primary">Continus</button>&nbsp;
+	<button id="paymentbtm" type="button" onclick="finnall()" class="btn btn-primary">Continus</button>&nbsp;
 </div>
 
   </div>
   </div>
+  
+ 
+ 
+ 
+ 
+
+  
+<div class="box" id="boxtwo">
+ <div class="maindailoboax">
+ 
+  <div class="exitdd">
+  	<div class="gggg" onclick="failexit()">
+  	<button class="ddd "><span style="color: white">X</span></button>
+   </div>
+  </div>
+   
+   
+<div id="printarea">
+
+ <div class="ticket">
+            <img src="./logo.png" alt="Logo">
+            <p class="centered">RECEIPT EXAMPLE
+                <br>Address line 1
+                <br>Address line 2</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="quantity">Q.</th>
+                        <th class="description">Description</th>
+                        <th class="price">$$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="quantity">1.00</td>
+                        <td class="description">ARDUINO UNO R3</td>
+                        <td class="price">$25.00</td>
+                    </tr>
+                    <tr>
+                        <td class="quantity">2.00</td>
+                        <td class="description">JAVASCRIPT BOOK</td>
+                        <td class="price">$10.00</td>
+                    </tr>
+                    <tr>
+                        <td class="quantity">1.00</td>
+                        <td class="description">STICKER PACK</td>
+                        <td class="price">$10.00</td>
+                    </tr>
+                    <tr>
+                        <td class="quantity"></td>
+                        <td class="description">TOTAL</td>
+                        <td class="price">$55.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="centered">Thanks for your purchase!<br>parzibyte.me/blog</p>
+        </div>
+
+</div>
+<div class="butttons">
+	<button id="paymentbtm" type="button" onclick="finnallprint()" class="btn btn-primary">Print</button>&nbsp;
+</div>
+
+  </div>
+  </div>
+  
   </div>
   
   
 <div id="fade" class="black_overlay"></div> 
     
-
-
-
-
-
-
 
 <style>
 	.breade_color{
@@ -502,6 +566,7 @@ display: block;
 var Sales_Price,Product_name,produ_id,Image,pieces,product_tittle;
 var pro_bar =document.getElementById("product_barcode");
 var clearbtn =document.getElementById("clearbtn");
+var continubtnone =document.getElementById("ajax");
 var continubtn =document.getElementById("paymentbtm");
 var totalss=document.getElementById("totals");
 var selectElement = document.getElementById('discoutss');
@@ -509,6 +574,8 @@ var disinput = document.getElementById('disinput');
 var netss = document.getElementById('nets');
 var trs = document.getElementById('trs');
 var infomag = document.getElementById('infomag');
+var States = document.getElementById('States');
+var Payment = document.getElementById('Payment');
 
 
 
@@ -522,19 +589,25 @@ pro_bar.focus();
 
 var dis=false;
 let disconttk=0;
+let disconttkPayment=0;
+let nettkbal=0;
+
 
 if (localStorage.getItem("count")) {
 	
     count = parseInt(localStorage.getItem("count"));
     if(count<=0)
 	{
-	 clearbtn.disabled=true;
+	 clearbtn.disabled=true; 
+	 continubtnone.disabled=true;
 	}else{
+	 continubtnone.disabled=false;
 	 clearbtn.disabled=false;
 	}
     
 }else{
 	
+	continubtnone.disabled=true;
 	clearbtn.disabled=true;
 }
 
@@ -550,7 +623,55 @@ if (localStorage.getItem("cart")) {
 }
 
 
+function finnall(){
+	
+	document.getElementById('boxx').style.display='none';
+	document.getElementById('boxtwo').style.display='block';
 
+}
+
+function finnallprint(){
+	console.log("jgfjgh");
+	//exit();
+	 /*
+ var printContent = document.getElementById("boxtwo").innerHTML;
+    var originalContent = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+  var hh= document.getElementById("header");
+ // hh.className="ffff";
+
+   document.body.style.margin = "0px 0px 0px px"; 
+   document.body.style.padding = "0px 0px 0px px";
+   document.body.style.borderStyle = "solid";
+   document.body.removeAttribute('body-pd');
+   window.print(); 
+   document.body.innerHTML = originalContent;
+   */
+   
+   
+   var disp_setting="toolbar=yes,location=no,";
+disp_setting+="directories=yes,menubar=yes,";
+disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
+   var content_vlue = document.getElementById("printarea").innerHTML;
+   var docprint=window.open("","",disp_setting);
+   docprint.document.open();
+   docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
+   docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
+   docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
+   docprint.document.write('<head><title>My Title</title>');
+   docprint.document.write('<style type="text/css">body{ margin:0px; height:100%; width:80mm;');
+   docprint.document.write('font-family:verdana,Arial;color:#000;');
+   docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+   docprint.document.write('a{color:#000;text-decoration:none;} </style>');
+   docprint.document.write('</head><body onLoad="self.print()"><left>');
+   docprint.document.write(content_vlue);
+   docprint.document.write('</left></body></html>');
+   docprint.document.close();
+   docprint.focus();
+   
+   
+    failexit();
+}
 
 
 
@@ -570,16 +691,23 @@ function seletfun(){
     disinput.max="99";
     disconttk=0;
     totalAc();
-    correctgg();
+    correctgg('');
 	}
 
 	
 }
 
 disinput.addEventListener("input", updateValue);
-
 function updateValue(e) {
   disconttk = e.target.value; 
+  totalAc();
+}
+
+
+
+Payment.addEventListener("input", updateValuePayment);
+function updateValuePayment(e) {
+  disconttkPayment = e.target.value; 
   totalAc();
 }
 
@@ -592,47 +720,80 @@ totalss.textContent=sum+" Tk";
 
 function totalAc(){
 	let s=disconttk;
- if(dis==false){
+	
+   if(dis==false){
+   	
   	let ass=s/100;
   	let dc=sum*ass;
   	let tatt=sum-dc;
+  	
   	if(tatt<=0)
   	{
-  		wronggg();
+  		wronggg("Wrong Discout amount");
   	}else{
-  	
   		let g=Math.round(tatt);
   		netss.textContent=g+"Tk";
-  		correctgg();
+  		nettkbal=g;
+  		correctgg('');
   	}
+
+
 
   }else{
   	let d=s;
   	let tatss=sum-d;
   	if(tatss<=0)
   	{
-  		wronggg();
+  		wronggg("Wrong Discout amount");
   	}else{
   		netss.textContent=tatss+"Tk";
-  		correctgg();
+  		nettkbal=tatss;
+  		correctgg('');
   	}
   }
+  
+  let paymt=disconttkPayment;
+  
+  if(paymt>=1){
+  	let paymttwo=nettkbal-disconttkPayment;
+    
+    if(paymttwo<=0){
+    	let kk=-1;
+    	let kett=kk*paymttwo;
+    	
+    	if(nettkbal==paymt)
+    	{
+    	correctgg('Congratulation');
+    	States.innerHTML="PAID";
+    	}
+    	else
+    	{
+    	 correctgg('Change amount '+kett+' Tk');
+    	 States.innerHTML="PAID";
+    	}
+    	
+    	//console.log(paymttwo+paymt);
+    }
+    
+  }
+  
+  
 }
 
 
 
-function wronggg(){
+function wronggg(mgs){
 	    netss.textContent="0 Tk";
-	    infomag.innerHTML="Wrong Discout amount";
+	    infomag.innerHTML=mgs;
   		infomag.style.color="red";
   		trs.style.borderBottom="1px solid red";
   		disinput.style.border="1px solid red";
   		continubtn.disabled=true;
 }
 
-function correctgg(){
-	    infomag.innerHTML="";
-  		infomag.style.color="black";
+function correctgg(mgs){
+	    infomag.innerHTML=mgs;
+  		infomag.style.color="green";
   		trs.style.borderBottom="1px solid #c8c7c8ff";
   		disinput.style.border="1px solid black";
   		continubtn.disabled=false;
@@ -732,11 +893,18 @@ function check(id,qty)
 
 
 function continus(){
+	
+	
 document.getElementById('light').style.display='block';
 document.getElementById('fade').style.display='block';
 popups();
 disinput.value="0";
 totalAc();
+
+document.body.style.overflow= "hidden";
+Payment.focus();
+document.getElementById('boxtwo').style.display='none';
+ document.getElementById('boxx').style.display='block';
 }
 
 
@@ -745,6 +913,16 @@ function exit(){
 	document.getElementById('light').style.display='none';
 	document.getElementById('fade').style.display='none';
     disinput.value="0";
+}
+
+
+function failexit(){
+	document.getElementById('light').style.display='none';
+	document.getElementById('fade').style.display='none';
+	
+	console.log("failexit");
+    disinput.value="0";
+   
 }
 
 
@@ -762,6 +940,7 @@ function add_data(){
 	localStorage.clear();
 	document.getElementById("sum").textContent ="0 Tk";
     document.getElementById("count").textContent = "Total Product: 0";
+    continubtnone.disabled=true;
     clearbtn.disabled=true;
    // 
    
@@ -810,6 +989,7 @@ if (ids in cart) {
     };
 	
     cart[ids] = cartItem
+    continubtnone.disabled=false; 
     clearbtn.disabled=false; 
     //---------hhhh----------------	
 	
@@ -1005,8 +1185,11 @@ function some_function(id,price){
     
     if(count<=0)
 	{
+	 continubtnone.disabled=true;
 	 clearbtn.disabled=true;
+	 
 	}else{
+	 continubtnone.disabled=false;
 	 clearbtn.disabled=false;
 	}
 	console.log("hello mewe");
