@@ -153,23 +153,27 @@ top:20%;
 .maindailoboax{
 	padding: 5px;
 }
+
+
+#printarea{
+	display: none;
+	background-color: red;
+}
+
 </style>
     
     
     
 
-  <div id="light" class="white_content">
-  
+<div id="light" class="white_content"> 
 <div class="box" id="boxx">
  <div class="maindailoboax">
   <div class="exitdd">
   	<div class="gggg" onclick="exit()">
   	<button class="ddd "><span style="color: white">X</span></button>
    </div>
-  </div>
-   
+  </div> 
 <div class="mainedd">
-
 <table class="table table-hover">
   <thead>
     <tr>
@@ -183,25 +187,17 @@ top:20%;
       <td><span id="totals""></span></td>
     </tr>
     <tr id="trs">
-    
-      <td >Discount :
-      
+      <td >Discount : 
 		<select id="discoutss" onchange="seletfun()">
 		  <option  value="percent">Percent(%)</option>
 		  <option value="Amount">Amount(tk)</option>
 		</select>
-      
-      
       </td> 
       <td>
- 
-      <input type="number" value="0" id="disinput" style="width: 80px" min="0" max="99"/>
-      
+      <input type="number" value="0" id="disinput" style="width: 80px" min="0" max="99"/> 
       </td>
     </tr>
-   
     <tr>
-    
       <td>Net price :</td> 
       <td><span id="nets"></span></td>
     </tr> 
@@ -249,58 +245,48 @@ top:20%;
 <div id="printarea">
 
  <div class="ticket">
-            <img src="./logo.png" alt="Logo">
-            <p class="centered">RECEIPT EXAMPLE
-                <br>Address line 1
-                <br>Address line 2</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th class="quantity">Q.</th>
-                        <th class="description">Description</th>
-                        <th class="price">$$</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="quantity">1.00</td>
-                        <td class="description">ARDUINO UNO R3</td>
-                        <td class="price">$25.00</td>
-                    </tr>
-                    <tr>
-                        <td class="quantity">2.00</td>
-                        <td class="description">JAVASCRIPT BOOK</td>
-                        <td class="price">$10.00</td>
-                    </tr>
-                    <tr>
-                        <td class="quantity">1.00</td>
-                        <td class="description">STICKER PACK</td>
-                        <td class="price">$10.00</td>
-                    </tr>
-                    <tr>
-                        <td class="quantity"></td>
-                        <td class="description">TOTAL</td>
-                        <td class="price">$55.00</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="centered">Thanks for your purchase!<br>parzibyte.me/blog</p>
-        </div>
+ 
+ <div class="iconprint">
+ 	<img src="{{ asset('icon/logo.png') }}" alt="Logo">
+ </div>
 
+<div class="printaddree" >
+       <span>Kamarpara,Mohanpur</span> <br>
+      <span style="font-size: 10px;">Mob:01713-742051</span>  
+</div>
+          <div class="details">
+               <table>
+                   <thead>
+                       <tr>
+                           <th class="quantity">Description</th>
+                           <th class="description">Q</th>
+                           <th class="price">Price</th>
+                           <th class="price">Net</th>
+                       </tr>
+                   </thead>
+                   
+                   <tbody id="printsbody">
+                               
+                   </tbody>    
+               </table>
+<br>
+               <div class="printaddree">
+                <span style="font-size: 12px;">Thanks for your purchase!</span> <br>
+                <span style="font-size: 10px;">www.adarshashop.com</span>
+            </div>    
+        </div>
+     </div>
 </div>
 <div class="butttons">
 	<button id="paymentbtm" type="button" onclick="finnallprint()" class="btn btn-primary">Print</button>&nbsp;
+	  <button id="paymentbtm" type="button" onclick="failexit()" class="btn btn-primary">Ok</button>
 </div>
-
-  </div>
-  </div>
-  
-  </div>
-  
-  
+</div>
+</div>
+</div>
+   
 <div id="fade" class="black_overlay"></div> 
     
-
 <style>
 	.breade_color{
 		font-size: 25px;
@@ -335,6 +321,7 @@ top:20%;
 		width:500px;
 		float: left;
 		padding-left:8px;	
+		
 	}
 	
 	.shodows{
@@ -475,6 +462,7 @@ display: block;
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
 		<button  id="ajax" class="btn btn-primary" onclick="continus()">Continuous</button>
+		
 	</div>
 	
 </div>
@@ -498,62 +486,17 @@ display: block;
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Name</th>
+      <th scope="col">Date</th>
+      <th scope="col">Sales</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>  <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+  <tbody id="proftgg">
+   
   </tbody>
 </table>
+<button class="btn btn-primary" onclick="inputfunction()">hello</button>
+<button class="btn btn-primary" onclick="profitshow()">profit</button>
 </div>
 </div>
   
@@ -561,9 +504,75 @@ display: block;
 <script>
 
 
+tessst();
+
+function tessst(){
+	
+	
+	var proft = document.getElementById('proftgg');
+	let nametr = document.createElement('tr');
+	
+	
+	let siretd = document.createElement('td');
+	let sirespan = document.createElement('span');
+	sirespan.innerHTML="1";
+	siretd.appendChild(sirespan);
+	nametr.appendChild(siretd);
+	
+	
+	
+	
+	let nametd = document.createElement('td');
+	let namespan = document.createElement('span');
+	namespan.innerHTML="name";
+	nametd.appendChild(namespan);
+	nametr.appendChild(nametd);	
+	
+	
+	
+
+	let datetd = document.createElement('td');
+	let datespan = document.createElement('span');
+	datespan.innerHTML="date";
+	datetd.appendChild(datespan);
+	nametr.appendChild(datetd);
+	
+	
+	
+	
+	let saletd = document.createElement('td');
+	let salesspan = document.createElement('span');
+	salesspan.innerHTML="150tk";
+	saletd.appendChild(salesspan);
+	nametr.appendChild(saletd);
+
+	
+	
+	
+	
+	proft.appendChild(nametr);
+	
+	//var obj = JSON.parse(cart);	
+	//	for(var key in cart){
+	//		console.log(cart[key].qty);
+	//		console.log("hello"+key);
+	//	}	
+    // console.log(cart);
+}
 
 
-var Sales_Price,Product_name,produ_id,Image,pieces,product_tittle;
+
+
+
+
+
+
+
+
+
+
+
+var Sales_Price,Product_name,produ_id,Image,pieces,product_tittle,purches_Price;
 var pro_bar =document.getElementById("product_barcode");
 var clearbtn =document.getElementById("clearbtn");
 var continubtnone =document.getElementById("ajax");
@@ -580,10 +589,15 @@ var Payment = document.getElementById('Payment');
 
 
 
+
+
+
+
 let cart = {};
 var addd;
 let count = 0;
 let sum = 0;
+let profit=0;
 let qtps= 1;
 pro_bar.focus();
 
@@ -591,6 +605,7 @@ var dis=false;
 let disconttk=0;
 let disconttkPayment=0;
 let nettkbal=0;
+let totaldiscout=0;
 
 
 if (localStorage.getItem("count")) {
@@ -617,39 +632,63 @@ if (localStorage.getItem("sum")) {
 }
 
 
+if (localStorage.getItem("profit")) {
+    profit = parseInt(localStorage.getItem("profit"));
+}
+
+
 if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
    // console.log(JSON.stringify(cart));
 }
 
 
+
+//this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
+
+  		
+function inputfunction(){    
+	
+	console.log("working");
+	
+const arrayLike = {
+  "a": "a",
+  "d": "b",
+  length: 2,
+};
+	
+           var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+       	    $.ajax({
+                    url: 'hhhh',
+                    type: 'POST',
+                    data: {_token: CSRF_TOKEN, hello:arrayLike},
+                    dataType: 'JSON',
+                    success: function (data) { 
+                      //  $(".writeinfo").append(data.catagory_name); 
+                      //	var obj = JSON.parse(data);
+                       console.log(data);
+                    }
+                });   	
+           }
+       
+
+
+
+
+
+
+
+
 function finnall(){
 	
 	document.getElementById('boxx').style.display='none';
 	document.getElementById('boxtwo').style.display='block';
-
+    printdatashow();
+    purchedata();
 }
 
 function finnallprint(){
-	console.log("jgfjgh");
-	//exit();
-	 /*
- var printContent = document.getElementById("boxtwo").innerHTML;
-    var originalContent = document.body.innerHTML;
-    document.body.innerHTML = printContent;
-  var hh= document.getElementById("header");
- // hh.className="ffff";
-
-   document.body.style.margin = "0px 0px 0px px"; 
-   document.body.style.padding = "0px 0px 0px px";
-   document.body.style.borderStyle = "solid";
-   document.body.removeAttribute('body-pd');
-   window.print(); 
-   document.body.innerHTML = originalContent;
-   */
-   
-   
-   var disp_setting="toolbar=yes,location=no,";
+ var disp_setting="toolbar=yes,location=no,";
 disp_setting+="directories=yes,menubar=yes,";
 disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
    var content_vlue = document.getElementById("printarea").innerHTML;
@@ -658,8 +697,9 @@ disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
    docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
    docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
    docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
-   docprint.document.write('<head><title>My Title</title>');
-   docprint.document.write('<style type="text/css">body{ margin:0px; height:100%; width:80mm;');
+   docprint.document.write('<head><title>My Title</title>'); 
+   docprint.document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"{{ asset('frontend/css/prints.css') }}\" />"); 
+   docprint.document.write('<style type="text/css"> body{ margin:0px; height:100%; width:80mm;');
    docprint.document.write('font-family:verdana,Arial;color:#000;');
    docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
    docprint.document.write('a{color:#000;text-decoration:none;} </style>');
@@ -668,11 +708,234 @@ disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
    docprint.document.write('</left></body></html>');
    docprint.document.close();
    docprint.focus();
-   
-   
     failexit();
 }
 
+
+function printdatashow(){
+		
+		
+	//console.log(netss.innerText);
+		
+		
+ let printbody = document.getElementById("printsbody");
+let printtrtwo = document.createElement('tr');
+let printtrtthree = document.createElement('tr');
+let nettr = document.createElement('tr');
+   
+    
+    for (let id in cart) {
+    let item = cart[id];
+    
+    let printtr = document.createElement('tr')
+   
+   
+    let printtdname = document.createElement("td");
+    const newBussname = document.createElement('span');
+     newBussname.textContent =item.Product; 
+     printtdname.appendChild(newBussname);
+     printtr.appendChild(printtdname); 
+   
+   
+   
+   
+    let printtd = document.createElement("td");
+    const newBuss = document.createElement('span');
+     newBuss.textContent =item.qty; 
+     printtd.appendChild(newBuss);
+     printtr.appendChild(printtd);  
+     
+     
+    
+     
+     
+    let printtdtk = document.createElement("td");
+    const newBusstk = document.createElement('span');
+     newBusstk.textContent =item.price+" x"; 
+     printtdtk.appendChild(newBusstk);
+     printtr.appendChild(printtdtk);  
+      
+      
+    let printtdnet = document.createElement("td");
+    const newBussnet = document.createElement('span');
+     newBussnet.textContent =item.qty*item.price+" Tk"; 
+     printtdnet.appendChild(newBussnet);
+     printtr.appendChild(printtdnet);  
+     
+     
+    
+     
+     printbody.appendChild(printtr);
+	}
+
+
+
+
+
+
+     let printtddis = document.createElement("td");
+     printtddis.className="tatols"
+     printtrtwo.appendChild(printtddis);
+        
+        
+        
+        
+     let printtdnet = document.createElement("td");
+     printtdnet.className="tatols"
+    const newBussnet = document.createElement('span');
+     newBussnet.textContent ="Total"; 
+     printtdnet.appendChild(newBussnet);
+     printtrtwo.appendChild(printtdnet); 
+     
+     
+     
+     
+     let printtdnett = document.createElement("td");
+     printtdnett.className="tatols"
+    const newBussnett = document.createElement('span');
+     newBussnett.textContent =""; 
+     printtdnett.appendChild(newBussnett);
+     printtrtwo.appendChild(printtdnett);  
+     
+     
+     
+     
+     let printtdnettnet = document.createElement("td");
+      printtdnettnet.className="tatols"
+    const newBussnettnet = document.createElement('span');
+     newBussnettnet.textContent =sum+" Tk"; 
+     printtdnettnet.appendChild(newBussnettnet);
+     printtrtwo.appendChild(printtdnettnet);
+     
+     
+     
+     //-------------gdfgdfg----------------
+     
+     
+     let distd = document.createElement("td");
+     const disspanon = document.createElement('span');
+     disspanon.textContent =""; 
+     distd.appendChild(disspanon);
+     printtrtthree.appendChild(distd);
+        
+        
+        
+        
+     let distdtwo = document.createElement("td");
+      const disspan = document.createElement('span');
+     disspan.textContent ="Discount"; 
+     distdtwo.appendChild(disspan);
+     printtrtthree.appendChild(distdtwo); 
+     
+     
+     
+     
+     let distdthree = document.createElement("td");
+    const disspanthree = document.createElement('span');
+    
+    if(dis==false){
+    	 disspanthree.textContent =disconttk+"%"; 
+    }else{
+    	// disspanthree.textContent =disconttk; 
+    }
+     distdthree.appendChild(disspanthree);
+     printtrtthree.appendChild(distdthree);  
+     
+     
+     
+     
+     let distdfour = document.createElement("td");
+    const disspanfour = document.createElement('span');
+     disspanfour.textContent =totaldiscout+" Tk"; 
+     distdfour.appendChild(disspanfour);
+     printtrtthree.appendChild(distdfour);
+     
+     
+     //------------net tk--------------------
+     
+     
+
+     let nettd = document.createElement("td");
+     nettd.className="tatols"
+     nettr.appendChild(nettd);
+        
+        
+        
+        
+     let nettdtwo = document.createElement("td");
+     nettdtwo.className="tatols"
+    const netsapn = document.createElement('span');
+     netsapn.textContent ="Net Price"; 
+     nettdtwo.appendChild(netsapn);
+     nettr.appendChild(nettdtwo); 
+     
+     
+     
+     
+     let nettdthree = document.createElement("td");
+     nettdthree.className="tatols"
+    const netsapnthree = document.createElement('span');
+     netsapnthree.textContent =""; 
+     nettdthree.appendChild(netsapnthree);
+     nettr.appendChild(nettdthree);  
+     
+     
+     
+     
+     let nettdfour = document.createElement("td");
+      nettdfour.className="tatols"
+    const netsapnfour = document.createElement('span');
+     netsapnfour.textContent =nettkbal+" Tk"; 
+     nettdfour.appendChild(netsapnfour);
+     nettr.appendChild(nettdfour);
+     
+     
+     
+     //-------------gdfgdfg----------------
+     
+     
+  
+     printbody.appendChild(printtrtwo);
+     printbody.appendChild(printtrtthree); 
+     printbody.appendChild(nettr);
+	
+}
+
+
+function printdatashownotjsonfile(unity, name, price){
+		
+ let printbody = document.getElementById("printsbody");
+
+let printtrtwo = document.createElement('tr')
+    printtrtwo.className="totalnet";
+    
+    let printtr = document.createElement('tr')
+
+   
+    let printtd = document.createElement("td");
+    const newBuss = document.createElement('span');
+     newBuss.textContent =unity; 
+     printtd.appendChild(newBuss);
+     printtr.appendChild(printtd);  
+     
+     
+    let printtdname = document.createElement("td");
+    const newBussname = document.createElement('span');
+     newBussname.textContent =name; 
+     printtdname.appendChild(newBussname);
+     printtr.appendChild(printtdname);  
+     
+     
+    let printtdtk = document.createElement("td");
+    const newBusstk = document.createElement('span');
+     newBusstk.textContent =price; 
+     printtdtk.appendChild(newBusstk);
+     printtr.appendChild(printtdtk);  
+     
+       
+     printbody.appendChild(printtr);
+		
+}
 
 
 function seletfun(){
@@ -692,9 +955,7 @@ function seletfun(){
     disconttk=0;
     totalAc();
     correctgg('');
-	}
-
-	
+	}	
 }
 
 disinput.addEventListener("input", updateValue);
@@ -725,6 +986,7 @@ function totalAc(){
    	
   	let ass=s/100;
   	let dc=sum*ass;
+  
   	let tatt=sum-dc;
   	
   	if(tatt<=0)
@@ -732,6 +994,7 @@ function totalAc(){
   		wronggg("Wrong Discout amount");
   	}else{
   		let g=Math.round(tatt);
+  		totaldiscout=Math.round(dc);
   		netss.textContent=g+"Tk";
   		nettkbal=g;
   		correctgg('');
@@ -748,6 +1011,7 @@ function totalAc(){
   	}else{
   		netss.textContent=tatss+"Tk";
   		nettkbal=tatss;
+  		totaldiscout=d;
   		correctgg('');
   	}
   }
@@ -841,9 +1105,10 @@ $(document).ready(function (e) {
 		Image=obj[key].Image; 
 	    Sales_Price=obj[key].Sales_Price;  
 	    pieces=obj[key].pieces; 
+	    purches_Price=obj[key].Purches_Price; 
       // console.log(obj[key].Product_name);
-        add(Sales_Price,Product_name,produ_id,Image,product_tittle,1);
-        
+        add(Sales_Price,Product_name,produ_id,Image,product_tittle,purches_Price);
+     
 		}	
 		}	
 		},
@@ -865,24 +1130,72 @@ $(document).ready(function (e) {
 allfuncaliondata();
 
 
-function tessst(){
-		//var obj = JSON.parse(cart);	
-		for(var key in cart){
-			console.log(cart[key].qty);
-			console.log("hello"+key);
-		}
-		
-console.log(cart);
-}
 
-
-function check(id,qty)
-    {
+function check(id,qty){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
     url: '/heo/'+id+"/"+qty,
     success: function (data) {
+        console.log("date add refurn value");  
+       
+       // $("#data").append(data);
+    },
+    error: function() { 
+        // console.log(data);
+    }
+});
+    }
+    
+    
+function purcheschack(id,qty,num){
+    $.ajax({
+    type: 'GET', //THIS NEEDS TO BE GET
+    url: '/purchers/'+id+"/"+qty+"/"+num,
+    success: function (data) {
+    	
         console.log("date add refurn value");
+         console.log(data);
+       // $("#data").append(data);
+    },
+    error: function() { 
+        // console.log(data);
+    }
+});
+    }
+    
+    
+    
+    
+    
+function profitshow(){
+	var Product_name;
+    $.ajax({
+    type: 'GET', 
+    url: '/profitshow',
+    success: function (data) {
+    	
+        console.log("date add refurn value");
+        // console.log(data);
+        var obj = JSON.parse(data);
+     for(var key in obj){
+		console.log(obj[key].Recive_number);
+     
+		}
+    },
+    error: function() { 
+
+    }
+});
+    }
+    
+function profit_data_load(dis,sales,amount,num){
+    $.ajax({
+    type: 'GET', //THIS NEEDS TO BE GET
+    url: '/profiturl/'+dis+"/"+sales+"/"+amount+"/"+num,
+    success: function (data) {
+    	
+        console.log("date add refurn value");
+         console.log(data);
        // $("#data").append(data);
     },
     error: function() { 
@@ -904,7 +1217,40 @@ totalAc();
 document.body.style.overflow= "hidden";
 Payment.focus();
 document.getElementById('boxtwo').style.display='none';
- document.getElementById('boxx').style.display='block';
+document.getElementById('boxx').style.display='block';
+ 
+ 
+ 
+ 
+}
+
+
+
+function purchedata(){
+	
+var minm = 100000000000; 
+var maxm = 999999999999;       
+var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
+	
+	
+	
+	
+	profit_data_load(totaldiscout,nettkbal,profit,num);
+	
+	for(var key in cart){
+		purcheschack(key,cart[key].qty,num);
+		var ffff=document.getElementById("n"+key);
+     	ffff.remove();
+		   }	
+		   
+  //  console.log("uuu"+cart);
+	localStorage.clear();
+	document.getElementById("sum").textContent ="0 Tk";
+    document.getElementById("count").textContent = "Total Product: 0";
+    continubtnone.disabled=true;
+    clearbtn.disabled=true;
+    
+   
 }
 
 
@@ -922,6 +1268,7 @@ function failexit(){
 	
 	console.log("failexit");
     disinput.value="0";
+     location.reload();
    
 }
 
@@ -929,8 +1276,6 @@ function failexit(){
 function add_data(){
 	
 	for(var key in cart){
-		//console.log(cart[key].qty);
-		//console.log("hello"+key);
 		check(key,cart[key].qty);
 		var ffff=document.getElementById("n"+key);
      	ffff.remove();
@@ -947,13 +1292,14 @@ function add_data(){
 }
 
 
-
-	
-
-function add(prices,names,ids,imagess,pro_tit,oo) {
+function add(prices,names,ids,imagess,pro_tit,purchesPrice) {
 
     pro_bar.focus();
     let tbody = document.getElementById("tbody");
+    //-----this print line for payment-------
+let printbody = document.getElementById("printsbody");
+    
+    
     let tr = document.createElement('tr') 
 	tr.id ="n"+ids;
 	
@@ -962,22 +1308,25 @@ function add(prices,names,ids,imagess,pro_tit,oo) {
     let Product = names+" "+pro_tit;
     let id = ids;
     let images = imagess;
-	 
+	let prod=price-purchesPrice;
+	
 	var qtyadd; 
     count++;
     sum += price;
-
+    profit+=prod;
     // console.log("looog"+cart);
-	 
+	 console.log("this is single profit"+profit);
 if (ids in cart) {
 	
     cart[ids].qty++;
     qtps=cart[ids].qty;
-    console.log(qtps);
+  //  console.log(qtps);
     var aa=document.getElementById("h"+ids).textContent=qtps;
-   // aa.innerHTML=qtps;
-   //   console.log(qtps);
-
+ 
+ 
+ 
+ 
+ 
 } else {
 
 
@@ -991,9 +1340,10 @@ if (ids in cart) {
     cart[ids] = cartItem
     continubtnone.disabled=false; 
     clearbtn.disabled=false; 
-    //---------hhhh----------------	
-	
     
+    
+    
+    //---------hhhh----------------	
 	 let title_td_id = document.createElement('td');
 	var oImg = document.createElement("img");
 	oImg.setAttribute('src', "{{asset('product')}}/"+images);
@@ -1026,7 +1376,6 @@ if (ids in cart) {
      newBus.classList.add("float-right");
      newBus.id="h"+ids;
      newBus.textContent = "1";
-   //  console.log(qtyadd);
      qty_td.appendChild(newBus);
      tr.appendChild(qty_td);
     
@@ -1038,7 +1387,6 @@ if (ids in cart) {
       newBu.textContent = price;
      price_td.appendChild(newBu);
     tr.appendChild(price_td);
-    
     
     
     
@@ -1063,7 +1411,43 @@ if (ids in cart) {
     tbody.appendChild(tr);
 	
 	
+	 //-----this print line for payment-------
+
+let printtrtwo = document.createElement('tr')
+    printtrtwo.className="totalnet";
+    
+    let printtr = document.createElement('tr')
+
+   
+    let printtd = document.createElement("td");
+    const newBuss = document.createElement('span');
+     newBuss.textContent ="1"; 
+     printtd.appendChild(newBuss);
+     printtr.appendChild(printtd);  
+     
+     
+    let printtdname = document.createElement("td");
+    const newBussname = document.createElement('span');
+     newBussname.textContent =Product; 
+     printtdname.appendChild(newBussname);
+     printtr.appendChild(printtdname);  
+     
+     
+    let printtdtk = document.createElement("td");
+    const newBusstk = document.createElement('span');
+     newBusstk.textContent =price; 
+     printtdtk.appendChild(newBusstk);
+     printtr.appendChild(printtdtk);  
+     
+       
+     printbody.appendChild(printtr);
+	
+	
+	
 //-------------hhhhh----------	
+    
+    
+    
     
     
 }
@@ -1083,8 +1467,10 @@ function updateCart() {
 	
    document.getElementById("sum").textContent = sum+" Tk";
    document.getElementById("count").textContent = "Total Product: "+count;
-    localStorage.setItem("sum", sum);
-    localStorage.setItem("count", count);
+   localStorage.setItem("sum", sum); 
+   localStorage.setItem("profit", profit);
+   localStorage.setItem("count", count);
+   console.log("this is profit total"+profit);
 }
 
 

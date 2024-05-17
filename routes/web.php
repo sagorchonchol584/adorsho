@@ -30,8 +30,14 @@ use App\Http\Controllers\Postcontroller;
 
 // test perpos user route
 
+Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 
 Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
+Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
+Route::get('/profiturl/{dis}/{sales}/{amount}/{num}', [Postcontroller::class,'profit_add'])->name('profiturls');
+
+//this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
+Route::post('/hhhh', [Postcontroller::class,'hhhttt'])->name('hh');
 
 
 
@@ -40,15 +46,8 @@ Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
 
 
-
-
-
 Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
-
 Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
-
-
-
 
 
 
@@ -60,8 +59,11 @@ Route::view('/meagge','frontend.message')->name('reg');
 
 //--this route is login users use time show like how much time loging  user for login id--
 Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
-
 Route::get('/tests', [Postcontroller::class,'testssss'])->name('tests');
+
+
+
+
 
 //--product add route this --
 Route::get('/product', [Postcontroller::class,'product'])->name('product');

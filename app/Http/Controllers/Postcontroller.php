@@ -30,9 +30,7 @@ public function report(){
     return view('deshboard.report');
  
   }
-   
-   
-   
+       
 public function removedate($id,$qty){
 
    // $datess['message']=$id;
@@ -60,26 +58,179 @@ public function removedate($id,$qty){
            	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
            	echo json_encode($stockinfo);
            
-    		}
+    		}		
+       }
+ 
+  }
+  
+   
+ //product purcher add  data 
+ 
+ public function purcher_add($id, $qty,$num){
+ 	
+ //	echo json_encode($id);
+ 	
+ 	
+ 	
+ 	  if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    	$outlet_Id_user = Auth::user()->ShopID;
+    				
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+    		if(count($stockinfo) === 0){				
+    			 $purcherdata['message']='Exit';
+    			 echo json_encode($purcherdata);	   
+    		}else{
+    			
+    		$product_price;
+    		$sales_price;
+    		$product_unite;
+    		$product_name;
+    		$profit;
+    		$per_pice_profit;
+    		$images;
+    		$expire_date;
     		
-    		
+           foreach($stockinfo as $row)
+           {
+           $product_name=$row->Product_name;
+           $product_price=$row->Purches_Price;
+           $sales_price=$row->Sales_Price; 
+           $per_pice_profit=$sales_price-$product_price;
+           $profit=$per_pice_profit*$qty;
+           $images=$row->Image; 
+           $expire_date=$row->Expire_date; 
+           }
+    
+           	$purcherdata['customer_id']="50"; 
+           	$purcherdata['customer_name']="customer_name"; 
+           	$purcherdata['product_Name']=$product_name; 
+           	$purcherdata['Sales_price']=$sales_price;
+           	$purcherdata['product_Price']=$product_price; 
+           	$purcherdata['Images']=$images;
+           	$purcherdata['product_id']=$id;	
+           	$purcherdata['product_unite']=$qty;	
+           	$purcherdata['Recive_num']=$num;	
+           	$purcherdata['profit_to_Pruduct']=$profit; 
+           	$purcherdata['prodcut_Exp_date']=$expire_date; 
+         	$purcherdata['purches_date']=date("Y-m-d");   
+		    $purcherdata['Admin_Id']=Auth::user()->AdminKey;
+		    $purcherdata['Starf_Id']=Auth::user()->id;    
+		    $purcherdata['Starf_Name']=Auth::user()->Name; 
+		    $purcherdata['Outlet_Id']=Auth::user()->ShopID;    
+		    $purcherdata['Outlet_Name']=Auth::user()->Shopname;
+
+           	
+           	
+  /*         	
+           try {
+     DB::table('purches_list')->insert($purcherdata); 
+      echo json_encode($datess);           
+          } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+        
+              }
+          }
+           	*/
+           	
+           	
+          	 DB::table('purches_list')->insert($purcherdata); 
+           	
+          // 	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($purcherdata);
+        //   	echo json_encode($purcherdata);
+           
+    		}	
+       }
+ 	
+ 		
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+//           $dates['customer_id']=$req->customer_id;
+//           $dates['customer_name']=$req->mobile;
+//           $dates['purches_date']=$req->address;             
+//           $dates['product_id']=date("Y-m-d");
+//           $dates['product_Name']=0;      
+//           $dates['product_Price']= date("Y-m-d");              
+//           $dates['product_Info']=0;
+//           $dates['profit_to_Pruduct']="54578";
+//           $dates['prodcut_Add_date']="362";               
+//           $dates['prodcut_Exp_date']=0;
+//           $dates['prodcut_Provide_com']="Good";
+//           $dates['prodcut_Purcher_price']="33455";             
+//           $dates['Admin_Id']="1212";
+//           $dates['Starf_Id']="5632";
+//           $dates['Starf_Name']="6985";                 
+//           $dates['Outlet_Id']="9685";
+//           $dates['Outlet_Name']="9658";
+//           $dates['Device_Info']="56";             
+//           DB::table('purches_list')->insert($dates);          
+//       //    return redirect("customerinfo");
+//            echo("purches list ");
+//         // return view('customerinfo')->with('messages','true');
+ 	
+ 	
+ }
+ 
+  
+ public function profit_add($totaldiscout,$sales,$amount,$num){
+ 	
+ 	  if(Auth::check()){
+    	$ids = Auth::user()->Shop_cat_id;
+    	$outlet_Id_user = Auth::user()->ShopID;
+    	
+           	$profitdata['Recive_number']=$num; 
+           	$profitdata['totaldiscout']=$totaldiscout; 	
+           	$profitdata['Profit']=$amount; 		
+           	$profitdata['Net_Profit']=$amount-$totaldiscout; 	
+           	$profitdata['Total_sales']=$sales+$totaldiscout; 	
+           	$profitdata['Net_Sale']=$sales; 
+           	$profitdata['show_key']=0; 
+         	$profitdata['Date']=date("Y-m-d");   
+		    $profitdata['Admin_Id']=Auth::user()->AdminKey;
+		    $profitdata['Starf_Id']=Auth::user()->id;    
+		    $profitdata['Starf_Name']=Auth::user()->Name; 
+		    $profitdata['Outlet_Id']=Auth::user()->ShopID;    
+		    $profitdata['Outlet_Name']=Auth::user()->Shopname;
+           
+            DB::table('profit_datails')->insert($profitdata); 
+           	
+      	echo json_encode($profitdata);
+           
     			
        }
  
+ }  
  
+ //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
+ public function hhhttt(Request $request){
+ 	
+ 	              $purcherdata['message']='Exit';  
+ 	              $purcherdata['hello']=$request->hello;
+ 	             $purcherdata['helloh']=$request->hello["length"];
+    			 echo json_encode($purcherdata);	
+           
+ 	
+ }
  
- 
- 
- 
- 
- 
- 
- 
+  public function profit_show(){
+    $profit_show=DB::table('profit_datails')->get();
+   echo json_encode($profit_show);
   }
     
- 
- 
- 
 public function searchidcan($id){
 	
 	  if(Auth::check()){
@@ -116,7 +267,6 @@ public function searchidcan($id){
     			
        }
   }
-  
   
 public function barcodes($id){
 	  if(Auth::check()){
@@ -335,8 +485,6 @@ public function Stock_Info_add(Request $reqs){
   	      
 } 
 
-
-
 public function customerinfonew(){
     $data['posts']=DB::table('customer_info')->get();
      return $data;
@@ -374,16 +522,17 @@ public function customer_Data_add(Request $req){
 	}
  
  
+
+ 
+ 
+ 
 //this purpose this product add and show update etc  
 public function product_add(Request $reqs){	
 
 if(Auth::check()){
 $id = Auth::user()->Shop_cat_id;
 
-$validator = Validator::make($reqs->all(), [	
-	'Barcode' => ['required',Rule::unique('product_info'.$id)],
-   
-]);
+$validator = Validator::make($reqs->all(), ['Barcode' => ['required',Rule::unique('product_info'.$id)],]);
 
 if ($validator->fails()) {
 	
