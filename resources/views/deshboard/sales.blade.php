@@ -169,8 +169,8 @@ top:20%;
 <div class="box" id="boxx">
  <div class="maindailoboax">
   <div class="exitdd">
-  	<div class="gggg" onclick="exit()">
-  	<button class="ddd "><span style="color: white">X</span></button>
+  	<div class="gggg" >
+  	<button class="ddd" onclick="exit()"><span style="color: white" >X</span></button>
    </div>
   </div> 
 <div class="mainedd">
@@ -225,19 +225,15 @@ top:20%;
 
   </div>
   </div>
-  
  
  
  
- 
-
-  
 <div class="box" id="boxtwo">
  <div class="maindailoboax">
  
   <div class="exitdd">
-  	<div class="gggg" onclick="failexit()">
-  	<button class="ddd "><span style="color: white">X</span></button>
+  	<div class="gggg">
+  	<button class="ddd"  onclick="failexit()"><span style="color: white">X</span></button>
    </div>
   </div>
    
@@ -283,6 +279,59 @@ top:20%;
 </div>
 </div>
 </div>
+
+
+<style>
+	.purchh{
+		height: 350px;
+		width: 100%;
+	
+	}
+	
+	
+
+</style>
+
+<div class="box" id="purches">
+ <div class="purchestwo">
+
+  <div class="exitdd">
+  	<div class="gggg" ">
+  	
+  	<button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
+   </div>
+  </div>
+  
+    <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
+<div class="purchh table-wrapper-scroll-y my-custom-scrollbar">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Qty</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody id="purschssss">
+  
+   
+   
+   
+  </tbody>
+</table>
+
+
+</div>
+
+</div>
+</div>
+
+
+
+
+
 </div>
    
 <div id="fade" class="black_overlay"></div> 
@@ -361,7 +410,7 @@ top:20%;
 			<div class="p-2 float-right">
 				 <form id="searchid">
 				<?php echo csrf_field(); ?>
-				<input class="form-control" name="product_barcode" id="product_barcode" type="text" class="inputFile"/>
+				<input class="form-control" name="customername" id="customername" type="text" class="inputFile"/>
 			 </form>	
 		</div>
 			
@@ -458,10 +507,11 @@ display: block;
 <div class="tatols">
 </div>
 <button class="btn btn-outline-primary" id="clearbtn" onclick="confram()">Clear</button>
-	<div class="float-right" >
+<div class="float-right" >
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
 		<button  id="ajax" class="btn btn-primary" onclick="continus()">Continuous</button>
+	
 		
 	</div>
 	
@@ -474,19 +524,17 @@ display: block;
 
 
 
-
 <div class="col-4 h-750">
 
 <br><br>
-<div class="card saleslist">
-		
-<div class="p-2">
-	
-	<table class="table table-striped">
+
+<div class="card saleslist table-wrapper-scroll-y my-custom-scrollbar">		
+<div class="p-2 ">	
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
+      <th scope="col">BarCode</th>
       <th scope="col">Date</th>
       <th scope="col">Sales</th>
     </tr>
@@ -495,62 +543,103 @@ display: block;
    
   </tbody>
 </table>
-<button class="btn btn-primary" onclick="inputfunction()">hello</button>
-<button class="btn btn-primary" onclick="profitshow()">profit</button>
 </div>
 </div>
   
   
 <script>
 
-
 tessst();
 
-function tessst(){
+function purchesdatashow(ddd){
 	
+document.getElementById('light').style.display='block';
+document.getElementById('fade').style.display='block';
+document.getElementById('purches').style.display='block';
+document.getElementById('boxtwo').style.display='none';
+document.getElementById('boxx').style.display='none';
+
+
+var purschssss = document.getElementById('purschssss');
+
+    $.ajax({
+    type: 'GET', 
+    url: '/profitdatails/'+ddd,
+    success: function (data) {
+    	
+ 
+      //  console.log("date add refurn value");
+       //  console.log(data);
+        var obj = JSON.parse(data);
+     for(var key in obj){
+     	
+     	// console.log("get data "+ddd);
+     	
+let nametrr = document.createElement('tr');
+     	
+    let siretdr = document.createElement('td');
+	let sirespanr = document.createElement('span');
+	sirespanr.innerHTML=key;
+	siretdr.appendChild(sirespanr);
+	nametrr.appendChild(siretdr);
 	
-	var proft = document.getElementById('proftgg');
-	let nametr = document.createElement('tr');
+     	
+     	
+     	
+     	
+     	
 	
+	let nametdr = document.createElement('td');
+	  let ar = document.createElement('a');
+	  ar.className="link"
+	  var dddr=obj[key].Recive_num;
+        ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
+	let namespanr = document.createElement('span');
+	namespanr.innerHTML=obj[key].product_Name;
+	ar.appendChild(namespanr);
 	
-	let siretd = document.createElement('td');
-	let sirespan = document.createElement('span');
-	sirespan.innerHTML="1";
-	siretd.appendChild(sirespan);
-	nametr.appendChild(siretd);
-	
-	
-	
-	
-	let nametd = document.createElement('td');
-	let namespan = document.createElement('span');
-	namespan.innerHTML="name";
-	nametd.appendChild(namespan);
-	nametr.appendChild(nametd);	
+	nametdr.appendChild(ar);
+	nametrr.appendChild(nametdr);	
 	
 	
 	
 
-	let datetd = document.createElement('td');
-	let datespan = document.createElement('span');
-	datespan.innerHTML="date";
-	datetd.appendChild(datespan);
-	nametr.appendChild(datetd);
+	let datetdr = document.createElement('td');
+	let datespanr = document.createElement('span');
+	datespanr.innerHTML=obj[key].product_unite;;
+	datetdr.appendChild(datespanr);
+	nametrr.appendChild(datetdr);
 	
 	
 	
 	
-	let saletd = document.createElement('td');
-	let salesspan = document.createElement('span');
-	salesspan.innerHTML="150tk";
-	saletd.appendChild(salesspan);
-	nametr.appendChild(saletd);
+	let saletdr = document.createElement('td');
+	let salesspanr = document.createElement('span');
+	salesspanr.innerHTML=obj[key].Sales_price+" tk";
+	saletdr.appendChild(salesspanr);
+	nametrr.appendChild(saletdr);
 
+	purschssss.appendChild(nametrr);	
+	
+	
+	
+     
+		}
+    },
+    error: function() { 
+
+    }
+});
 	
 	
 	
 	
-	proft.appendChild(nametr);
+	
+	
+	
+	
+	
+
 	
 	//var obj = JSON.parse(cart);	
 	//	for(var key in cart){
@@ -561,12 +650,92 @@ function tessst(){
 }
 
 
+function tessst(){
+	var proft = document.getElementById('proftgg');
+	var name,dates,salest;
+    $.ajax({
+    type: 'GET', 
+    url: '/profitshow',
+    success: function (data) {
+    	
+ 
+        console.log("date add refurn value");
+        // console.log(data);
+        var obj = JSON.parse(data);
+     for(var key in obj){
+     	
+ let nametr = document.createElement('tr');
+     	
+    let siretd = document.createElement('td');
+	let sirespan = document.createElement('span');
+	sirespan.innerHTML=key;
+	siretd.appendChild(sirespan);
+	nametr.appendChild(siretd);
+	
+     	
+     	
+	
+	let nametd = document.createElement('td');
+	let buttons = document.createElement('button');
+    var ddd=obj[key].Recive_number;
 
+      buttons.innerHTML=obj[key].Names;
+	  buttons.className="link";
+	  buttons.id=ddd;
+	  buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
+	
+	nametd.appendChild(buttons);
+	nametr.appendChild(nametd);	
+	
+	
+	
 
+	let datetd = document.createElement('td');
+	let datespan = document.createElement('span');
+	datespan.innerHTML=obj[key].Date;;
+	datetd.appendChild(datespan);
+	nametr.appendChild(datetd);
+	
+	
+	
+	
+	let saletd = document.createElement('td');
+	let salesspan = document.createElement('span');
+	salesspan.innerHTML=obj[key].Total_sales+" tk";
+	
+	
+	
+	
+	
+	saletd.appendChild(salesspan);
+	nametr.appendChild(saletd);
 
+	proft.appendChild(nametr);	
+     
+		}
+    },
+    error: function() { 
 
+    }
+});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-
+	
+	//var obj = JSON.parse(cart);	
+	//	for(var key in cart){
+	//		console.log(cart[key].qty);
+	//		console.log("hello"+key);
+	//	}	
+    // console.log(cart);
+}
 
 
 
@@ -585,10 +754,8 @@ var trs = document.getElementById('trs');
 var infomag = document.getElementById('infomag');
 var States = document.getElementById('States');
 var Payment = document.getElementById('Payment');
-
-
-
-
+var customername = document.getElementById('customername');
+var checkboxpises = document.getElementById('checkboxpises');
 
 
 
@@ -642,40 +809,92 @@ if (localStorage.getItem("cart")) {
    // console.log(JSON.stringify(cart));
 }
 
-
+cheackbox();
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 
   		
 function inputfunction(){    
 	
-	console.log("working");
-	
+console.log("working");
+
 const arrayLike = {
   "a": "a",
   "d": "b",
   length: 2,
 };
 	
-           var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-       	    $.ajax({
-                    url: 'hhhh',
-                    type: 'POST',
-                    data: {_token: CSRF_TOKEN, hello:arrayLike},
-                    dataType: 'JSON',
-                    success: function (data) { 
-                      //  $(".writeinfo").append(data.catagory_name); 
-                      //	var obj = JSON.parse(data);
-                       console.log(data);
-                    }
-                });   	
-           }
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+            url: 'hhhh',
+            type: 'POST',
+            data: {_token: CSRF_TOKEN, hello:arrayLike},
+            dataType: 'JSON',
+            success: function (data) { 
+              //  $(".writeinfo").append(data.catagory_name); 
+              //	var obj = JSON.parse(data);
+               console.log(data);
+            }
+        });   	
+   }
        
 
 
 
 
+ checkboxpises.onclick = function() {
+ 	
+ 	if(checkboxpises.checked==true){
+ 		customername.value="Unknown";
+ 		customername.disabled = true;
+ 	console.log("true");
+ 	}else{
+ 		customername.value="";
+        customername.disabled = false;
+ 	}
+ 	
+ }
 
+
+
+function cheackbox(){
+	
+	checkboxpises.checked=true; 
+if(checkboxpises.checked==true){
+ 		customername.value="Unknown";
+ 		customername.disabled = true;
+ 	console.log("true");
+ 	}else{
+ 		customername.value="";
+        customername.disabled = false;
+ 	}
+
+}
+
+
+function profitshow(){
+	var Product_name;
+    $.ajax({
+    type: 'GET', 
+    url: '/profitshow',
+    success: function (data) {
+    	
+        console.log("date add refurn value");
+        // console.log(data);
+        var obj = JSON.parse(data);
+     for(var key in obj){
+		console.log(obj[key].Recive_number);
+     
+		}
+    },
+    error: function() { 
+
+    }
+});
+    }
+
+
+//this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length end
 
 
 
@@ -1167,31 +1386,15 @@ function purcheschack(id,qty,num){
     
     
     
-function profitshow(){
-	var Product_name;
-    $.ajax({
-    type: 'GET', 
-    url: '/profitshow',
-    success: function (data) {
-    	
-        console.log("date add refurn value");
-        // console.log(data);
-        var obj = JSON.parse(data);
-     for(var key in obj){
-		console.log(obj[key].Recive_number);
-     
-		}
-    },
-    error: function() { 
 
-    }
-});
-    }
     
-function profit_data_load(dis,sales,amount,num){
+function profit_data_load(dis,sales,amount,num,name){
+	
+	
+	
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/profiturl/'+dis+"/"+sales+"/"+amount+"/"+num,
+    url: '/profiturl/'+dis+"/"+sales+"/"+amount+"/"+num+"/"+name,
     success: function (data) {
     	
         console.log("date add refurn value");
@@ -1218,7 +1421,7 @@ document.body.style.overflow= "hidden";
 Payment.focus();
 document.getElementById('boxtwo').style.display='none';
 document.getElementById('boxx').style.display='block';
- 
+ document.getElementById('purches').style.display='none';
  
  
  
@@ -1227,7 +1430,11 @@ document.getElementById('boxx').style.display='block';
 
 
 function purchedata(){
-	
+var nameofcoustmor=customername.value; 
+if(nameofcoustmor==""){
+	nameofcoustmor="Unknown"
+}
+
 var minm = 100000000000; 
 var maxm = 999999999999;       
 var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
@@ -1235,7 +1442,7 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 	
 	
 	
-	profit_data_load(totaldiscout,nettkbal,profit,num);
+	profit_data_load(totaldiscout,nettkbal,profit,num,nameofcoustmor);
 	
 	for(var key in cart){
 		purcheschack(key,cart[key].qty,num);
@@ -1261,6 +1468,13 @@ function exit(){
     disinput.value="0";
 }
 
+function exittwo(){
+
+	document.getElementById('light').style.display='none';
+	document.getElementById('fade').style.display='none';
+    location.reload();
+}
+
 
 function failexit(){
 	document.getElementById('light').style.display='none';
@@ -1274,7 +1488,6 @@ function failexit(){
 
 
 function add_data(){
-	
 	for(var key in cart){
 		check(key,cart[key].qty);
 		var ffff=document.getElementById("n"+key);

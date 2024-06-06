@@ -20,7 +20,7 @@ use App\Http\Controllers\Postcontroller;
  
  
  
- Route::get('/report', [Postcontroller::class,'report'])->name('report');
+Route::get('/report', [Postcontroller::class,'report'])->name('report');
  
  
 
@@ -32,14 +32,17 @@ use App\Http\Controllers\Postcontroller;
 
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 
+Route::get('/salesshow', [Postcontroller::class,'sales_show']);
+
+Route::get('/profitdatails/{id}', [Postcontroller::class,'profitdatailsfun'])->name('profitdatailsname');
+
+
 Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
 Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
-Route::get('/profiturl/{dis}/{sales}/{amount}/{num}', [Postcontroller::class,'profit_add'])->name('profiturls');
+Route::get('/profiturl/{dis}/{sales}/{amount}/{num}/{name}', [Postcontroller::class,'profit_add'])->name('profiturls');
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 Route::post('/hhhh', [Postcontroller::class,'hhhttt'])->name('hh');
-
-
 
 
 

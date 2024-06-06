@@ -186,7 +186,7 @@ public function removedate($id,$qty){
  }
  
   
- public function profit_add($totaldiscout,$sales,$amount,$num){
+ public function profit_add($totaldiscout,$sales,$amount,$num,$name){
  	
  	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
@@ -204,7 +204,8 @@ public function removedate($id,$qty){
 		    $profitdata['Starf_Id']=Auth::user()->id;    
 		    $profitdata['Starf_Name']=Auth::user()->Name; 
 		    $profitdata['Outlet_Id']=Auth::user()->ShopID;    
-		    $profitdata['Outlet_Name']=Auth::user()->Shopname;
+		    $profitdata['Outlet_Name']=Auth::user()->Shopname; 
+		    $profitdata['Names']=$name;
            
             DB::table('profit_datails')->insert($profitdata); 
            	
@@ -226,9 +227,33 @@ public function removedate($id,$qty){
  	
  }
  
-  public function profit_show(){
-    $profit_show=DB::table('profit_datails')->get();
+public function profit_show(){
+    $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->limit(30)->get();
    echo json_encode($profit_show);
+  }
+  
+public function sales_show(){
+    $sales_show=DB::table('purches_list')->get();
+   echo json_encode($sales_show);
+  }
+  
+  
+public function profitdatailsfun($id){
+  
+    if(Auth::check()){	
+    	
+	    $profitdatailsfun=DB::table('purches_list')->where('Recive_num', $id)->get();	
+	    
+	    if(count($profitdatailsfun) === 0){				
+    			 $profitdatailsfun['message']='Exit';
+    		echo json_encode($profitdatailsfun);	   
+    		}
+    		else
+    		{
+    		 echo json_encode($profitdatailsfun);
+    		}
+    		
+		 }else{return view('login');}
   }
     
 public function searchidcan($id){
@@ -988,9 +1013,10 @@ public function sales(){
         if(Auth::check()){return view('deshboard.sales');}else{return view('login');}
 	}
 	
-public function home(){    
-        if(Auth::check()){return view('frontend.deshboard');}else{return view('login');}
-	}
+public function home(){ 
+   
+        if(Auth::check()){return view('frontend.deshboard');}else{return view('login');}   
+        	}
 				
 public function testssss(){    
         if(Auth::check()){return view('frontend.test');}else{return view('login');}

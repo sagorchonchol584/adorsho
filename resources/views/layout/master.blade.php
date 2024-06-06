@@ -419,6 +419,8 @@
 
 
 <script>
+
+/*
 document.addEventListener("keydown", e => {
     if(e.key === "A" || e.key === "a" ) {
       console.log("jghdfjghj");
@@ -432,7 +434,7 @@ document.addEventListener("keydown", e => {
       e.preventDefault()
     }
     
-  })
+  })*/
 </script>
 
 <header class="header body-pd " id="header">

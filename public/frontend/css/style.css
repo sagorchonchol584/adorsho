@@ -286,6 +286,17 @@
 	padding-left: 5px;
 	margin-top: 23px;
 }
+
+
+.link{
+font-size: 16px;
+text-decoration: none;
+color: black;
+font-weight: 500;
+border: none;
+background: none;
+	
+}
 @keyframes textclip {
   to {
     background-position: 200% center;
