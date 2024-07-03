@@ -45,8 +45,8 @@ public function removedate($id,$qty){
     			 $datess['message']='Exit';
     			 echo json_encode($datess);	   
     		}else{
-    		$Total_product;	
-    		$productt;
+
+    	
     		
            foreach($stockinfo as $row)
            {
@@ -81,16 +81,6 @@ public function removedate($id,$qty){
     			 $purcherdata['message']='Exit';
     			 echo json_encode($purcherdata);	   
     		}else{
-    			
-    		$product_price;
-    		$sales_price;
-    		$product_unite;
-    		$product_name;
-    		$profit;
-    		$per_pice_profit;
-    		$images;
-    		$expire_date;
-    		
            foreach($stockinfo as $row)
            {
            $product_name=$row->Product_name;
@@ -101,7 +91,6 @@ public function removedate($id,$qty){
            $images=$row->Image; 
            $expire_date=$row->Expire_date; 
            }
-    
            	$purcherdata['customer_id']="50"; 
            	$purcherdata['customer_name']="customer_name"; 
            	$purcherdata['product_Name']=$product_name; 
@@ -113,12 +102,12 @@ public function removedate($id,$qty){
            	$purcherdata['Recive_num']=$num;	
            	$purcherdata['profit_to_Pruduct']=$profit; 
            	$purcherdata['prodcut_Exp_date']=$expire_date; 
-         	$purcherdata['purches_date']=date("Y-m-d");   
-		    $purcherdata['Admin_Id']=Auth::user()->AdminKey;
-		    $purcherdata['Starf_Id']=Auth::user()->id;    
-		    $purcherdata['Starf_Name']=Auth::user()->Name; 
-		    $purcherdata['Outlet_Id']=Auth::user()->ShopID;    
-		    $purcherdata['Outlet_Name']=Auth::user()->Shopname;
+          	$purcherdata['purches_date']=date("Y-m-d");   
+		        $purcherdata['Admin_Id']=Auth::user()->AdminKey;
+		        $purcherdata['Starf_Id']=Auth::user()->id;    
+		        $purcherdata['Starf_Name']=Auth::user()->Name; 
+		        $purcherdata['Outlet_Id']=Auth::user()->ShopID;    
+		        $purcherdata['Outlet_Name']=Auth::user()->Shopname;
 
            	
            	
@@ -267,8 +256,6 @@ public function searchidcan($id){
     			 $datess['message']='Exit';
     			 echo json_encode($datess);	   
     		}else{
-    		$Total_product;	
-    		$productt;
          	foreach($stockinfo as $row)
           {
            $Total_product=$row->Total_product;
@@ -376,10 +363,7 @@ public function Stock_Info_add(Request $reqs){
       $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
 
 	  $total_row = $data->count();
-	  $Total_product;
-	  $loadeddate;
-	  $shopidload;
-	  $barcodes;
+
 	  $ndate=date_create($reqs->Expire_date);	
 	  $newdate=date_format($ndate,"Y-m-d");
 
@@ -549,8 +533,6 @@ public function customer_Data_add(Request $req){
  
 
  
- 
- 
 //this purpose this product add and show update etc  
 public function product_add(Request $reqs){	
 
@@ -635,21 +617,16 @@ if ($validator->fails()) {
 
   } 
       
-public function imagesss(Request $request){
-    	
-    $validator = Validator::make($request->all(), ['image' => 'required|image|mimes:png,jpg,jpeg|max:200',]);
-
-        if ($validator->fails()) {
-            return response()
-                ->json([
-                    'success' => false,
-                    'error' =>  $validation->errors()->first()
-                ]);
-        }
-
-     
-    
-    }     
+// public function imagesss(Request $request){
+//      $validator = Validator::make($request->all(), ['image' => 'required|image|mimes:png,jpg,jpeg|max:200',]);
+//       if ($validator->fails()) {
+//             return response()
+//                 ->json([
+//                     'success' => false,
+//                     'error' =>  $validation->errors()->first()
+//                 ]);
+//         }
+//     }     
     
     
     
@@ -734,10 +711,7 @@ public function catagoryshow(){
 		}
   }
  
-
-
-
-   
+ 
     
     
     
@@ -923,11 +897,6 @@ public function customRegistration(Request $require){
 
 
 
-
-
-
-
-
 //test purpose 
 public function delete($id){	
   
@@ -1014,9 +983,8 @@ public function sales(){
 	}
 	
 public function home(){ 
-   
         if(Auth::check()){return view('frontend.deshboard');}else{return view('login');}   
-        	}
+  }
 				
 public function testssss(){    
         if(Auth::check()){return view('frontend.test');}else{return view('login');}

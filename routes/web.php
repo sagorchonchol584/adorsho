@@ -24,10 +24,6 @@ Route::get('/report', [Postcontroller::class,'report'])->name('report');
  
  
 
-
-
-
-
 // test perpos user route
 
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
@@ -119,10 +115,10 @@ Route::get('/home', [Postcontroller::class,'home'])->name('home');
 Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
 Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');
 Route::get('/chonchol',[Postcontroller::class,'datasho'])->name('chonchol');
-Route::post('/reverse-me', function (Request $request) {
-  $reversed = strrev($request->input('reverse_this'));
-  return $reversed;
-});
+
+//Route::post('/reverse-me', function (Request $request) {$reversed = strrev($request->input('reverse_this'));return $reversed;});
+
+
 Route::get('/hello', function () {
      return "nooooo";
  });

@@ -55,6 +55,9 @@
 .h-50{
 	height: 50px;
 }
+.h-60{
+	height: 50px;
+}
 .h-80{
 	height: 80px;
 }
@@ -303,12 +306,59 @@ background: none;
   }
 }
 
-  @keyframes textcliptwo {
+@keyframes textcliptwo {
   to {
     background-position: 200% center;
   }
 }
 
+
+
+
+
+/* this is a universel style*/
+.breade_color
+{
+		font-size: 25px;
+		color: #484F56;
+}
+	
+.breade{
+		font-size: 20px;
+		color: #484F56;
+}
+.breaderr{
+		font-size: 13px;
+		color: #484F56;
+	}
+	
+
+	
+	.top_breadc{
+		height: 80px;
+		width: 100%;
+	  background: #FFFFFF;
+	 /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+	}
+	
+	.top_breadcone{
+		height: 50px;
+		width: 50px;;
+		float: left;	
+		padding-top:8px;	
+	}
+	
+	.top_breadctwo{
+		height: 30px;
+		width:500px;
+		float: left;
+		padding-left:8px;	
+	
+	}
+	
+	.shodows{
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	}
 
 
 
