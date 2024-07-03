@@ -54,7 +54,7 @@
 	<div class="container">
 	 <div class="bg-blue  card-btm-border card-boder ">
 	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card">
-	   <h3 class="text-center ">Wellcome </br> to </br> Shop name</h3>
+	   <h3 class="text-center ">Sales to Today</h3>
 	   </div>
 	 </div>
 	</div>
@@ -106,10 +106,10 @@
 
 <div class="row">
 	<div class="col-9 h-500">
-		<a href="{{ route('home')}}"  class="textand" >home</a>
-		<a href="{{ route('product')}}"  class="textand" >product</a>
-		<a href="{{ route('oder')}}"  class="textand" >oder</a>
-		<a href="{{ route('customer')}}"  class="textand" >customer</a>
+		<a href="{{route('home')}}"  class="textand" >home</a>
+		<a href="{{route('product')}}"  class="textand" >product</a>
+		<a href="{{route('oder')}}"  class="textand" >oder</a>
+		<a href="{{route('customer')}}"  class="textand" >customer</a>
 
 		<h1>Deshboard page</h1>
 		

@@ -115,7 +115,7 @@
 <div class="form_hand card">
 <div class="p-5 col-6">
 
-<form action="{{ route('customerdateAdd')}}" id="myForm" method="post">
+<form action="{{route('customerdateAdd')}}" id="myForm" method="post">
   <?php echo csrf_field(); ?>
   <div class="form-group">
     <input type="text" class="form-control" id="Name" name="customer_name" aria-describedby="emailHelp" placeholder="Name" required>
