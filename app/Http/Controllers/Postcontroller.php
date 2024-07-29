@@ -219,8 +219,75 @@ public function removedate($id,$qty){
 public function profit_show(){
     $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->limit(30)->get();
    echo json_encode($profit_show);
-  }
+}
   
+public function month_profit(){
+  if(Auth::check()){
+    
+    $Total_product=0;
+    $datee=date("Y-m-d");
+    $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
+    foreach($tk_show as $row)
+    {
+     $Total_product+=$row->Total_sales;
+    }
+    echo json_encode($Total_product);
+    
+    }else{
+      
+      $datess['message']="Please contract administration ";
+      echo json_encode($datess); 
+     
+    }
+}
+
+
+
+public function totalproduct(){
+  if(Auth::check()){
+    $ids = Auth::user()->ShopID;
+    $Totalproduct=0;
+   // $datee=date("Y-m-d");
+    $tk_show=DB::table('stock_info')->where('Outlet_Id', $ids)->get();
+    foreach($tk_show as $row)
+    {
+    // $Total_product=$row->Total_sales;
+     $Totalproduct++;
+    }
+    echo json_encode($Totalproduct);
+    
+    }else{
+      
+      $datess['message']="Please contract administration ";
+      echo json_encode($datess); 
+     
+    }
+}
+
+
+
+public function company_value(){
+  if(Auth::check()){
+    
+    $Total_product=0;
+    $datee=date("Y-m-d");
+    $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
+    foreach($tk_show as $row)
+    {
+     $Total_product+=$row->Total_sales;
+    }
+    echo json_encode($Total_product);
+    
+    }else{
+      
+      $datess['message']="Please contract administration ";
+      echo json_encode($datess); 
+     
+    }
+}
+
+
+
 public function sales_show(){
     $sales_show=DB::table('purches_list')->get();
    echo json_encode($sales_show);
@@ -259,12 +326,12 @@ public function searchidcan($id){
          	foreach($stockinfo as $row)
           {
            $Total_product=$row->Total_product;
-           }
+          }
            
            if($Total_product<=0){
-           	     $datess['message']='Exit';
-           	     $datess['data']='NO';
-    			 echo json_encode($datess);	 
+           	  $datess['message']='Exit';
+           	  $datess['data']='NO';
+    			  echo json_encode($datess);	 
            }else{
            	
            	$productt=$Total_product-1;
@@ -274,7 +341,7 @@ public function searchidcan($id){
            	
            }
     		}
-    		
+	
     		
     			
        }
@@ -358,14 +425,12 @@ public function Stock_Info_add(Request $reqs){
   if(Auth::check()){ 
   
   
-     $ShopID = Auth::user()->ShopID;
-  
-      $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
-
+    $ShopID = Auth::user()->ShopID;
+    $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
 	  $total_row = $data->count();
-
 	  $ndate=date_create($reqs->Expire_date);	
 	  $newdate=date_format($ndate,"Y-m-d");
+
 
       if($total_row > 0)
       {
@@ -378,7 +443,6 @@ public function Stock_Info_add(Request $reqs){
        }
        
        if($Total_product<=0){
-       	 	
        $datess['Total_product']=$reqs->Product_units;  
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;

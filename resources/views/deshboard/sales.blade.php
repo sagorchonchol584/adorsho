@@ -92,7 +92,7 @@
 	
 	0% {
 		
-		scale(.7);
+		scale(0.7);
 		opacity: 0;
 	}
 	45% {
@@ -102,7 +102,7 @@
 	}
 	80% {
 	
-		scale(.95);
+		scale(0.95);
 	}
 	100% {
 		
@@ -355,7 +355,7 @@ top:20%;
 		height: 80px;
 		width: 100%;
 	  background: #FFFFFF;
-	 // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 	}
 	
 	.top_breadcone{
@@ -593,7 +593,7 @@ let nametrr = document.createElement('tr');
 	  let ar = document.createElement('a');
 	  ar.className="link"
 	  var dddr=obj[key].Recive_num;
-        ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
+  ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
 	let namespanr = document.createElement('span');
 	namespanr.innerHTML=obj[key].product_Name;
 	ar.appendChild(namespanr);

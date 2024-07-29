@@ -118,7 +118,7 @@
 		height: 80px;
 		width: 100%;
 	  background: #FFFFFF;
-	 // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 	}
 	
 	.top_breadcone{
@@ -290,27 +290,21 @@
    	var PurchesPrice=document.getElementById('PurchesPrice');
    	var Selesprice=document.getElementById('Selesprice');
    	var productdiscout=document.getElementById('productdiscout'); 
-   
+    var idddd=document.getElementById('product_barcode');
+    var productname=document.getElementById('productname');	
+    var frame=document.getElementById('frame');
+    var ischeckbox1=document.getElementById('inlineCheckbox1'); 	
+    var checkboxpises=document.getElementById('checkboxpises'); 
+    var pieces=document.getElementById('pieces'); 
+    var available=document.getElementById('available');   
+    var esxpire_date=document.getElementById('expire_date');	
+    var inputdd=document.getElementById('inputdd'); 
+
+    var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
+    var total_product,prises,exprie_date;
+          
+    
 	
-
-
-     	var idddd=document.getElementById('product_barcode');
-     	var productname=document.getElementById('productname');	
-     	var frame=document.getElementById('frame');
-     	var ischeckbox1=document.getElementById('inlineCheckbox1'); 
-     	
-     	
-     	 var checkboxpises=document.getElementById('checkboxpises'); 
-     	  var pieces=document.getElementById('pieces'); 
-     	   var available=document.getElementById('available'); 
-     	 
-     	  
-     	  var esxpire_date=document.getElementById('expire_date');	
-     	  var inputdd=document.getElementById('inputdd'); 
-          var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-          var total_product,prises,exprie_date;
-          
-          
      idddd.focus();
 
 
@@ -318,30 +312,27 @@
      $(document).ready(function (e) {
  	 $("#uploadFormbar").on('submit',(function(e) {
 		e.preventDefault();		
-	
 
-	
-	
 		$.ajax({
         type: 'GET',
         url: 'barcode/' + idddd.value,
- 
+
         beforeSend: function() { 	
            hidddenshow();
         },            
-      complete: function() {
+        complete: function() {
           hiddden();
        },
-        
+
 		success: function(data)
 	    {
 		   	 
 		var obj = JSON.parse(data);
 		if(obj.message=="Exit"){
-				frame.src = "{{asset('frontend/img/demo.jpg')}}";
-				orrning("Not Found Data");
-				productname.value="";
-				idddd.value="";
+			frame.src = "{{asset('frontend/img/demo.jpg')}}";
+			orrning("Not Found Data");
+			productname.value="";
+			idddd.value="";
 				//idddd.focus();
 		}else{
 					
@@ -358,36 +349,31 @@
 	    total_product=obj[key].Total_product; 
 	    prises=obj[key].pieces; 
 	    exprie_date=obj[key].Expire_date;
-        console.log(total_product);
-        
+       // console.log(total_product);
         Selesprice.value=obj[key].Sales_Price; 
         PurchesPrice.value=obj[key].Purches_Price;
 		}
 		
 		
 		
-		
+
 	    if(total_product==null){
 		//console.log(total_product);
 		available.innerHTML="";
-	    }else{
-	    	
+	    }else
+		{	
 	    	available.innerHTML="Product is Available: "+total_product;
-	    	esxpire_date.value=exprie_date;
-	    	
-	    	
-	    	if(total_product==0){
+	    	esxpire_date.value=exprie_date;		
+			if(total_product==0){
 	    		esxpire_date.disabled=false;
 	    	}else{
 	    	    esxpire_date.disabled=true;
 	    	    $(".addd").hide();
-	    	}
-	    		
-	    	
+	    	}	
+
 	    	if(prises=="0"){
 	    		
-	    		//esxpire_date.disabled=false;
-	    		
+	    		//esxpire_date.disabled=false;	
 	    	}else{
 	    		pieces.type="text";
 	    		pieces.value=prises;
@@ -396,7 +382,6 @@
 	    }
 	
 	    
-	
 		}
 		
 		},
@@ -416,28 +401,27 @@
  var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
       
     
-        
-      
-     $(document).ready(function (e) {
+    $(document).ready(function (e) {
 	$("#uploadFormstock").on('submit',(function(e) {
-		e.preventDefault();		
-			
-		//----------------------------------
-
+		e.preventDefault();			
+	  //----------------------------------
 	  const formData = new FormData(this);
 		//console.log("test "+unlimitesdate);
-	
 	if(!productname.value==""){
 		
-	
-	
-	
 	if(!idddd.value==" "){
 		console.log("date ");
 		
-	
+
+		console.log("purchess"+PurchesPrice.value<Selesprice.value);
+		console.log("salse"+Selesprice.value);
+
 	if(PurchesPrice.value<Selesprice.value)
 	{
+		errrrr("done to work");
+
+		/*
+
 		total_prire=(PurchesPrice.value*productunity.value);
 	if(unlimitesdate==""){	
 		console.log("Unlimited inviled");
@@ -494,9 +478,14 @@
     	} 	        
         });							
 		}
+
+
+*/
+
 		 }
 		 else
 		 { 
+		
 		 errrrr("Purchase price more than sales price");
 		 }
 		 
