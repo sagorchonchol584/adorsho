@@ -3,7 +3,7 @@
 		<link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('frontend/css/sidebar.css') }}" rel="stylesheet">
-		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
 		<script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"> </script>	
 		<script src="{{ asset('frontend/js/sweetalert.min.js') }}"> </script>	
 	    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>

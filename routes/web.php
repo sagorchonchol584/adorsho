@@ -36,7 +36,7 @@ Route::get('/salesshow', [Postcontroller::class,'sales_show']);
 Route::get('/profitdatails/{id}', [Postcontroller::class,'profitdatailsfun'])->name('profitdatailsname');
 Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
 Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
-Route::get('/profiturl/{dis}/{sales}/{amount}/{num}/{name}', [Postcontroller::class,'profit_add'])->name('profiturls');
+Route::get('/profiturl/{discat}/{dis}/{sales}/{amount}/{num}/{name}', [Postcontroller::class,'profit_add'])->name('profiturls');
 
 
 

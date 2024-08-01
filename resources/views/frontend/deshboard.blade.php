@@ -80,7 +80,7 @@
 	<div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75">
 	   <span class="text-left fw-bold text-black-50">TOTAL PRODUCT</span>
 	   <span class=" text-left fw-bold fs-1">
-	   <span id="product">Loading..</span>
+	   <span id="producta">Loading..</span>
 	  
 	   </span>
 
@@ -109,7 +109,11 @@
    <div class="container">
 	<div class="bg-green  card-btm-border card-boder ">
 	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75 ">
-	  <span class="text-left text-center fw-bold text-black-50">NEW EMPLOYEES</span>
+	  <span class="text-left text-center fw-bold text-black-50">TOTAL PRODUCT</span>
+	  <span class=" text-left fw-bold fs-1">
+	   <span id="product">Loading..</span>
+	  
+	   </span>
 	  </div>
 	 </div>
    </div>

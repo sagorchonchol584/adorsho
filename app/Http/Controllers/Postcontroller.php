@@ -175,28 +175,29 @@ public function removedate($id,$qty){
  }
  
   
- public function profit_add($totaldiscout,$sales,$amount,$num,$name){
+ public function profit_add($discats,$totaldiscout,$sales,$amount,$num,$name){
  	
  	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
     	$outlet_Id_user = Auth::user()->ShopID;
     	
-           	$profitdata['Recive_number']=$num; 
-           	$profitdata['totaldiscout']=$totaldiscout; 	
-           	$profitdata['Profit']=$amount; 		
-           	$profitdata['Net_Profit']=$amount-$totaldiscout; 	
-           	$profitdata['Total_sales']=$sales+$totaldiscout; 	
-           	$profitdata['Net_Sale']=$sales; 
-           	$profitdata['show_key']=0; 
-         	$profitdata['Date']=date("Y-m-d");   
+        $profitdata['Recive_number']=$num; 
+        $profitdata['totaldiscout']=$totaldiscout; 	
+        $profitdata['Profit']=$amount; 		
+        $profitdata['Net_Profit']=$amount-$totaldiscout; 	
+        $profitdata['Total_sales']=$sales+$totaldiscout; 	
+        $profitdata['Net_Sale']=$sales; 
+        $profitdata['show_key']=0; 
+        $profitdata['Date']=date("Y-m-d");   
 		    $profitdata['Admin_Id']=Auth::user()->AdminKey;
 		    $profitdata['Starf_Id']=Auth::user()->id;    
 		    $profitdata['Starf_Name']=Auth::user()->Name; 
 		    $profitdata['Outlet_Id']=Auth::user()->ShopID;    
 		    $profitdata['Outlet_Name']=Auth::user()->Shopname; 
 		    $profitdata['Names']=$name;
+        $profitdata['Discount_type']=$discats;
            
-            DB::table('profit_datails')->insert($profitdata); 
+        DB::table('profit_datails')->insert($profitdata); 
            	
       	echo json_encode($profitdata);
            
@@ -217,7 +218,8 @@ public function removedate($id,$qty){
  }
  
 public function profit_show(){
-    $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->limit(30)->get();
+  $datee=date("Y-m-d");
+    $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->where('Date', $datee)->get();
    echo json_encode($profit_show);
 }
   
@@ -348,14 +350,16 @@ public function searchidcan($id){
   }
   
 public function barcodes($id){
+
 	  if(Auth::check()){
+
     	$ids = Auth::user()->Shop_cat_id;
     	$outlet_Id_user = Auth::user()->ShopID;
     				
-	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
-         $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
-      
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();	
+
     		if(count($stockinfo) === 0){
+          $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
     			if(count($reults) === 0){		
     			 $datess['message']='Exit';
     			 echo json_encode($datess);		 
@@ -366,10 +370,15 @@ public function barcodes($id){
     		}else{
     			echo json_encode($stockinfo);
     		}
-    		
-    		
     			
+
+
+
+       }else{
+        return view('login');
        }
+
+       
   }
     
     
@@ -419,9 +428,7 @@ public function stockaddfuntion(){
   }
   
 public function Stock_Info_add(Request $reqs){
-  	
-  
-  
+ 
   if(Auth::check()){ 
   
   
@@ -452,14 +459,14 @@ public function Stock_Info_add(Request $reqs){
        $datess['Expire_date']=$reqs->Expire_date; 
         
         if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
        }
        
       if($reqs->pieces=="empty"){
-	   $datess['pieces']="0";
+	       $datess['pieces']="0";
         }
        else{
 	 $datess['pieces']=$reqs->pieces;
@@ -484,7 +491,7 @@ public function Stock_Info_add(Request $reqs){
 
  
        if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
@@ -532,7 +539,7 @@ public function Stock_Info_add(Request $reqs){
        
          
       if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
@@ -621,7 +628,7 @@ if ($validator->fails()) {
        $datess['Product_name']=$reqs->Product_name;
           
        if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;

@@ -87,7 +87,7 @@
 	border: none;
 }
 
-
+/*
 @keyframes fadeIn {
 	
 	0% {
@@ -109,7 +109,9 @@
 		scale(1);
 	}     
   
+ 
 }
+   */
 	.exitdd{
 		height: 50px;
 		width: 100%;
@@ -184,7 +186,7 @@ top:20%;
   <tbody>
     <tr>
       <td>Total price :</td> 
-      <td><span id="totals""></span></td>
+      <td><span id="totals"></span></td>
     </tr>
     <tr id="trs">
       <td >Discount : 
@@ -230,7 +232,6 @@ top:20%;
  
 <div class="box" id="boxtwo">
  <div class="maindailoboax">
- 
   <div class="exitdd">
   	<div class="gggg">
   	<button class="ddd"  onclick="failexit()"><span style="color: white">X</span></button>
@@ -283,29 +284,45 @@ top:20%;
 
 <style>
 	.purchh{
-		height: 350px;
+		height: 400px;
 		width: 100%;
-	
+    background-color: #484F56;
 	}
-	
-	
 
+  .boxr {
+  height: 600px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+.popoo{
+    height: 100px;
+    width: 100%;
+    background-color: red;
+  }
 </style>
 
-<div class="box" id="purches">
+<div class="boxr" id="purches">
  <div class="purchestwo">
 
   <div class="exitdd">
-  	<div class="gggg" ">
-  	
-  	<button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
-   </div>
+  	<div class="gggg">
+  	 <button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
+    </div>
   </div>
   
-    <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
-<div class="purchh table-wrapper-scroll-y my-custom-scrollbar">
+  <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
 
-<table class="table table-striped">
+<div class="purchh">
+<table class="">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -315,16 +332,13 @@ top:20%;
     </tr>
   </thead>
   <tbody id="purschssss">
-  
-   
-   
    
   </tbody>
 </table>
-
-
 </div>
-
+<div class="popoo">
+  <h2>hello</h2>
+</div>
 </div>
 </div>
 
@@ -370,6 +384,7 @@ top:20%;
 		width:500px;
 		float: left;
 		padding-left:8px;	
+  
 		
 	}
 	
@@ -536,10 +551,11 @@ display: block;
       <th scope="col">#</th>
       <th scope="col">BarCode</th>
       <th scope="col">Date</th>
+      <th scope="col">Discount</th>
       <th scope="col">Sales</th>
     </tr>
   </thead>
-  <tbody id="proftgg">
+  <tbody id="proftgg" style="text-align: right">
    
   </tbody>
 </table>
@@ -657,32 +673,29 @@ function tessst(){
     type: 'GET', 
     url: '/profitshow',
     success: function (data) {
-    	
- 
-        console.log("date add refurn value");
+      console.log("date add refurn value");
         // console.log(data);
-        var obj = JSON.parse(data);
+     var obj = JSON.parse(data);
      for(var key in obj){
      	
  let nametr = document.createElement('tr');
      	
-    let siretd = document.createElement('td');
+  let siretd = document.createElement('td');
 	let sirespan = document.createElement('span');
 	sirespan.innerHTML=key;
 	siretd.appendChild(sirespan);
 	nametr.appendChild(siretd);
 	
      	
-     	
-	
+    
 	let nametd = document.createElement('td');
 	let buttons = document.createElement('button');
-    var ddd=obj[key].Recive_number;
+  var ddd=obj[key].Recive_number;
 
-      buttons.innerHTML=obj[key].Names;
-	  buttons.className="link";
-	  buttons.id=ddd;
-	  buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
+  buttons.innerHTML=obj[key].Names;
+	buttons.className="link";
+	buttons.id=ddd;
+	buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
 	
 	nametd.appendChild(buttons);
 	nametr.appendChild(nametd);	
@@ -695,6 +708,15 @@ function tessst(){
 	datespan.innerHTML=obj[key].Date;;
 	datetd.appendChild(datespan);
 	nametr.appendChild(datetd);
+
+
+
+
+  let disc = document.createElement('td');
+	let discspan = document.createElement('span');
+	discspan.innerHTML=obj[key].totaldiscout+" "+obj[key].Discount_type;
+	disc.appendChild(discspan);
+	nametr.appendChild(disc);
 	
 	
 	
@@ -773,6 +795,7 @@ let disconttk=0;
 let disconttkPayment=0;
 let nettkbal=0;
 let totaldiscout=0;
+let discount_cat;
 
 
 if (localStorage.getItem("count")) {
@@ -1102,7 +1125,7 @@ let nettr = document.createElement('tr');
      
      
      let nettdfour = document.createElement("td");
-      nettdfour.className="tatols"
+     nettdfour.className="tatols"
     const netsapnfour = document.createElement('span');
      netsapnfour.textContent =nettkbal+" Tk"; 
      nettdfour.appendChild(netsapnfour);
@@ -1149,9 +1172,7 @@ let printtrtwo = document.createElement('tr')
     const newBusstk = document.createElement('span');
      newBusstk.textContent =price; 
      printtdtk.appendChild(newBusstk);
-     printtr.appendChild(printtdtk);  
-     
-       
+     printtr.appendChild(printtdtk);    
      printbody.appendChild(printtr);
 		
 }
@@ -1214,6 +1235,7 @@ function totalAc(){
   	}else{
   		let g=Math.round(tatt);
   		totaldiscout=Math.round(dc);
+      discount_cat='%';
   		netss.textContent=g+"Tk";
   		nettkbal=g;
   		correctgg('');
@@ -1231,6 +1253,7 @@ function totalAc(){
   		netss.textContent=tatss+"Tk";
   		nettkbal=tatss;
   		totaldiscout=d;
+      discount_cat='TK';
   		correctgg('');
   	}
   }
@@ -1322,11 +1345,11 @@ $(document).ready(function (e) {
 		produ_id=obj[key].Barcode;
 		product_tittle=obj[key].Weight;
 		Image=obj[key].Image; 
-	    Sales_Price=obj[key].Sales_Price;  
-	    pieces=obj[key].pieces; 
-	    purches_Price=obj[key].Purches_Price; 
+	  Sales_Price=obj[key].Sales_Price;  
+	  pieces=obj[key].pieces; 
+	  purches_Price=obj[key].Purches_Price; 
       // console.log(obj[key].Product_name);
-        add(Sales_Price,Product_name,produ_id,Image,product_tittle,purches_Price);
+    add(Sales_Price,Product_name,produ_id,Image,product_tittle,purches_Price);
      
 		}	
 		}	
@@ -1388,13 +1411,13 @@ function purcheschack(id,qty,num){
     
 
     
-function profit_data_load(dis,sales,amount,num,name){
+function profit_data_load(discat,dis,sales,amount,num,name){
 	
 	
 	
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/profiturl/'+dis+"/"+sales+"/"+amount+"/"+num+"/"+name,
+    url: '/profiturl/'+discat+"/"+dis+"/"+sales+"/"+amount+"/"+num+"/"+name,
     success: function (data) {
     	
         console.log("date add refurn value");
@@ -1442,7 +1465,7 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 	
 	
 	
-	profit_data_load(totaldiscout,nettkbal,profit,num,nameofcoustmor);
+	profit_data_load(discount_cat,totaldiscout,nettkbal,profit,num,nameofcoustmor);
 	
 	for(var key in cart){
 		purcheschack(key,cart[key].qty,num);
@@ -1698,7 +1721,7 @@ function allfuncaliondata(){
     for (let id in cart) {
     let item = cart[id];
     let tr = document.createElement('tr')
-	 tr.id = "n"+id;
+	  tr.id = "n"+id;
 	
 	
 	

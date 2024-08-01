@@ -104,7 +104,7 @@
 	   <div class="input-group-prepend">
           <div class="input-group-text"><span class="text-primary" id="weightshow"> ± </span></div>
        </div>
-	          <input type="number" class="form-control" id="Weight" name="Weight" placeholder="Weight">
+	          <input type="number" class="form-control" id="Weight" name="Weight" placeholder="Weight" >
 	   <div class="input-group-prepend">
           <div class="input-group-text"><span class="text-primary" id="weightshow">gm</span></div>
        </div>
@@ -501,7 +501,7 @@ fetch_customer_data();
 		var size = formFile.files[0].size;
 		var extn = formFile.files[0].type.split('/')[1];
 	    var maxSize = 100000;
-	  	var valid = ["gif", "png", "jpg", "jpeg"];
+	  	var valid = ["gif", "png", "jpg", "jpeg","webp"];
 	    if (!valid.includes(extn)){
 		 
 	
@@ -530,14 +530,17 @@ fetch_customer_data();
        formData.append("Sub_Catagory", sub_category.value); 
        formData.append("Sub_to_sub_catagory", subtosutcatagory.value);
        
-       if(placehol.value==""){
+
+
+       if(placehol.value===""){
        	 formData.append("Weight", "empty");
+			console.log("empty");
        }else{
        	 formData.append("Weight", "± "+placehol.value+" gm");
        }
        
       
-			//	console.log("hello ");
+			
 				
 		$.ajax({
         url: "{{route('loader')}}",

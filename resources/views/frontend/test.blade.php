@@ -1,90 +1,124 @@
 @extends('layout.master')
 @section('content')
 
+<style>
+.box {
+	height: 100px;
+	width: 100px;
+	border-radius: 80%;
+	text-align: center;
+	border: 3px solid;
+	border-color: orange transparent;
+	animation: spin 1s infinite ease-out;
+  }
+  
+  @keyframes spin {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+	
+  }
+  
+  
+  .black_overlay {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .80;
+	filter: alpha(opacity=80);
+  }
+  .white_content {
+	display: none;
+	position: absolute;
+	top: 40%;
+	left:45%;
+	width: auto;
+	height: auto;
+	padding: 16px;
+   opacity: .80;
+   background-color:hsla(0,0%,0%,0.0);
+	opacity: .80;
+	z-index: 1002;
+  
+  }
+	  
+  .breade_color{
+	font-size: 25px;
+	color: #484F56;
+}
+
+	.breade{
+	font-size: 20px;
+	color: #484F56;
+}
+.breaderr{
+	font-size: 13px;
+	color: #484F56;
+}
+
+
+
+.top_breadc{
+	height: 80px;
+	width: 100%;
+  background: #FFFFFF;
+
+}
+
+.top_breadcone{
+	height: 50px;
+	width: 50px;;
+	float: left;	
+	padding-top:8px;	
+}
+
+.top_breadctwo{
+	height: 30px;
+	width:500px;
+	float: left;
+	padding-left:8px;	
+
+}
+
+.shodows{
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.headertable{	
+	text-align: center;
+	height: 50px;
+	background-color: #ffffffff;
+}
+</style>
 <div class="row">
 <div class="col-12 h-80">
-				
-<div class="top_breadc">
+  <div class="top_breadc">
 	<div class="top_breadcone"><i class='bx bxs-dashboard bx-lg card' ></i></div>
 	  <div class="top_breadctwo">
 	    <span class="breade_color">Stock page</span>
 		<p class="breaderr">This is Stock page add information hole store.</p>   
       </div>
 </div>	
-	</div>
-   </div>
-    <div class="row">
-	<div class="col-8 h-500">
-	
-	
-	
-	
-	
-	
-<style>
+</div> 
+</div> 
 
-.box {
-  height: 100px;
-  width: 100px;
-  border-radius: 80%;
-  text-align: center;
-  border: 3px solid;
-  border-color: orange transparent;
-  animation: spin 1s infinite ease-out;
-}
+<div class="row"> 
+<div class="col-8 h-500"> 
+  <div id="light" class="white_content"> 
+   <div class="box"></div> 
+    </div> 
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-  
-}
-
-
-.black_overlay {
-  display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1001;
-  -moz-opacity: 0.8;
-  opacity: .80;
-  filter: alpha(opacity=80);
-}
-.white_content {
-  display: none;
-  position: absolute;
-  top: 40%;
-  left:45%;
-  width: auto;
-  height: auto;
-  padding: 16px;
- opacity: .80;
- background-color:hsla(0,0%,0%,0.0);
-  opacity: .80;
-  z-index: 1002;
-
-}
-	
-</style>
-    
-    
-    
-
-  <div id="light" class="white_content">
-  <div class="box"></div>
-  </div>
-  <div id="fade" class="black_overlay"></div> 
-    
-
-	
-
+<div id="fade" class="black_overlay"></div>  
+     
 <!--This is a follder opening show -->
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
@@ -96,73 +130,18 @@
 </ol>
 </nav>
 
-<style>
-	
-	.breade_color{
-		font-size: 25px;
-		color: #484F56;
-	}
-	
-		.breade{
-		font-size: 20px;
-		color: #484F56;
-	}
-	.breaderr{
-		font-size: 13px;
-		color: #484F56;
-	}
-	
-
-	
-	.top_breadc{
-		height: 80px;
-		width: 100%;
-	  background: #FFFFFF;
-
-	}
-	
-	.top_breadcone{
-		height: 50px;
-		width: 50px;;
-		float: left;	
-		padding-top:8px;	
-	}
-	
-	.top_breadctwo{
-		height: 30px;
-		width:500px;
-		float: left;
-		padding-left:8px;	
-	
-	}
-	
-	.shodows{
-		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	
-	}
-	
-	
-</style>
-
-
-
-
 
 <div class="px-4 col-6 card p-3">
+  <span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
+    <form id="uploadFormbar">
+     <?php echo csrf_field(); ?>
+     <div class="form-group">
+       <label for="exampleInputName">Barcode</label>
+        <input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
+     </div> 
+    </form>
 
-
-<span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
-
- <form id="uploadFormbar">
- <?php echo csrf_field(); ?>
-  <div class="form-group">
-  <label for="exampleInputName">Barcode</label>
-<input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
-  </div> 
- </form>
-  
 <div class="form-group">
-
 <div class="form-row">
 	<div class="form-group col-md-8 p-2 "> 
 		<div class="form-group">
@@ -172,33 +151,24 @@
 		</div> 
 	</div>
  
- <div class="form-group col-md-4 "> 
+
+<div class="form-group col-md-4 "> 
   <div class="form-group">
-  
 <div class="form-row pricsss">
 	<div class="form-group col-md-3 p-1"> 
 		<div class="form-group">
 		  <input type="checkbox"  id="checkboxpises" class="form-check-input" style="width: 25px; height: 25px;">
 		</div> 
 	</div>
- 
- <div class="form-group col-md-9 p-1 "> 
- <div class="form-group" style="height: 30px;">
-  <input type="hidden" class="form-control" placeholder="pieces" name="pieces" id="pieces"/>
- </div> 
- </div>
-
-
+  <div class="form-group col-md-9 p-1 "> 
+    <div class="form-group" style="height: 30px;">
+      <input type="hidden" class="form-control" placeholder="pieces" name="pieces" id="pieces"/>
+    </div> 
+   </div>
 </div>
-  
-  
-  
- </div> 
- </div>
-
-
+</div> 
 </div>
-
+</div>
 </div> 
     
 
@@ -227,26 +197,21 @@
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-<input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
+       <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
        <br/> 
     </div>
  
   <div class="form-group col-md-6">
-   <label for="exampleInputName">Product Expire Date</label>
-    <input type="date"  class="form-control" id="expire_date"  name="Expire_date" >
-  <br/>
+    <label for="exampleInputName">Product Expire Date</label>
+     <input type="date"  class="form-control" id="expire_date"  name="Expire_date" ><br/>
     </div>
-    
-    <style>
 
-    </style>
     <div class="form-group col-md-6">
-    <div class="addd">
+     <div class="addd">
     	<label for="PurchesPrice" class="animate-charcter" style="color: red;">Unlimited date</label>
-     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 25px; height: 25px">
-
-    </div>  
-       <br/> 
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 25px; height: 25px">
+     </div>  
+     <br/> 
     </div>
  </div>
 </div>
@@ -407,20 +372,15 @@
 	  //----------------------------------
 	  const formData = new FormData(this);
 		//console.log("test "+unlimitesdate);
-	if(!productname.value==""){
+	if(!productname.value==" "){
 		
 	if(!idddd.value==" "){
-		console.log("date ");
-		
-
-		console.log("purchess"+PurchesPrice.value<Selesprice.value);
-		console.log("salse"+Selesprice.value);
-
-	if(PurchesPrice.value<Selesprice.value)
+	
+	if(parseInt(PurchesPrice.value)<parseInt(Selesprice.value))
 	{
-		errrrr("done to work");
+	//	errrrr("done to work");
 
-		/*
+		
 
 		total_prire=(PurchesPrice.value*productunity.value);
 	if(unlimitesdate==""){	
@@ -436,11 +396,12 @@
        formData.append("Weight", Weights);
       
       
-      if(Weights==" "){
+      if(Weights=="0"){
        	 formData.append("Weight", "empty");
+         console.log("weight of web");
        }else{
           formData.append("Weight", Weights);
-          console.log(Weights);
+		  console.log("weight of true"+Weights);
        }
     
     
@@ -451,6 +412,7 @@
        }
 	
 
+        //  console.log(formData.get("Weight"));
 			
 		$.ajax({
         url: "{{route('stockload')}}",
@@ -463,7 +425,6 @@
 	    	console.log(data);
 		const obj = JSON.parse(data);
 			
-		
 		if(obj.message=="Exit"){
 			 orrning("Barcode allready exit");	
 			  allclear();
@@ -480,12 +441,11 @@
 		}
 
 
-*/
 
 		 }
+
 		 else
 		 { 
-		
 		 errrrr("Purchase price more than sales price");
 		 }
 		 
@@ -537,7 +497,7 @@
 
 			if(cont_currentdata.getTime()<inputs.getTime()){
 	          unlimitesdate=esxpire_date.value;
-			  console.log(unlimitesdate); // 👉️ true
+			 // console.log(unlimitesdate); // 👉️ true
 			}else{
 			//console.log("this not right"); // 👉️ true
 			errrrr("Expire date Inviled")
@@ -700,17 +660,8 @@ ischeckbox1.onclick = function() {
  </div>
 
 </div>
-	<style>
-	
-		.headertable{	
-			text-align: center;
-			height: 50px;
-			background-color: #ffffffff;
-		}
-		
-	</style>
-<div class="col-4 h-750">
 
+<div class="col-4 h-750">
 </br>
 </br>
 
@@ -743,26 +694,19 @@ ischeckbox1.onclick = function() {
   </tbody>  
 </table>
 </div>	
-
 <div class="d-flex justify-content-center p-1"> </div>	
 </div>
-
-
-
-
-
 </div>
+
+
+
+
 <div class="row">
 	<div class="col-12 h-250">
-	
 	<div class="row">
-	<div class="col-6 h-300">
-		
-
-	</div>
-	<div class="col-6 h-300">
-		
-		
+	 <div class="col-6 h-300">
+	 </div>
+	<div class="col-6 h-300">		
 	</div>		
    </div>	
    </div>
