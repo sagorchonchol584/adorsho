@@ -66,7 +66,7 @@
  position: absolute;
  top:0;
  left:0;
- center:0;
+
  width: 100%;
  height: 100%;
  background-color:hsla(0,0%,0%,0.0);
@@ -283,14 +283,9 @@ top:20%;
 
 
 <style>
-	.purchh{
-		height: 400px;
-		width: 100%;
-    background-color: #484F56;
-	}
-
+	
   .boxr {
-  height: 600px;
+  height: 500px;
   width: 600px;
   margin: auto;
   border: 1px solid #555500ff;
@@ -304,15 +299,19 @@ top:20%;
   animation: fadeIn 0.5s ease-in-out forwards;
 }
 .popoo{
-    height: 100px;
+    height: 80px;
     width: 100%;
-    background-color: red;
+    background-color:  #e9e9e9;
   }
+ .purchestwosss{
+  height: 410px;
+  width: 100%;
+  overflow-y: scroll;
+ }
 </style>
 
 <div class="boxr" id="purches">
- <div class="purchestwo">
-
+ 
   <div class="exitdd">
   	<div class="gggg">
   	 <button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
@@ -321,8 +320,9 @@ top:20%;
   
   <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
 
-<div class="purchh">
-<table class="">
+  <div class="purchestwosss">
+  
+  <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -335,9 +335,14 @@ top:20%;
    
   </tbody>
 </table>
+
 </div>
 <div class="popoo">
-  <h2>hello</h2>
+<div class="col-6 h-80 text-md-end p-4">
+  <span id="discoutchack" style="color: black; font-size: 20px; font-weight: 500;">Discount:8%</span>
+</div>
+<div class="col-6  h-80 text-md-end p-4 color: red;">
+<span id="detailschack" style="color: black; font-size: 20px; font-weight: 500;">Total:38100 TK</span>
 </div>
 </div>
 </div>
@@ -526,13 +531,8 @@ display: block;
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
 		<button  id="ajax" class="btn btn-primary" onclick="continus()">Continuous</button>
-	
-		
 	</div>
-	
 </div>
-
-
 </div>
 </div>
 </div>
@@ -546,12 +546,12 @@ display: block;
 <div class="card saleslist table-wrapper-scroll-y my-custom-scrollbar">		
 <div class="p-2 ">	
 <table class="table table-striped">
-  <thead>
-    <tr>
+  <thead  style="text-align: right">
+    <tr >
       <th scope="col">#</th>
-      <th scope="col">BarCode</th>
+      <th scope="col">Sales Man</th>
       <th scope="col">Date</th>
-      <th scope="col">Discount</th>
+    <!--  <th scope="col">Discount</th> -->
       <th scope="col">Sales</th>
     </tr>
   </thead>
@@ -564,6 +564,10 @@ display: block;
   
   
 <script>
+
+var detailschack = document.getElementById('detailschack');
+var discoutchack = document.getElementById('discoutchack');
+
 
 tessst();
 
@@ -581,44 +585,45 @@ var purschssss = document.getElementById('purschssss');
     $.ajax({
     type: 'GET', 
     url: '/profitdatails/'+ddd,
-    success: function (data) {
-    	
- 
-      //  console.log("date add refurn value");
-       //  console.log(data);
-        var obj = JSON.parse(data);
-     for(var key in obj){
+    success: function (data, status) {
+    
+    var getdata = JSON.parse(data);
+    
+    
+    // this total show 
+    var objone = getdata.profit_with_discout;
+    for(var key in objone){
+     console.log(objone[key].Net_Sale);
+
+
+     detailschack.innerHTML="Total: "+objone[key].Total_sales+"Tk";
+     discoutchack.innerHTML="Discount: "+objone[key].Discount_type;
+     }
+
+  // this details show 
+
+  var obj = getdata.profitdatailsfun;
+
+  for(var key in obj){ 	
+  let nametrr = document.createElement('tr');
      	
-     	// console.log("get data "+ddd);
-     	
-let nametrr = document.createElement('tr');
-     	
-    let siretdr = document.createElement('td');
+  let siretdr = document.createElement('td');
 	let sirespanr = document.createElement('span');
 	sirespanr.innerHTML=key;
 	siretdr.appendChild(sirespanr);
 	nametrr.appendChild(siretdr);
 	
-     	
-     	
-     	
-     	
-     	
-	
+ 
 	let nametdr = document.createElement('td');
-	  let ar = document.createElement('a');
-	  ar.className="link"
-	  var dddr=obj[key].Recive_num;
-  ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
+	let ar = document.createElement('a');
+	ar.className="link"
+	var dddr=obj[key].Recive_num;
+ // ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
 	let namespanr = document.createElement('span');
 	namespanr.innerHTML=obj[key].product_Name;
 	ar.appendChild(namespanr);
-	
 	nametdr.appendChild(ar);
 	nametrr.appendChild(nametdr);	
-	
-	
-	
 
 	let datetdr = document.createElement('td');
 	let datespanr = document.createElement('span');
@@ -626,21 +631,18 @@ let nametrr = document.createElement('tr');
 	datetdr.appendChild(datespanr);
 	nametrr.appendChild(datetdr);
 	
-	
-	
-	
 	let saletdr = document.createElement('td');
 	let salesspanr = document.createElement('span');
 	salesspanr.innerHTML=obj[key].Sales_price+" tk";
 	saletdr.appendChild(salesspanr);
 	nametrr.appendChild(saletdr);
+	purschssss.appendChild(nametrr);	 
 
-	purschssss.appendChild(nametrr);	
-	
-	
-	
-     
+
+ 
+
 		}
+ 
     },
     error: function() { 
 
@@ -667,8 +669,10 @@ let nametrr = document.createElement('tr');
 
 
 function tessst(){
+
 	var proft = document.getElementById('proftgg');
 	var name,dates,salest;
+  
     $.ajax({
     type: 'GET', 
     url: '/profitshow',
@@ -692,7 +696,7 @@ function tessst(){
 	let buttons = document.createElement('button');
   var ddd=obj[key].Recive_number;
 
-  buttons.innerHTML=obj[key].Names;
+  buttons.innerHTML=obj[key].Starf_Name;
 	buttons.className="link";
 	buttons.id=ddd;
 	buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
@@ -711,14 +715,14 @@ function tessst(){
 
 
 
-
+/*
   let disc = document.createElement('td');
 	let discspan = document.createElement('span');
-	discspan.innerHTML=obj[key].totaldiscout+" "+obj[key].Discount_type;
+	discspan.innerHTML=obj[key].Discount_type;
 	disc.appendChild(discspan);
 	nametr.appendChild(disc);
 	
-	
+*/
 	
 	
 	let saletd = document.createElement('td');
@@ -778,6 +782,7 @@ var States = document.getElementById('States');
 var Payment = document.getElementById('Payment');
 var customername = document.getElementById('customername');
 var checkboxpises = document.getElementById('checkboxpises');
+
 
 
 
@@ -955,22 +960,15 @@ disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
 
 
 function printdatashow(){
-		
-		
-	//console.log(netss.innerText);
-		
-		
- let printbody = document.getElementById("printsbody");
+let printbody = document.getElementById("printsbody");
 let printtrtwo = document.createElement('tr');
 let printtrtthree = document.createElement('tr');
 let nettr = document.createElement('tr');
    
-    
+
     for (let id in cart) {
     let item = cart[id];
-    
     let printtr = document.createElement('tr')
-   
    
     let printtdname = document.createElement("td");
     const newBussname = document.createElement('span');
@@ -978,18 +976,11 @@ let nettr = document.createElement('tr');
      printtdname.appendChild(newBussname);
      printtr.appendChild(printtdname); 
    
-   
-   
-   
     let printtd = document.createElement("td");
     const newBuss = document.createElement('span');
      newBuss.textContent =item.qty; 
      printtd.appendChild(newBuss);
      printtr.appendChild(printtd);  
-     
-     
-    
-     
      
     let printtdtk = document.createElement("td");
     const newBusstk = document.createElement('span');
@@ -997,16 +988,11 @@ let nettr = document.createElement('tr');
      printtdtk.appendChild(newBusstk);
      printtr.appendChild(printtdtk);  
       
-      
     let printtdnet = document.createElement("td");
     const newBussnet = document.createElement('span');
      newBussnet.textContent =item.qty*item.price+" Tk"; 
      printtdnet.appendChild(newBussnet);
      printtr.appendChild(printtdnet);  
-     
-     
-    
-     
      printbody.appendChild(printtr);
 	}
 
@@ -1235,7 +1221,7 @@ function totalAc(){
   	}else{
   		let g=Math.round(tatt);
   		totaldiscout=Math.round(dc);
-      discount_cat='%';
+      discount_cat=disconttk+'%';
   		netss.textContent=g+"Tk";
   		nettkbal=g;
   		correctgg('');
@@ -1253,7 +1239,7 @@ function totalAc(){
   		netss.textContent=tatss+"Tk";
   		nettkbal=tatss;
   		totaldiscout=d;
-      discount_cat='TK';
+      discount_cat=s+'TK';
   		correctgg('');
   	}
   }
@@ -1474,7 +1460,12 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 		   }	
 		   
   //  console.log("uuu"+cart);
-	localStorage.clear();
+//	localStorage.clear();
+  localStorage.removeItem("cart");
+  localStorage.removeItem("sum");
+  localStorage.removeItem("profit");
+  localStorage.removeItem("count");
+
 	document.getElementById("sum").textContent ="0 Tk";
     document.getElementById("count").textContent = "Total Product: 0";
     continubtnone.disabled=true;
@@ -1518,11 +1509,20 @@ function add_data(){
 		   }	
 		   
   //  console.log("uuu"+cart);
-	localStorage.clear();
+	localStorage.removeItem("cart");
+  localStorage.removeItem("sum");
+  localStorage.removeItem("profit");
+  localStorage.removeItem("count");
+
+  // localStorage.setItem("cart", JSON.stringify(cart));
+  //  localStorage.setItem("sum", sum); 
+  //  localStorage.setItem("profit", profit);
+  //  localStorage.setItem("count", count);
+
 	document.getElementById("sum").textContent ="0 Tk";
-    document.getElementById("count").textContent = "Total Product: 0";
-    continubtnone.disabled=true;
-    clearbtn.disabled=true;
+  document.getElementById("count").textContent = "Total Product: 0";
+  continubtnone.disabled=true;
+  clearbtn.disabled=true;
    // 
    
 }
@@ -1693,6 +1693,7 @@ let printtrtwo = document.createElement('tr')
    
    
     localStorage.setItem("cart", JSON.stringify(cart));
+    
    // console.log(cart);
     
     updateCart();

@@ -174,18 +174,20 @@
 <div class="col-4 h-650">
 <br>
 <br>
-  <div class="card">
 
+  <div class="card">
 			  <div class="active_full" id="listss">
 				<div class="searchbar">
-			       <div class="input-group rounded">
-  					 <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />		 
+			       <div class="input-group rounded col-5">
+  					 <input type="text" name="search" id="search" class="form-control" placeholder="Search" />		 
+ 				  </div>
+				   <div class="input-group rounded col-7 p-1">
+  					<h6 class="">Search With Barcode or Product name</h6>
  				  </div>
 		        </div>
 		      </div>
-	   
   
-<script>
+<!-- <script>
 var inputtt=document.getElementById("search");
  
 	   $(document).ready(function (e) {
@@ -196,8 +198,8 @@ var inputtt=document.getElementById("search");
 	    { emptys();  }
 		else{
 		 		
-	 $("#showsstwo").hide();
-     $("#showss").hide();
+	   $("#showsstwo").hide();
+       $("#showss").hide();
 		 		
 		 				 		 		 
 	    const formData = new FormData(this);	
@@ -211,7 +213,7 @@ var inputtt=document.getElementById("search");
 		success: function(data)
 	    {
 	    //	console.log(data);
-	tablecreat();
+	     tablecreat();
 		},
 	  	error: function() 
     	{
@@ -235,19 +237,12 @@ var inputtt=document.getElementById("search");
 }
 	
 	
-	function showwtable(){
-		
-		
-	}
-	
+
 
 	
 	
 	
-	
-	
-	
-</script>
+</script> -->
 
 
 
@@ -273,14 +268,14 @@ display: block;
       
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <table class="table table-striped table-bordered" id="section1" >
-       <thead class="hello">
+       <thead >
         <tr>
          <th>S.R</th>
          <th>Barcode</th>
          <th>Product Name</th>
         </tr>
        </thead>
-       <tbody>
+       <tbody class="hello">
        </tbody>
       </table>
      </div>
@@ -313,6 +308,7 @@ fetch_customer_data();
   var query = $(this).val();
   fetch_customer_data(query);
  });
+
 });
 
 

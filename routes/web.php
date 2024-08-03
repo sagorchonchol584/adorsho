@@ -29,7 +29,7 @@ Route::get('/report', [Postcontroller::class,'report'])->name('report');
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 Route::get('/tkshow', [Postcontroller::class,'month_profit']);
 Route::get('/totalproduct', [Postcontroller::class,'totalproduct']);
-Route::get('/salesshow', [Postcontroller::class,'sales_show']);
+// Route::get('/salesshow', [Postcontroller::class,'sales_show']);
 
 
 
@@ -45,6 +45,7 @@ Route::get('/profiturl/{discat}/{dis}/{sales}/{amount}/{num}/{name}', [Postcontr
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 Route::post('/hhhh', [Postcontroller::class,'hhhttt'])->name('hh');
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
+Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
 Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
 Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
 Route::view('/meagge','frontend.message')->name('reg');

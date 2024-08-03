@@ -78,9 +78,9 @@
    <div class="container">
 	<div class="bg-red  card-btm-border card-boder ">
 	<div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75">
-	   <span class="text-left fw-bold text-black-50">TOTAL PRODUCT</span>
+	   <span class="text-left fw-bold text-black-50">NOMBER OF SALES</span>
 	   <span class=" text-left fw-bold fs-1">
-	   <span id="producta">Loading..</span>
+	   <span id="salesproduct">Loading..</span>
 	  
 	   </span>
 
@@ -125,13 +125,9 @@
  
 
 <div class="row">
-	<div class="col-9 h-500">
-		
-
-	
-		
+	<div class="col-9 h-500">	
 		@if(session()->has('success'))	
-		<h2>aa{{session('success')}}</h2>
+		<h2>{{session('success')}}</h2>
 		@endif
 		
 		@auth
@@ -158,16 +154,20 @@
 <script>
 	var takss=document.getElementById('takas');
 	var product=document.getElementById('product');
+	var salesproduct=document.getElementById('salesproduct');
+	
 	check();
 	totalproduct();
 
 //takss.innerHTML=getNumber(1600850);
 
-function numberWithCommas(number) {
+function numberWithCommas(number,totals) {
     var parts = number.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	takss.innerHTML=parts.join('.');
+	salesproduct.innerHTML=totals;
 }
+
 
 function check(){
     $.ajax({
@@ -175,7 +175,8 @@ function check(){
     url: '/tkshow/',
     success: function (data) {
       //  console.log("date add refurn value"+data); 
-	  numberWithCommas(data); 
+	  var dategert=JSON.parse(data);
+	  numberWithCommas(dategert.Total_product,dategert.salesproduct); 
 		
     },
     error: function() { 

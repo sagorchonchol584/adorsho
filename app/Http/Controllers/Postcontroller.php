@@ -218,22 +218,60 @@ public function removedate($id,$qty){
  }
  
 public function profit_show(){
+if(Auth::check()){
+
+  $AdminCat = Auth::user()->AdminCat;
+  $Starf_Id = Auth::user()->id;
+  $ids = Auth::user()->ShopID;
   $datee=date("Y-m-d");
-    $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->where('Date', $datee)->get();
-   echo json_encode($profit_show);
+
+  if($AdminCat=="Admin"){
+    $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->get();
+     echo json_encode($profit_show);
+  }else{
+    $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->where('Starf_Id', $Starf_Id)->get();
+    echo json_encode($profit_show);
+  }
+}
+else{
+  $datess['message']="Please contract administration ";
+  echo json_encode($datess);
+}
 }
   
 public function month_profit(){
   if(Auth::check()){
-    
-    $Total_product=0;
-    $datee=date("Y-m-d");
-    $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
-    foreach($tk_show as $row)
-    {
-     $Total_product+=$row->Total_sales;
+    $AdminCat = Auth::user()->AdminCat;
+    $Starf_Id = Auth::user()->id;
+    if($AdminCat=="Admin"){
+      $ids = Auth::user()->ShopID;
+      $Total_product=0;
+      $salesproduct=0;
+      $datee=date("Y-m-d");
+      $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->where('Date', $datee)->get();
+      foreach($tk_show as $row)
+      {
+       $Total_product+=$row->Total_sales;
+       $salesproduct++;
+      }
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct);
+      echo json_encode($all_month);
+    }else{
+
+      $ids = Auth::user()->ShopID;
+      $Total_product=0;
+      $salesproduct=0;
+      $datee=date("Y-m-d");
+      $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->where('Date', $datee)->where('Starf_Id', $Starf_Id)->get();
+      foreach($tk_show as $row)
+      {
+       $Total_product+=$row->Total_sales;
+       $salesproduct++;
+      }
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct);
+      echo json_encode($all_month);
+
     }
-    echo json_encode($Total_product);
     
     }else{
       
@@ -255,6 +293,7 @@ public function totalproduct(){
     {
     // $Total_product=$row->Total_sales;
      $Totalproduct++;
+
     }
     echo json_encode($Totalproduct);
     
@@ -270,10 +309,11 @@ public function totalproduct(){
 
 public function company_value(){
   if(Auth::check()){
-    
+    $ShopID = Auth::user()->ShopID;
+
     $Total_product=0;
     $datee=date("Y-m-d");
-    $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
+    $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ShopID)->where('Date', $datee)->get();
     foreach($tk_show as $row)
     {
      $Total_product+=$row->Total_sales;
@@ -290,25 +330,29 @@ public function company_value(){
 
 
 
-public function sales_show(){
-    $sales_show=DB::table('purches_list')->get();
-   echo json_encode($sales_show);
-  }
+// public function sales_show(){
+//    $sales_show=DB::table('purches_list')->get();
+//    echo json_encode($sales_show);
+//   }
   
   
 public function profitdatailsfun($id){
   
     if(Auth::check()){	
-    	
-	    $profitdatailsfun=DB::table('purches_list')->where('Recive_num', $id)->get();	
-	    
-	    if(count($profitdatailsfun) === 0){				
+    	$outlet_Id_user = Auth::user()->ShopID;
+	       $profitdatailsfun=DB::table('purches_list')->where('Outlet_Id', $outlet_Id_user)->where('Recive_num', $id)->get();	
+	    $profit_with_discout=DB::table('profit_datails')->where('Outlet_Id', $outlet_Id_user)->where('Recive_number', $id)->get();	
+
+	    if(count($profitdatailsfun) === 0 && count($profit_with_discout) === 0){				
     			 $profitdatailsfun['message']='Exit';
     		echo json_encode($profitdatailsfun);	   
     		}
     		else
     		{
-    		 echo json_encode($profitdatailsfun);
+
+          $all_data = array("profit_with_discout"=>$profit_with_discout,"profitdatailsfun"=>$profitdatailsfun);
+          echo json_encode($all_data);
+      
     		}
     		
 		 }else{return view('login');}
@@ -1086,21 +1130,23 @@ public function productInfo(){
     		}else{return view('login');}
 	}
 		
-public function productInfo_search(Request $request){
+// public function productInfo_search(Request $request){
     	
     	
-    	 if(Auth::check()){	
-    		   $data = DB::table('catgory_info')->get();
-    		$product = DB::table('product_info')->where('Barcode', $request->search)->get();	
-         //  return view('deshboard.product_info')->with('data', $data)->with('product', $product);		
-        echo($product);
-    		}else{return view('login');}
+//     	 if(Auth::check()){	
+//     		   $data = DB::table('catgory_info')->get();
+//     		$product = DB::table('product_info')->where('Barcode', $request->search)->get();	
+//          //  return view('deshboard.product_info')->with('data', $data)->with('product', $product);		
+//        // echo($product);
+//     		}else{return view('login');}
     	
     	
-	}
+// 	}
 		
 		
 				
+
+
 public function action(Request $request){
 		
 //	$data = DB::table('catgory_info')->get();
@@ -1139,15 +1185,23 @@ public function action(Request $request){
        foreach($data as $row)
        {
        //	$actual_link = "https://$_SERVER[HTTP_HOST]/product/";
+
+      
+
+       if(strval($row->Weight)=='0'){
+         $showproduct=$row->Product_name;
+       }else{
+         $showproduct=$row->Product_name."". $row->Weight;
+       }
+
         $output .= '
         <tr>
-      
-       
          <td>'.$row->Product_ID.'</td>
          <td>'.$row->Barcode.'</td>
-         <td>'.$row->Product_name."".$row->Weight.'</td>
+         <td>'.$showproduct.'</td>
         </tr>
         ';
+
        }
       }
       else
@@ -1178,12 +1232,62 @@ public function action(Request $request){
 
 	}
 
-}
 
 
-/*
- 
-*/
+
+public function stockchack(){
+		
+  //	$data = DB::table('catgory_info')->get();
+    
+    
+    if(Auth::check()){
+    
+    // $id = Auth::user()->Shop_cat_id;
+    $output = '';
+      $ShopID = Auth::user()->ShopID;
+      $datee=date("Y-m-d");
+      // $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
+      $data = DB::table('stock_info')->where('Outlet_Id', $ShopID)->where('Update_Date', $datee)->orderBy('id', 'desc')->get();
+      $total_row = $data->count();
+        
+        
+        if($total_row > 0)
+        {
+         foreach($data as $row)
+         {
+
+         if(strval($row->Weight)=='0'){
+           $showproduct=$row->Product_name;
+         }else{
+           $showproduct=$row->Product_name."". $row->Weight;
+         }
+
+          $output.= '
+          <tr>
+           <td>'.$row->id.'</td>
+           <td>'.$row->Barcode.'</td>
+           <td>'.$row->Product_name.'</td>
+          </tr>
+          ';
+          
+
+         }
+
+        }
+        else
+        { 
+          $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+        $data = array('table_data'  =>$output,'total_data'  => $total_row);
+  
+        echo json_encode($data);
+   
+      }
+    }
+  
+  }
+  
 
 
 

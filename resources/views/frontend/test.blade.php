@@ -168,6 +168,7 @@
 </div>
 </div> 
 </div>
+
 </div>
 </div> 
     
@@ -246,9 +247,107 @@
   </form>
 
 </div>
+
+
+</div>	
+</div>
+
+</div>
+
+<div class="col-4 h-750">
+</br>
+</br>
+
+
+<div class="card">
+<div class="active_full" id="listss">
+		<div class="searchbar ">
+			<div class="p-1 text-center ">
+  		<h6 class="">Today is Stock loaded</h6>
+ 		</div>
+	</div>
+	</div>		  
+
+<div class="headto " id="ddd">
+     <div id="showss">
+<div class="container ">
+   <div class="panel panel-default">
+    <div class="panel-body">
+     <div class="table-responsive">
+
+
+<style>
+.my-custom-scrollbar {
+position: relative;
+height: 520px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}	
+      </style>
+      
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-striped table-bordered" id="section1" >
+       <thead>
+        <tr>
+         <th>S.R</th>
+         <th>Barcode</th>
+         <th>Product Name</th>
+        </tr>
+       </thead>
+       <tbody class="hello">
+       </tbody>
+      </table>
+     </div>
+    </div>    
+   </div>
+  </div> 
+  </div>
+
+<script>
+
+$(document).ready(function(){
+fetch_customer_data();
+ 
+ function fetch_customer_data()
+ {
+  $.ajax({
+  method:'GET',
+   url:"{{ route('stock_show_ronter') }}",
+   dataType:'json',
+   success:function(data)
+   {
+    $('.hello').html(data.table_data);
+    $('#total_records').text(data.total_data);
+   }
+  })
+ }
+});
+
+
+</script>
+
+       
+       
+       
+       
+       
+       
+      </div>
+        <div class="d-flex justify-content-center p-1"></div>	
+   </div>
+ </div>
+
+
+
+</div>
+
+
+
+
+
    <script>       
-  
-  
   
 
    	var productunity=document.getElementById('productunity'); 
@@ -266,14 +365,12 @@
     var inputdd=document.getElementById('inputdd'); 
 
     var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-    var total_product,prises,exprie_date;
-          
-    
-	
+    var total_product,prises,exprie_date;               
+    var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;   
+
+
      idddd.focus();
 
-
-     
      $(document).ready(function (e) {
  	 $("#uploadFormbar").on('submit',(function(e) {
 		e.preventDefault();		
@@ -295,7 +392,7 @@
 		var obj = JSON.parse(data);
 		if(obj.message=="Exit"){
 			frame.src = "{{asset('frontend/img/demo.jpg')}}";
-			orrning("Not Found Data");
+			dailogmess("Not Found Data","Chack this Barcode ?","info");
 			productname.value="";
 			idddd.value="";
 				//idddd.focus();
@@ -353,7 +450,7 @@
 	  	error: function() 
     	{
     		console.log("network problem");
-    		testtt();
+			dailogmess("Data Load Fail!","Chack your Network?","error");
     	} 	        
         });							
 	
@@ -362,8 +459,7 @@
         
         
         
-            
- var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
+
       
     
     $(document).ready(function (e) {
@@ -426,10 +522,10 @@
 		const obj = JSON.parse(data);
 			
 		if(obj.message=="Exit"){
-			 orrning("Barcode allready exit");	
+			dailogmess("Barcode allready exit","Chack this Barcode ?","info");	
 			  allclear();
 		}else{	
-		    successfull("Product Load");
+		    dailogmess("Product Load","Data Uploaded Success?","success");
 	         allclear();  
 		}
 		
@@ -446,7 +542,7 @@
 
 		 else
 		 { 
-		 errrrr("Purchase price more than sales price");
+		 dailogmess("Purchase price more than sales price","Chack the field ?","info");
 		 }
 		 
 		 
@@ -454,13 +550,13 @@
 		 }else{
 		 	
 		console.log("empty ");
-		orrningbar("Please Input Barcode with Scanner");
+		dailogmess("Please Input Barcode with Scanner","Chack the field ?","info");
 		idddd.focus();
 	   }
 	
 	}
 	else{
-		orrningbarrr("Can't found product name ");
+		dailogmess("Can't found product name ","Chack the field ?","info");
 		idddd.focus();
 	}
 		 
@@ -472,16 +568,16 @@
         inputdd.onclick = function() {
    	
      if(productunity.value==""){
-      	errrrr("Product Units Empty");
+		dailogmess("Product Units Empty","Chack the field ?","info");
       }else if(PurchesPrice.value==""){
-      	errrrr("Purchase Price Empty");
+		dailogmess("Purchase Price Empty","Chack the field ?","info");
       }else if(Selesprice.value==""){
-      	errrrr("sales Price Empty");
+		dailogmess("sales Price Empty","Chack the field ?","info");
       }else if(productdiscout.value==""){
-      	errrrr("Product Discout Empty");
+		dailogmess("Product Discout Empty","Chack the field ?","info");
       }else if(esxpire_date.value=="" && ischeckbox1.checked  == false){
       	unlimitesdate="";
-      	errrrr("Expire Date Empty");
+      	dailogmess("Expire Date Empty","Chack the field ?","info");
       }else{ 
       
 			if(ischeckbox1.checked  == false){
@@ -500,7 +596,7 @@
 			 // console.log(unlimitesdate); // 👉️ true
 			}else{
 			//console.log("this not right"); // 👉️ true
-			errrrr("Expire date Inviled")
+			dailogmess("Expire date Inviled","Chack the field ?","info");
 			}
              //  console.log(esxpire_date.value);
 						
@@ -586,67 +682,22 @@ ischeckbox1.onclick = function() {
             } 
               
      
-  function errrrr(varr){
+  function dailogmess(mess,messtwo,messtheree){
 		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Chack the field ?",
-		 	      icon: "error",
+		 	      title: ""+mess+"",
+		  	     text: ""+messtwo+"",
+		 	      icon: ""+messtheree+"",
 		       });
 		 }     
 		  
-		  
-	 function orrning(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Chack this Barcode ?",
-		 	      icon: "info",
-		       });
-		 }  
-		 
-	function orrningbar(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Search Barcode?",
-		 	      icon: "info",
-		       });
-		 }
-		 
- function orrningbarrr(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Scan Barcode with scanner !",
-		 	      icon: "info",
-		       });
-		 }     
-		 
-		 
-  function successfull(gd){
-		    swal({
-		 	      title: ""+gd+"",
-		  	     text: "Chack the field ?",
-		 	      icon: "success",
-		       });
-		 }   
-		 
+
+
 		 
 		      
-		function suss(){
-			swal({
-		         title: "Successfull!",
-		         text: "You clicked the button!",
-		         icon: "success",
-		        });
-		}	
+	
 		
 		
-				      
-		function testtt(){
-		  swal({
-		 	      title: "Data Load Fail!",
-		  	     text: "Chack your Network ?",
-		 	      icon: "error",
-		       });
-		}	   
+				       
                  
    </script>
 
@@ -656,59 +707,6 @@ ischeckbox1.onclick = function() {
 
 
 
-</div>	
- </div>
 
-</div>
-
-<div class="col-4 h-750">
-</br>
-</br>
-
-<div class="active_full">
-<div class="searchbar">
-<div class="input-group rounded">
-  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-  <span class="input-group-text  bg-primary" id="searchid">
-    <i class="fas fa-search"></i>
-  </span>
-</div>
-</div>
-<div class="headto card">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">---</th>
-      <th scope="col">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td>hhhh</td>
-      <td></td>
-      <td> <span style="color: green; font-weight: bold;"> fffff</td> 
-    </tr>
-  </tbody>  
-</table>
-</div>	
-<div class="d-flex justify-content-center p-1"> </div>	
-</div>
-</div>
-
-
-
-
-<div class="row">
-	<div class="col-12 h-250">
-	<div class="row">
-	 <div class="col-6 h-300">
-	 </div>
-	<div class="col-6 h-300">		
-	</div>		
-   </div>	
-   </div>
   
 @endsection
