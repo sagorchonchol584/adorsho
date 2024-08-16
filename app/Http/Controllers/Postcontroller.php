@@ -21,6 +21,24 @@ class Postcontroller extends Controller
 
 
 
+
+  public function chackingfun($barcode){
+    
+
+    if(Auth::check()){
+      $ids = Auth::user()->ShopID;
+      $dateload['Product_show_by_admin']="1"; 
+      DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ids)->update($dateload);
+      }else{
+        $datess['message']="Please contract administration ";
+        echo json_encode($datess); 
+      }
+
+  }
+  
+
+
+
 public function showMasge(){
     return view('test');
  
@@ -240,6 +258,7 @@ else{
 }
   
 public function month_profit(){
+
   if(Auth::check()){
     $AdminCat = Auth::user()->AdminCat;
     $Starf_Id = Auth::user()->id;
@@ -247,14 +266,25 @@ public function month_profit(){
       $ids = Auth::user()->ShopID;
       $Total_product=0;
       $salesproduct=0;
+      $total_com_val=0;
+      //$total_com_val_net=0;
+
       $datee=date("Y-m-d");
       $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->where('Date', $datee)->get();
+      $total_com_vals=DB::table('stock_info')->where('Outlet_Id', $ids)->get();
+
+      foreach($total_com_vals as $row)
+      {  
+       $total_com_val+=$row->Purches_Price*$row->Total_product;
+      }
+      
       foreach($tk_show as $row)
       {
        $Total_product+=$row->Total_sales;
        $salesproduct++;
       }
-      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct);
+
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct,"totalcomvalu"=>$total_com_val);
       echo json_encode($all_month);
     }else{
 
@@ -268,7 +298,7 @@ public function month_profit(){
        $Total_product+=$row->Total_sales;
        $salesproduct++;
       }
-      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct);
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct,"totalcomvalu"=>"000");
       echo json_encode($all_month);
 
     }
@@ -473,15 +503,14 @@ public function stockaddfuntion(){
   
 public function Stock_Info_add(Request $reqs){
  
+
+
   if(Auth::check()){ 
-  
-  
     $ShopID = Auth::user()->ShopID;
     $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
 	  $total_row = $data->count();
 	  $ndate=date_create($reqs->Expire_date);	
 	  $newdate=date_format($ndate,"Y-m-d");
-
 
       if($total_row > 0)
       {
@@ -608,6 +637,152 @@ public function Stock_Info_add(Request $reqs){
     	}
   	      
 } 
+
+
+
+
+public function Stock_Info_add_demo(Request $reqs){
+ 
+
+
+  if(Auth::check()){ 
+    $ShopID = Auth::user()->ShopID;
+    $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
+	  $total_row = $data->count();
+	  $ndate=date_create($reqs->Expire_date);	
+	  $newdate=date_format($ndate,"Y-m-d");
+
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $Total_product=$row->Total_product;
+        $loadeddate=$row->Expire_date;
+        $shopidload=$row->Outlet_Id;
+        $barcodes=$row->Barcode;
+       }
+       
+       if($Total_product<=0){
+       $datess['Product_show_by_admin']=0;
+       $datess['Product_load_numer']=$reqs->Product_units;  
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id;
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate; 
+       $datess['Expire_date']=$reqs->Expire_date; 
+        
+        if($reqs->Weight=="empty"){
+       	$datess['Weight']="0";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+       
+      if($reqs->pieces=="empty"){
+	       $datess['pieces']="0";
+        }
+       else{
+	 $datess['pieces']=$reqs->pieces;
+       }
+       
+       
+       DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
+      echo json_encode($datess); 	
+      //echo json_encode("working this funcation");
+    
+       }
+       
+       else if($loadeddate==$newdate){
+       $total_pr=$reqs->Product_units;
+       $datess['Product_show_by_admin']=0; 
+       $datess['Product_load_numer']=$total_pr;  
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id;
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate; 
+
+ 
+       if($reqs->Weight=="empty"){
+       	$datess['Weight']="0";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+
+      if($reqs->pieces=="empty"){
+	   $datess['pieces']="0";
+        }
+       else{
+	 $datess['pieces']=$reqs->pieces;
+       }
+       
+       
+      DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
+      echo json_encode($datess);
+	
+       }else{
+       	 
+       	 $datess['message']='Exit';
+    	 echo json_encode($datess);		 
+       	
+       }
+       
+       }else{
+      
+       $datess['Product_show_by_admin']=0; 
+       $datess['Product_name']=$reqs->Product_name;
+       $datess['Barcode']=$reqs->Barcode;
+       $datess['Facility_Product_for_internet']=FALSE;
+       $datess['Product_load_numer']=$reqs->Product_units;  
+       $datess['Total_product']="0";
+       $datess['Purches_Price']=$reqs->Purches_Price;  
+       $datess['Sales_Price']=$reqs->Sales_Price;
+       $datess['Product_add_user_id']=Auth::user()->id; 
+       $datess['Outlet_Id']=Auth::user()->ShopID;
+       $datess['Outlet_Name']=Auth::user()->Shopname;
+       $datess['Image']=$reqs->Image;  
+       $datess['Expire_date']=$reqs->Expire_date;  
+       $datess['Add_date']=date("Y-m-d");
+       $datess['Update_Date']=date("Y-m-d");
+       $datess['Descount_rate']=$reqs->Descount_rate;     
+       $datess['Catagory']=$reqs->Catagory;
+       $datess['Sub_Catagory']=$reqs->Sub_Catagory;
+       $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
+       $datess['Top_rating_range']=0; 
+       
+       
+         
+      if($reqs->Weight=="empty"){
+       	$datess['Weight']="0";
+       }
+       else{
+       	$datess['Weight']=$reqs->Weight;
+       }
+       
+       
+       if($reqs->pieces=="empty"){
+       	$datess['pieces']="0";
+       }
+       else{
+       	$datess['pieces']=$reqs->pieces;
+       }
+      
+	   DB::table('stock_info')->insert($datess); 
+	   
+	   
+	   echo json_encode($datess);
+       }
+  
+    }else{
+    	return view('login');
+    	}
+  	      
+} 
+
+
+
 
 public function customerinfonew(){
     $data['posts']=DB::table('customer_info')->get();
@@ -841,6 +1016,19 @@ public function createnewprofile(){
     	else{return view('login');}
 	}
 			
+
+  public function product_supplier(){
+    if(Auth::check()){	
+      $id = Auth::user()->id;	
+    //  if()
+   
+     // $data['posts']=DB::table('users')->where('AdminKey',$id)->paginate(9);
+      return view('deshboard.product_supplier');
+    }
+    else{return view('login');}
+}
+  
+
 public function userOnlineStatus(){
         $users = User::all();
         foreach ($users as $user) {
@@ -1243,14 +1431,15 @@ public function stockchack(){
     if(Auth::check()){
     
     // $id = Auth::user()->Shop_cat_id;
-    $output = '';
+     $output = '';
       $ShopID = Auth::user()->ShopID;
+      $addID = Auth::user()->id;
       $datee=date("Y-m-d");
-      // $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();
-      $data = DB::table('stock_info')->where('Outlet_Id', $ShopID)->where('Update_Date', $datee)->orderBy('id', 'desc')->get();
+      // $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();->where('Product_add_user_id', $datee)
+      $data = DB::table('stock_info')->where('Outlet_Id', $ShopID)->where('Product_add_user_id', $addID)->where('Product_show_by_admin', 0)->orderBy('id', 'desc')->get();
       $total_row = $data->count();
-        
-        
+      
+
         if($total_row > 0)
         {
          foreach($data as $row)
@@ -1262,25 +1451,31 @@ public function stockchack(){
            $showproduct=$row->Product_name."". $row->Weight;
          }
 
+        //  if($row->Product_show_by_admin==0){
+          $message='<span style=" color:red; font-weight:bold;">Not Sent</span>';
+          $ddd='<input type="checkbox" id="myChecka" value="'. $row->Barcode.'-'.$row->Product_load_numer.'">';
+
           $output.= '
           <tr>
-           <td>'.$row->id.'</td>
-           <td>'.$row->Barcode.'</td>
-           <td>'.$row->Product_name.'</td>
-          </tr>
-          ';
-          
-
+          <td>'.$showproduct.'</td>
+          <td>'.$row->Product_load_numer.'</td>
+          <td>'.$message.'</td>
+          <td>'.$ddd.'</td>
+         </tr>
+         ';
+         //  }else{
+         // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
+         // $ddd='<input type="checkbox" hidden>';
+         //  }
+         //$ddd='<input type="checkbox" id="myChecka" value="5">';
+       
          }
-
         }
         else
         { 
           $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
         }
-
         $data = array('table_data'  =>$output,'total_data'  => $total_row);
-  
         echo json_encode($data);
    
       }

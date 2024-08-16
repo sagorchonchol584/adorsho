@@ -256,7 +256,6 @@
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
@@ -278,7 +277,6 @@
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textcliptwo 4s linear infinite;
@@ -346,6 +344,7 @@ background: none;
 		width: 50px;;
 		float: left;	
 		padding-top:8px;	
+	
 	}
 	
 	.top_breadctwo{

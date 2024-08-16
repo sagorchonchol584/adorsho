@@ -291,12 +291,15 @@ display: block;
       <table class="table table-striped table-bordered" id="section1" >
        <thead>
         <tr>
-         <th>S.R</th>
-         <th>Barcode</th>
+         
          <th>Product Name</th>
+         <th>Unity</th>
+		 <th>Unity</th>
+		 <th><span><input type="checkbox" id="allselected"></span></th>
         </tr>
        </thead>
        <tbody class="hello">
+
        </tbody>
       </table>
      </div>
@@ -305,45 +308,13 @@ display: block;
   </div> 
   </div>
 
-<script>
-
-$(document).ready(function(){
-fetch_customer_data();
- 
- function fetch_customer_data()
- {
-  $.ajax({
-  method:'GET',
-   url:"{{ route('stock_show_ronter') }}",
-   dataType:'json',
-   success:function(data)
-   {
-    $('.hello').html(data.table_data);
-    $('#total_records').text(data.total_data);
-   }
-  })
- }
-});
-
-
-</script>
-
-       
-       
-       
-       
-       
-       
       </div>
-        <div class="d-flex justify-content-center p-1"></div>	
+        <div class="text-sm-end p-1 ">
+			<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="datasenteds()">Sent</button>
+		</div>	
    </div>
  </div>
-
-
-
 </div>
-
-
 
 
 
@@ -364,12 +335,56 @@ fetch_customer_data();
     var esxpire_date=document.getElementById('expire_date');	
     var inputdd=document.getElementById('inputdd'); 
 
-    var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-    var total_product,prises,exprie_date;               
-    var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;   
 
+	var allselect=document.getElementById("allselected");
+	
+	var datasent=document.getElementById("datasent");
+
+
+    var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
+    var total_product,prises,exprie_date,suppliername;               
+    var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;   
+    let Product_sent_of_admin;
+    let upload_product_count=0;
+    let count=0;
 
      idddd.focus();
+
+
+
+fetch_customer_data();
+//button_chack_for_sent();
+datasent.disabled=true;
+
+
+
+
+
+function fetch_customer_data()
+ {
+  $.ajax({
+  method:'GET',
+   url:"{{ route('stock_show_ronter') }}",
+   dataType:'json',
+   success:function(data)
+   {
+    $('.hello').html(data.table_data);
+  //  $('#total_records').text(data.total_data);
+   //   console.log(data.total_data);
+      button_chack_for_sent();
+	  if(parseInt(data.total_data)==0){
+		allselect.disabled=true;
+		datasent.disabled=true;
+	  }else{
+		allselect.disabled=false;
+		datasent.disabled=true;
+	  }
+   }
+  })
+ }
+
+
+
 
      $(document).ready(function (e) {
  	 $("#uploadFormbar").on('submit',(function(e) {
@@ -399,10 +414,16 @@ fetch_customer_data();
 		}else{
 					
 		for(var key in obj){
-		Product_name=obj[key].Product_name;
+		Weights=obj[key].Weight;
+		Product_sent_of_admin=obj[key].Product_sent_of_admin;
+		console.log(Product_sent_of_admin);
+		if(parseInt(Weights)==0){
+		  Product_name=obj[key].Product_name;
+		}else{
+		  Product_name=obj[key].Product_name+obj[key].Weight;
+		}
 		productname.value=Product_name;
 		Barcode=obj[key].Barcode;
-		Weights=obj[key].Weight;
 		Image=obj[key].Image;
         frame.src = "{{asset('product')}}/"+Image;
 		Catagory=obj[key].Catagory;
@@ -411,9 +432,15 @@ fetch_customer_data();
 	    total_product=obj[key].Total_product; 
 	    prises=obj[key].pieces; 
 	    exprie_date=obj[key].Expire_date;
-       // console.log(total_product);
-        Selesprice.value=obj[key].Sales_Price; 
-        PurchesPrice.value=obj[key].Purches_Price;
+
+		if(obj[key].Sales_Price==null||obj[key].Purches_Price==null)
+		{
+			console.log("just undefined remove ");
+		}else{
+			Selesprice.value=obj[key].Sales_Price; 
+            PurchesPrice.value=obj[key].Purches_Price;
+		}
+      
 		}
 		
 		
@@ -474,11 +501,9 @@ fetch_customer_data();
 	
 	if(parseInt(PurchesPrice.value)<parseInt(Selesprice.value))
 	{
+
 	//	errrrr("done to work");
-
-		
-
-		total_prire=(PurchesPrice.value*productunity.value);
+	 total_prire=(PurchesPrice.value*productunity.value);
 	if(unlimitesdate==""){	
 		console.log("Unlimited inviled");
 		}else{	
@@ -509,7 +534,14 @@ fetch_customer_data();
 	
 
         //  console.log(formData.get("Weight"));
-			
+		
+		if(parseInt(Product_sent_of_admin)===0){
+			dailogmess("Not sent product","Product_sent_of_admin","info");
+		}else{
+
+			//dailogmess(" Product_sent_of_admin 1","Product_sent_of_admin","success");
+	
+
 		$.ajax({
         url: "{{route('stockload')}}",
 		type: "POST",
@@ -527,13 +559,18 @@ fetch_customer_data();
 		}else{	
 		    dailogmess("Product Load","Data Uploaded Success?","success");
 	         allclear();  
+			 fetch_customer_data();
 		}
 		
 		},
 	  	error: function() 
     	{
     	} 	        
-        });							
+        });		
+		
+
+	    }
+
 		}
 
 
@@ -690,22 +727,144 @@ ischeckbox1.onclick = function() {
 		       });
 		 }     
 		  
-
-
 		 
-		      
+//-------------this all funtion is checking all option and sent to admin data
+
+function button_chack_for_sent(){
+ var nodeListss = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeListss.length; i++) {
+		nodeListss[i].addEventListener("click",function(){
+			if( nodeListss[i].checked == true){
+			datasent.disabled=false;
+		//	console.log("dfhdsjhfdfsh");
+		    }else{
+			datasent.disabled=true;
+			}
+		});
+    }
 	
-		
-		
-				       
-                 
+}
+
+
+allselect.addEventListener("click",allsetect_function);      
+
+
+function allsetect_function(){
+ var nodeList = document.querySelectorAll("#myChecka");
+  if(count===0){
+    count=1;
+	datasent.disabled=false;
+    for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].checked = true;
+    }
+  }else{
+    count=0;
+	datasent.disabled=true;
+    for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].checked = false;}
+  }
+
+}
+	
+
+
+
+function datatranfer(barcodes) {
+	
+ $.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/chacking/'+barcodes,
+     success: function (data) {
+	//var dategert=JSON.parse(data);
+	console.log(data);
+	
+     },
+     error: function() { 
+        // console.log(barcodes);
+      }
+     });
+	      
+   }
+	
+
+   
+ function dataloadedfun(ff){
+    swal({
+  title: "Suppiler Total Amount is "+ff+" Tk",
+  text: "Will be write supplier name or company name",
+  content: "input",
+  buttons: true,
+  dangerMode: true,
+  closeOnClickOutside: false,
+})
+.then((willDelete) => {
+  if (willDelete!= "" && willDelete != null) {
+	
+//-------------------------
+suppliername=willDelete;
+	swal({
+  title: "Are you sure?",
+  text: "Will be sent to Admin",
+  buttons: true,
+  dangerMode: true,
+  closeOnClickOutside: false,
+})
+.then((willDeletes) => {
+  if (willDeletes) {
+
+    finallydatatrenfer(suppliername);
+    fetch_customer_data();
+	swal("Your data sent ", {
+      icon: "success",
+    }).then(function(){});
+
+
+//-------------------------
+
+  } else {
+    swal("Close your supplier page",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+  } else {
+    swal("Close your supplier page",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+ }  
+ 
+function finallydatatrenfer(names){
+	var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datastwo = nodeList[i].value.split("-");
+	   datatranfer(datastwo[0]);
+		}
+    }
+
+}
+
+function datasenteds(){
+ var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datas = nodeList[i].value.split("-");
+     	let Amountss=datas[1];
+	    upload_product_count+=parseInt(Amountss);
+		}
+    }
+	dataloadedfun(upload_product_count);
+}
+
+
+//-------------this all funtion is checking all option and sent to admin data
+
+
    </script>
-
-
-
-
-
-
 
 
   

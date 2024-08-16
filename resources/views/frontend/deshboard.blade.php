@@ -96,7 +96,11 @@
    <div class="container">
 	<div class="bg-yellow  card-btm-border card-boder ">
 	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border card h-75">
-	  <span class="text-left  text-center fw-bold text-black-50">COMPANY VALUE</span>
+	  <span class="text-left text-center fw-bold text-black-50">COMPANY VALUE</span>
+	  <span class=" text-left fw-bold fs-1">
+	   <span id="COMVALUE">Loading..</span>
+	   <svg class=" " width="30" height="30"> <use xlink:href="#taka"/></svg>
+	   </span>
 	  </div>
 	</div>
    </div>
@@ -109,7 +113,7 @@
    <div class="container">
 	<div class="bg-green  card-btm-border card-boder ">
 	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75 ">
-	  <span class="text-left text-center fw-bold text-black-50">TOTAL PRODUCT</span>
+	  <span class="text-left text-center fw-bold text-black-50">TOTAL PRODUCT ITEMS</span>
 	  <span class=" text-left fw-bold fs-1">
 	   <span id="product">Loading..</span>
 	  
@@ -155,17 +159,26 @@
 	var takss=document.getElementById('takas');
 	var product=document.getElementById('product');
 	var salesproduct=document.getElementById('salesproduct');
+	var totalcomvalues=document.getElementById('COMVALUE');
 	
 	check();
 	totalproduct();
 
 //takss.innerHTML=getNumber(1600850);
 
-function numberWithCommas(number,totals) {
+function numberWithCommas(number,totals,comvalue) {
+
+
     var parts = number.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+	var partscomvalue = comvalue.toString().split('.');
+    partscomvalue[0] = partscomvalue[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+
 	takss.innerHTML=parts.join('.');
 	salesproduct.innerHTML=totals;
+	totalcomvalues.innerHTML=partscomvalue.join('.');;
 }
 
 
@@ -176,17 +189,19 @@ function check(){
     success: function (data) {
       //  console.log("date add refurn value"+data); 
 	  var dategert=JSON.parse(data);
-	  numberWithCommas(dategert.Total_product,dategert.salesproduct); 
+	  numberWithCommas(dategert.Total_product,dategert.salesproduct,dategert.totalcomvalu); 
 		
     },
     error: function() { 
 		takss.innerHTML="Loading....";
         // console.log(data);
     }
-});
+   });
     }
 
-	function totalproduct(){
+
+
+function totalproduct(){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
     url: '/totalproduct/',
@@ -200,7 +215,8 @@ function check(){
         // console.log(data);
     }
 });
-    }
+}
+
 
 	
 </script>

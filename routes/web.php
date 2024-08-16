@@ -22,7 +22,7 @@ use App\Http\Controllers\Postcontroller;
  
 Route::get('/report', [Postcontroller::class,'report'])->name('report');
  
- 
+Route::get('/chacking/{barcode}', [Postcontroller::class,'chackingfun']);
 
 // test perpos user route
 
@@ -85,13 +85,14 @@ Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAg
 
 //--stock inforamtion route --
 Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
-Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add'])->name('stockload');
-
+//Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add'])->name('stockload');
+Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
 
 
 
 //user create or regstition  function
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');
+Route::get('/productsupplier', [Postcontroller::class,'product_supplier'])->name('product_supplier_page');
 Route::post('/registaion',[Postcontroller::class,'customRegistration'])->name('regdata');
 Route::post('/employecreate',[Postcontroller::class,'employeadd'])->name('Employee');
 
