@@ -343,7 +343,7 @@
 		console.log("Unlimited inviled");
 		}else{	
 		
-	   formData.append("catagory_id", sub_category_name.value);
+	     formData.append("catagory_id", sub_category_name.value);
        formData.append("Sub_catagory_id", sub_category.value); 
        formData.append("Sub_to_sub_catagory", subtosutcatagory.value);
        formData.append("Total_purchase_Price", total_prire); 
@@ -352,11 +352,11 @@
 	
 				
 		$.ajax({
-        url: "{{route('loader')}}",
+    url: "{{route('loader')}}",
 		type: "POST",
 		data:  formData,
 		contentType: false,
-        processData:false,      
+    processData:false,      
 		success: function(data)
 	    {
 	    	    	

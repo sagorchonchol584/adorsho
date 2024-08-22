@@ -10,6 +10,7 @@
 	border: 3px solid;
 	border-color: orange transparent;
 	animation: spin 1s infinite ease-out;
+	
   }
   
   @keyframes spin {
@@ -21,8 +22,7 @@
 	}
 	
   }
-  
-  
+
   .black_overlay {
 	display: none;
 	position: absolute;
@@ -36,6 +36,8 @@
 	opacity: .80;
 	filter: alpha(opacity=80);
   }
+
+
   .white_content {
 	display: none;
 	position: absolute;
@@ -111,16 +113,10 @@
 </div> 
 </div> 
 
-<div class="row"> 
-<div class="col-8 h-500"> 
-  <div id="light" class="white_content"> 
-   <div class="box"></div> 
-    </div> 
 
-<div id="fade" class="black_overlay"></div>  
      
 <!--This is a follder opening show -->
-    <nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
     <li class="breadcrumb-item"><a class="breade" href="#">Page</a></li>
@@ -131,6 +127,224 @@
 </nav>
 
 
+
+<div id="fade" class="black_overlay"></div>
+<div id="light" class="white_content"> 
+<div class="box" id="boxx"></div>
+</div>
+
+
+
+<!--This is a pop loading deing  -->
+<style>
+.maindailoboax {
+  height: 460px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  border:  1px solid red;
+}
+
+
+.black_overlaya {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+ 
+}
+.white_contenta {
+ display: none;
+ position: absolute;
+ top:0;
+ left:0;
+
+ width: 100%;
+ height: 100%;
+ background-color:hsla(0,0%,0%,0.0);
+ z-index: 1002;
+}
+
+
+	
+.gggg{
+	
+	text-align: right;
+}
+
+.ddd{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	border: none;
+}
+
+.exitdd{
+		height: 50px;
+		width: 100%;
+	    background-color:#F5F5F5;
+	   
+	}
+.mainedd{
+		height: 315px;
+		width: 100%;
+		border-top: 1px solid #a6a6a6ff;
+		background-color: #FFFFFF;
+	}
+.butttons{
+		height: 40px;
+		width: 100%;
+		text-align: right;
+		padding-top: 5px;
+	}
+
+
+.info{
+		height: 40px;
+		width: 100%;
+		text-align: center;
+		padding-top: 5px;
+	
+	}
+	
+.dddd{
+  height: 650px;
+  width: 600px;
+  margin: auto;
+
+  text-align: center;
+border-radius: 5px;
+background: white;
+position: relative;
+top:20%;
+
+}
+
+.maindailoboax{
+	padding: 5px;
+}
+
+</style>
+
+
+
+
+<div id="fadea" class="black_overlaya"></div>
+<div id="lighta" class="white_contenta"> 
+
+<div class="maindailoboax" id="maindailoboax">
+  <div class="exitdd">
+  	<div class="gggg" >
+  	<button class="ddd" onclick="pop_custom_off()"><span style="color: white" >X</span></button>
+   </div>
+  </div> 
+<div class="mainedd">
+<table class="table table-hover">
+  <thead>
+    <tr style="text-align:center">
+      <th scope="col">Supplier Information</th>
+       <th scope="col" >Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="text-align:right">
+      <td>Total Product :</td> 
+      <td><span id="product" style="width: 100%; font-size: 20px; font-weight: bold;"></span></td>
+    </tr>
+	<tr style="text-align:right">
+      <td>Total price :</td> 
+      <td><span id="totals" style="width: 100%; font-size: 20px; font-weight: bold;"></span></td>
+    </tr>
+    <tr id="trs" style="text-align:right">
+      <td>Supplier Company Name : 
+      </td> 
+      <td>
+      <input type="text"  id="suppliername" style="width: 100%; font-size: 20px; font-weight: bold;" value="SUCHUNA ENTER PRICE"/> 
+      </td>
+    </tr>
+    <tr style="text-align:right">
+      <td>Proprietor Name :</td> 
+      <td><input type="text" id="propriername" style="width: 100%; font-size: 20px; font-weight: bold;" value="Md.ALLAMHAMMUD KHAN"/> </td>
+    </tr> 
+     <tr style="text-align:right">
+    
+      <td>Phone Number :</td> 
+      <td> <input type="number" id="phone" style="width: 100%; font-size: 20px; font-weight: bold;"  maxlength="10" value="01713742051" /></td>
+    </tr> 
+	<tr style="text-align:right">
+      <td>Address :</td> 
+      <td><input type="text" id="address" style="width: 100%; font-size: 20px; font-weight: bold;" value="hatarr,monapur"/></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="info">
+	<h4 id="infomag">You should be sent correct info</h4>
+</div>
+
+<div class="butttons">
+	<button id="paymentbtm" type="button" onclick="datatranfer()" class="btn btn-primary">Continus</button>&nbsp;
+</div>
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+$("#phone").keydown(function(event) {
+  k = event.which;
+  if ((k >= 96 && k <= 105) || k == 8) {
+    if ($(this).val().length == 11) {
+      if (k == 8) {
+        return true;
+      } else {
+        event.preventDefault();
+        return false;
+
+      }
+    }
+  } else {
+    event.preventDefault();
+    return false;
+  }
+
+});
+
+
+
+</script>
+
+
+<!--This is a pop coustom desgin end -->
+
+
+
+
+
+
+<div class="row"> 
+<div class="col-8 h-500"> 
 <div class="px-4 col-6 card p-3">
   <span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
     <form id="uploadFormbar">
@@ -263,7 +477,7 @@
 <div class="active_full" id="listss">
 		<div class="searchbar ">
 			<div class="p-1 text-center ">
-  		<h6 class="">Today is Stock loaded</h6>
+  		<h6 class="">Stock loaded, please sent to admin</h6>
  		</div>
 	</div>
 	</div>		  
@@ -294,7 +508,8 @@ display: block;
          
          <th>Product Name</th>
          <th>Unity</th>
-		 <th>Unity</th>
+		 <th>Prices</th>
+		 <th>Total</th>
 		 <th><span><input type="checkbox" id="allselected"></span></th>
         </tr>
        </thead>
@@ -310,11 +525,14 @@ display: block;
 
       </div>
         <div class="text-sm-end p-1 ">
-			<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="datasenteds()">Sent</button>
+			<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="dataloadedfun()">Sent</button>
 		</div>	
    </div>
  </div>
 </div>
+<style>
+
+</style>
 
 
 
@@ -335,18 +553,28 @@ display: block;
     var esxpire_date=document.getElementById('expire_date');	
     var inputdd=document.getElementById('inputdd'); 
 
-
 	var allselect=document.getElementById("allselected");
-	
 	var datasent=document.getElementById("datasent");
+
+	var product=document.getElementById('product');
+	var totals=document.getElementById('totals');
+	var propriername=document.getElementById('propriername');
+	var suppliername=document.getElementById('suppliername');
+	var phone=document.getElementById('phone');
+	var address=document.getElementById('address');
+	
+	
 
 
     var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-    var total_product,prises,exprie_date,suppliername;               
+    var total_product,prises,exprie_date,suppliername,paymethod,disconttkPayment,id_get_insert_data;               
     var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;   
     let Product_sent_of_admin;
     let upload_product_count=0;
+	let upload_salesprice_count=0;
     let count=0;
+	let totaltk=0;
+	let unites=0;
 
      idddd.focus();
 
@@ -355,9 +583,6 @@ display: block;
 fetch_customer_data();
 //button_chack_for_sent();
 datasent.disabled=true;
-
-
-
 
 
 function fetch_customer_data()
@@ -685,11 +910,14 @@ ischeckbox1.onclick = function() {
  	function hiddden(){
 		document.getElementById('light').style.display='none';
 		document.getElementById('fade').style.display='none';
+		
+		
 	}	
 	
 	function hidddenshow(){
-		document.getElementById('light').style.display='block';
+		 document.getElementById('light').style.display='block';
 		 document.getElementById('fade').style.display='block';
+		
 	}
 		
  
@@ -737,17 +965,32 @@ function button_chack_for_sent(){
 			if( nodeListss[i].checked == true){
 			datasent.disabled=false;
 		//	console.log("dfhdsjhfdfsh");
+		   button_chack();
 		    }else{
 			datasent.disabled=true;
+			button_chack();
 			}
+			
+
 		});
     }
 	
 }
 
 
-allselect.addEventListener("click",allsetect_function);      
 
+function button_chack(){
+ var nodeListss = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeListss.length; i++) {
+		if( nodeListss[i].checked == true){
+			datasent.disabled=false;
+		    }
+    }
+	
+}
+
+
+allselect.addEventListener("click",allsetect_function);      
 
 function allsetect_function(){
  var nodeList = document.querySelectorAll("#myChecka");
@@ -769,99 +1012,181 @@ function allsetect_function(){
 
 
 
-function datatranfer(barcodes) {
+function data_tranfer_all_data(barcode,id) {
 	
- $.ajax({
+	hidddenshow();
+
+	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/chacking/'+barcodes,
+     url: '/stockloadlog/'+barcode+"/"+id,
      success: function (data) {
-	//var dategert=JSON.parse(data);
-	console.log(data);
-	
+		hiddden();
+       console.log("date add refurn value"+data); 
      },
      error: function() { 
-        // console.log(barcodes);
-      }
-     });
-	      
+      // meass.innerHTML="Data failed";
+      //    console.log(data);
+     }
+    });
+
+
+
+// $.ajaxSetup({
+//             headers: {
+//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//          });
+//  $.ajax({
+//      type: 'POST', //THIS NEEDS TO BE GET
+//      url: '/stockloadlog/',
+//      data: {barcodes:barcode}, 
+//      success: function (data) {
+// 	//	hiddden();
+//         console.log("date add refurn value"+data); 
+//      },
+//      error: function() { 
+//       // meass.innerHTML="Data failed";
+//       //    console.log(data);
+//      }
+//     });
    }
 	
 
    
- function dataloadedfun(ff){
-    swal({
-  title: "Suppiler Total Amount is "+ff+" Tk",
-  text: "Will be write supplier name or company name",
-  content: "input",
-  buttons: true,
-  dangerMode: true,
-  closeOnClickOutside: false,
-})
-.then((willDelete) => {
-  if (willDelete!= "" && willDelete != null) {
-	
-//-------------------------
-suppliername=willDelete;
-	swal({
-  title: "Are you sure?",
-  text: "Will be sent to Admin",
-  buttons: true,
-  dangerMode: true,
-  closeOnClickOutside: false,
-})
-.then((willDeletes) => {
-  if (willDeletes) {
+ function dataloadedfun(){
 
-    finallydatatrenfer(suppliername);
-    fetch_customer_data();
-	swal("Your data sent ", {
-      icon: "success",
-    }).then(function(){});
-
-
-//-------------------------
-
-  } else {
-    swal("Close your supplier page",{
-    	closeOnClickOutside: false,
-    });
-  }
-});
-
-  } else {
-    swal("Close your supplier page",{
-    	closeOnClickOutside: false,
-    });
-  }
-});
-
+var partscomvalue = all_sales_price().toString().split('.');
+    partscomvalue[0] = partscomvalue[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	pop_custom_on();
+	totals.innerHTML= partscomvalue.join('.')+" Tk";
+	product.innerHTML=all_product_unite()+" Piece";
  }  
  
-function finallydatatrenfer(names){
+function all_barcode_number(id){
+	console.log("helllo world");
 	var nodeList = document.querySelectorAll("#myChecka");
     for (let i = 0; i < nodeList.length; i++) {
 		if( nodeList[i].checked == true){
 	    const datastwo = nodeList[i].value.split("-");
-	   datatranfer(datastwo[0]);
+	   data_tranfer_all_data(datastwo[0],id);
+	   console.log("helllo world");
 		}
     }
 
 }
 
-function datasenteds(){
+function all_product_unite(){
  var nodeList = document.querySelectorAll("#myChecka");
     for (let i = 0; i < nodeList.length; i++) {
 		if( nodeList[i].checked == true){
 	    const datas = nodeList[i].value.split("-");
-     	let Amountss=datas[1];
-	    upload_product_count+=parseInt(Amountss);
+     	let product=datas[1];
+	    upload_product_count+=parseInt(product);
 		}
     }
-	dataloadedfun(upload_product_count);
+	return upload_product_count;
 }
 
 
+function all_sales_price(){
+ var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datas = nodeList[i].value.split("-");
+     	let price=datas[2];
+		 let pieces=datas[1];
+		 upload_salesprice_count+=parseInt(pieces*price);
+		}
+    }
+	return upload_salesprice_count;
+}
+
 //-------------this all funtion is checking all option and sent to admin data
+
+function pop_custom_on(){
+		document.getElementById('fadea').style.display='block';
+		document.getElementById('lighta').style.display='block';
+		document.getElementById('maindailoboax').style.display='block';
+}
+
+function pop_custom_off(){
+		document.getElementById('lighta').style.display='none';
+		document.getElementById('fadea').style.display='none';
+		document.getElementById('maindailoboax').style.display='none';
+		upload_product_count=0;
+		upload_salesprice_count=0;
+}
+
+
+
+function datatranfer() {
+	unites=upload_product_count;
+	totaltk=upload_salesprice_count;
+	
+if(suppliername.value!=="" && phone.value!=="" && address.value!=="" && propriername.value!=="" || paymetstk.value!==""){
+	confram();
+	
+}else{
+	dailogmess("Empty you field","Please Chack Your field","info");
+}
+
+}
+
+function add_data(){
+	hidddenshow();
+	let idcout;
+	$.ajaxSetup({
+				headers: {
+				   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			 });
+	 $.ajax({
+		 type: 'POST', //THIS NEEDS TO BE GET
+		 url: '/supplierdataload/',
+		 data: {company_name:suppliername.value,name:propriername.value,mobile:phone.value,address:address.value,unite:unites,totaltk:totaltk}, 
+		 success: function (data) {
+			all_barcode_number(data);
+			hiddden();
+		 },
+		 error: function() { 
+		  // meass.innerHTML="Data failed";
+		  //    console.log(data);
+		 }
+		});
+		unites=0;
+		totaltk=0;
+		return idcout;
+}
+
+
+ function confram(){
+	pop_custom_off();
+swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary data!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Your data Deleted ", {
+      icon: "success",
+    }).then(function(){
+		fetch_customer_data();
+ //   location.reload();
+    });
+
+   add_data();
+
+  } else {
+    swal("Do you want Exit ?",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+	}
 
 
    </script>

@@ -21,9 +21,16 @@ use App\Http\Controllers\Postcontroller;
  
  
 Route::get('/report', [Postcontroller::class,'report'])->name('report');
- 
-Route::get('/chacking/{barcode}', [Postcontroller::class,'chackingfun']);
 
+
+Route::get('/supplierinfologstates', [Postcontroller::class,'suplier_info_log_state'])->name("supplierlog");
+Route::get('/supplierstates', [Postcontroller::class,'suplierstate'])->name("supplierstates");
+Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
+
+
+//----it's ok this route
+Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
+Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
 // test perpos user route
 
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
@@ -43,7 +50,6 @@ Route::get('/profiturl/{discat}/{dis}/{sales}/{amount}/{num}/{name}', [Postcontr
 
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
-Route::post('/hhhh', [Postcontroller::class,'hhhttt'])->name('hh');
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
 Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
 Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');

@@ -15,35 +15,192 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 
-
 class Postcontroller extends Controller
 {
 
 
-
-
-  public function chackingfun($barcode){
+public function stockloadlogfuncation($barcode,$id){
     
 
     if(Auth::check()){
       $ids = Auth::user()->ShopID;
+    $supplierdata= DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ids)->get();
+    if(count($supplierdata) === 0){				
+      $datess['message']='Exit';
+      echo json_encode($datess);	   
+   }else{
+      foreach($supplierdata as $row)
+      {
+      $supplierarray['Product_load_numer']=$row->Product_load_numer;
+      $supplierarray['pieces']=$row->pieces;
+      $supplierarray['Image']=$row->Image;
+      $supplierarray['Purches_Price']=$row->Purches_Price;
+      $supplierarray['Weight']=$row->Weight;
+      $supplierarray['Descount_rate']=$row->Descount_rate;
+      $supplierarray['Update_Date']=$row->Update_Date;
+      $supplierarray['Product_add_user_id']=$row->Product_add_user_id;
+      $supplierarray['Sales_Price']=$row->Sales_Price;
+      $supplierarray['Admindatasentdate']=date("Y-m-d");
+      $supplierarray['supplier_id']=$id;
+      $supplierarray['Outlet_Id']=$row->Outlet_Id;
+      $supplierarray['Product_name']=$row->Product_name;
+      }
+        DB::table('suppile_info_log')->insert($supplierarray); 
+        echo json_encode($supplierarray);
+   }		
+
       $dateload['Product_show_by_admin']="1"; 
       DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ids)->update($dateload);
       }else{
         $datess['message']="Please contract administration ";
         echo json_encode($datess); 
+      } 
+
+  //  echo json_encode($id); 
+}
+  
+public function chackingfuntwo(Request $reqs){
+
+$test=array('test'=>$reqs->catagory_name);
+echo json_encode($test);
+$pizza  = $reqs->catagory_name;
+
+}
+
+
+public function suplierstate(){
+
+
+  if(Auth::check()){
+     $output = '';
+      $ShopID = Auth::user()->ShopID;
+      $addID = Auth::user()->id;
+      $data = DB::table('suppile_info')->where('ShopID', $ShopID)->get();
+      $total_row = $data->count();
+      
+        if($total_row > 0)
+        {
+         foreach($data as $row)
+         {
+          $ddd='<input type="checkbox" id="myChecka" value="'.$row->company_name.'">';
+
+          $output.= '
+          <tr>
+          <td>'.$row->name.'</td>
+          <td>'.$row->unite.'</td>
+          <td>'.$row->totaltk.'</td>
+         <td>'.$ddd.'</td>
+         
+         </tr>
+         ';
+         //  }else{
+         // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
+         // $ddd='<input type="checkbox" hidden>';
+         //  }
+         //$ddd='<input type="checkbox" id="myChecka" value="5">';
+       
+         }
+        }
+        else
+        { 
+          $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+        $data = array('table_data'  =>$output,'total_data'  => $total_row);
+        echo json_encode($data);
+   
       }
+    
 
   }
   
 
 
+  public function suplier_info_log_state(){
 
-public function showMasge(){
-    return view('test');
- 
-  }
+
+    if(Auth::check()){
+       $output = '';
+        $ShopID = Auth::user()->ShopID;
+        $addID = Auth::user()->id;
+        $data = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->get();
+        $total_row = $data->count();
+        
+          if($total_row > 0)
+          {
+           foreach($data as $row)
+           {
+            $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
+           
+            $output.= '
+            <tr>
+             <td>'.$ddd.'</td>
+            <td>'.$row->Product_name.'</td>
+            <td>'.$row->Product_load_numer.'</td>
+            <td>'.$row->Purches_Price.'</td>   
+           </tr>
+           ';
+           //  }else{
+           // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
+           // $ddd='<input type="checkbox" hidden>';
+           //  }
+           //$ddd='<input type="checkbox" id="myChecka" value="5">';
+         
+           }
+          }
+          else
+          { 
+            $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+          }
+          $data = array('table_data'  =>$output,'total_data'  => $total_row);
+          echo json_encode($data);
+     
+        }
+      
   
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+public function supplierdataload(Request $reqs){
+
+
+ if(Auth::check()){
+  $supplierarray['company_name']=$reqs->company_name; 
+	$supplierarray['name']=$reqs->name; 
+  $supplierarray['mobile']=$reqs->mobile; 
+  $supplierarray['address']=$reqs->address; 
+  $supplierarray['unite']=$reqs->unite; 
+  $supplierarray['totaltk']=$reqs->totaltk; 
+  $supplierarray['payable']=0; 
+  $supplierarray['date']=date("Y-m-d"); 
+  $supplierarray['paymentdate']=date("Y-m-d"); 
+  $supplierarray['paymentmethod']="0"; 
+  $supplierarray['paymenttk']=0; 
+  $supplierarray['ShopID']= Auth::user()->ShopID;; 
+  $datr= DB::table('suppile_info')->insertGetId($supplierarray);    
+
+
+  echo json_encode($datr);
+
+
+ }else{
+  return view('login');
+ }
+
+
+
+
+}
+
 public function report(){
     return view('deshboard.report');
  
@@ -85,16 +242,11 @@ public function removedate($id,$qty){
  //product purcher add  data 
  
  public function purcher_add($id, $qty,$num){
- 	
- //	echo json_encode($id);
- 	
- 	
- 	
  	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
-    	$outlet_Id_user = Auth::user()->ShopID;
-    				
-	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+    	$outlet_Id_user = Auth::user()->ShopID;			
+	    $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+
     		if(count($stockinfo) === 0){				
     			 $purcherdata['message']='Exit';
     			 echo json_encode($purcherdata);	   
@@ -126,72 +278,12 @@ public function removedate($id,$qty){
 		        $purcherdata['Starf_Name']=Auth::user()->Name; 
 		        $purcherdata['Outlet_Id']=Auth::user()->ShopID;    
 		        $purcherdata['Outlet_Name']=Auth::user()->Shopname;
-
-           	
-           	
-  /*         	
-           try {
-     DB::table('purches_list')->insert($purcherdata); 
-      echo json_encode($datess);           
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-        
-              }
-          }
-           	*/
-           	
-           	
           	 DB::table('purches_list')->insert($purcherdata); 
-           	
-          // 	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($purcherdata);
-        //   	echo json_encode($purcherdata);
-           
     		}	
        }
- 	
- 		
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
-//           $dates['customer_id']=$req->customer_id;
-//           $dates['customer_name']=$req->mobile;
-//           $dates['purches_date']=$req->address;             
-//           $dates['product_id']=date("Y-m-d");
-//           $dates['product_Name']=0;      
-//           $dates['product_Price']= date("Y-m-d");              
-//           $dates['product_Info']=0;
-//           $dates['profit_to_Pruduct']="54578";
-//           $dates['prodcut_Add_date']="362";               
-//           $dates['prodcut_Exp_date']=0;
-//           $dates['prodcut_Provide_com']="Good";
-//           $dates['prodcut_Purcher_price']="33455";             
-//           $dates['Admin_Id']="1212";
-//           $dates['Starf_Id']="5632";
-//           $dates['Starf_Name']="6985";                 
-//           $dates['Outlet_Id']="9685";
-//           $dates['Outlet_Name']="9658";
-//           $dates['Device_Info']="56";             
-//           DB::table('purches_list')->insert($dates);          
-//       //    return redirect("customerinfo");
-//            echo("purches list ");
-//         // return view('customerinfo')->with('messages','true');
- 	
- 	
  }
  
+
   
  public function profit_add($discats,$totaldiscout,$sales,$amount,$num,$name){
  	
@@ -224,16 +316,6 @@ public function removedate($id,$qty){
  
  }  
  
- //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
- public function hhhttt(Request $request){
- 	
- 	              $purcherdata['message']='Exit';  
- 	              $purcherdata['hello']=$request->hello;
- 	             $purcherdata['helloh']=$request->hello["length"];
-    			 echo json_encode($purcherdata);	
-           
- 	
- }
  
 public function profit_show(){
 if(Auth::check()){
@@ -335,36 +417,6 @@ public function totalproduct(){
     }
 }
 
-
-
-public function company_value(){
-  if(Auth::check()){
-    $ShopID = Auth::user()->ShopID;
-
-    $Total_product=0;
-    $datee=date("Y-m-d");
-    $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ShopID)->where('Date', $datee)->get();
-    foreach($tk_show as $row)
-    {
-     $Total_product+=$row->Total_sales;
-    }
-    echo json_encode($Total_product);
-    
-    }else{
-      
-      $datess['message']="Please contract administration ";
-      echo json_encode($datess); 
-     
-    }
-}
-
-
-
-// public function sales_show(){
-//    $sales_show=DB::table('purches_list')->get();
-//    echo json_encode($sales_show);
-//   }
-  
   
 public function profitdatailsfun($id){
   
@@ -456,16 +508,6 @@ public function barcodes($id){
   }
     
     
-  
-public function test(){
-   $hashed = Hash::make('password', [
-    'rounds' => 12,
-]);
-
-echo($hashed );
- 
-  }
-
 public function customerinfo(){	
      $data['posts']=DB::table('customer_info')->orderBy('total_purches_count', 'DESC')->limit(45)->paginate(9);
      $datatwo['poststwo']=DB::table('customer_info')->orderBy('id', 'DESC')->limit(8)->get();
@@ -640,11 +682,7 @@ public function Stock_Info_add(Request $reqs){
 
 
 
-
 public function Stock_Info_add_demo(Request $reqs){
- 
-
-
   if(Auth::check()){ 
     $ShopID = Auth::user()->ShopID;
     $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
@@ -751,9 +789,7 @@ public function Stock_Info_add_demo(Request $reqs){
        $datess['Sub_Catagory']=$reqs->Sub_Catagory;
        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
        $datess['Top_rating_range']=0; 
-       
-       
-         
+          
       if($reqs->Weight=="empty"){
        	$datess['Weight']="0";
        }
@@ -777,19 +813,11 @@ public function Stock_Info_add_demo(Request $reqs){
   
     }else{
     	return view('login');
-    	}
-  	      
+    	}     
 } 
 
 
 
-
-public function customerinfonew(){
-    $data['posts']=DB::table('customer_info')->get();
-     return $data;
-     
-     // return "hello";
-  }
   
 public function customer_Data_add(Request $req){
         
@@ -819,7 +847,6 @@ public function customer_Data_add(Request $req){
            // echo("hello nabd");
          // return view('customerinfo')->with('messages','true');
 	}
- 
  
 
  
@@ -1002,9 +1029,6 @@ public function catagoryshow(){
   }
  
  
-    
-    
-    
 // customer info and loging user data info
  		
 public function createnewprofile(){
@@ -1199,81 +1223,6 @@ public function customRegistration(Request $require){
     }
 
 
-
-//test purpose 
-public function delete($id){	
-  
-    DB::table('users')->where('Adminid',$id)->delete();
-    return redirect("/post/showdata");
- 
-  }
-
-public function single_data_update(Request $require, $id){
-
-     $date['name']=$require->Name;
-    $date['email']=$require->email;
-    DB::table('users')->where('id',$id)->update($date);
-    return redirect("/post/showdata"); 
-    
-  }
-
-public function single_data_show_update($id){
-    $data['posts']=DB::table('users')->where('Adminid',$id)->get();
-    return view('post/update',$data);
-  }
-
-public function single_data_show($id){
-    $data['posts']=DB::table('users')->where('Adminid',$id)->get();
-    return view('post/show',$data);
-  }
-
-public function Index(Request $require){
-          $date['name']=$require->name;
-         $date['email']=$require->email;    
-        $date['password']=Hash::make($require->password);
-        
-        
-    
-  try {
-            DB::table('users')->insert($date);          
-            return redirect("/post/showdata");
-            
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-            return 'Duplicate Entry';
-              }
-          }
-    }
- 
-public function option_show(){
-    $data['posts']=DB::table('sub_sub_catgory_info')->get();
-    return view('post/show',$data);
-  }
-
-public function datashow(){
-
-    $data['posts']=DB::table('users')->get();
-    return view('post/index',$data);
- 
-  }
-   
-
- 
-     
-     
- // test purpose but main projcet reletive        
-public function systemInfo(Request $req){
-            $dates['company_Id']=$req->company_Id;
-            $dates['company_Name']=$req->company_Name;
-            $dates['date']=$req->date;
-            DB::table('system_info')->insert($dates);          
-            return redirect("/productInfo");
-	}
-  
-
-	
-	
 	
 //this all page show with date pass	
 		
@@ -1332,14 +1281,8 @@ public function productInfo(){
 // 	}
 		
 		
-				
-
 
 public function action(Request $request){
-		
-//	$data = DB::table('catgory_info')->get();
-	
-	
 	if(Auth::check()){
 	
 	 $id = Auth::user()->Shop_cat_id;
@@ -1420,9 +1363,6 @@ public function action(Request $request){
 
 	}
 
-
-
-
 public function stockchack(){
 		
   //	$data = DB::table('catgory_info')->get();
@@ -1452,13 +1392,14 @@ public function stockchack(){
          }
 
         //  if($row->Product_show_by_admin==0){
-          $message='<span style=" color:red; font-weight:bold;">Not Sent</span>';
-          $ddd='<input type="checkbox" id="myChecka" value="'. $row->Barcode.'-'.$row->Product_load_numer.'">';
+          $message=$row->Product_load_numer*$row->Purches_Price;
+          $ddd='<input type="checkbox" id="myChecka" value="'. $row->Barcode.'-'.$row->Product_load_numer.'-'.$row->Purches_Price.'">';
 
           $output.= '
           <tr>
           <td>'.$showproduct.'</td>
           <td>'.$row->Product_load_numer.'</td>
+          <td>'.$row->Purches_Price.'</td>
           <td>'.$message.'</td>
           <td>'.$ddd.'</td>
          </tr>
