@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 
 class Postcontroller extends Controller
@@ -44,6 +45,7 @@ public function stockloadlogfuncation($barcode,$id){
       $supplierarray['supplier_id']=$id;
       $supplierarray['Outlet_Id']=$row->Outlet_Id;
       $supplierarray['Product_name']=$row->Product_name;
+      $supplierarray['Barcode']=$row->Barcode;
       }
         DB::table('suppile_info_log')->insert($supplierarray); 
         echo json_encode($supplierarray);
@@ -68,44 +70,181 @@ $pizza  = $reqs->catagory_name;
 }
 
 
+
+public function suplier_list($id){
+  if(Auth::check()){
+    $output = '';
+     $ShopID = Auth::user()->ShopID;
+     $admin = Auth::user()->AdminCat;
+     $data = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->where('supplier_id', $id)->get();
+     $total_row = $data->count();
+     $totaltks=0;
+       if($total_row > 0)
+       {
+        foreach($data as $row)
+        {
+         // $totaltks++;
+       //  $ddd='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->name.'</button>';
+       $totaltks+=$row->Product_load_numer*$row->Purches_Price;
+         $output.= '
+         <tr>
+         <td>'.$row->Product_name.'</td>
+         <td>'.$row->Product_load_numer.'</td>
+         <td>'.$row->Purches_Price.'</td>   
+         <td style="text-align:right">'.$row->Product_load_numer*$row->Purches_Price.'</td> 
+        </tr>
+        ';   
+        }
+       }
+       else
+       { 
+         $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+       }
+       $data = array('table_data'  =>$output,'total_data'  => $totaltks,'admincat' => $admin);
+       echo json_encode($data);
+     }
+}
+
+
 public function suplierstate(){
-
-
   if(Auth::check()){
      $output = '';
-      $ShopID = Auth::user()->ShopID;
-      $addID = Auth::user()->id;
-      $data = DB::table('suppile_info')->where('ShopID', $ShopID)->get();
-      $total_row = $data->count();
-      
-        if($total_row > 0)
-        {
-         foreach($data as $row)
-         {
-          $ddd='<input type="checkbox" id="myChecka" value="'.$row->company_name.'">';
+     $outputpayable = '';
+     $outputlog='';
+     $total_due_tk=0;
+     $total_pay_tk_year=0;
+     $total_pay_tk_months=0;
+     $total_payable_tk_months=0;
+     $years=date('Y');
+     $months=date('m');
+     $ShopID = Auth::user()->ShopID;
+     $me="";
 
+
+//----------------thsi show recently update data  uploaded--------
+      $INVOICEDUE = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 0)->get();
+      $total_row_count =  $INVOICEDUE->count();
+
+//-------------------thsi  a payable system-----------------------
+      $datapayable = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 1)->get();
+      $total_row_payable = $datapayable->count();
+
+//-------------------this suppile_info_log------------------------
+      $datas = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->limit(100)->orderBy('id', 'DESC')->get();
+      $total_row_log = $datas->count();
+
+      //----------------thsi show recently update data  uploaded---------------------------------------
+      if($total_row_count > 0){
+         foreach($INVOICEDUE as $row)
+         {
+          
+        
+          $total_due_tk+=$row->totaltk;
+      
+          $ddd='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->company_name.'</button>';
+          $namse='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->name.'</button>';
+
+        $mesadd="";
+          $toDate = Carbon::parse($row->date);
+          $fromDate = Carbon::parse(date("Y-m-d"));
+          $days = $toDate->diffInDays($fromDate);
+          
+       if($days==0){
+        $mesadd="Today";
+       }else{
+        $mesadd=$days." Days";
+       }
+  
+  
           $output.= '
           <tr>
-          <td>'.$row->name.'</td>
+          <td>'.$ddd.'</td>
+          <td>'.$namse .'</td>
+          <td>'.$mesadd.'</td>
           <td>'.$row->unite.'</td>
           <td>'.$row->totaltk.'</td>
-         <td>'.$ddd.'</td>
-         
          </tr>
          ';
-         //  }else{
-         // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
-         // $ddd='<input type="checkbox" hidden>';
-         //  }
-         //$ddd='<input type="checkbox" id="myChecka" value="5">';
-       
          }
         }
         else
         { 
           $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
         }
-        $data = array('table_data'  =>$output,'total_data'  => $total_row);
+
+       //-------------------thsi  a payable system-----------------------
+        if($total_row_payable > 0){
+          foreach($datapayable as $row)
+          {
+
+    
+            $orderdate = explode('-',$row->date);
+            $month = $orderdate[1];
+            $year  = $orderdate[0];
+        
+     
+            if($year==$years){
+              $total_pay_tk_year+=$row->paymenttk;
+            }
+   
+            if($year.$month==$years.$months){
+              $total_pay_tk_months+=$row->paymenttk;
+            }
+            $total_payable_tk_months+=$row->payable;
+
+
+
+          $dddoutputpayable='<button class="supperbutton" onclick="datashowpayable('.$row->id.')">'.$row->name.'</button>';
+          $outputpayable.= '
+          <tr>
+          <td>'.$dddoutputpayable.'</td>
+          <td>'.$row->totaltk.'</td>
+          <td>'.$row->paymenttk.'</td>
+          <td>'.$row->payable.'</td>
+         </tr>
+         ';
+          }
+        }
+        else
+        { 
+          $outputpayable ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+
+      //-------------------this suppile_info_log------------------------
+        
+          if($total_row_log > 0)
+          {
+           foreach($datas as $row)
+           {
+            $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
+           
+            $outputlog.= '
+            <tr>
+             <td>'.$ddd.'</td>
+            <td>'.$row->Product_name.'</td>
+            <td>'.$row->Product_load_numer.'</td>
+            <td>'.$row->Purches_Price.'</td>   
+             <td>'.$row->Product_load_numer*$row->Purches_Price.'</td>  
+           </tr>
+           ';
+           }
+          }
+          else
+          { 
+            $outputlog ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+          }
+          
+
+        $data = array('table_data'  =>$output,
+        'INVOICEDUE'  => $total_row_count,
+        'payable'=>$outputpayable,
+        'allduetk' => $total_due_tk,
+        'year_pay' => $total_pay_tk_year,
+        'months_pay' => $total_pay_tk_months,
+        'supplier_log' =>$outputlog,
+        'payableyear' => $total_payable_tk_months
+      );
         echo json_encode($data);
    
       }
@@ -114,65 +253,7 @@ public function suplierstate(){
   }
   
 
-
-  public function suplier_info_log_state(){
-
-
-    if(Auth::check()){
-       $output = '';
-        $ShopID = Auth::user()->ShopID;
-        $addID = Auth::user()->id;
-        $data = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->get();
-        $total_row = $data->count();
-        
-          if($total_row > 0)
-          {
-           foreach($data as $row)
-           {
-            $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
-           
-            $output.= '
-            <tr>
-             <td>'.$ddd.'</td>
-            <td>'.$row->Product_name.'</td>
-            <td>'.$row->Product_load_numer.'</td>
-            <td>'.$row->Purches_Price.'</td>   
-           </tr>
-           ';
-           //  }else{
-           // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
-           // $ddd='<input type="checkbox" hidden>';
-           //  }
-           //$ddd='<input type="checkbox" id="myChecka" value="5">';
-         
-           }
-          }
-          else
-          { 
-            $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
-          }
-          $data = array('table_data'  =>$output,'total_data'  => $total_row);
-          echo json_encode($data);
-     
-        }
-      
-  
-    }
-    
-
-
-
-
-
-
-
-
-
-
-
 public function supplierdataload(Request $reqs){
-
-
  if(Auth::check()){
   $supplierarray['company_name']=$reqs->company_name; 
 	$supplierarray['name']=$reqs->name; 
@@ -185,20 +266,13 @@ public function supplierdataload(Request $reqs){
   $supplierarray['paymentdate']=date("Y-m-d"); 
   $supplierarray['paymentmethod']="0"; 
   $supplierarray['paymenttk']=0; 
-  $supplierarray['ShopID']= Auth::user()->ShopID;; 
+  $supplierarray['ShopID']=Auth::user()->ShopID;
+  $supplierarray['admin_show']=0;  
   $datr= DB::table('suppile_info')->insertGetId($supplierarray);    
-
-
   echo json_encode($datr);
-
-
  }else{
   return view('login');
  }
-
-
-
-
 }
 
 public function report(){
@@ -543,136 +617,68 @@ public function stockaddfuntion(){
  //if(Auth::check()){return view('deshboard.stock_add');}else{return view('login');}
   }
   
-public function Stock_Info_add(Request $reqs){
- 
 
+
+
+
+public function Stock_Info_add_finally(Request $reqs){
+ 
+ // echo json_encode("data insert".$reqs->tk);
 
   if(Auth::check()){ 
-    $ShopID = Auth::user()->ShopID;
-    $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
-	  $total_row = $data->count();
-	  $ndate=date_create($reqs->Expire_date);	
-	  $newdate=date_format($ndate,"Y-m-d");
 
+    $ShopID = Auth::user()->ShopID;
+    $stratf_id = Auth::user()->id;
+    $adminCat = Auth::user()->AdminCat;
+
+    $data = DB::table('suppile_info_log')->where('supplier_id', $reqs->id)->where('Outlet_Id', $ShopID)->get();
+    $total_row = $data->count();
+    $suppile_info = DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->get();
+    $total_row_suppile_info = $suppile_info->count();
       if($total_row > 0)
       {
        foreach($data as $row)
        {
-        $Total_product=$row->Total_product;
-        $loadeddate=$row->Expire_date;
-        $shopidload=$row->Outlet_Id;
-        $barcodes=$row->Barcode;
+      $this->input_data_stock_load($row->Barcode);
        }
        
-       if($Total_product<=0){
-       $datess['Total_product']=$reqs->Product_units;  
-       $datess['Purches_Price']=$reqs->Purches_Price;  
-       $datess['Sales_Price']=$reqs->Sales_Price;
-       $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Update_Date']=date("Y-m-d");
-       $datess['Descount_rate']=$reqs->Descount_rate; 
-       $datess['Expire_date']=$reqs->Expire_date; 
-        
-        if($reqs->Weight=="empty"){
-       	$datess['Weight']="0";
-       }
-       else{
-       	$datess['Weight']=$reqs->Weight;
-       }
-       
-      if($reqs->pieces=="empty"){
-	       $datess['pieces']="0";
-        }
-       else{
-	 $datess['pieces']=$reqs->pieces;
-       }
-       
-       
-       DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-      echo json_encode($datess); 	
-      //echo json_encode("working this funcation");
-    
-       }
-       
-       else if($loadeddate==$newdate){
-       		
-       $total_pr=$Total_product+$reqs->Product_units;
-       $datess['Total_product']=$total_pr;  
-       $datess['Purches_Price']=$reqs->Purches_Price;  
-       $datess['Sales_Price']=$reqs->Sales_Price;
-       $datess['Product_add_user_id']=Auth::user()->id;
-       $datess['Update_Date']=date("Y-m-d");
-       $datess['Descount_rate']=$reqs->Descount_rate; 
-
- 
-       if($reqs->Weight=="empty"){
-       	$datess['Weight']="0";
-       }
-       else{
-       	$datess['Weight']=$reqs->Weight;
-       }
-
-      if($reqs->pieces=="empty"){
-	   $datess['pieces']="0";
-        }
-       else{
-	 $datess['pieces']=$reqs->pieces;
-       }
-       
-       
-      DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-      echo json_encode($datess);
-	
-       }else{
-       	 
-       	 $datess['message']='Exit';
-    	 echo json_encode($datess);		 
-       	
-       }
-       
-       }else{
-       				     		
-       $datess['Product_name']=$reqs->Product_name;
-       $datess['Barcode']=$reqs->Barcode;
-       $datess['Facility_Product_for_internet']=FALSE;
-       $datess['Total_product']=$reqs->Product_units;  
-       $datess['Purches_Price']=$reqs->Purches_Price;  
-       $datess['Sales_Price']=$reqs->Sales_Price;
-       $datess['Product_add_user_id']=Auth::user()->id; 
-       $datess['Outlet_Id']=Auth::user()->ShopID;
-       $datess['Outlet_Name']=Auth::user()->Shopname;
-       $datess['Image']=$reqs->Image;  
-       $datess['Expire_date']=$reqs->Expire_date;  
-       $datess['Add_date']=date("Y-m-d");
-       $datess['Update_Date']=date("Y-m-d");
-       $datess['Descount_rate']=$reqs->Descount_rate;     
-       $datess['Catagory']=$reqs->Catagory;
-       $datess['Sub_Catagory']=$reqs->Sub_Catagory;
-       $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
-       $datess['Top_rating_range']=0; 
-       
-       
-         
-      if($reqs->Weight=="empty"){
-       	$datess['Weight']="0";
-       }
-       else{
-       	$datess['Weight']=$reqs->Weight;
-       }
-       
-       
-       if($reqs->pieces=="empty"){
-       	$datess['pieces']="0";
-       }
-       else{
-       	$datess['pieces']=$reqs->pieces;
-       }
+      }
       
-	   DB::table('stock_info')->insert($datess); 
-	   
-	   
-	   echo json_encode($datess);
-       }
+    if($total_row_suppile_info > 0){
+      $datess['admin_show']=1;  
+      $datess['paymenttk']=$reqs->tk;  
+      $datess['paymentmethod']=$reqs->methedpay;  
+      $datess['payable']=$reqs->payabletk;  
+      $datess['paymentdate']=date("Y-m-d"); 
+      DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->update($datess);
+
+     //----------------------this amount assets--------------
+      if($reqs->methedpay=="other"){
+       $assets['Outlet_id']=$ShopID;
+       $assets['AdminCat']=$adminCat;
+       $assets['Date']=date("Y-m-d");
+       $assets['Info_update']=date("Y-m-d");
+       $assets['Amount']=$reqs->tk;
+       $assets['Amountdetails']="Pay Suppliers";
+       DB::table('assets_and_properity')->insert($assets);
+      }
+      //----------------------this cash insert--------------
+      $cashflow['Outlet_id']=$ShopID; 
+      $cashflow['Admincat']=$adminCat; 
+      $cashflow['Supplier_cash']=$reqs->tk; 
+      $cashflow['date']=date("Y-m-d"); 
+      $cashflow['Admin_show_date']=date("Y-m-d"); 
+      $cashflow['stratf_id']=$stratf_id; 
+      $cashflow['details']="Supplier Cost"; 
+      $cashflow['Ac_check']=0; 
+      $cashflow['expend_cost']=0; 
+      $cashflow['admin_show']=0; 
+      
+     DB::table('cash_flow_cost_info')->insert($cashflow); 
+     echo json_encode($datess);
+     }
+
+   
   
     }else{
     	return view('login');
@@ -680,7 +686,34 @@ public function Stock_Info_add(Request $reqs){
   	      
 } 
 
+public function input_data_stock_load($barcode){
 
+  if(Auth::check()){ 
+    $ShopID = Auth::user()->ShopID;
+    $data = DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ShopID)->get();
+    $newdate=date("Y-m-d");
+	  $total_row = $data->count();
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $barcode=$row->Barcode;
+        $Product_load_numer=$row->Product_load_numer;
+        $Total_product=$row->Total_product;
+       } 
+    $datess['Product_show_by_admin']=2;
+    $datess['Product_load_numer']="0";
+    $datess['Total_product']=$Total_product+$Product_load_numer;  
+    $datess['Update_Date']=$newdate;  
+    DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ShopID)->update($datess);
+    echo json_encode( $datess);
+
+      }else{
+        echo json_encode("data insert fail");
+      }
+      
+    }
+}
 
 public function Stock_Info_add_demo(Request $reqs){
   if(Auth::check()){ 

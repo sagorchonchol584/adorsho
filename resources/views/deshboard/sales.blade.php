@@ -1391,12 +1391,7 @@ function purcheschack(id,qty,num){
 });
     }
     
-    
-    
-    
-    
-
-    
+ 
 function profit_data_load(discat,dis,sales,amount,num,name){
 	
 	

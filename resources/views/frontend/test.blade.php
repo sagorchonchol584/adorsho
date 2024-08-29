@@ -226,12 +226,11 @@
   height: 650px;
   width: 600px;
   margin: auto;
-
   text-align: center;
-border-radius: 5px;
-background: white;
-position: relative;
-top:20%;
+   border-radius: 5px;
+   background: white;
+    position: relative;
+    top:20%;
 
 }
 
@@ -842,6 +841,7 @@ function fetch_customer_data()
       	dailogmess("Expire Date Empty","Chack the field ?","info");
       }else{ 
       
+
 			if(ischeckbox1.checked  == false){
 				
 			const date = new Date();
@@ -872,8 +872,7 @@ function fetch_customer_data()
 			
 			console.log(currentDate);
 			unlimitesdate=currentDate;
-			
-			
+	
 			}
       
         }	
@@ -910,19 +909,15 @@ ischeckbox1.onclick = function() {
  	function hiddden(){
 		document.getElementById('light').style.display='none';
 		document.getElementById('fade').style.display='none';
-		
-		
 	}	
 	
 	function hidddenshow(){
 		 document.getElementById('light').style.display='block';
-		 document.getElementById('fade').style.display='block';
-		
+		 document.getElementById('fade').style.display='block';	
 	}
 		
  
   
-   
    function allclear(){
      	  productname.value=""; 
      	  productunity.value=""; 
@@ -1163,14 +1158,14 @@ function add_data(){
 	pop_custom_off();
 swal({
   title: "Are you sure?",
-  text: "Once deleted, you will not be able to recover this imaginary data!",
+  text: "you will not be able to recover this imaginary data!",
   icon: "warning",
   buttons: true,
   dangerMode: true,
 })
 .then((willDelete) => {
   if (willDelete) {
-    swal("Your data Deleted ", {
+    swal("Your data Sent ", {
       icon: "success",
     }).then(function(){
 		fetch_customer_data();

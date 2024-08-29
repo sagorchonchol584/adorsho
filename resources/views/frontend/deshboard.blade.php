@@ -178,7 +178,7 @@ function numberWithCommas(number,totals,comvalue) {
 
 	takss.innerHTML=parts.join('.');
 	salesproduct.innerHTML=totals;
-	totalcomvalues.innerHTML=partscomvalue.join('.');;
+	totalcomvalues.innerHTML=partscomvalue.join('.');
 }
 
 

@@ -469,7 +469,7 @@ document.addEventListener("keydown", e => {
                     <li class="nav-item dropdown">       
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 							<span style="font-weight: bold;">{{auth()->user()->Name}} </span> 
-							<img src="{{ asset('images') }}/{{auth()->user()->image}}" width="40px" height="40px" class="rounded-circle"/>
+							<img src="{{asset('images')}}/{{auth()->user()->image}}" width="40px" height="40px" class="rounded-circle"/>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a href="#" class="dropdown-item">Reports</a>

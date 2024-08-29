@@ -24,15 +24,28 @@ Route::get('/report', [Postcontroller::class,'report'])->name('report');
 
 
 Route::get('/supplierinfologstates', [Postcontroller::class,'suplier_info_log_state'])->name("supplierlog");
+Route::get('/supplierlist/{id}', [Postcontroller::class,'suplier_list']);
 Route::get('/supplierstates', [Postcontroller::class,'suplierstate'])->name("supplierstates");
+
+//Route::get('/suppliar_info_deshboard', [Postcontroller::class, 'suppliar_all_info_api'])->name('sideshboard');
+
 Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
 
 
-//----it's ok this route
+//--stock inforamtion route --
+Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+Route::post('/stockloadfinally', [Postcontroller::class, 'Stock_Info_add_finally']);
+Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
 Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
 Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
-// test perpos user route
 
+
+
+
+
+
+
+// test perpos user route
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 Route::get('/tkshow', [Postcontroller::class,'month_profit']);
 Route::get('/totalproduct', [Postcontroller::class,'totalproduct']);
@@ -89,10 +102,6 @@ Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainst
 Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
 
 
-//--stock inforamtion route --
-Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
-//Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add'])->name('stockload');
-Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
 
 
 
