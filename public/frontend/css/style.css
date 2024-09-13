@@ -73,6 +73,9 @@
 .h-120{
 	height: 120px;
 }
+.h-170{
+	height: 170px;
+}
 .h-250{
 	height: 250px;
 }
@@ -109,6 +112,7 @@
 
 .h-1000{
 	height: 1000px;
+
 }
 
 
@@ -189,9 +193,7 @@
 	border-width: 0;
 	transition: all .2s;
 }
-.text-left {
-	text-align: left!important;
-}
+
 
 .border-primary {
 	border-color: #3f6ad8!important;
@@ -378,4 +380,8 @@ background: none;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
     border-radius: 50px;
+}
+
+.ttt{
+text-align: right;
 }

@@ -150,6 +150,12 @@ position: relative;
 height: 253px;
 overflow: auto;
 }
+
+.my-custom-scrollbartree {
+position: relative;
+height: 550px;
+overflow: auto;
+}
 .my-custom-scrollbartwo {
 position: relative;
 height: 550px;
@@ -191,6 +197,8 @@ float: right;
 <div id="fadea" class="black_overlaya"></div>
 <div id="lighta" class="white_contenta"> 
 
+
+
 <div class="maindailoboax" id="maindailoboax">
   <div class="exitdd">
     <diV class="ggggg">
@@ -218,9 +226,11 @@ float: right;
 </div>
 </div>
 
-<div class="info ">
+<div class="info  border">
   <div class="tkinfo">
-	<h4 id="infomag"></h4>
+    <div class="col-4"> <span class="cashs"></span></div>
+    <div class="col-8">  <h4 id="infomag"></h4></div>
+
   </div>
   <div class="inputtsupper">
 
@@ -246,6 +256,81 @@ float: right;
 	<button id="paymentbtm" type="button" onclick="datatranfer()" class="btn btn-primary">Sent</button>&nbsp;
 </div>
 </div>
+
+
+
+
+
+
+<!-----------this is a pop payable --------------------->
+
+<div class="maindailoboax" id="payableid">
+  <div class="exitdd">
+    <diV class="ggggg">
+    <span style="font-size:20px; font-weight:bold";>This is Payable Information</span>
+    </diV>
+  	<div class="gggg" >
+    <button class="ddd" onclick="pop_custom_off()"><span style="color: white" >X</span></button>
+   </div>
+  </div> 
+<div class="mainedd">
+<table  width="100%"  style="text-align: right;">
+  <tr height="50px">
+    <td><h5>Total Unites: </h5></td>
+    <td><h5 class="unitess"></h5></td>
+  </tr>
+  <tr height="50px">
+    <td><h5>Total Price: </h5></td>
+    <td><h5 class="price"></h5></td>
+  </tr>
+  <tr height="50px">
+    <td><h5>Total Payments: </h5></td>
+    <td><h5 class="paymet"></h5></td>
+  </tr>
+</table>
+</div>
+
+<div class="info ">
+  <div class="tkinfo">
+  <div class="col-4"> <span class="cashspay"></span></div>
+  <div class="col-8">  	<h4 id="payableee"></h4></div>
+
+  </div>
+  <div class="inputtsupper">
+
+  
+  <div class="input-group ">
+  <select class="stceted" id="Selectpayable">
+    <option selected>---Selected---</option>
+    <option value="cashdrawer">Drawer Cash</option>
+
+    @if(auth()->user()->AdminCat =='Admin')	
+    <option value="other">Other Cash</option>
+    @endif
+
+  </select>
+</div>
+
+  </div> 
+  <div class="inputtsuppertwo">
+  <input type="number" value="" id="payablepayment" class="form-control" visible="none">
+  </div>
+
+
+</div>
+
+<div class="butttons">
+	<button id="paymentbtmable" type="button" onclick="payabletranfer()" class="btn btn-primary">Sent</button>&nbsp;
+</div>
+</div>
+<!-----------this is a pop payable end---------------->
+
+
+
+
+
+
+
 </div>
 
 <!--This is a pop coustom desgin end -->
@@ -361,18 +446,18 @@ float: right;
 </div>
 <div class="col-12 h-600">
 <div class="row">
-<div class="col-7 h-600 ">
+<div class="col-7 h-600 card">
 
 <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span >Show Stock Upload Data</span></div>
 <div class="table-wrapper-scroll-y my-custom-scrollbartwo">
       <table class="table table-striped table-bordered" id="section1" >
        <thead>
         <tr>
-         <th></th>
-         <th>Product Name</th>
-		     <th>Unites</th>
-		     <th>prices</th>
-         <th>Tk</th>
+         <th><span class="name"></span></th>
+         <th><span class="product">Product Name</span></th>
+		     <th><span class="unite">Unites</span></th>
+		     <th><span class="Prices">Prices</span></th>
+         <th><span class="tk">Tk</span></th>
          </tr>
        </thead>
        <tbody class="supplierLog">
@@ -385,7 +470,7 @@ float: right;
 <div class="col-5 h-600 card">
 
  <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span > Supplier Info</span></div>
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
+<div class="table-wrapper-scroll-y my-custom-scrollbartree">
       <table class="table table-striped table-bordered" id="section1" >
        <thead>
         <tr>
@@ -403,7 +488,7 @@ float: right;
        </tbody>
       </table>
      </div>
-     <button>fffffff</button>
+     <button type="button" class="btn btn-light"  id="payablebtms" onclick="showpayablelistd()">ALL PAYABLE DUE</button>
 </div>
 </div>
 </div>
@@ -415,18 +500,46 @@ float: right;
 
 <script>
 
+ var showpayablelist=false;
 
 var inputSelect0=document.getElementById("inputGroupSelect03");
 var supplierpayment=document.getElementById("supplierpayment");
 var paymentbtm=document.getElementById("paymentbtm");
 
 
+var Selectpayable=document.getElementById("Selectpayable");
+var payablepayment=document.getElementById("payablepayment");
+var paymentbtmable=document.getElementById("paymentbtmable");
+
+
+
+
+
 supplierpayment.disabled=true;
+payablepayment.disabled=true;
+
 paymentbtm.disabled=true;
+paymentbtmable.disabled=true;
+
+
+
 let idsforsupplier=0;
 let total_price=0;
 let payabletksa=0;
 var inputname;
+
+
+let payabletks=0;
+let extrapayabletks=0;
+var inputnamepayabe;
+let payabaleId=0;
+
+let cash_credit_totals=0;
+
+
+
+
+
 
 inputSelect0.addEventListener("click", function(){
 
@@ -435,20 +548,52 @@ if(inputSelect0.value==="cashdrawer"){
   paymentbtm.disabled=false;
   supplierpayment.placeholder="Please cash pick up to cash darwer";
   inputname=supplierpayment.value;
+  $('.cashs').html("Total your Cash : "+cash_credit_totals+" Tk");
 
 }else if(inputSelect0.value==="other"){
   supplierpayment.disabled=false;
   paymentbtm.disabled=false;
   supplierpayment.placeholder="Your cash increasing";
   inputname=supplierpayment.value;
+  $('.cashs').html(" ");
 }else{
   supplierpayment.disabled=true;
   paymentbtm.disabled=true;
   supplierpayment.placeholder=" ";
   supplierpayment.value="";
-}
-  
+} 
 } );
+
+
+
+
+
+Selectpayable.addEventListener("click", function(){
+
+if(Selectpayable.value==="cashdrawer"){
+  payablepayment.disabled=false;
+  paymentbtmable.disabled=false;
+  payablepayment.placeholder="Please cash pick up to cash darwer";
+  inputnamepayabe=payablepayment.value;
+  $('.cashspay').html("Total your Cash : "+cash_credit_totals+" Tk");
+
+}else if(Selectpayable.value==="other"){
+  payablepayment.disabled=false;
+  paymentbtmable.disabled=false;
+  payablepayment.placeholder="Your cash increasing";
+  inputnamepayabe=payablepayment.value;
+  $('.cashspay').html(" ");
+}else{
+  payablepayment.disabled=true;
+  paymentbtmable.disabled=true;
+  payablepayment.placeholder=" ";
+  payablepayment.value="";
+} 
+} );
+
+
+
+
 
 
 
@@ -460,11 +605,18 @@ function fetch_customer_data()
  {
   $.ajax({
   method:'GET',
-   url:"{{ route('supplierstates') }}",
+   url:"{{ route('supplierstatesrounte') }}",
    dataType:'json',
    success:function(data)
    {
     $('.supplier').html(data.table_data); 
+
+
+    if(!parseInt(data.payableyear)>0){
+       $("#payablebtms").hide();
+     }
+
+     cash_credit_totals=data.cash_crdits;
 
     var payableyearmonths = data.payableyear.toString().split('.');
     payableyearmonths[0] = payableyearmonths[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -489,7 +641,12 @@ function fetch_customer_data()
 
 
     $('.invoice').html(data.INVOICEDUE+" INVOICES");
-    $('.supplierLog').html(data.supplier_log);
+    if(showpayablelist==false){
+      $('.supplierLog').html(data.supplier_log);
+    }else{
+      $('.supplierLog').html(data.payable);
+    }
+  
    }
   });
  }
@@ -499,10 +656,94 @@ function datatranfer() {
 
 let tks=parseInt(supplierpayment.value);
 if(supplierpayment.value!==""){
+
 if(total_price>=tks){
- payabletksa=total_price-tks;
-confram();
-pop_custom_off();
+
+if(inputSelect0.value=="other"){
+   payabletksa=total_price-tks;
+    confram();
+    pop_custom_off();
+
+}else{
+
+  if(cash_credit_totals>=tks){
+    payabletksa=total_price-tks;
+    confram();
+    pop_custom_off();
+  }else{
+    dailogmess("Not Enough Cash","Please Sales More ","info");
+  }
+
+}
+
+
+
+}else{
+  dailogmess("Don't Less Then Total Tk","Please Check Total Tk","info");
+  supplierpayment.value="";
+}
+
+  console.log("worring");
+}else
+{
+  dailogmess("Please fillup cash field","Empty field","info");
+ 
+}
+
+
+// $.ajaxSetup({
+//             headers: {
+//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//          });
+//  $.ajax({
+//      type: 'POST', //THIS NEEDS TO BE GET
+//      url: '/chackingtwo/',
+//      data: {catagory_name:myArray}, 
+//      success: function (data) {
+//         console.log("date add refurn value"+data); 
+//      },
+//      error: function() { 
+//       // meass.innerHTML="Data failed";
+//       //    console.log(data);
+//      }
+//     });
+
+
+
+   }
+
+
+function payabletranfer() {
+
+let tks=parseInt(payablepayment.value);
+if(payablepayment.value!==""){
+
+if(payabletks>=tks){
+
+  if(Selectpayable.value=="other"){
+    extrapayabletks=payabletks-tks;
+    conframpayable();
+    pop_custom_off();
+
+  }else{
+console.log("gggg"+cash_credit_totals);
+  if(cash_credit_totals>=tks){
+    extrapayabletks=payabletks-tks;
+    conframpayable();
+    pop_custom_off();
+  }else{
+    dailogmess("Not Enough Cash","Please Sales More ","info");
+  }
+
+}
+
+
+
+
+
+
+
 }else{
   dailogmess("Don't Less Then Total Tk","Please Check Total Tk","info");
   supplierpayment.value="";
@@ -540,6 +781,8 @@ pop_custom_off();
 
 
 
+
+
 function datashowwite(id){
   pop_custom_on();
   idsforsupplier=id;
@@ -549,14 +792,15 @@ function datashowwite(id){
    dataType:'json',
    success:function(data)
    {
+  
+
   $('.supplierlist').html(data.table_data);
-  // console.log(data.table_data); 
   total_price=data.total_data;
   if(data.admincat=="Admin"){
     inputSelect0.options[2].disabled = false;
   }else{
-   inputSelect0.options[2].disabled = true;
-   console.log(data.admincat);
+    inputSelect0.options[2].disabled = true;
+    console.log(data.admincat);
   }
 
 	 var partscomvalue = total_price.toString().split('.');
@@ -573,13 +817,25 @@ function pop_custom_on(){
 		document.getElementById('fadea').style.display='block';
 		document.getElementById('lighta').style.display='block';
 		document.getElementById('maindailoboax').style.display='block';
+    document.getElementById('payableid').style.display='none';
 }
+
+function pop_custom_payable(){
+		document.getElementById('fadea').style.display='block';
+		document.getElementById('lighta').style.display='block';
+		document.getElementById('maindailoboax').style.display='none';
+    document.getElementById('payableid').style.display='block';
+}
+
 
 function pop_custom_off(){
 		document.getElementById('lighta').style.display='none';
 		document.getElementById('fadea').style.display='none';
 		document.getElementById('maindailoboax').style.display='none';
-
+   // clearlyalldata();
+   document.getElementById('payableid').style.display='none';
+   $('.cashs').html(" ");
+   $('.cashspay').html(" ");
 }
 
      
@@ -616,17 +872,62 @@ swal({
     }).then((mee)=>{
 
       //---------this pop alert---------
-      supplierpayment.disabled=true;
-      paymentbtm.disabled=true;
-      supplierpayment.placeholder=" ";
-      supplierpayment.value="";
-      inputSelect0.options[0].selected = true
+      clearlyalldata();
     });
   }
 });
 
 	}
 
+
+  function conframpayable(){
+ 
+ swal({
+   title: "Are you sure?",
+   text: "you will not be able to recover this imaginary data!",
+   icon: "warning",
+   buttons: true,
+   dangerMode: true,
+ })
+ .then((willDelete) => {
+   if (willDelete) {
+     swal("Your data Sent ", {
+       icon: "success",
+     }).then(function(){
+      sentpayabledata();
+     });
+ 
+   } else {
+     swal("Do you want Exit ?",{
+       closeOnClickOutside: false,
+     }).then((mee)=>{
+ 
+       //---------this pop alert---------
+      // clearlyalldata();
+     });
+   }
+ });
+ 
+   }
+
+
+
+  function clearlyalldata(){
+    supplierpayment.disabled=true;
+    paymentbtm.disabled=true;
+    supplierpayment.placeholder=" ";
+    supplierpayment.value="";
+    inputSelect0.options[0].selected = true
+  }
+
+  
+  function clearlyallpayabledata(){
+    payablepayment.disabled=true;
+    paymentbtmable.disabled=true;
+    payablepayment.placeholder=" ";
+    payablepayment.value="";
+    Selectpayable.options[0].selected = true
+  }
 
 function sentdata(){
 
@@ -642,14 +943,87 @@ function sentdata(){
      data: {id:idsforsupplier,tk:supplierpayment.value,payabletk:payabletksa,methedpay:inputSelect0.value}, 
      success: function (data) {
         console.log(data); 
-        location.reload();
+     //   location.reload();
+     clearlyalldata()
      },
      error: function() { 
       // meass.innerHTML="Data failed";
       //    console.log(data);
      }
     });
+
+    fetch_customer_data();
 }
+
+
+function sentpayabledata(){
+
+//console.log("internet data sent");
+
+$.ajaxSetup({
+          headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+       });
+$.ajax({
+   type: 'POST', //THIS NEEDS TO BE GET
+   url: '/payabledataloaded/',
+   data: {id:payabaleId,tk:payablepayment.value,payabletk:extrapayabletks,methedpay:Selectpayable.value}, 
+   success: function (data) {
+      console.log(data); 
+   clearlyallpayabledata();
+   },
+   error: function() { 
+   }
+  });
+
+  fetch_customer_data();
+}
+
+
+
+
+function showpayablelistd(){
+  showpayablelist=true;
+
+ fetch_customer_data();
+ $('.product').html("Prices");
+ $('.name').html("Name");
+ $('.unite').html("Before Payment");
+ $('.Prices').html("Last Date");
+ $('.tk').html("Payable Tk");
+}
+
+
+function datashowpayable(id,unite,payable,paymenttk,totaltk){
+  pop_custom_payable();
+  clearlyallpayabledata();
+  payabletks=payable;
+  payabaleId=id;
+
+  var payableyearmonths = payable.toString().split('.');
+  payableyearmonths[0] = payableyearmonths[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  $("#payableee").html("Payable Amount: "+payableyearmonths.join('.')+" Tk");
+
+
+
+  var unitesss = unite.toString().split('.');
+  unitesss[0] = unitesss[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  $(".unitess").html(unitesss.join('.')+" Pieces");
+
+
+  var totaltks = totaltk.toString().split('.');
+  totaltks[0] = totaltks[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  $(".price").html(totaltks.join('.')+" Tk");
+
+
+  var paymenttks = paymenttk.toString().split('.');
+  paymenttks[0] = paymenttks[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  $(".paymet").html(paymenttks.join('.')+" Tk");
+
+
+}
+
 </script>
 
 

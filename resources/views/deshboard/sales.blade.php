@@ -329,6 +329,7 @@ top:20%;
       <th scope="col">Name</th>
       <th scope="col">Qty</th>
       <th scope="col">Price</th>
+      <th scope="col">Total</th>
     </tr>
   </thead>
   <tbody id="purschssss">
@@ -593,7 +594,7 @@ var purschssss = document.getElementById('purschssss');
     // this total show 
     var objone = getdata.profit_with_discout;
     for(var key in objone){
-     console.log(objone[key].Net_Sale);
+   //  console.log(objone[key].Net_Sale);
 
 
      detailschack.innerHTML="Total: "+objone[key].Total_sales+"Tk";
@@ -627,15 +628,25 @@ var purschssss = document.getElementById('purschssss');
 
 	let datetdr = document.createElement('td');
 	let datespanr = document.createElement('span');
-	datespanr.innerHTML=obj[key].product_unite;;
+	datespanr.innerHTML=obj[key].product_unite;
 	datetdr.appendChild(datespanr);
 	nametrr.appendChild(datetdr);
 	
 	let saletdr = document.createElement('td');
+  saletdr.style.textAlign="right";
 	let salesspanr = document.createElement('span');
 	salesspanr.innerHTML=obj[key].Sales_price+" tk";
 	saletdr.appendChild(salesspanr);
 	nametrr.appendChild(saletdr);
+
+	let totals = document.createElement('td');
+  totals.style.textAlign="right";
+	let totalsapn = document.createElement('span');
+	totalsapn.innerHTML=parseInt(obj[key].Sales_price)*parseInt(obj[key].product_unite)+" tk";
+	totals.appendChild(totalsapn);
+	nametrr.appendChild(totals);
+
+
 	purschssss.appendChild(nametrr);	 
 
 
@@ -677,7 +688,7 @@ function tessst(){
     type: 'GET', 
     url: '/profitshow',
     success: function (data) {
-      console.log("date add refurn value");
+     // console.log("date add refurn value");
         // console.log(data);
      var obj = JSON.parse(data);
      for(var key in obj){
@@ -842,29 +853,29 @@ cheackbox();
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 
   		
-function inputfunction(){    
+// function inputfunction(){    
 	
-console.log("working");
+// console.log("working");
 
-const arrayLike = {
-  "a": "a",
-  "d": "b",
-  length: 2,
-};
+// const arrayLike = {
+//   "a": "a",
+//   "d": "b",
+//   length: 2,
+// };
 	
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-            url: 'hhhh',
-            type: 'POST',
-            data: {_token: CSRF_TOKEN, hello:arrayLike},
-            dataType: 'JSON',
-            success: function (data) { 
-              //  $(".writeinfo").append(data.catagory_name); 
-              //	var obj = JSON.parse(data);
-               console.log(data);
-            }
-        });   	
-   }
+// var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+//     $.ajax({
+//             url: 'hhhh',
+//             type: 'POST',
+//             data: {_token: CSRF_TOKEN, hello:arrayLike},
+//             dataType: 'JSON',
+//             success: function (data) { 
+//               //  $(".writeinfo").append(data.catagory_name); 
+//               //	var obj = JSON.parse(data);
+//                console.log(data);
+//             }
+//         });   	
+//    }
        
 
 
@@ -875,7 +886,7 @@ var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
  	if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- 	console.log("true");
+ //	console.log("true");
  	}else{
  		customername.value="";
         customername.disabled = false;
@@ -891,7 +902,7 @@ function cheackbox(){
 if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- 	console.log("true");
+ 	//console.log("true");
  	}else{
  		customername.value="";
         customername.disabled = false;
@@ -907,11 +918,11 @@ function profitshow(){
     url: '/profitshow',
     success: function (data) {
     	
-        console.log("date add refurn value");
+       // console.log("date add refurn value");
         // console.log(data);
         var obj = JSON.parse(data);
      for(var key in obj){
-		console.log(obj[key].Recive_number);
+		//console.log(obj[key].Recive_number);
      
 		}
     },
@@ -1321,7 +1332,7 @@ $(document).ready(function (e) {
 			}else{
 				orrning("Not Found Data","Plase search Again");
 			}
-			console.log("not found");
+			//console.log("not found");
 			
 		}else{
 					
@@ -1364,7 +1375,7 @@ function check(id,qty){
     type: 'GET', //THIS NEEDS TO BE GET
     url: '/heo/'+id+"/"+qty,
     success: function (data) {
-        console.log("date add refurn value");  
+     //   console.log("date add refurn value");  
        
        // $("#data").append(data);
     },
@@ -1381,8 +1392,8 @@ function purcheschack(id,qty,num){
     url: '/purchers/'+id+"/"+qty+"/"+num,
     success: function (data) {
     	
-        console.log("date add refurn value");
-         console.log(data);
+     //   console.log("date add refurn value");
+    //     console.log(data);
        // $("#data").append(data);
     },
     error: function() { 
@@ -1394,21 +1405,26 @@ function purcheschack(id,qty,num){
  
 function profit_data_load(discat,dis,sales,amount,num,name){
 	
-	
-	
-    $.ajax({
-    type: 'GET', //THIS NEEDS TO BE GET
-    url: '/profiturl/'+discat+"/"+dis+"/"+sales+"/"+amount+"/"+num+"/"+name,
-    success: function (data) {
-    	
-        console.log("date add refurn value");
-         console.log(data);
-       // $("#data").append(data);
-    },
-    error: function() { 
-        // console.log(data);
-    }
-});
+$.ajaxSetup({
+          headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+       });
+
+
+$.ajax({
+   type: 'POST', //THIS NEEDS TO BE GET
+   url: '/profiturl/',
+   data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
+   success: function (data) {
+     // console.log(data); 
+   
+   },
+   error: function() { 
+   }
+  });
+
+
     }
 
 
@@ -1489,7 +1505,7 @@ function failexit(){
 	document.getElementById('light').style.display='none';
 	document.getElementById('fade').style.display='none';
 	
-	console.log("failexit");
+	//console.log("failexit");
     disinput.value="0";
      location.reload();
    
@@ -1546,7 +1562,7 @@ let printbody = document.getElementById("printsbody");
     sum += price;
     profit+=prod;
     // console.log("looog"+cart);
-	 console.log("this is single profit"+profit);
+	// console.log("this is single profit"+profit);
 if (ids in cart) {
 	
     cart[ids].qty++;
@@ -1634,7 +1650,7 @@ if (ids in cart) {
 	 
      newButton.addEventListener("click", function(){
       some_function(ids,price);
-      console.log("clear alll");
+     // console.log("clear alll");
      }, false);
 	 
 	 
@@ -1702,7 +1718,7 @@ function updateCart() {
    localStorage.setItem("sum", sum); 
    localStorage.setItem("profit", profit);
    localStorage.setItem("count", count);
-   console.log("this is profit total"+profit);
+  // console.log("this is profit total"+profit);
 }
 
 
@@ -1810,7 +1826,7 @@ function some_function(id,price){
 	 continubtnone.disabled=false;
 	 clearbtn.disabled=false;
 	}
-	console.log("hello mewe");
+	//console.log("hello mewe");
     updateCart();
     check(id,a);
     popups();

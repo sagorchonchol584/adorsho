@@ -514,7 +514,7 @@ document.addEventListener("keydown", e => {
 			 	  <div class="deshbo">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line Deshboard">
 						<li><a href="{{ route('home')}}" class="link-dark rounded menu-width"> Overview</a></li>
-						<li><a href="{{ route('product')}}" class="link-dark rounded menu-width">Updates</a></li>
+						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width "> Cash Flow</a></li>   
 						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>
 						<li><a href="{{ route('report')}}" class="link-dark rounded menu-width">Reports</a></li>
 						<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width">Sales</a></li>
@@ -563,9 +563,9 @@ document.addEventListener("keydown", e => {
 						<div class="Acountss">		
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line">
 								@if(auth()->user()->AdminCat =='Admin')	
-								<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width "> Suplier Pages</a></li>   
 								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>             
 		                   		 @endif
+								<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width "> Suplier Pages</a></li>  
 								<li><a href="{{route('profileView')}}" class="link-dark rounded menu-width">Profile</a></li>
 								<li><a href="#" class="link-dark rounded menu-width">Settings</a></li>
 								<li><a href="{{route('loginout')}}" class="link-dark rounded menu-width">Sign out</a></li>

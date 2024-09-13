@@ -596,6 +596,7 @@ function fetch_customer_data()
   //  $('#total_records').text(data.total_data);
    //   console.log(data.total_data);
       button_chack_for_sent();
+
 	  if(parseInt(data.total_data)==0){
 		allselect.disabled=true;
 		datasent.disabled=true;
@@ -712,7 +713,7 @@ function fetch_customer_data()
         
 
       
-    
+
     $(document).ready(function (e) {
 	$("#uploadFormstock").on('submit',(function(e) {
 		e.preventDefault();			
@@ -1046,7 +1047,9 @@ function data_tranfer_all_data(barcode,id) {
 //     });
    }
 	
-
+function slectted(){
+console.log("hello world");
+}
    
  function dataloadedfun(){
 
