@@ -162,9 +162,6 @@
 	var totalcomvalues=document.getElementById('COMVALUE');
 	
 	check();
-	totalproduct();
-
-//takss.innerHTML=getNumber(1600850);
 
 function numberWithCommas(number,totals,comvalue) {
 
@@ -185,40 +182,22 @@ function numberWithCommas(number,totals,comvalue) {
 function check(){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/tkshow/',
+    url: '/deshboard_all_info_get_data/',
     success: function (data) {
       //  console.log("date add refurn value"+data); 
 	  var dategert=JSON.parse(data);
 	  numberWithCommas(dategert.Total_product,dategert.salesproduct,dategert.totalcomvalu); 
-		
+	  product.innerHTML=dategert.total_product;
     },
     error: function() { 
 		takss.innerHTML="Loading....";
         // console.log(data);
+		product.innerHTML="Loading....";
     }
    });
     }
 
 
-
-function totalproduct(){
-    $.ajax({
-    type: 'GET', //THIS NEEDS TO BE GET
-    url: '/totalproduct/',
-    success: function (data) {
-      //  console.log("date add refurn value"+data); 
-	  
-	  product.innerHTML=data;
-    },
-    error: function() { 
-		product.innerHTML="Loading....";
-        // console.log(data);
-    }
-});
-}
-
-
-	
 </script>
 
 

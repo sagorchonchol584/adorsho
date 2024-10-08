@@ -385,3 +385,12 @@ background: none;
 .ttt{
 text-align: right;
 }
+
+.text-right-side{
+	text-align: right;
+}
+
+ th .bderre{
+	border-bottom: 1px solid red;
+	
+}

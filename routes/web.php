@@ -45,13 +45,24 @@ Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
 
 
 
+
+
+
+
+
 //---this route is when admin check expence cost then update  ----route:  stockloadfinally------------
 Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
 
 
-
 //---this route  expence cost uploaded   ----route:  stockloadfinally------------
 Route::post('/expenceadd', [Postcontroller::class,'expence_add_func']);
+
+//---this route  expence cost update   ----route:  stockloadfinally------------
+Route::post('/expence_update', [Postcontroller::class,'expence_update_func']);
+
+
+//---this route  expence cost uploaded   ----route:  stockloadfinally------------
+Route::get('/get_data_to_update/{id}', [Postcontroller::class,'get_data_to_update_func']);
 
 
 
@@ -69,6 +80,11 @@ Route::post('/stockloadfinally', [Postcontroller::class, 'Stock_Info_add_finally
 Route::post('/payabledataloaded', [Postcontroller::class, 'Payable_finally']);
 
 
+//---this a function is when start day then auto info get and loaded ----route:  daily_activity_load------------
+Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_data_loaded']);
+
+
+
 Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
 Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
 Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
@@ -81,9 +97,10 @@ Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
 
 // test perpos user route
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
-Route::get('/tkshow', [Postcontroller::class,'month_profit']);
-Route::get('/totalproduct', [Postcontroller::class,'totalproduct']);
-// Route::get('/salesshow', [Postcontroller::class,'sales_show']);
+
+
+//--------this route is deshboard show all info like sales today, upload info ent------------
+Route::get('/deshboard_all_info_get_data', [Postcontroller::class,'deshboard_all_info_get_data_func']);
 
 
 

@@ -605,9 +605,13 @@ document.addEventListener("keydown", e => {
 </body>
 </div>
 
+
+
+
 <script>
 
-      
+auto_loaddes();
+
         let darkModeAc = localStorage.getItem("collapsac"); 
         let pagrAc = localStorage.getItem("collapsac_page"); 
         let deshboardAc = localStorage.getItem("collapsac_deshboard");
@@ -774,6 +778,63 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	});
 
+
+
+function auto_data_load_date(f){
+	
+var a = f.split('-');
+var date = new Date (a[0], a[1],a[2]);
+localStorage.setItem("dateload",date.getTime());   
+
+}
+
+
+function auto_loaddes(){
+
+dateload = localStorage.getItem("dateload");
+//console.log(dateload);
+var q = new Date();
+var m = q.getMonth()+1;
+var d = q.getDate();
+var y = q.getFullYear();
+var Today = new Date(y,m,d);
+
+
+if(dateload==Today.getTime()){
+//	console.log("Today");
+}else{
+	auto_data_load_all_info();
+	localStorage.setItem("dateload",Today.getTime());  
+	//console.log("lest days");
+}
+
+}
+//localStorage.clear();
+
+function auto_data_load_all_info(){
+
+$.ajax({
+	method:'GET',
+	url:' /daily_activity_load/',
+	dataType: 'json',
+	success:function(data){
+	auto_data_load_date(data);
+	},
+	error:function(data){
+	console.log("Data failed");
+	}
+});
+}
+
+
 </script>
+
+
+<!-- @if(auth()->user()->data_auto_loaded =='0')	
+<script>
+	
+</script>			 -->
+
+@endif
 </body>
 </html>

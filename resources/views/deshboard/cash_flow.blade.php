@@ -203,7 +203,6 @@ float: right;
     <option value="BreakTimeCost">Break Time Cost</option>
     <option value="VehicleRent">Vehicle Rent</option>
     <option value="EmployerTake">Employer Take</option>
-
   </select>
 </div>
 </div>
@@ -212,6 +211,7 @@ float: right;
 <div class="col-12 h-60">
 <div class="col-6 h-60 ttt"><span style="font-size: 20px;" >Amount :</span></div>
 <div class="col-6 h-60">
+<input type="number" class="form-control" aria-label="Large" id="hiddenamout" hidden>
 <input type="number" class="form-control" aria-label="Large" id="amountcash">
 </div>
 </div>
@@ -234,7 +234,7 @@ float: right;
 </div>
 
 <div class="butttons">
-	<button id="cashbtm" type="button"  class="btn btn-primary">Sent</button>&nbsp;
+	<button id="cashbtm" type="button"   class="btn btn-primary">Sent</button>&nbsp;
 </div>
 </div>
 </div>
@@ -257,8 +257,8 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="month">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Total Expends</span></div>
+<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="totalsales">00.00 Tk</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Total Sales</span></div>
 </div>
 </div>
 </div>
@@ -275,7 +275,7 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="year">00.00 Tk</span></div>
+<div class="col-12 h-70 fs-5 fw-bold  pt-4 "><span class="todaycash">00.00 Tk</span></div>
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Today Cash</span></div>
 </div>
 </div>
@@ -297,8 +297,8 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="PAYABLEyear">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Sent Cash To Admin</span></div>
+<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="montyexpence">00.00 Tk</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Expences </span></div>
 </div>
 </div>
 </div>
@@ -313,8 +313,8 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="unpaid">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Expends</span></div>
+<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="monthy_suppier_exp">00.00 Tk</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Supplier Expences</span></div>
 </div>
 </div>
 </div>
@@ -331,7 +331,7 @@ float: right;
 <div class="col-9 h-120 "> 
 <div class="row">
 <div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="invoice">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>INVOICE DUE</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Notification</span></div>
 </div>
 </div>
 </div>
@@ -350,7 +350,7 @@ float: right;
 <!------------------This is a top info bar ------------------>
 
 </div>
-<div class="col-12 h-600">
+<div class="col-12 h-600 card">
 <div class="row">
 <div class="col-7 h-600 ">
 
@@ -412,26 +412,65 @@ float: right;
 
 </div>
 <div class="col-5 h-600 card">
- <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span > Supplier Info</span></div>
+ <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span >Expence List of days</span></div>
+ <hr>
 <div class="table-wrapper-scroll-y my-custom-scrollbartree">
-      <table class="table table-striped table-bordered" id="section1" >
+      <table class="table table-hover" id="section1" style=" font-size:18px;">
        <thead>
-        <tr>
-         
-         <th>Supplier Name</th>
-         <th>Name</th>
-         <th>Date</th>
-         <th>Unity</th>
-	    	 <th>Prices</th>
-         
-        </tr>
-       </thead>
-       <tbody class="supplier">
 
+        <tr>
+         <th>Details</th>
+	    	 <th class="text-right-side"></th>
+        </tr>
+
+       </thead>
+       <tbody >
+
+       <tr>
+         <th> Salse Today</th>
+	    	 <th class="text-right-side"><span id="salescash"> </span></th>
+        </tr>
+
+        <tr>
+         <th>Supplier Expance</th>
+	    	 <th class="text-right-side"><span id="supex"> </span></th>
+        </tr>
+
+        <tr >
+         <th>Total Expence</th>
+	    	 <th class="text-right-side"><span id="expenc"> </span></th>
+        </tr>
+        
+        <tr  class="table-secondary">
+         <th scope="col">Net Cash </th>
+	    	 <th class="text-right-side bderre"><span id="Cashid"> </span></th>
+        </tr>
+       
+
+        <tr >
+         <th>Sent Balance </th>
+	    	 <th class="text-right-side">
+         <select class="stceted_cash_sent" id="cashid">
+   
+  </select>
+
+         </th>
+        </tr>
+
+
+        <tr >
+         <th> </th>
+	    	 <th class="text-right-side">
+          <button id="cashsentbnt" onclick="confrm_cash_sent()" class="btn btn-primary">Sent </button>
+        </th>
+        </tr>
+
+
+    
        </tbody>
       </table>
      </div>
-     <button onclick="showpayablelist()">ALL PAYABLE DUE</button>
+     <button >ALL PAYABLE DUE</button>
 </div>
 </div>
 </div>
@@ -444,77 +483,127 @@ float: right;
 <script>
 
 
-
-
-
 var expens=document.getElementById("expens");
 var amountcash=document.getElementById("amountcash");
 var cashbtm=document.getElementById("cashbtm");
+var cashid=document.getElementById("cashid");
+var cashsentbnt=document.getElementById('cashsentbnt');
+cashsentbnt.disabled=true;
+
+var check=false;
+let idsss=0;
+
+
+
+
+//------this very inportens data type---
+let total_sales=0;
+let cashaviable=0;
+let today_expen=0;
+let today_supplier=0;
+let today_cash=0;
+let today_net_cash=0;
+let add_expence=0;
 
 
 
 
 
-
+fetch_customer_data();
 
 
 
 cashbtm.addEventListener("click", expencedata);
 
+
 function expencedata(){
-if(expens.value=="select"){
+
+   if(check==false){
+    console.log("not update")
+  
+    if(expens.value=="select"){
   dailogmess("Please Select The Option","Not Selected Data","info");
-}
-else{
-  if(parseInt(amountcash.value)>0){
-if(parseInt(cashaviable)>=amountcash.value){
-  confrm_expenc_cost_sent(amountcash.value,expens.value);
-}else{
-  dailogmess("Not Enough Cash","You sale cash "+cashaviable+" Tk","info");
-}
-}else{
-  dailogmess("Please fillup cash field","Empty field","info");
-}
-}
-}
+    }else{
+      if(parseInt(amountcash.value)>0){
+        if(parseInt(cashaviable)>=amountcash.value){
+            confrm_expenc_cost_sent(amountcash.value,expens.value);
+             }else{
+             dailogmess("Not Enough Cash","You sale cash "+cashaviable+" Tk","info");
+              }
+      }else{
+           dailogmess("Please fillup cash field","Empty field","info");
+            }
+      }
+  
+  
+  }else{
+
+    console.log("this updatedata")
+
+    if(expens.value=="select"){
+  dailogmess("Please Select The Option","Not Selected Data","info");
+    }else{
+      if(parseInt(amountcash.value)>0){
+        if(parseInt(cashaviable)>=amountcash.value){
+            confrm_expenc_update_cost_sent(amountcash.value,expens.value);
+             }else{
+             dailogmess("Not Enough Cash","You sale cash "+cashaviable+" Tk","info");
+              }
+      }else{
+           dailogmess("Please fillup cash field","Empty field","info");
+            }
+      }
+
+
+   }
+ 
 
 
 
+
+
+
+  
+
+
+}
 
 
 function expenccostsent(tks,select){
-  $.ajaxSetup({
-                headers: {
-                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-             });
-     $.ajax({
-         type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expenceadd/',
-         data: {tk:tks,selectvale:select}, 
-         success: function (data) {
-            console.log(data); 
-         //   location.reload();
-         fetch_customer_data();
-         },
-         error: function() { 
-          // meass.innerHTML="Data failed";
-          //    console.log(data);
-         }
-        });
+
+
+  console.log(tks);
+  console.log(select);
+
+  // $.ajaxSetup({
+  //               headers: {
+  //                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //               }
+  //            });
+  //    $.ajax({
+  //        type: 'POST', //THIS NEEDS TO BE GET
+  //        url: '/expenceadd/',
+  //        data: {tk:tks,selectvale:select}, 
+  //        success: function (data) {
+  //           console.log(data); 
+  //        //   location.reload();
+  //        fetch_customer_data();
+  //        },
+  //        error: function() { 
+  //         // meass.innerHTML="Data failed";
+  //         //    console.log(data);
+  //        }
+  //       });
 
        
 }
-
-
-
 
 
 function confrm_expenc_cost_sent(tk,selcetdd){
   pop_custom_off();
  swal({
    title: "Are you sure?",
-   text: "you will not be able to recover this imaginary data!",
+   text: "you will be able to this sent data!",
    icon: "warning",
    buttons: true,
    dangerMode: true,
@@ -538,92 +627,134 @@ function confrm_expenc_cost_sent(tk,selcetdd){
      });
    }
  });
-
    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function confrm_expenc_update_cost_sent(tk,selcetdd){
+  pop_custom_off();
+ swal({
+   title: "Are you sure?",
+   text: "you will update data!",
+   icon: "warning",
+   buttons: true,
+   dangerMode: true,
+ })
+ .then((willDelete) => {
+   if (willDelete) {
+     swal("Your data update ", {
+       icon: "success",
+     }).then(function(){
+    //  expenccostsent(tk,selcetdd);
+    confrm_expenc_update_data_sent(tk,selcetdd);
+     });
+ 
+   } else {
+     swal("Do you want Exit ?",{
+       closeOnClickOutside: false,
+     }).then((mee)=>{
+ 
+       //---------this pop alert---------
+     
+     });
+   }
+ });
+   }
+
+
+function updatedata(id){
+  check=true;
+  idsss=id;
+  //cashbtm.onclick =expencedata(2);
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/get_data_to_update/'+id,
+     success: function (data) {
+	var datajos=JSON.parse(data);
+      if(datajos.message=="exitdata"){
+        dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
+      }else{
+        amountcash.value=datajos.debit_taka; 
+        expens.value=datajos.datails;
+       document.getElementById("hiddenamout").value=datajos.id;
+        pop_custom_on();
+
+      }
+       
+     },
+     error: function() { 
+
+     }
+    });
+
+}
+
+function confrm_expenc_update_data_sent(amountcash,expens){
+
+
+
+  $.ajaxSetup({
+                headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+             });
+     $.ajax({
+         type: 'POST', //THIS NEEDS TO BE GET
+         url: '/expence_update/',
+         data: {tk:amountcash,selectvale:expens,id:idsss}, 
+         success: function (data) {
+            console.log(data); 
+         //   location.reload();
+         fetch_customer_data();
+         },
+         error: function() { 
+          // meass.innerHTML="Data failed";
+          //    console.log(data);
+         }
+        });
+
+       
+}
+
+
+
+
+
+
+
+//------------sent data funcation----------
+
+function confrm_cash_sent(){
+ 
+if(parseInt(cashid.value)==0){
+  dailogmess("Please Check Selcet Option","Choose stafName","info")
+}else{
+ 
+ swal({
+   title: "Are you sure?",
+   text: "you will be able to this sent data!",
+   icon: "warning",
+   buttons: true,
+   dangerMode: true,
+ })
+ .then((willDelete) => {
+   if (willDelete) {
+     swal("Your data Sent ", {
+       icon: "success",
+     }).then(function(){
+      expenccostsent(total_sales,cashid.value);
+     });
+ 
+   } else {
+     swal("Do you want Exit ?",{
+       closeOnClickOutside: false,
+     }).then((mee)=>{
+       //---------this pop alert---------
+     });
+   }
+ });
+}
+
+   }
 
 
 
@@ -634,16 +765,9 @@ var showpayablelist=false;
 
 var supplierpayment=document.getElementById("supplierpayment");
 
-let idsforsupplier=0;
-let total_price=0;
-let payabletksa=0;
-var inputname;
-let cashaviable=0;
+let ff=0;
 
 
-
-
-fetch_customer_data();
 //button_chack_for_sent();
 
 
@@ -655,36 +779,83 @@ function fetch_customer_data()
    dataType:'json',
    success:function(data)
    {
-    $('.supplier').html(data.table_data); 
+    //$('.supplier').html(data.table_data); 
 
-    var payableyearmonths = data.payableyear.toString().split('.');
-    payableyearmonths[0] = payableyearmonths[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    all_cash_sent_fuc(data.totalsates, data.today_suppier_exps, data.today_expence_tk, data.cash_crdits);
+    total_sales=data.totalsates;
+   
+
+    $('.stceted_cash_sent').html(data.setectvalue); 
+
+    today_expen=parseInt(data.today_expence_tk);
+    today_supplier=parseInt(data.monthy_suppier_exps);
+    add_expence=today_supplier+today_expen;
+
+    today_cash=parseInt(data.cash_crdits);
+    today_net_cash=today_cash-add_expence;
+
+  var net_cash = today_net_cash.toString().split('.');
+  net_cash[0] = net_cash[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+
+
+    var monthy_expences = data.monthy_expence.toString().split('.');
+    monthy_expences[0] = monthy_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    var today_expences = data.today_expence_tk.toString().split('.');
+    today_expences[0] = today_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+
+    $('.montyexpence').html(monthy_expences.join('.')+" Tk");
+    $('#expenc').html(" - "+today_expences.join('.')+" Tk");
+    $('#expenc').css("color", "red");
+
+
+ 
+
+    var totalsatess = data.totalsates.toString().split('.');
+    totalsatess[0] = totalsatess[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    $('.totalsales').html(totalsatess.join('.')+" Tk");
+    $('#salescash').html(totalsatess.join('.')+" Tk");
+
     
 
-    $('.PAYABLEyear').html(payableyearmonths.join('.')+" Tk");
+    var todaycash = data.cash_crdits.toString().split('.');
+    todaycash[0] = todaycash[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    $('.todaycash').html(todaycash.join('.')+" Tk");
+    $('#Cashid').html(todaycash.join('.')+" Tk");
+
+   
+
+    var monthy_suppier_expence = data.monthy_suppier_exps.toString().split('.');
+    monthy_suppier_expence[0] = monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    var today_suppier_expence = data.today_suppier_exps.toString().split('.');
+    today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk");
+    $('#supex').html(" - "+today_suppier_expence.join('.')+" Tk");
+    $('#supex').css("color", "red");
 
 
-    var months = data.months_pay.toString().split('.');
-    months[0] = months[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    $('.month').html(months.join('.')+" Tk");
+    $('.cashflow_log').html(data.cashflow_log);
 
 
-    var years = data.year_pay.toString().split('.');
-    years[0] = years[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    $('.year').html(years.join('.')+" Tk");
+if(parseInt(data.not_show_admin)>0){
+  $('.invoice').html(data.not_show_admin+" NO CHECK");
+  $('.invoice').css({"color": "red"});
+}else{
+  $('.invoice').html(" CHECKED");
+  $('.invoice').css({"color": "green"});
+}
 
 
-    var unpaid = data.allduetk.toString().split('.');
-    unpaid[0] = unpaid[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    $('.unpaid').html(unpaid.join('.')+" Tk");
 
-
-    $('.invoice').html(data.INVOICEDUE+" INVOICES");
-    if(showpayablelist==false){
-      $('.cashflow_log').html(data.cashflow_log);
-    }else{
-      $('.cashflow_log').html(data.payableyear);
-    }
+    // if(showpayablelist==false){
+    //   $('.cashflow_log').html(data.cashflow_log);
+    // }else{
+    //   $('.cashflow_log').html(data.payableyear);
+    // }
   
     cashaviable=data.cash_crdits;
 
@@ -743,7 +914,6 @@ function fetch_customer_data()
 //    }
 //   });
 // }
-
 
 
 function pop_custom_on(){
@@ -841,6 +1011,31 @@ function dailogmess(mess,messtwo,messtheree){
 // function showpayablelist(){
 //   showpayablelist=true;
 // }
+
+
+
+
+
+
+
+function all_cash_sent_fuc(sale,supplier,expens,cash){
+  total_sales=sale;
+  today_supplier=supplier;
+
+if(cash<=0){
+  cashsentbnt.disabled=true;
+}else{
+  cashsentbnt.disabled=false;
+  //cashsent.disabled=true;
+}
+
+
+
+}
+
+
+
+
 
 
 </script>
