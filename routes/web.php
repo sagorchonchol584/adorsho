@@ -66,6 +66,16 @@ Route::get('/get_data_to_update/{id}', [Postcontroller::class,'get_data_to_updat
 
 
 
+//---this route  expence cost delete   ----route:  stockloadfinally------------
+Route::get('/get_data_to_delete/{id}', [Postcontroller::class,'get_data_to_delete_func']);
+
+
+
+
+//---this route  expence cost sent cash   ----route:  stockloadfinally------------
+Route::get('/get_data_to_cash_sent/{id}', [Postcontroller::class,'get_data_to_cash_sent_func']);
+
+
 
 
 //--stock inforamtion route --

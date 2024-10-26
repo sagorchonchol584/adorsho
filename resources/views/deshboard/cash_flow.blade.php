@@ -452,7 +452,7 @@ float: right;
 	    	 <th class="text-right-side">
          <select class="stceted_cash_sent" id="cashid">
    
-  </select>
+         </select>
 
          </th>
         </tr>
@@ -575,25 +575,25 @@ function expenccostsent(tks,select){
   console.log(tks);
   console.log(select);
 
-  // $.ajaxSetup({
-  //               headers: {
-  //                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //               }
-  //            });
-  //    $.ajax({
-  //        type: 'POST', //THIS NEEDS TO BE GET
-  //        url: '/expenceadd/',
-  //        data: {tk:tks,selectvale:select}, 
-  //        success: function (data) {
-  //           console.log(data); 
-  //        //   location.reload();
-  //        fetch_customer_data();
-  //        },
-  //        error: function() { 
-  //         // meass.innerHTML="Data failed";
-  //         //    console.log(data);
-  //        }
-  //       });
+  $.ajaxSetup({
+                headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+             });
+     $.ajax({
+         type: 'POST', //THIS NEEDS TO BE GET
+         url: '/expenceadd/',
+         data: {tk:tks,selectvale:select}, 
+         success: function (data) {
+            console.log(data); 
+         //   location.reload();
+         fetch_customer_data();
+         },
+         error: function() { 
+          // meass.innerHTML="Data failed";
+          //    console.log(data);
+         }
+        });
 
        
 }
@@ -661,36 +661,9 @@ function confrm_expenc_update_cost_sent(tk,selcetdd){
    }
 
 
-function updatedata(id){
-  check=true;
-  idsss=id;
-  //cashbtm.onclick =expencedata(2);
-	$.ajax({
-     type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_update/'+id,
-     success: function (data) {
-	var datajos=JSON.parse(data);
-      if(datajos.message=="exitdata"){
-        dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
-      }else{
-        amountcash.value=datajos.debit_taka; 
-        expens.value=datajos.datails;
-       document.getElementById("hiddenamout").value=datajos.id;
-        pop_custom_on();
 
-      }
-       
-     },
-     error: function() { 
-
-     }
-    });
-
-}
 
 function confrm_expenc_update_data_sent(amountcash,expens){
-
-
 
   $.ajaxSetup({
                 headers: {
@@ -725,6 +698,7 @@ function confrm_expenc_update_data_sent(amountcash,expens){
 
 function confrm_cash_sent(){
  
+  console.log(cashid.value);
 if(parseInt(cashid.value)==0){
   dailogmess("Please Check Selcet Option","Choose stafName","info")
 }else{
@@ -741,7 +715,8 @@ if(parseInt(cashid.value)==0){
      swal("Your data Sent ", {
        icon: "success",
      }).then(function(){
-      expenccostsent(total_sales,cashid.value);
+console.log("hello");
+    cash_sent_any_prsonal(cashid.value);
      });
  
    } else {
@@ -757,7 +732,27 @@ if(parseInt(cashid.value)==0){
    }
 
 
+function cash_sent_any_prsonal(id){
 
+
+  console.log("id :"+id);
+  $.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/get_data_to_cash_sent/'+id,
+     success: function (data) {
+	var datajos=JSON.parse(data);
+
+     console.log(datajos);
+     fetch_customer_data();
+       
+     },
+     error: function() { 
+
+     }
+    });
+
+
+}
 
 
 
@@ -815,11 +810,23 @@ function fetch_customer_data()
 
     var totalsatess = data.totalsates.toString().split('.');
     totalsatess[0] = totalsatess[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    $('.totalsales').html(totalsatess.join('.')+" Tk");
     $('#salescash').html(totalsatess.join('.')+" Tk");
 
-    
 
+
+
+    var total_show_Not_funs = data.total_show_Not_fun.toString().split('.');
+    total_show_Not_funs[0] = total_show_Not_funs[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    $('.totalsales').html(total_show_Not_funs.join('.')+" Tk");
+
+
+
+    if(parseInt(data.cash_crdits)<0){
+      $("#cashsentbnt").attr("disabled","disabled");
+    }
+
+
+  
     var todaycash = data.cash_crdits.toString().split('.');
     todaycash[0] = todaycash[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     $('.todaycash').html(todaycash.join('.')+" Tk");
@@ -834,6 +841,9 @@ function fetch_customer_data()
     today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk");
+
+
+    
     $('#supex').html(" - "+today_suppier_expence.join('.')+" Tk");
     $('#supex').css("color", "red");
 
@@ -1034,9 +1044,104 @@ if(cash<=0){
 }
 
 
+function updatedata(id){
+  check=true;
+  idsss=id;
+  //cashbtm.onclick =expencedata(2);
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/get_data_to_update/'+id,
+     success: function (data) {
+	var datajos=JSON.parse(data);
+      if(datajos.message=="exitdata"){
+        dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
+      }else{
+        amountcash.value=datajos.debit_taka; 
+        expens.value=datajos.datails;
+       document.getElementById("hiddenamout").value=datajos.id;
+        pop_custom_on();
+
+      }
+       
+     },
+     error: function() { 
+
+     }
+    });
+
+}
 
 
 
+
+
+function deletdata(id){
+  check=true;
+  idsss=id;
+  //cashbtm.onclick =expencedata(2);
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/get_data_to_update/'+id,
+     success: function (data) {
+
+
+	var datajos=JSON.parse(data);
+      if(parseInt(datajos.message)==0){
+        dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
+      }else{
+        console.log("whats happend")
+      conformdeleta(id);
+      }
+       
+     },
+     error: function() { 
+
+     }
+    });
+}
+
+function conformdeleta(id){
+       swal({
+   title: "Are you sure?",
+   text: "you will not be able to return!",
+   icon: "warning",
+   buttons: true,
+   dangerMode: true,
+ })
+ .then((willDelete) => {
+   if (willDelete) {
+     swal("Data has Deleted ", {
+       icon: "success",
+     }).then(function(){
+     datedeleteinfo(id);
+     });
+ 
+   } else {
+     swal("Do you want Exit ?",{
+       closeOnClickOutside: false,
+     }).then((mee)=>{
+       //---------this pop alert---------
+     });
+   }
+ });
+}
+
+function datedeleteinfo(id){
+  $.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/get_data_to_delete/'+id,
+     success: function (data) {
+	var datajos=JSON.parse(data);
+
+     console.log(datajos);
+     fetch_customer_data();
+       
+     },
+     error: function() { 
+
+     }
+    });
+}
 
 </script>
 
