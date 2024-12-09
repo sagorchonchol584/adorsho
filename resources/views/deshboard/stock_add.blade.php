@@ -49,7 +49,7 @@
 		height: 80px;
 		width: 100%;
 	  background: #FFFFFF;
-	 // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 	}
 	
 	.top_breadcone{
@@ -343,7 +343,7 @@
 		console.log("Unlimited inviled");
 		}else{	
 		
-	   formData.append("catagory_id", sub_category_name.value);
+	     formData.append("catagory_id", sub_category_name.value);
        formData.append("Sub_catagory_id", sub_category.value); 
        formData.append("Sub_to_sub_catagory", subtosutcatagory.value);
        formData.append("Total_purchase_Price", total_prire); 
@@ -352,11 +352,11 @@
 	
 				
 		$.ajax({
-        url: "{{route('loader')}}",
+    url: "{{route('loader')}}",
 		type: "POST",
 		data:  formData,
 		contentType: false,
-        processData:false,      
+    processData:false,      
 		success: function(data)
 	    {
 	    	    	
@@ -446,7 +446,7 @@
 			console.log("this not right"); // 👉️ true
 			errrrr("Expire date Inviled")
 			}
-               console.log(esxpire_date.value);
+      console.log(esxpire_date.value);
 						
 			}else{
 				

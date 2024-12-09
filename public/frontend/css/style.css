@@ -8,7 +8,7 @@
 [class*='col-']
 {
 	float: left;
-	border: 1px solid #0000ffff;
+	border: 1px solid rgb(7, 206, 7);
 }
 .row:after
 {
@@ -58,6 +58,9 @@
 .h-60{
 	height: 50px;
 }
+.h-70{
+	height: 70px;
+}
 .h-80{
 	height: 80px;
 }
@@ -69,6 +72,9 @@
 }
 .h-120{
 	height: 120px;
+}
+.h-170{
+	height: 170px;
 }
 .h-250{
 	height: 250px;
@@ -106,6 +112,7 @@
 
 .h-1000{
 	height: 1000px;
+
 }
 
 
@@ -186,9 +193,7 @@
 	border-width: 0;
 	transition: all .2s;
 }
-.text-left {
-	text-align: left!important;
-}
+
 
 .border-primary {
 	border-color: #3f6ad8!important;
@@ -256,7 +261,6 @@
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
@@ -278,7 +282,6 @@
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textcliptwo 4s linear infinite;
@@ -346,6 +349,7 @@ background: none;
 		width: 50px;;
 		float: left;	
 		padding-top:8px;	
+	
 	}
 	
 	.top_breadctwo{
@@ -360,5 +364,33 @@ background: none;
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	}
 
+.testttt{
+	height:150px;
+	color: #e9e9e9;
+}
 
 
+/* this is a test.blade style*/
+
+
+.cerlll{
+	width: 70px;
+	height: 70px;
+	background: #D3D3D3;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.ttt{
+text-align: right;
+}
+
+.text-right-side{
+	text-align: right;
+}
+
+ th .bderre{
+	border-bottom: 1px solid red;
+	
+}

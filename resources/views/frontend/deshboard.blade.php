@@ -51,11 +51,22 @@
  <div class="row m-2">
   <div class="container-fluid">
    <div class="col-3 h-150 ">
-	<div class="container">
-	 <div class="bg-blue  card-btm-border card-boder ">
-	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card">
-	   <h3 class="text-center ">Wellcome </br> to </br> Shop name</h3>
+	<div class="container ">
+	<div class="testttt">
+	 <div class="bg-blue card-btm-border card-boder">
+		<div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75">
+	   <span class="text-left fw-bold text-black-50 m-1 "> SALES TODAY</span>
+	   <span class=" text-left fw-bold fs-1">
+	   <span id="takas">Loading..</span>
+	   <svg class=" " width="30" height="30"> <use xlink:href="#taka"/></svg>
+	   </span>
+	 
+
+
+
+	
 	   </div>
+		</div>
 	 </div>
 	</div>
    </div> 
@@ -66,9 +77,14 @@
   <div class="col-3 h-150 ">
    <div class="container">
 	<div class="bg-red  card-btm-border card-boder ">
-	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card">
-	    <h3 class=" text-center">Wellcome </br> to </br> Shop name</h3>
-	  </div>
+	<div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75">
+	   <span class="text-left fw-bold text-black-50">NOMBER OF SALES</span>
+	   <span class=" text-left fw-bold fs-1">
+	   <span id="salesproduct">Loading..</span>
+	  
+	   </span>
+
+	</div>
 	</div>
    </div>
   </div> 
@@ -78,9 +94,13 @@
  <div class="container-fluid">
   <div class="col-3 h-150 ">
    <div class="container">
-	<div class="bg-red  card-btm-border card-boder ">
-	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card">
-	    <h3 class=" text-center">Wellcome </br> to </br> Shop name</h3>
+	<div class="bg-yellow  card-btm-border card-boder ">
+	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border card h-75">
+	  <span class="text-left text-center fw-bold text-black-50">COMPANY VALUE</span>
+	  <span class=" text-left fw-bold fs-1">
+	   <span id="COMVALUE">Loading..</span>
+	   <svg class=" " width="30" height="30"> <use xlink:href="#taka"/></svg>
+	   </span>
 	  </div>
 	</div>
    </div>
@@ -91,9 +111,13 @@
  <div class="container-fluid">
   <div class="col-3 h-150 ">
    <div class="container">
-	<div class="bg-red  card-btm-border card-boder ">
-	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card">
-	    <h3 class=" text-center">Wellcome </br> to </br> Shop name</h3>
+	<div class="bg-green  card-btm-border card-boder ">
+	  <div class="container-fluid h-10 w-100 p-1 widget-chart widget-chart2  card-btm-border  card h-75 ">
+	  <span class="text-left text-center fw-bold text-black-50">TOTAL PRODUCT ITEMS</span>
+	  <span class=" text-left fw-bold fs-1">
+	   <span id="product">Loading..</span>
+	  
+	   </span>
 	  </div>
 	 </div>
    </div>
@@ -105,27 +129,17 @@
  
 
 <div class="row">
-	<div class="col-9 h-500">
-		<a href="{{ route('home')}}"  class="textand" >home</a>
-		<a href="{{ route('product')}}"  class="textand" >product</a>
-		<a href="{{ route('oder')}}"  class="textand" >oder</a>
-		<a href="{{ route('customer')}}"  class="textand" >customer</a>
-
-		<h1>Deshboard page</h1>
-		
+	<div class="col-9 h-500">	
 		@if(session()->has('success'))	
-		<h2>aa{{session('success')}}</h2>
+		<h2>{{session('success')}}</h2>
 		@endif
 		
 		@auth
 	
 		{{auth()->user()}}
 		@endauth
+	
 		
-		
-		
-		<h1> <a href="{{route('loginout')}}">Out</a> </h1>
-		<h1> <a href="{{route('chonchol')}}">data show</a> </h1>
 	</div>
 	<div class="col-3 h-500">ii</div>
 </div>
@@ -141,7 +155,50 @@
 
 </div>
 
+<script>
+	var takss=document.getElementById('takas');
+	var product=document.getElementById('product');
+	var salesproduct=document.getElementById('salesproduct');
+	var totalcomvalues=document.getElementById('COMVALUE');
+	
+	check();
 
+function numberWithCommas(number,totals,comvalue) {
+
+
+    var parts = number.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+	var partscomvalue = comvalue.toString().split('.');
+    partscomvalue[0] = partscomvalue[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+
+	takss.innerHTML=parts.join('.');
+	salesproduct.innerHTML=totals;
+	totalcomvalues.innerHTML=partscomvalue.join('.');
+}
+
+
+function check(){
+    $.ajax({
+    type: 'GET', //THIS NEEDS TO BE GET
+    url: '/deshboard_all_info_get_data/',
+    success: function (data) {
+      //  console.log("date add refurn value"+data); 
+	  var dategert=JSON.parse(data);
+	  numberWithCommas(dategert.Total_product,dategert.salesproduct,dategert.totalcomvalu); 
+	  product.innerHTML=dategert.total_product;
+    },
+    error: function() { 
+		takss.innerHTML="Loading....";
+        // console.log(data);
+		product.innerHTML="Loading....";
+    }
+   });
+    }
+
+
+</script>
 
 
 @endsection

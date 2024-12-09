@@ -1,92 +1,122 @@
 @extends('layout.master')
 @section('content')
 
+<style>
+.box {
+	height: 100px;
+	width: 100px;
+	border-radius: 80%;
+	text-align: center;
+	border: 3px solid;
+	border-color: orange transparent;
+	animation: spin 1s infinite ease-out;
+	
+  }
+  
+  @keyframes spin {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+	
+  }
+
+  .black_overlay {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .80;
+	filter: alpha(opacity=80);
+  }
+
+
+  .white_content {
+	display: none;
+	position: absolute;
+	top: 40%;
+	left:45%;
+	width: auto;
+	height: auto;
+	padding: 16px;
+   opacity: .80;
+   background-color:hsla(0,0%,0%,0.0);
+	opacity: .80;
+	z-index: 1002;
+  
+  }
+	  
+  .breade_color{
+	font-size: 25px;
+	color: #484F56;
+}
+
+	.breade{
+	font-size: 20px;
+	color: #484F56;
+}
+.breaderr{
+	font-size: 13px;
+	color: #484F56;
+}
+
+
+
+.top_breadc{
+	height: 80px;
+	width: 100%;
+  background: #FFFFFF;
+
+}
+
+.top_breadcone{
+	height: 50px;
+	width: 50px;;
+	float: left;	
+	padding-top:8px;	
+}
+
+.top_breadctwo{
+	height: 30px;
+	width:500px;
+	float: left;
+	padding-left:8px;	
+
+}
+
+.shodows{
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.headertable{	
+	text-align: center;
+	height: 50px;
+	background-color: #ffffffff;
+}
+</style>
 <div class="row">
 <div class="col-12 h-80">
-				
-<div class="top_breadc">
+  <div class="top_breadc">
 	<div class="top_breadcone"><i class='bx bxs-dashboard bx-lg card' ></i></div>
 	  <div class="top_breadctwo">
 	    <span class="breade_color">Stock page</span>
 		<p class="breaderr">This is Stock page add information hole store.</p>   
       </div>
 </div>	
-	</div>
-   </div>
-    <div class="row">
-	<div class="col-8 h-500">
-	
-	
-	
-	
-	
-	
-<style>
-
-.box {
-  height: 100px;
-  width: 100px;
-  border-radius: 80%;
-  text-align: center;
-  border: 3px solid;
-  border-color: orange transparent;
-  animation: spin 1s infinite ease-out;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-  
-}
+</div> 
+</div> 
 
 
-.black_overlay {
-  display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1001;
-  -moz-opacity: 0.8;
-  opacity: .80;
-  filter: alpha(opacity=80);
-}
-.white_content {
-  display: none;
-  position: absolute;
-  top: 40%;
-  left:45%;
-  width: auto;
-  height: auto;
-  padding: 16px;
- opacity: .80;
- background-color:hsla(0,0%,0%,0.0);
-  opacity: .80;
-  z-index: 1002;
-
-}
-	
-</style>
-    
-    
-    
-
-  <div id="light" class="white_content">
-  <div class="box"></div>
-  </div>
-  <div id="fade" class="black_overlay"></div> 
-    
-
-	
-
+     
 <!--This is a follder opening show -->
-    <nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
     <li class="breadcrumb-item"><a class="breade" href="#">Page</a></li>
@@ -96,73 +126,235 @@
 </ol>
 </nav>
 
+
+
+<div id="fade" class="black_overlay"></div>
+<div id="light" class="white_content"> 
+<div class="box" id="boxx"></div>
+</div>
+
+
+
+<!--This is a pop loading deing  -->
 <style>
-	
-	.breade_color{
-		font-size: 25px;
-		color: #484F56;
-	}
-	
-		.breade{
-		font-size: 20px;
-		color: #484F56;
-	}
-	.breaderr{
-		font-size: 13px;
-		color: #484F56;
-	}
-	
+.maindailoboax {
+  height: 460px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  border:  1px solid red;
+}
+
+
+.black_overlaya {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+ 
+}
+.white_contenta {
+ display: none;
+ position: absolute;
+ top:0;
+ left:0;
+
+ width: 100%;
+ height: 100%;
+ background-color:hsla(0,0%,0%,0.0);
+ z-index: 1002;
+}
+
 
 	
-	.top_breadc{
-		height: 80px;
-		width: 100%;
-	  background: #FFFFFF;
-	 // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
+.gggg{
 	
-	.top_breadcone{
+	text-align: right;
+}
+
+.ddd{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	border: none;
+}
+
+.exitdd{
 		height: 50px;
-		width: 50px;;
-		float: left;	
-		padding-top:8px;	
+		width: 100%;
+	    background-color:#F5F5F5;
+	   
+	}
+.mainedd{
+		height: 315px;
+		width: 100%;
+		border-top: 1px solid #a6a6a6ff;
+		background-color: #FFFFFF;
+	}
+.butttons{
+		height: 40px;
+		width: 100%;
+		text-align: right;
+		padding-top: 5px;
+	}
+
+
+.info{
+		height: 40px;
+		width: 100%;
+		text-align: center;
+		padding-top: 5px;
+	
 	}
 	
-	.top_breadctwo{
-		height: 30px;
-		width:500px;
-		float: left;
-		padding-left:8px;	
-	
-	}
-	
-	.shodows{
-		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	
-	}
-	
-	
+.dddd{
+  height: 650px;
+  width: 600px;
+  margin: auto;
+  text-align: center;
+   border-radius: 5px;
+   background: white;
+    position: relative;
+    top:20%;
+
+}
+
+.maindailoboax{
+	padding: 5px;
+}
+
 </style>
 
 
 
 
+<div id="fadea" class="black_overlaya"></div>
+<div id="lighta" class="white_contenta"> 
 
-<div class="px-4 col-6 card p-3">
-
-
-<span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
-
- <form id="uploadFormbar">
- <?php echo csrf_field(); ?>
-  <div class="form-group">
-  <label for="exampleInputName">Barcode</label>
-<input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
+<div class="maindailoboax" id="maindailoboax">
+  <div class="exitdd">
+  	<div class="gggg" >
+  	<button class="ddd" onclick="pop_custom_off()"><span style="color: white" >X</span></button>
+   </div>
   </div> 
- </form>
-  
-<div class="form-group">
+<div class="mainedd">
+<table class="table table-hover">
+  <thead>
+    <tr style="text-align:center">
+      <th scope="col">Supplier Information</th>
+       <th scope="col" >Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="text-align:right">
+      <td>Total Product :</td> 
+      <td><span id="product" style="width: 100%; font-size: 20px; font-weight: bold;"></span></td>
+    </tr>
+	<tr style="text-align:right">
+      <td>Total price :</td> 
+      <td><span id="totals" style="width: 100%; font-size: 20px; font-weight: bold;"></span></td>
+    </tr>
+    <tr id="trs" style="text-align:right">
+      <td>Supplier Company Name : 
+      </td> 
+      <td>
+      <input type="text"  id="suppliername" style="width: 100%; font-size: 20px; font-weight: bold;" value="SUCHUNA ENTER PRICE"/> 
+      </td>
+    </tr>
+    <tr style="text-align:right">
+      <td>Proprietor Name :</td> 
+      <td><input type="text" id="propriername" style="width: 100%; font-size: 20px; font-weight: bold;" value="Md.ALLAMHAMMUD KHAN"/> </td>
+    </tr> 
+     <tr style="text-align:right">
+    
+      <td>Phone Number :</td> 
+      <td> <input type="number" id="phone" style="width: 100%; font-size: 20px; font-weight: bold;"  maxlength="10" value="01713742051" /></td>
+    </tr> 
+	<tr style="text-align:right">
+      <td>Address :</td> 
+      <td><input type="text" id="address" style="width: 100%; font-size: 20px; font-weight: bold;" value="hatarr,monapur"/></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
+<div class="info">
+	<h4 id="infomag">You should be sent correct info</h4>
+</div>
+
+<div class="butttons">
+	<button id="paymentbtm" type="button" onclick="datatranfer()" class="btn btn-primary">Continus</button>&nbsp;
+</div>
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+$("#phone").keydown(function(event) {
+  k = event.which;
+  if ((k >= 96 && k <= 105) || k == 8) {
+    if ($(this).val().length == 11) {
+      if (k == 8) {
+        return true;
+      } else {
+        event.preventDefault();
+        return false;
+
+      }
+    }
+  } else {
+    event.preventDefault();
+    return false;
+  }
+
+});
+
+
+
+</script>
+
+
+<!--This is a pop coustom desgin end -->
+
+
+
+
+
+
+<div class="row"> 
+<div class="col-8 h-500"> 
+<div class="px-4 col-6 card p-3">
+  <span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
+    <form id="uploadFormbar">
+     <?php echo csrf_field(); ?>
+     <div class="form-group">
+       <label for="exampleInputName">Barcode</label>
+        <input type="text" class="form-control" id="product_barcode" name="product_barcode" aria-describedby="emailHelp" placeholder="Barcode" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
+     </div> 
+    </form>
+
+<div class="form-group">
 <div class="form-row">
 	<div class="form-group col-md-8 p-2 "> 
 		<div class="form-group">
@@ -172,33 +364,25 @@
 		</div> 
 	</div>
  
- <div class="form-group col-md-4 "> 
+
+<div class="form-group col-md-4 "> 
   <div class="form-group">
-  
 <div class="form-row pricsss">
 	<div class="form-group col-md-3 p-1"> 
 		<div class="form-group">
 		  <input type="checkbox"  id="checkboxpises" class="form-check-input" style="width: 25px; height: 25px;">
 		</div> 
 	</div>
- 
- <div class="form-group col-md-9 p-1 "> 
- <div class="form-group" style="height: 30px;">
-  <input type="hidden" class="form-control" placeholder="pieces" name="pieces" id="pieces"/>
- </div> 
- </div>
-
-
+  <div class="form-group col-md-9 p-1 "> 
+    <div class="form-group" style="height: 30px;">
+      <input type="hidden" class="form-control" placeholder="pieces" name="pieces" id="pieces"/>
+    </div> 
+   </div>
 </div>
-  
-  
-  
- </div> 
- </div>
-
-
+</div> 
 </div>
 
+</div>
 </div> 
     
 
@@ -227,26 +411,21 @@
     </div>
     <div class="form-group col-md-6 p-1">
       <label for="Selesprice">Seles price</label>
-<input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
+       <input type="number" class="form-control" id="Selesprice" name="Sales_Price" placeholder="Rate" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
        <br/> 
     </div>
  
   <div class="form-group col-md-6">
-   <label for="exampleInputName">Product Expire Date</label>
-    <input type="date"  class="form-control" id="expire_date"  name="Expire_date" >
-  <br/>
+    <label for="exampleInputName">Product Expire Date</label>
+     <input type="date"  class="form-control" id="expire_date"  name="Expire_date" ><br/>
     </div>
-    
-    <style>
 
-    </style>
     <div class="form-group col-md-6">
-    <div class="addd">
+     <div class="addd">
     	<label for="PurchesPrice" class="animate-charcter" style="color: red;">Unlimited date</label>
-     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 25px; height: 25px">
-
-    </div>  
-       <br/> 
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="width: 25px; height: 25px">
+     </div>  
+     <br/> 
     </div>
  </div>
 </div>
@@ -281,75 +460,195 @@
   </form>
 
 </div>
+
+
+</div>	
+</div>
+
+</div>
+
+<div class="col-4 h-750">
+</br>
+</br>
+
+
+<div class="card">
+<div class="active_full" id="listss">
+		<div class="searchbar ">
+			<div class="p-1 text-center ">
+  		<h6 class="">Stock loaded, please sent to admin</h6>
+ 		</div>
+	</div>
+	</div>		  
+
+<div class="headto " id="ddd">
+     <div id="showss">
+<div class="container ">
+   <div class="panel panel-default">
+    <div class="panel-body">
+     <div class="table-responsive">
+
+
+<style>
+.my-custom-scrollbar {
+position: relative;
+height: 520px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}	
+      </style>
+      
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-striped table-bordered" id="section1" >
+       <thead>
+        <tr>
+         
+         <th>Product Name</th>
+         <th>Unity</th>
+		 <th>Prices</th>
+		 <th>Total</th>
+		 <th><span><input type="checkbox" id="allselected"></span></th>
+        </tr>
+       </thead>
+       <tbody class="hello">
+
+       </tbody>
+      </table>
+     </div>
+    </div>    
+   </div>
+  </div> 
+  </div>
+
+      </div>
+        <div class="text-sm-end p-1 ">
+			<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="dataloadedfun()">Sent</button>
+		</div>	
+   </div>
+ </div>
+</div>
+<style>
+
+</style>
+
+
+
    <script>       
-  
-  
   
 
    	var productunity=document.getElementById('productunity'); 
    	var PurchesPrice=document.getElementById('PurchesPrice');
    	var Selesprice=document.getElementById('Selesprice');
    	var productdiscout=document.getElementById('productdiscout'); 
-   
+    var idddd=document.getElementById('product_barcode');
+    var productname=document.getElementById('productname');	
+    var frame=document.getElementById('frame');
+    var ischeckbox1=document.getElementById('inlineCheckbox1'); 	
+    var checkboxpises=document.getElementById('checkboxpises'); 
+    var pieces=document.getElementById('pieces'); 
+    var available=document.getElementById('available');   
+    var esxpire_date=document.getElementById('expire_date');	
+    var inputdd=document.getElementById('inputdd'); 
+
+	var allselect=document.getElementById("allselected");
+	var datasent=document.getElementById("datasent");
+
+	var product=document.getElementById('product');
+	var totals=document.getElementById('totals');
+	var propriername=document.getElementById('propriername');
+	var suppliername=document.getElementById('suppliername');
+	var phone=document.getElementById('phone');
+	var address=document.getElementById('address');
+	
 	
 
 
-     	var idddd=document.getElementById('product_barcode');
-     	var productname=document.getElementById('productname');	
-     	var frame=document.getElementById('frame');
-     	var ischeckbox1=document.getElementById('inlineCheckbox1'); 
-     	
-     	
-     	 var checkboxpises=document.getElementById('checkboxpises'); 
-     	  var pieces=document.getElementById('pieces'); 
-     	   var available=document.getElementById('available'); 
-     	 
-     	  
-     	  var esxpire_date=document.getElementById('expire_date');	
-     	  var inputdd=document.getElementById('inputdd'); 
-          var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
-          var total_product,prises,exprie_date;
-          
-          
+    var Product_ID ,Product_name, Barcode, Product_name, Weights,Image, Catagory, Sub_Catagory, Sub_to_sub_catagory;
+    var total_product,prises,exprie_date,suppliername,paymethod,disconttkPayment,id_get_insert_data;               
+    var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;   
+    let Product_sent_of_admin;
+    let upload_product_count=0;
+	let upload_salesprice_count=0;
+    let count=0;
+	let totaltk=0;
+	let unites=0;
+
      idddd.focus();
 
 
-     
+
+fetch_customer_data();
+//button_chack_for_sent();
+datasent.disabled=true;
+
+
+function fetch_customer_data()
+ {
+  $.ajax({
+  method:'GET',
+   url:"{{ route('stock_show_ronter') }}",
+   dataType:'json',
+   success:function(data)
+   {
+    $('.hello').html(data.table_data);
+  //  $('#total_records').text(data.total_data);
+   //   console.log(data.total_data);
+      button_chack_for_sent();
+
+	  if(parseInt(data.total_data)==0){
+		allselect.disabled=true;
+		datasent.disabled=true;
+	  }else{
+		allselect.disabled=false;
+		datasent.disabled=true;
+	  }
+   }
+  })
+ }
+
+
+
+
      $(document).ready(function (e) {
  	 $("#uploadFormbar").on('submit',(function(e) {
 		e.preventDefault();		
-	
 
-	
-	
 		$.ajax({
         type: 'GET',
         url: 'barcode/' + idddd.value,
- 
+
         beforeSend: function() { 	
            hidddenshow();
         },            
-      complete: function() {
+        complete: function() {
           hiddden();
        },
-        
+
 		success: function(data)
 	    {
 		   	 
 		var obj = JSON.parse(data);
 		if(obj.message=="Exit"){
-				frame.src = "{{asset('frontend/img/demo.jpg')}}";
-				orrning("Not Found Data");
-				productname.value="";
-				idddd.value="";
+			frame.src = "{{asset('frontend/img/demo.jpg')}}";
+			dailogmess("Not Found Data","Chack this Barcode ?","info");
+			productname.value="";
+			idddd.value="";
 				//idddd.focus();
 		}else{
 					
 		for(var key in obj){
-		Product_name=obj[key].Product_name;
+		Weights=obj[key].Weight;
+		Product_sent_of_admin=obj[key].Product_sent_of_admin;
+		console.log(Product_sent_of_admin);
+		if(parseInt(Weights)==0){
+		  Product_name=obj[key].Product_name;
+		}else{
+		  Product_name=obj[key].Product_name+obj[key].Weight;
+		}
 		productname.value=Product_name;
 		Barcode=obj[key].Barcode;
-		Weights=obj[key].Weight;
 		Image=obj[key].Image;
         frame.src = "{{asset('product')}}/"+Image;
 		Catagory=obj[key].Catagory;
@@ -358,36 +657,37 @@
 	    total_product=obj[key].Total_product; 
 	    prises=obj[key].pieces; 
 	    exprie_date=obj[key].Expire_date;
-        console.log(total_product);
-        
-        Selesprice.value=obj[key].Sales_Price; 
-        PurchesPrice.value=obj[key].Purches_Price;
+
+		if(obj[key].Sales_Price==null||obj[key].Purches_Price==null)
+		{
+			console.log("just undefined remove ");
+		}else{
+			Selesprice.value=obj[key].Sales_Price; 
+            PurchesPrice.value=obj[key].Purches_Price;
+		}
+      
 		}
 		
 		
 		
-		
+
 	    if(total_product==null){
 		//console.log(total_product);
 		available.innerHTML="";
-	    }else{
-	    	
+	    }else
+		{	
 	    	available.innerHTML="Product is Available: "+total_product;
-	    	esxpire_date.value=exprie_date;
-	    	
-	    	
-	    	if(total_product==0){
+	    	esxpire_date.value=exprie_date;		
+			if(total_product==0){
 	    		esxpire_date.disabled=false;
 	    	}else{
 	    	    esxpire_date.disabled=true;
 	    	    $(".addd").hide();
-	    	}
-	    		
-	    	
+	    	}	
+
 	    	if(prises=="0"){
 	    		
-	    		//esxpire_date.disabled=false;
-	    		
+	    		//esxpire_date.disabled=false;	
 	    	}else{
 	    		pieces.type="text";
 	    		pieces.value=prises;
@@ -396,14 +696,13 @@
 	    }
 	
 	    
-	
 		}
 		
 		},
 	  	error: function() 
     	{
     		console.log("network problem");
-    		testtt();
+			dailogmess("Data Load Fail!","Chack your Network?","error");
     	} 	        
         });							
 	
@@ -412,33 +711,24 @@
         
         
         
-            
- var Product_Name,Avilable_Product,Facility_Product,Total_product,Purches_Price,Sales_Price,Product_Expire_date,Image;
-      
-    
-        
-      
-     $(document).ready(function (e) {
-	$("#uploadFormstock").on('submit',(function(e) {
-		e.preventDefault();		
-			
-		//----------------------------------
 
+      
+
+    $(document).ready(function (e) {
+	$("#uploadFormstock").on('submit',(function(e) {
+		e.preventDefault();			
+	  //----------------------------------
 	  const formData = new FormData(this);
 		//console.log("test "+unlimitesdate);
-	
-	if(!productname.value==""){
+	if(!productname.value==" "){
 		
-	
-	
-	
 	if(!idddd.value==" "){
-		console.log("date ");
-		
 	
-	if(PurchesPrice.value<Selesprice.value)
+	if(parseInt(PurchesPrice.value)<parseInt(Selesprice.value))
 	{
-		total_prire=(PurchesPrice.value*productunity.value);
+
+	//	errrrr("done to work");
+	 total_prire=(PurchesPrice.value*productunity.value);
 	if(unlimitesdate==""){	
 		console.log("Unlimited inviled");
 		}else{	
@@ -452,11 +742,12 @@
        formData.append("Weight", Weights);
       
       
-      if(Weights==" "){
+      if(Weights=="0"){
        	 formData.append("Weight", "empty");
+         console.log("weight of web");
        }else{
           formData.append("Weight", Weights);
-          console.log(Weights);
+		  console.log("weight of true"+Weights);
        }
     
     
@@ -467,7 +758,15 @@
        }
 	
 
-			
+        //  console.log(formData.get("Weight"));
+		
+		if(parseInt(Product_sent_of_admin)===0){
+			dailogmess("Not sent product","Product_sent_of_admin","info");
+		}else{
+
+			//dailogmess(" Product_sent_of_admin 1","Product_sent_of_admin","success");
+	
+
 		$.ajax({
         url: "{{route('stockload')}}",
 		type: "POST",
@@ -479,25 +778,33 @@
 	    	console.log(data);
 		const obj = JSON.parse(data);
 			
-		
 		if(obj.message=="Exit"){
-			 orrning("Barcode allready exit");	
+			dailogmess("Barcode allready exit","Chack this Barcode ?","info");	
 			  allclear();
 		}else{	
-		    successfull("Product Load");
+		    dailogmess("Product Load","Data Uploaded Success?","success");
 	         allclear();  
+			 fetch_customer_data();
 		}
 		
 		},
 	  	error: function() 
     	{
     	} 	        
-        });							
+        });		
+		
+
+	    }
+
 		}
+
+
+
 		 }
+
 		 else
 		 { 
-		 errrrr("Purchase price more than sales price");
+		 dailogmess("Purchase price more than sales price","Chack the field ?","info");
 		 }
 		 
 		 
@@ -505,13 +812,13 @@
 		 }else{
 		 	
 		console.log("empty ");
-		orrningbar("Please Input Barcode with Scanner");
+		dailogmess("Please Input Barcode with Scanner","Chack the field ?","info");
 		idddd.focus();
 	   }
 	
 	}
 	else{
-		orrningbarrr("Can't found product name ");
+		dailogmess("Can't found product name ","Chack the field ?","info");
 		idddd.focus();
 	}
 		 
@@ -523,18 +830,19 @@
         inputdd.onclick = function() {
    	
      if(productunity.value==""){
-      	errrrr("Product Units Empty");
+		dailogmess("Product Units Empty","Chack the field ?","info");
       }else if(PurchesPrice.value==""){
-      	errrrr("Purchase Price Empty");
+		dailogmess("Purchase Price Empty","Chack the field ?","info");
       }else if(Selesprice.value==""){
-      	errrrr("sales Price Empty");
+		dailogmess("sales Price Empty","Chack the field ?","info");
       }else if(productdiscout.value==""){
-      	errrrr("Product Discout Empty");
+		dailogmess("Product Discout Empty","Chack the field ?","info");
       }else if(esxpire_date.value=="" && ischeckbox1.checked  == false){
       	unlimitesdate="";
-      	errrrr("Expire Date Empty");
+      	dailogmess("Expire Date Empty","Chack the field ?","info");
       }else{ 
       
+
 			if(ischeckbox1.checked  == false){
 				
 			const date = new Date();
@@ -548,10 +856,10 @@
 
 			if(cont_currentdata.getTime()<inputs.getTime()){
 	          unlimitesdate=esxpire_date.value;
-			  console.log(unlimitesdate); // 👉️ true
+			 // console.log(unlimitesdate); // 👉️ true
 			}else{
 			//console.log("this not right"); // 👉️ true
-			errrrr("Expire date Inviled")
+			dailogmess("Expire date Inviled","Chack the field ?","info");
 			}
              //  console.log(esxpire_date.value);
 						
@@ -565,8 +873,7 @@
 			
 			console.log(currentDate);
 			unlimitesdate=currentDate;
-			
-			
+	
 			}
       
         }	
@@ -606,13 +913,12 @@ ischeckbox1.onclick = function() {
 	}	
 	
 	function hidddenshow(){
-		document.getElementById('light').style.display='block';
-		 document.getElementById('fade').style.display='block';
+		 document.getElementById('light').style.display='block';
+		 document.getElementById('fade').style.display='block';	
 	}
 		
  
   
-   
    function allclear(){
      	  productname.value=""; 
      	  productunity.value=""; 
@@ -637,145 +943,252 @@ ischeckbox1.onclick = function() {
             } 
               
      
-  function errrrr(varr){
+  function dailogmess(mess,messtwo,messtheree){
 		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Chack the field ?",
-		 	      icon: "error",
+		 	      title: ""+mess+"",
+		  	     text: ""+messtwo+"",
+		 	      icon: ""+messtheree+"",
 		       });
 		 }     
 		  
-		  
-	 function orrning(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Chack this Barcode ?",
-		 	      icon: "info",
-		       });
-		 }  
 		 
-	function orrningbar(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Search Barcode?",
-		 	      icon: "info",
-		       });
+//-------------this all funtion is checking all option and sent to admin data
+
+function button_chack_for_sent(){
+ var nodeListss = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeListss.length; i++) {
+		nodeListss[i].addEventListener("click",function(){
+			if( nodeListss[i].checked == true){
+			datasent.disabled=false;
+		//	console.log("dfhdsjhfdfsh");
+		   button_chack();
+		    }else{
+			datasent.disabled=true;
+			button_chack();
+			}
+			
+
+		});
+    }
+	
+}
+
+
+
+function button_chack(){
+ var nodeListss = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeListss.length; i++) {
+		if( nodeListss[i].checked == true){
+			datasent.disabled=false;
+		    }
+    }
+	
+}
+
+
+allselect.addEventListener("click",allsetect_function);      
+
+function allsetect_function(){
+ var nodeList = document.querySelectorAll("#myChecka");
+  if(count===0){
+    count=1;
+	datasent.disabled=false;
+    for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].checked = true;
+    }
+  }else{
+    count=0;
+	datasent.disabled=true;
+    for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].checked = false;}
+  }
+
+}
+	
+
+
+
+function data_tranfer_all_data(barcode,id) {
+	
+	hidddenshow();
+
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/stockloadlog/'+barcode+"/"+id,
+     success: function (data) {
+		hiddden();
+       console.log("date add refurn value"+data); 
+     },
+     error: function() { 
+      // meass.innerHTML="Data failed";
+      //    console.log(data);
+     }
+    });
+
+
+
+// $.ajaxSetup({
+//             headers: {
+//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//          });
+//  $.ajax({
+//      type: 'POST', //THIS NEEDS TO BE GET
+//      url: '/stockloadlog/',
+//      data: {barcodes:barcode}, 
+//      success: function (data) {
+// 	//	hiddden();
+//         console.log("date add refurn value"+data); 
+//      },
+//      error: function() { 
+//       // meass.innerHTML="Data failed";
+//       //    console.log(data);
+//      }
+//     });
+   }
+	
+function slectted(){
+console.log("hello world");
+}
+   
+ function dataloadedfun(){
+
+var partscomvalue = all_sales_price().toString().split('.');
+    partscomvalue[0] = partscomvalue[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	pop_custom_on();
+	totals.innerHTML= partscomvalue.join('.')+" Tk";
+	product.innerHTML=all_product_unite()+" Piece";
+ }  
+ 
+function all_barcode_number(id){
+	console.log("helllo world");
+	var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datastwo = nodeList[i].value.split("-");
+	   data_tranfer_all_data(datastwo[0],id);
+	   console.log("helllo world");
+		}
+    }
+
+}
+
+function all_product_unite(){
+ var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datas = nodeList[i].value.split("-");
+     	let product=datas[1];
+	    upload_product_count+=parseInt(product);
+		}
+    }
+	return upload_product_count;
+}
+
+
+function all_sales_price(){
+ var nodeList = document.querySelectorAll("#myChecka");
+    for (let i = 0; i < nodeList.length; i++) {
+		if( nodeList[i].checked == true){
+	    const datas = nodeList[i].value.split("-");
+     	let price=datas[2];
+		 let pieces=datas[1];
+		 upload_salesprice_count+=parseInt(pieces*price);
+		}
+    }
+	return upload_salesprice_count;
+}
+
+//-------------this all funtion is checking all option and sent to admin data
+
+function pop_custom_on(){
+		document.getElementById('fadea').style.display='block';
+		document.getElementById('lighta').style.display='block';
+		document.getElementById('maindailoboax').style.display='block';
+}
+
+function pop_custom_off(){
+		document.getElementById('lighta').style.display='none';
+		document.getElementById('fadea').style.display='none';
+		document.getElementById('maindailoboax').style.display='none';
+		upload_product_count=0;
+		upload_salesprice_count=0;
+}
+
+
+
+function datatranfer() {
+	unites=upload_product_count;
+	totaltk=upload_salesprice_count;
+	
+if(suppliername.value!=="" && phone.value!=="" && address.value!=="" && propriername.value!=="" || paymetstk.value!==""){
+	confram();
+	
+}else{
+	dailogmess("Empty you field","Please Chack Your field","info");
+}
+
+}
+
+function add_data(){
+	hidddenshow();
+	let idcout;
+	$.ajaxSetup({
+				headers: {
+				   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			 });
+	 $.ajax({
+		 type: 'POST', //THIS NEEDS TO BE GET
+		 url: '/supplierdataload/',
+		 data: {company_name:suppliername.value,name:propriername.value,mobile:phone.value,address:address.value,unite:unites,totaltk:totaltk}, 
+		 success: function (data) {
+			all_barcode_number(data);
+			hiddden();
+		 },
+		 error: function() { 
+		  // meass.innerHTML="Data failed";
+		  //    console.log(data);
 		 }
-		 
- function orrningbarrr(varr){
-		    swal({
-		 	      title: ""+varr+"",
-		  	     text: "Scan Barcode with scanner !",
-		 	      icon: "info",
-		       });
-		 }     
-		 
-		 
-  function successfull(gd){
-		    swal({
-		 	      title: ""+gd+"",
-		  	     text: "Chack the field ?",
-		 	      icon: "success",
-		       });
-		 }   
-		 
-		 
-		      
-		function suss(){
-			swal({
-		         title: "Successfull!",
-		         text: "You clicked the button!",
-		         icon: "success",
-		        });
-		}	
-		
-		
-				      
-		function testtt(){
-		  swal({
-		 	      title: "Data Load Fail!",
-		  	     text: "Chack your Network ?",
-		 	      icon: "error",
-		       });
-		}	   
-                 
+		});
+		unites=0;
+		totaltk=0;
+		return idcout;
+}
+
+
+ function confram(){
+	pop_custom_off();
+swal({
+  title: "Are you sure?",
+  text: "you will not be able to recover this imaginary data!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Your data Sent ", {
+      icon: "success",
+    }).then(function(){
+		fetch_customer_data();
+ //   location.reload();
+    });
+
+   add_data();
+
+  } else {
+    swal("Do you want Exit ?",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+	}
+
+
    </script>
 
 
-
-
-
-
-
-</div>	
- </div>
-
-</div>
-	<style>
-	
-		.headertable{	
-			text-align: center;
-			height: 50px;
-			background-color: #ffffffff;
-		}
-		
-	</style>
-<div class="col-4 h-750">
-
-</br>
-</br>
-
-<div class="active_full">
-<div class="searchbar">
-<div class="input-group rounded">
-  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-  <span class="input-group-text  bg-primary" id="searchid">
-    <i class="fas fa-search"></i>
-  </span>
-</div>
-</div>
-<div class="headto card">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">---</th>
-      <th scope="col">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td>hhhh</td>
-      <td></td>
-      <td> <span style="color: green; font-weight: bold;"> fffff</td> 
-    </tr>
-  </tbody>  
-</table>
-</div>	
-
-<div class="d-flex justify-content-center p-1"> </div>	
-</div>
-
-
-
-
-
-</div>
-<div class="row">
-	<div class="col-12 h-250">
-	
-	<div class="row">
-	<div class="col-6 h-300">
-		
-
-	</div>
-	<div class="col-6 h-300">
-		
-		
-	</div>		
-   </div>	
-   </div>
   
 @endsection

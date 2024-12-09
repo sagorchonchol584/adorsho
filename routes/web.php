@@ -21,37 +21,113 @@ use App\Http\Controllers\Postcontroller;
  
  
 Route::get('/report', [Postcontroller::class,'report'])->name('report');
- 
- 
+
+
+
+
+
+Route::get('/supplierinfologstates', [Postcontroller::class,'suplier_info_log_state'])->name("supplierlog");
+
+//--------this function is show pop alert data get payment info & show data, but not payemnt-------route name:supplierlist
+Route::get('/supplierlist/{id}', [Postcontroller::class,'suplier_list']);
+
+
+
+Route::get('/supplierstates', [Postcontroller::class,'suplierstate'])->name("supplierstatesrounte");
+
+
+Route::get('/cashflowstates', [Postcontroller::class,'cashflowstates'])->name("cashflowstatesroute");
+
+
+//Route::get('/suppliar_info_deshboard', [Postcontroller::class, 'suppliar_all_info_api'])->name('sideshboard');
+
+Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
+
+
+
+
+
+
+
+
+//---this route is when admin check expence cost then update  ----route:  stockloadfinally------------
+Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
+
+
+//---this route  expence cost uploaded   ----route:  stockloadfinally------------
+Route::post('/expenceadd', [Postcontroller::class,'expence_add_func']);
+
+//---this route  expence cost update   ----route:  stockloadfinally------------
+Route::post('/expence_update', [Postcontroller::class,'expence_update_func']);
+
+
+//---this route  expence cost uploaded   ----route:  stockloadfinally------------
+Route::get('/get_data_to_update/{id}', [Postcontroller::class,'get_data_to_update_func']);
+
+
+
+//---this route  expence cost delete   ----route:  stockloadfinally------------
+Route::get('/get_data_to_delete/{id}', [Postcontroller::class,'get_data_to_delete_func']);
+
+
+
+
+//---this route  expence cost sent cash   ----route:  stockloadfinally------------
+Route::get('/get_data_to_cash_sent/{id}', [Postcontroller::class,'get_data_to_cash_sent_func']);
+
+
+
+
+//--stock inforamtion route --
+Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+
+
+
+//---this a function is when payment of supplier some money pay then use ----route:  stockloadfinally------------
+Route::post('/stockloadfinally', [Postcontroller::class, 'Stock_Info_add_finally']);
+
+//---this a function is when payable of supplier some money pay then use ----route:  payabledataloaded------------
+Route::post('/payabledataloaded', [Postcontroller::class, 'Payable_finally']);
+
+
+//---this a function is when start day then auto info get and loaded ----route:  daily_activity_load------------
+Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_data_loaded']);
+
+
+
+Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
+Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
+Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
+
+
+
+
+
+
 
 // test perpos user route
-
 Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 
-Route::get('/salesshow', [Postcontroller::class,'sales_show']);
+
+//--------this route is deshboard show all info like sales today, upload info ent------------
+Route::get('/deshboard_all_info_get_data', [Postcontroller::class,'deshboard_all_info_get_data_func']);
+
+
 
 Route::get('/profitdatails/{id}', [Postcontroller::class,'profitdatailsfun'])->name('profitdatailsname');
-
-
 Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
 Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
-Route::get('/profiturl/{dis}/{sales}/{amount}/{num}/{name}', [Postcontroller::class,'profit_add'])->name('profiturls');
+
+//--------------this route is sales  profite data insert table profit_datails------------
+Route::post('/profiturl', [Postcontroller::class,'profit_add'])->name('profiturls');
+
+
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
-Route::post('/hhhh', [Postcontroller::class,'hhhttt'])->name('hh');
-
-
-
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
-
-
+Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
 Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
 Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
-
-
-
-
-
 Route::view('/meagge','frontend.message')->name('reg');
 //Route::view('/home','frontend.deshboard')->name('home');
 
@@ -87,15 +163,13 @@ Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainst
 Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
 
 
-//--stock inforamtion route --
-Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
-Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add'])->name('stockload');
-
 
 
 
 //user create or regstition  function
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');
+Route::get('/productsupplier', [Postcontroller::class,'product_supplier'])->name('product_supplier_page');
+Route::get('/cashflow', [Postcontroller::class,'cashflowfun'])->name('cashflowfun');
 Route::post('/registaion',[Postcontroller::class,'customRegistration'])->name('regdata');
 Route::post('/employecreate',[Postcontroller::class,'employeadd'])->name('Employee');
 

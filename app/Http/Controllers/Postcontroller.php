@@ -13,19 +13,1026 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Carbon\Carbon;
 
 
 class Postcontroller extends Controller
 {
 
 
+public function stockloadlogfuncation($barcode,$id){
+    
+    if(Auth::check()){
+      $ids = Auth::user()->ShopID;
+    $supplierdata= DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ids)->get();
+    if(count($supplierdata) === 0){				
+      $datess['message']='Exit';
+      echo json_encode($datess);	   
+   }else{
+      foreach($supplierdata as $row)
+      {
+      $supplierarray['Product_load_numer']=$row->Product_load_numer;
+      $supplierarray['pieces']=$row->pieces;
+      $supplierarray['Image']=$row->Image;
+      $supplierarray['Purches_Price']=$row->Purches_Price;
+      $supplierarray['Weight']=$row->Weight;
+      $supplierarray['Descount_rate']=$row->Descount_rate;
+      $supplierarray['Update_Date']=$row->Update_Date;
+      $supplierarray['Product_add_user_id']=$row->Product_add_user_id;
+      $supplierarray['Sales_Price']=$row->Sales_Price;
+      $supplierarray['Admindatasentdate']=date("Y-m-d");
+      $supplierarray['supplier_id']=$id;
+      $supplierarray['Outlet_Id']=$row->Outlet_Id;
+      $supplierarray['Product_name']=$row->Product_name;
+      $supplierarray['Barcode']=$row->Barcode;
+      $supplierarray['Admin_show']=0;
+      }
+        DB::table('suppile_info_log')->insert($supplierarray); 
+        echo json_encode($supplierarray);
+   }		
 
-public function showMasge(){
-    return view('test');
+      $dateload['Product_show_by_admin']="1"; 
+      DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ids)->update($dateload);
+      }else{
+        $datess['message']="Please contract administration ";
+        echo json_encode($datess); 
+      } 
+
+  //  echo json_encode($id); 
+}
+  
+public function chackingfuntwo(Request $reqs){
+
+$test=array('test'=>$reqs->catagory_name);
+echo json_encode($test);
+$pizza  = $reqs->catagory_name;
+
+}
+
+
+//--------this function is show pop alert data get payment info, but not payemnt-------route name:supplierlist
+public function suplier_list($id){
+  if(Auth::check()){
+    $output = '';
+     $ShopID = Auth::user()->ShopID;
+     $admin = Auth::user()->AdminCat;
+     $Starf_Id = Auth::user()->id;
+     $totaltks=0;
+     $cash_flow=0;
+
+     $data = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->where('supplier_id', $id)->get();
+     $total_row = $data->count();
+
+  
+
+
  
+       if($total_row > 0)
+       {
+        foreach($data as $row)
+        {
+         // $totaltks++;
+       //  $ddd='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->name.'</button>';
+       $totaltks+=$row->Product_load_numer*$row->Purches_Price;
+         $output.= '
+         <tr>
+         <td>'.$row->Product_name.'</td>
+         <td>'.$row->Product_load_numer.'</td>
+         <td>'.$row->Purches_Price.'</td>   
+         <td style="text-align:right">'.$row->Product_load_numer*$row->Purches_Price.'</td> 
+        </tr>
+        ';   
+        }
+       }
+       else
+       { 
+         $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+       }
+
+
+
+       $data = array('table_data'  =>$output,'total_data'  => $totaltks,'admincat' => $admin);
+       echo json_encode($data);
+     }
+}
+
+
+
+
+
+
+public function cashflowstates(){
+
+  if(Auth::check()){
+     $output = '';
+     $outputpayable = '';
+     $outputlog='';
+     $selectid='';
+     $monthy_suppier_exps_tk=0;
+     $today_suppier_exps_tk=0;
+     $today_expence_tk=0;
+     $total_pay_tk_months=0;
+     $total_expence_tk_months=0;
+     $cureentyears=date('Y');
+     $curentmonths=date('m');
+     $ShopID = Auth::user()->ShopID;
+     $Starf_Id = Auth::user()->id;
+     $me="";
+     $cash_flow=0;
+     $Total_salestk=0;
+     $admin_not_show_dat=0;
+     $total_show_Not_fun=0;
+     $monthy_expence_fun=0;
+
+
+     if(Auth::user()->AdminCat=="Admin"){
+    
+//----------------This all supplier expence show without personal expence --------
+$monthy_suppier_exps_data = DB::table('cash_flow_cost_info')->where('Outlet_id', $ShopID)->where('stratf_id', $Starf_Id)->where('expend_cost', 0)->where('admin_show', 1)->where('Ac_check', 0)->get();
+$monthy_suppier_exps_tk_count =  $monthy_suppier_exps_data->count();
+
+
+
+//-------------------thsi  a payable system-----------------------
+$datapayable = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 1)->get();
+$total_row_payable = $datapayable->count();
+
+//-------------------this cash_flow_cost_info------------------------
+
+$datas = DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)
+->whereBetween('date', [
+    Carbon::now()->startOfMonth(), 
+    Carbon::now()->endOfMonth()
+])->limit(100)->orderBy('id', 'DESC')->get();
+$total_row_log = $datas->count();
+
+
+      //----thhis cah show api  
+    $cashflow = DB::table('cash_flow')->where('Outlet_Id', $ShopID)->where('Starf_Id', $Starf_Id)->get();
+    $cashflow_data_row = $cashflow->count();
+
+
+    $dataexpence = DB::table('cash_flow_cost_info')->where('Outlet_id', $ShopID)->where('stratf_id', $Starf_Id)->where('expend_cost', 1)->where('Ac_check', 0)->get();
+    $cash_flow_cost_info_data= $dataexpence->count();
+
+
+
+
+  }else{
+       
+      
+
+     
+//----------------This all supplier expence show without personal expence --------
+      $monthy_suppier_exps_data = DB::table('cash_flow_cost_info')->where('Outlet_id', $ShopID)->where('stratf_id', $Starf_Id)->where('expend_cost', 0)->where('admin_show', 1)->where('Ac_check', 0)->get();
+      $monthy_suppier_exps_tk_count =  $monthy_suppier_exps_data->count();
+
+
+//-------------------thsi  a payable system-----------------------
+      $dataexpence = DB::table('cash_flow_cost_info')->where('Outlet_id', $ShopID)->where('stratf_id', $Starf_Id)->where('expend_cost', 1)->where('admin_show', 1)->get();
+      $cash_flow_cost_info_data = $dataexpence->count();
+
+//-------------------this cash_flow_cost_info------------------------
+
+      $datas = DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('stratf_id', $Starf_Id)
+      ->whereBetween('date', [
+          Carbon::now()->startOfMonth(), 
+          Carbon::now()->endOfMonth()
+      ])->limit(100)->orderBy('id', 'DESC')->get();
+      $total_row_log = $datas->count();
+
+
+   //----thhis cah show api
+   $cashflow = DB::table('cash_flow')->where('Outlet_Id', $ShopID)->where('Starf_Id', $Starf_Id)->get();
+   $cashflow_data_row = $cashflow->count();
+
+
+  }
+
+
+
+
+   if($cashflow_data_row > 0)
+     {
+      foreach($cashflow as $row)
+      {
+        $cash_flow=$row->cash_credit;
+      }
+    }
+
+
+
+
+      //----------------thsi show recently update data  uploaded---------------------------------------
+      if($monthy_suppier_exps_tk_count > 0){
+         foreach($monthy_suppier_exps_data as $row)
+         {
+          
+
+        
+          $monthy_suppier_exps_tk+=$row->debit_tk;
+      
+        //   $ddd='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->company_name.'</button>';
+        //   $namse='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->name.'</button>';
+
+          // $mesadd="";
+          // $toDate = Carbon::parse($row->date);
+          // $fromDate = Carbon::parse(date("Y-m-d"));
+          // $days = $toDate->diffInDays($fromDate);
+          
+
+          $today_suppier_exps_tk+=$row->debit_tk;
+
+      //  if($fromDate==$toDate){
+        
+      //    }
+
+
+          // if($days==0){
+          // $mesadd="Today";
+          // }else{
+          // $mesadd=$days." Days";
+          // }
+  
+  
+        //   $output.= '
+        //   <tr>
+        //   <td>'.$ddd.'</td>
+        //   <td>'.$namse .'</td>
+        //   <td>'.$mesadd.'</td>
+        //   <td>'.$row->unite.'</td>
+        //   <td>'.$row->totaltk.'</td>
+        //   </tr>
+        //  ';
+           }
+
+        }
+        else
+        { 
+          $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+       //-------------------thsi  a payable system-----------------------
+        if($cash_flow_cost_info_data > 0){
+          foreach($dataexpence as $row)
+          {
+
+    
+            $orderdate = explode('-',$row->date);
+            $month = $orderdate[1];
+            $year  = $orderdate[0];
+        
+
+          
+
+     
+            // if($year==$cureentyears){
+            //   $total_expence_tk_year+=$row->debit_tk;
+            // }
+   
+
+        if($row->Ac_check==0){
+          if($year.$month==$cureentyears.$curentmonths){
+            $total_expence_tk_months+=$row->debit_tk;
+           }
+        }
+
+     //   $monthy_expence_fun+=$row->debit_tk;
+           
+           //   $total_expence_tk_months+=$row->payable;
+      
+
+          //  if($row->payable>0){
+
+          //   $mesadd="";
+            $toDate = Carbon::parse($row->Admin_show_date);
+            $fromDate = Carbon::parse(date("Y-m-d"));
+           // $days = $toDate->diffInDays($fromDate);
+            
+       //-----------this is today expence -----------
+         //  if($fromDate==$toDate){
+            $today_expence_tk+=$row->debit_tk;
+        //     }
+    
+
+           
+
+          //  if($days==0){
+          //   $mesadd="Today";
+          //  }else{
+          //   $mesadd=$days." Days";
+          //  }
+    
+
+
+
+          //   $dddoutputpayable='<button class="supperbutton" onclick="datashowpayable('.$row->id.','.$row->unite.','.$row->payable.','.$row->paymenttk.','.$row->totaltk.' )">'.$row->name.'</button>';
+          //   $outputpayable.= '
+          //   <tr>
+          //   <td>'.$dddoutputpayable.'</td>
+          //   <td>'.$row->unite.'</td>
+          //   <td>'.$row->paymenttk.'</td>
+          //   <td>'.$mesadd.'</td>
+          //   <td>'.$row->payable.'</td>
+          //  </tr>
+          //  ';
+          //  }
+
+
+          }
+        }
+        else
+        { 
+          $outputpayable ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+
+      //-------------------this suppile_info_log------------------------
+        
+          if($total_row_log > 0)
+          {
+           foreach($datas as $row)
+           {
+    
+
+         
+            $adminshow="";
+            $dddcash="";
+            $mesadd="";
+            $toDate = Carbon::parse($row->date);
+            $fromDate = Carbon::parse(date("Y-m-d"));
+            $days = $toDate->diffInDays($fromDate);
+
+
+
+
+
+
+            
+         if($days==0){
+          $mesadd="Today";
+         }else{
+          $mesadd=$days." Days";
+         }
+    
+         if($row->admin_show == 1){
+          $adminshow='<span style=color:green;><i class="bx bx-check  bx-sm"></i></span>';
+          $dddcash='<span style=color:green;><i class="bx bx-check bx-sm"> <i class="bx bx-edit bx-sm" onclick="updatedata('.$row->id.')"></i><span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
+        
+        }else{
+          $admin_not_show_dat++;
+          
+          $adminshow='<span style=color:red; onclick="updatedata('.$row->id.')"><i class="bx bx-edit bx-sm" ></i></span> <span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
+          $dddcash='<input type="checkbox" id="cashfun" value="'. $row->id.'">';
+         }
+
+        
+     
+
+
+         if(Auth::user()->AdminCat=="Admin"){
+          $outputlog.= '
+          <tr>
+          <td>'.$row->Name.'</td>
+          <td>'.$row->details.'</td>
+          <td>'.$mesadd.'</td>      
+          <td>'.$row->debit_tk.'</td>  
+          <td>'.$dddcash.'</td>  
+          
+         </tr>
+         ';
+           }else{
+            $outputlog.= '
+            <tr>
+            <td>'.$row->details.'</td>
+            <td>'.$row->date.'</td>
+            <td>'.$mesadd.'</td>      
+            <td>'.$row->debit_tk.'</td>  
+            <td>'.$adminshow.'</td> 
+            
+           </tr>
+           ';
+           }
+
+
+
+           }
+          }
+          else
+          { 
+            $outputlog ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+          }
+          
+
+
+      
+          $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ShopID)->where('Starf_Id', $Starf_Id)->get();
+          foreach($tk_show as $row)
+          {
+            if($row->show_key==0){
+              $Total_salestk+=$row->Total_sales;
+             }
+             $total_show_Not_fun+=$row->Total_sales;
+          // $salesproduct++;
+      
+          }
+    
+          
+          $datapayable = DB::table('users')->where('ShopID', $ShopID)->get();
+          $total_row_payable = $datapayable->count();
+          if($total_row_payable > 0)
+          $selectid.='<option id="users" value="0" selected>--Selected Person--</option>';
+          {
+           foreach($datapayable as $row)
+           {
+
+            if($row->id==$Starf_Id){
+             // $selectid.='<option id="users" value="'.$row->id.'">'.$row->Name.'</option>';
+            }else{
+              $selectid.='<option id="users" value="'.$row->id.'">'.$row->Name.'</option>';
+            }
+           }
+
+          // $selectid.='<option id="users" value="end">Today is Closed</option>';
+          }
+
+
+
+
+        $data = array('table_data'  =>$output,
+        'not_show_admin'  => $admin_not_show_dat,
+        'payable'=>$outputpayable,
+        'monthy_suppier_exps' => $monthy_suppier_exps_tk,
+        'today_suppier_exps' => $today_suppier_exps_tk,
+        'today_expence_tk' => $today_expence_tk,
+        'months_pay' => $total_pay_tk_months,
+        'cashflow_log' =>$outputlog,
+        'monthy_expence' => $total_expence_tk_months,
+        'cash_crdits' => $cash_flow,
+        'totalsates' => $Total_salestk,
+        'setectvalue' => $selectid,
+
+        'total_show_Not_fun' => $total_show_Not_fun,
+        'monthy_expence_fun' => $monthy_expence_fun,
+
+      );
+        echo json_encode($data);
+   
+      }
+    
   }
   
+
+public function suplierstate(){
+
+  if(Auth::check()){
+     $output = '';
+     $outputpayable = '';
+     $outputlog='';
+     $total_due_tk=0;
+     $total_pay_tk_year=0;
+     $total_pay_tk_months=0;      
+     $total_payable_tk_months=0;
+     $years=date('Y');
+     $months=date('m');
+     $ShopID = Auth::user()->ShopID;
+     $Starf_Id = Auth::user()->id;
+     $me="";
+     $cash_flow=0;
+
+//----------------thsi show recently update data  uploaded--------
+      $INVOICEDUE = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 0)->get();
+      $total_row_count =  $INVOICEDUE->count();
+
+//-------------------thsi  a payable system-----------------------
+      $datapayable = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 1)->get();
+      $total_row_payable = $datapayable->count();
+
+//-------------------this suppile_info_log------------------------
+      $datas = DB::table('suppile_info_log')->where('Outlet_Id', $ShopID)->where('Admin_show', 1)->limit(100)->orderBy('id', 'DESC')->get();
+      $total_row_log = $datas->count();
+
+
+
+   //----thhis cah show api
+   $cashflow = DB::table('cash_flow')->where('Outlet_Id', $ShopID)->where('Starf_Id', $Starf_Id)->get();
+   $cashflow_data_row = $cashflow->count();
+
+   if($cashflow_data_row > 0)
+     {
+      foreach($cashflow as $row)
+      {
+        $cash_flow=$row->cash_credit;
+      }
+    }
+
+
+
+
+      //----------------thsi show recently update data  uploaded---------------------------------------
+      if($total_row_count > 0){
+         foreach($INVOICEDUE as $row)
+         {
+          
+        
+          $total_due_tk+=$row->totaltk;
+      
+          $ddd='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->company_name.'</button>';
+          $namse='<button class="supperbutton" onclick="datashowwite('.$row->id.')">'.$row->name.'</button>';
+
+        $mesadd="";
+          $toDate = Carbon::parse($row->date);
+          $fromDate = Carbon::parse(date("Y-m-d"));
+          $days = $toDate->diffInDays($fromDate);
+          
+       if($days==0){
+        $mesadd="Today";
+       }else{
+        $mesadd=$days." Days";
+       }
+  
+  
+          $output.= '
+          <tr>
+          <td>'.$ddd.'</td>
+          <td>'.$namse .'</td>
+          <td>'.$mesadd.'</td>
+          <td>'.$row->unite.'</td>
+          <td>'.$row->totaltk.'</td>
+         </tr>
+         ';
+         }
+        }
+        else
+        { 
+          $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+       //-------------------thsi  a payable system-----------------------
+        if($total_row_payable > 0){
+          foreach($datapayable as $row)
+          {
+
+    
+            $orderdate = explode('-',$row->date);
+            $month = $orderdate[1];
+            $year  = $orderdate[0];
+        
+     
+            if($year==$years){
+              $total_pay_tk_year+=$row->paymenttk;
+            }
+   
+            if($year.$month==$years.$months){
+              $total_pay_tk_months+=$row->paymenttk;
+            }
+            $total_payable_tk_months+=$row->payable;
+
+
+          if($row->payable>0){
+
+
+            $mesadd="";
+            $toDate = Carbon::parse($row->paymentdate);
+            $fromDate = Carbon::parse(date("Y-m-d"));
+            $days = $toDate->diffInDays($fromDate);
+            
+         if($days==0){
+          $mesadd="Today";
+         }else{
+          $mesadd=$days." Days";
+         }
+    
+
+
+
+            $dddoutputpayable='<button class="supperbutton" onclick="datashowpayable('.$row->id.','.$row->unite.','.$row->payable.','.$row->paymenttk.','.$row->totaltk.' )">'.$row->name.'</button>';
+            $outputpayable.= '
+            <tr>
+            <td>'.$dddoutputpayable.'</td>
+            <td>'.$row->unite.'</td>
+            <td>'.$row->paymenttk.'</td>
+            <td>'.$mesadd.'</td>
+            <td>'.$row->payable.'</td>
+           </tr>
+           ';
+
+
+
+
+          }
+          }
+        }
+        else
+        { 
+          $outputpayable ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+
+
+      //-------------------this suppile_info_log------------------------
+        
+          if($total_row_log > 0)
+          {
+           foreach($datas as $row)
+           {
+            $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
+           
+            $outputlog.= '
+            <tr>
+            <td>'.$ddd.'</td>
+            <td>'.$row->Product_name.'</td>
+            <td>'.$row->Product_load_numer.'</td>
+            <td>'.$row->Purches_Price.'</td>   
+             <td>'.$row->Product_load_numer*$row->Purches_Price.'</td>  
+           </tr>
+           ';
+           }
+          }
+          else
+          { 
+            $outputlog ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+          }
+          
+
+
+
+
+        $data = array('table_data'  =>$output,
+        'INVOICEDUE'  => $total_row_count,
+        'payable'=>$outputpayable,
+        'allduetk' => $total_due_tk,
+        'year_pay' => $total_pay_tk_year,
+        'months_pay' => $total_pay_tk_months,
+        'supplier_log' =>$outputlog,
+        'payableyear' => $total_payable_tk_months,
+        'cash_crdits' => $cash_flow
+      );
+        echo json_encode($data);
+   
+      }
+    
+
+  }
+  
+
+  public function expence_add_func(Request $reqs){
+    if(Auth::check()){
+      
+      $ShopID = Auth::user()->ShopID;
+      $stratf_id = Auth::user()->id;
+      $adminCat = Auth::user()->AdminCat;
+
+  
+      $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+      
+      if(count($cash_flow_data) > 0){	
+      foreach($cash_flow_data as $row)
+      {
+      $cashAount=$row->cash_credit;
+      $cashdebit=$row->cash_debit;
+      }
+  
+      if($cashAount>=$reqs->tk){
+        $cash_flow['cash_credit']=$cashAount-$reqs->tk;
+       }else{
+        $cash_flow['cash_credit']=$cashAount;
+       }
+      $cash_flow['details']='Next Sale data loaded';
+      $cash_flow['Update_date']=date("Y-m-d");
+      $cash_flow['cash_debit']=$cashdebit+$reqs->tk;
+  
+     
+      DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);    
+      echo json_encode($cash_flow);	
+      
+     
+
+    $cashflow['Outlet_id']=$ShopID; 
+    $cashflow['Admincat']=$adminCat; 
+    $cashflow['debit_tk']=$reqs->tk; 
+    $cashflow['date']=date("Y-m-d");
+    $cashflow['Update_Date']=date("Y-m-d"); 	
+    $cashflow['Admin_show_date']=date("Y-m-d"); 
+    $cashflow['stratf_id']=$stratf_id; 
+    $cashflow['details']=$reqs->selectvale;
+    $cashflow['Ac_check']=0; 
+    $cashflow['expend_cost']=1;
+
+    if($adminCat=="Admin"){
+      $cashflow['admin_show']=1; 
+     }else{
+      $cashflow['admin_show']=0; 
+     }
+
+    $cashflow['supplier_id']=0; 
+    $cashflow['Name']=Auth::user()->Name; 
+    DB::table('cash_flow_cost_info')->insert($cashflow);  
+    }
+
+  }else{
+     return view('login');
+    }
+   }
+   
+
+
+
+   
+  public function expence_update_func(Request $reqs){
+    if(Auth::check()){
+      
+      $ShopID = Auth::user()->ShopID;
+      $stratf_id = Auth::user()->id;
+      $adminCat = Auth::user()->AdminCat;
+      $cashdebitupdate=0;
+      $cashdebitupdatedata=0;
+
+      $expenceupdate=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->where('admin_show', 0)->get();
+      $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+
+      if(count($expenceupdate) > 0){	
+        foreach($expenceupdate as $rowc)
+        {
+       // $cashAount=$row->cash_credit;
+        $cashdebitupdateadd=$rowc->debit_tk;
+        }
+        $cashdebitupdate=$cashdebitupdateadd-$reqs->tk;
+
+        if($cashdebitupdate>0){
+          $cashdebitupdatedata=$cashdebitupdate*1;
+        }else{
+          $cashdebitupdatedata=$cashdebitupdate*-1;
+        }
+        
+        echo json_encode($cashdebitupdate);	
+      }
+
+
+      
+      
+      if(count($cash_flow_data) > 0){	
+      foreach($cash_flow_data as $row)
+      {
+      $cashAount=$row->cash_credit;
+      $cashdebit=$row->cash_debit;
+      }
+  
+      if($cashAount>=$reqs->tk){
+        $cash_flow['cash_credit']=$cashAount-$reqs->tk;
+       }else{
+        $cash_flow['cash_credit']=$cashAount;
+       }
+
+       if($cashdebitupdate>0){
+        $cash_flow['cash_debit']=$cashdebit-$cashdebitupdatedata;
+        $cash_flow['cash_credit']=$cashAount+$cashdebitupdatedata;
+      }else{
+        $cash_flow['cash_debit']=$cashdebit+$cashdebitupdatedata;
+        $cash_flow['cash_credit']=$cashAount-$cashdebitupdatedata;
+      }
+
+
+      $cash_flow['details']='Last is update data';
+      $cash_flow['Update_date']=date("Y-m-d");
+     DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);    
+  
+
+    $cashflow['debit_tk']=$reqs->tk; 
+    $cashflow['Update_Date']=date("Y-m-d"); 	
+    $cashflow['details']=$reqs->selectvale;
+    DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->update($cashflow);  
+
+
+   }
+
+  }else{
+     return view('login');
+    }
+   }
+   
+
+   public function get_data_to_update_func($id){
+    if(Auth::check()){
+    $ShopID = Auth::user()->ShopID;
+    $statechek = Auth::user()->AdminCat;
+
+    $showdata=DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('expend_cost', 1)->where('id', $id)->get();
+    $data_count=$showdata->count();
+
+
+  if($data_count>0){
+    foreach($showdata as $rows ){
+      $data_sent=array("id"=>$rows->id,"datails"=>$rows->details,"debit_taka"=>$rows->debit_tk);
+      echo json_encode($data_sent);
+    }
+  }else{
+    $data_sent=array("message"=>0);
+    echo json_encode($data_sent);
+  }
+   // echo json_encode($reqs->id);Admincat
+
+    }else{
+     return view('login');
+    }
+   }
+
+   
+   public function get_data_to_delete_func($id){
+    if(Auth::check()){
+    $ShopID = Auth::user()->ShopID;
+    $statechek = Auth::user()->AdminCat;
+    $stratf_id = Auth::user()->id;
+    $cashdebitupdatedata=0;
+    $cashcash_credit=0;
+    $cashcash_debit=0;
+
+   
+ 
+  $expenceupdate=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->get();
+  $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+
+  if(count($expenceupdate) > 0){	
+    foreach($expenceupdate as $rowc)
+    {
+    $cashdebitupdatedata=$rowc->debit_tk;
+    }
+  }
+    
+  if(count($cash_flow_data) > 0){	
+    foreach($cash_flow_data as $rowc)
+    {
+    $cashcash_credit=$rowc->cash_credit;
+    $cashcash_debit=$rowc->cash_debit;
+    }
+  }
+ 
+  $cash_flow['cash_credit']=$cashcash_credit+$cashdebitupdatedata;
+  $cash_flow['cash_debit']=$cashcash_debit-$cashdebitupdatedata;
+ DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);   
+
+$showdata=DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
+ $data_sent=array("message"=>$showdata);
+ echo json_encode($cash_flow);
+//echo json_encode($cashdebitupdatedata);
+
+    }else{
+     return view('login');
+    }
+}
+
+
+public function get_data_to_cash_sent_func($id){
+  if(Auth::check()){
+
+    $ShopID = Auth::user()->ShopID;
+    $statechek = Auth::user()->AdminCat;
+    $stratf_id = Auth::user()->id;
+    $stratf_name = Auth::user()->Name;
+    $cashcash_credit_get=0;
+    $cashcash_credit=0;
+    $cashcash_debit=0;
+    $cashcash_debit_tk=0;
+    $getname="";
+
+    $cash_flow_cost_info_get=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id )->where('Outlet_id', $ShopID)->where('Ac_check', 0)->get();	
+
+    $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+
+    //this is paramiter id get to quary so to needs two quary
+    $cash_get_pre_id=DB::table('cash_flow')->where('Starf_Id',$id )->where('Outlet_Id', $ShopID)->get();	
+  
+    if(count($cash_flow_data) > 0){	
+      foreach($cash_flow_data as $rowc)
+      {
+      $cashcash_credit=$rowc->cash_credit;
+      $cashcash_debit=$rowc->cash_debit;
+      }
+    }
+
+
+    if(count($cash_get_pre_id) > 0){	
+      foreach($cash_get_pre_id as $rowc)
+      {
+      $cashcash_credit_get=$rowc->cash_credit;
+      $cashcash_debit_get=$rowc->cash_debit;
+      $getname=$rowc->Starf_Name;
+      }
+    }
+
+
+    if(count($cash_flow_cost_info_get) > 0){	
+      foreach($cash_flow_cost_info_get as $row)
+      {
+
+     $cashcash_debit_tk=$row->debit_tk;
+     $cash_flow_cost['Ac_check']=1;
+     DB::table('cash_flow_cost_info')->where('id',$row->id)->update($cash_flow_cost);
+      }
+    }
+
+
+   
+    //id			cash_credit				
+
+    $cash_sent['Outlet_id']=$ShopID;
+    $cash_sent['Starf_Name']=$stratf_name ;
+    $cash_sent['Starf_Id']=$stratf_id;
+    $cash_sent['cash_credit']=$cashcash_credit;
+    $cash_sent['cash_debit']=$cashcash_debit;
+    $cash_sent['date']=date("Y-m-d");
+    $cash_sent['Admin_show_date']=date("Y-m-d");
+    $cash_sent['confrm_access']=0;
+    $cash_sent['admin_show']=0;
+    $cash_sent['Sent_Starf_id']=$id;
+    $cash_sent['confrm_access']=0;
+    
+    $resultt=DB::table('cash_sent_any_person')->insert($cash_sent);   
+    echo json_encode($cash_sent);
+
+
+if($resultt==1){
+  $cash_flow['cash_credit']=0;
+  $cash_flow['cash_debit']=0;
+  $cash_flow['sent_confim']=1;
+  $cash_flow['Update_date']=date("Y-m-d");
+  $cash_flow['cash_mark']="Sent Cash";
+  $cash_flow['cash_provider_name']=$getname;
+  DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);  
+
+  $cash_flow_get['cash_credit']=$cashcash_credit_get+$cashcash_credit;
+  $cash_flow_get['Update_date']=date("Y-m-d");
+  $cash_flow_get['cash_mark']="Get Cash";
+  $cash_flow_get['cash_provider_name']=$stratf_name;
+  $cash_flow_get['notifi_meg']=1;
+  DB::table('cash_flow')->where('Starf_Id',$id)->where('Outlet_Id', $ShopID)->update($cash_flow_get); 
+
+
+
+
+
+
+  $cash_flow_cost_info['Ac_check']=1;
+  DB::table('cash_flow_cost_info')->where('Outlet_id', $ShopID)->where('stratf_id', $stratf_id)->update($cash_flow_cost_info);
+     
+
+  $users_upadate['Notifi_meg']=1;
+  DB::table('users')->where('id',$id)->update($users_upadate); 
+
+  $profit_datails['show_key']=1;
+  DB::table('profit_datails')->where('Outlet_Id', $ShopID)->where('Starf_Id', $stratf_id)->update($profit_datails);
+      
+  $users_upadate['Notifi_meg']=1;
+  DB::table('users')->where('id',$id)->update($users_upadate); 
+
+}
+
+
+
+
+  }else{
+   return view('login');
+  }
+ }
+ 
+
+
+
+   public function cashshowadminfunction(Request $reqs){
+    if(Auth::check()){
+    $ShopID = Auth::user()->ShopID;
+    $cashshow['admin_show']=1;
+    DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->update($cashshow);
+    echo json_encode($reqs->id);
+
+    }else{
+     return view('login');
+    }
+   }
+   
+   
+
+public function supplierdataload(Request $reqs){
+ if(Auth::check()){
+  $supplierarray['company_name']=$reqs->company_name; 
+	$supplierarray['name']=$reqs->name; 
+  $supplierarray['mobile']=$reqs->mobile; 
+  $supplierarray['address']=$reqs->address; 
+  $supplierarray['unite']=$reqs->unite; 
+  $supplierarray['totaltk']=$reqs->totaltk; 
+  $supplierarray['payable']=0; 
+  $supplierarray['date']=date("Y-m-d"); 
+  $supplierarray['paymentdate']=date("Y-m-d"); 
+  $supplierarray['paymentmethod']="0"; 
+  $supplierarray['paymenttk']=0; 
+  $supplierarray['ShopID']=Auth::user()->ShopID;
+  $supplierarray['admin_show']=0;  
+  $datr= DB::table('suppile_info')->insertGetId($supplierarray);    
+  echo json_encode($datr);
+ }else{
+  return view('login');
+ }
+}
+
 public function report(){
     return view('deshboard.report');
  
@@ -51,9 +1058,11 @@ public function removedate($id,$qty){
            foreach($stockinfo as $row)
            {
            $Total_product=$row->Total_product;
+           $total_sales_count=$row->Total_sales_count;
            }
            
            	$productt=$Total_product+$qty;
+             $datesss['Total_sales_count']=$total_sales_count-$qty; 
            	$datesss['Total_product']=$productt; 
            	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
            	echo json_encode($stockinfo);
@@ -67,16 +1076,11 @@ public function removedate($id,$qty){
  //product purcher add  data 
  
  public function purcher_add($id, $qty,$num){
- 	
- //	echo json_encode($id);
- 	
- 	
- 	
  	  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
-    	$outlet_Id_user = Auth::user()->ShopID;
-    				
-	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+    	$outlet_Id_user = Auth::user()->ShopID;			
+	    $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
+
     		if(count($stockinfo) === 0){				
     			 $purcherdata['message']='Exit';
     			 echo json_encode($purcherdata);	   
@@ -108,138 +1112,195 @@ public function removedate($id,$qty){
 		        $purcherdata['Starf_Name']=Auth::user()->Name; 
 		        $purcherdata['Outlet_Id']=Auth::user()->ShopID;    
 		        $purcherdata['Outlet_Name']=Auth::user()->Shopname;
-
-           	
-           	
-  /*         	
-           try {
-     DB::table('purches_list')->insert($purcherdata); 
-      echo json_encode($datess);           
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-        
-              }
-          }
-           	*/
-           	
-           	
           	 DB::table('purches_list')->insert($purcherdata); 
-           	
-          // 	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($purcherdata);
-        //   	echo json_encode($purcherdata);
-           
     		}	
        }
- 	
- 		
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
-//           $dates['customer_id']=$req->customer_id;
-//           $dates['customer_name']=$req->mobile;
-//           $dates['purches_date']=$req->address;             
-//           $dates['product_id']=date("Y-m-d");
-//           $dates['product_Name']=0;      
-//           $dates['product_Price']= date("Y-m-d");              
-//           $dates['product_Info']=0;
-//           $dates['profit_to_Pruduct']="54578";
-//           $dates['prodcut_Add_date']="362";               
-//           $dates['prodcut_Exp_date']=0;
-//           $dates['prodcut_Provide_com']="Good";
-//           $dates['prodcut_Purcher_price']="33455";             
-//           $dates['Admin_Id']="1212";
-//           $dates['Starf_Id']="5632";
-//           $dates['Starf_Name']="6985";                 
-//           $dates['Outlet_Id']="9685";
-//           $dates['Outlet_Name']="9658";
-//           $dates['Device_Info']="56";             
-//           DB::table('purches_list')->insert($dates);          
-//       //    return redirect("customerinfo");
-//            echo("purches list ");
-//         // return view('customerinfo')->with('messages','true');
- 	
- 	
  }
  
+
   
- public function profit_add($totaldiscout,$sales,$amount,$num,$name){
- 	
+//----this function is sales  profite data insert table profit_datails----route name //profiturl--------
+  public function profit_add(Request $reqs){
  	  if(Auth::check()){
-    	$ids = Auth::user()->Shop_cat_id;
-    	$outlet_Id_user = Auth::user()->ShopID;
-    	
-           	$profitdata['Recive_number']=$num; 
-           	$profitdata['totaldiscout']=$totaldiscout; 	
-           	$profitdata['Profit']=$amount; 		
-           	$profitdata['Net_Profit']=$amount-$totaldiscout; 	
-           	$profitdata['Total_sales']=$sales+$totaldiscout; 	
-           	$profitdata['Net_Sale']=$sales; 
-           	$profitdata['show_key']=0; 
-         	$profitdata['Date']=date("Y-m-d");   
+
+      	$ids = Auth::user()->id;
+       	$outlet_Id_user = Auth::user()->ShopID;
+        $datechack=date("Y-m-d");
+        $cashAount=0;
+        $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$ids )->where('Outlet_Id', $outlet_Id_user)->get();	
+    
+
+        $profitdata['Recive_number']=$reqs->numkey; 
+        $profitdata['totaldiscout']=$reqs->diskey; 	
+        $profitdata['Profit']=$reqs->amountkey;   	
+        $profitdata['Net_Profit']=$reqs->amountkey-$reqs->diskey; 	
+        $profitdata['Total_sales']=$reqs->saleskey+$reqs->diskey; 	
+        $profitdata['Net_Sale']=$reqs->saleskey; 
+        $profitdata['Names']=$reqs->namekey; 
+        $profitdata['show_key']=0; 
+        $profitdata['Date']=date("Y-m-d");   
 		    $profitdata['Admin_Id']=Auth::user()->AdminKey;
 		    $profitdata['Starf_Id']=Auth::user()->id;    
 		    $profitdata['Starf_Name']=Auth::user()->Name; 
 		    $profitdata['Outlet_Id']=Auth::user()->ShopID;    
 		    $profitdata['Outlet_Name']=Auth::user()->Shopname; 
-		    $profitdata['Names']=$name;
-           
-            DB::table('profit_datails')->insert($profitdata); 
-           	
-      	echo json_encode($profitdata);
-           
-    			
+        $profitdata['Discount_type']=$reqs->discatkey;    
+        DB::table('profit_datails')->insert($profitdata);    	
+      	echo json_encode($profitdata);		
+
+
+       if(count($cash_flow_data) > 0){				
+       
+           foreach($cash_flow_data as $row)
+            {
+            $cashAount=$row->cash_credit;
+            }
+
+       $cash_flow['cash_credit']=$cashAount+$reqs->saleskey;
+       $cash_flow['details']='Next Sale data loaded';
+       $cash_flow['Update_date']=date("Y-m-d");
+      DB::table('cash_flow')->where('Starf_Id',$ids)->where('Outlet_Id', $outlet_Id_user)->update($cash_flow);    
+       echo json_encode($cash_flow);	
+       	
+         
+       }else{
+
+      $cash_flow['date']=date("Y-m-d");
+      $cash_flow['cash_credit']=$reqs->saleskey;
+      $cash_flow['cash_provider_name']='Cash not Sent';
+      $cash_flow['details']='NetSales';
+      $cash_flow['cash_debit']=0;
+      $cash_flow['Outlet_Id']=Auth::user()->ShopID; 
+      $cash_flow['Starf_Name']=Auth::user()->Name; 
+      $cash_flow['Starf_Id']=Auth::user()->id; 
+      $cash_flow['admin_show']=0;
+      $cash_flow['sent_confim']=0;
+      $cash_flow['Admin_show_date']=date("Y-m-d");
+      $cash_flow['Update_date']=date("Y-m-d"); 
+	  $cash_flow['cash_mark']="No mark";
+	  $cash_flow['notifi_meg']=0;
+      DB::table('cash_flow')->insert($cash_flow);    	
+      echo json_encode($cash_flow_data);	
+
        }
+
+
+    }
  
  }  
  
- //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
- public function hhhttt(Request $request){
- 	
- 	              $purcherdata['message']='Exit';  
- 	              $purcherdata['hello']=$request->hello;
- 	             $purcherdata['helloh']=$request->hello["length"];
-    			 echo json_encode($purcherdata);	
-           
- 	
- }
  
 public function profit_show(){
-    $profit_show=DB::table('profit_datails')->orderBy('id', 'DESC')->limit(30)->get();
-   echo json_encode($profit_show);
+if(Auth::check()){
+
+  $AdminCat = Auth::user()->AdminCat;
+  $Starf_Id = Auth::user()->id;
+  $ids = Auth::user()->ShopID;
+  $datee=date("Y-m-d");
+
+  if($AdminCat=="Admin"){
+    $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->get();
+     echo json_encode($profit_show);
+  }else{
+    $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->where('Starf_Id', $Starf_Id)->get();
+    echo json_encode($profit_show);
   }
+}
+else{
+  $datess['message']="Please contract administration ";
+  echo json_encode($datess);
+}
+}
   
-public function sales_show(){
-    $sales_show=DB::table('purches_list')->get();
-   echo json_encode($sales_show);
-  }
-  
+public function deshboard_all_info_get_data_func(){
+
+  if(Auth::check()){
+    $AdminCat = Auth::user()->AdminCat;
+    $Starf_Id = Auth::user()->id;
+    $ids = Auth::user()->ShopID;
+    $Total_product=0;
+    $salesproduct=0;
+    $total_com_val=0;
+    $Totalproduct=0;
+    $datee=date("Y-m-d");
+
+    if($AdminCat=="Admin"){
+    
+      $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->where('Date', $datee)->get();
+     
+      $total_com_vals=DB::table('stock_info')->where('Outlet_Id', $ids)->get();
+
+      foreach($total_com_vals as $row)
+      {  
+       $total_com_val+=$row->Purches_Price*$row->Total_product;
+       $Totalproduct++;
+      }
+      
+      foreach($tk_show as $row)
+      {
+       $Total_product+=$row->Total_sales;
+       $Totalproduct++;
+      }
+
+
+
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct,"totalcomvalu"=>$total_com_val,"total_product"=>$Totalproduct);
+        echo json_encode($all_month);
+
+
+    }else{
+
+
+
+
+      $tk_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->where('Date', $datee)->where('Starf_Id', $Starf_Id)->get();
+      foreach($tk_show as $row)
+      {
+       $Total_product+=$row->Total_sales;
+       $salesproduct++;
+      }
+
+
+      $tk_shows=DB::table('stock_info')->where('Outlet_Id', $ids)->get();
+      foreach($tk_shows as $row)
+      {
+       $Totalproduct++;
+      }
+      
+
+      $all_month = array("Total_product"=>$Total_product,"salesproduct"=>$salesproduct,"totalcomvalu"=>"000","total_product"=>$Totalproduct);
+      echo json_encode($all_month);
+
+
+
+    }
+    }else{
+      
+      $datess['message']="Please contract administration ";
+      echo json_encode($datess); 
+     
+    }
+}
+
+
   
 public function profitdatailsfun($id){
   
     if(Auth::check()){	
-    	
-	    $profitdatailsfun=DB::table('purches_list')->where('Recive_num', $id)->get();	
-	    
-	    if(count($profitdatailsfun) === 0){				
+    	$outlet_Id_user = Auth::user()->ShopID;
+	       $profitdatailsfun=DB::table('purches_list')->where('Outlet_Id', $outlet_Id_user)->where('Recive_num', $id)->get();	
+	    $profit_with_discout=DB::table('profit_datails')->where('Outlet_Id', $outlet_Id_user)->where('Recive_number', $id)->get();	
+
+	    if(count($profitdatailsfun) === 0 && count($profit_with_discout) === 0){				
     			 $profitdatailsfun['message']='Exit';
     		echo json_encode($profitdatailsfun);	   
     		}
     		else
     		{
-    		 echo json_encode($profitdatailsfun);
+
+          $all_data = array("profit_with_discout"=>$profit_with_discout,"profitdatailsfun"=>$profitdatailsfun);
+          echo json_encode($all_data);
+      
     		}
     		
 		 }else{return view('login');}
@@ -259,36 +1320,41 @@ public function searchidcan($id){
          	foreach($stockinfo as $row)
           {
            $Total_product=$row->Total_product;
-           }
+           $total_sales_count=$row->Total_sales_count;
+          }
            
            if($Total_product<=0){
-           	     $datess['message']='Exit';
-           	     $datess['data']='NO';
-    			 echo json_encode($datess);	 
+           	  $datess['message']='Exit';
+           	  $datess['data']='NO';
+    			  echo json_encode($datess);	 
            }else{
            	
            	$productt=$Total_product-1;
+             
            	$datesss['Total_product']=$productt; 
+            $datesss['Total_sales_count']=$total_sales_count+1; 
            	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
            	echo json_encode($stockinfo);
            	
            }
     		}
-    		
+	
     		
     			
        }
   }
   
 public function barcodes($id){
+
 	  if(Auth::check()){
+
     	$ids = Auth::user()->Shop_cat_id;
     	$outlet_Id_user = Auth::user()->ShopID;
     				
-	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
-         $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
-      
+	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();	
+
     		if(count($stockinfo) === 0){
+          $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
     			if(count($reults) === 0){		
     			 $datess['message']='Exit';
     			 echo json_encode($datess);		 
@@ -299,23 +1365,18 @@ public function barcodes($id){
     		}else{
     			echo json_encode($stockinfo);
     		}
-    		
-    		
     			
+
+
+
+       }else{
+        return view('login');
        }
+
+       
   }
     
     
-  
-public function test(){
-   $hashed = Hash::make('password', [
-    'rounds' => 12,
-]);
-
-echo($hashed );
- 
-  }
-
 public function customerinfo(){	
      $data['posts']=DB::table('customer_info')->orderBy('total_purches_count', 'DESC')->limit(45)->paginate(9);
      $datatwo['poststwo']=DB::table('customer_info')->orderBy('id', 'DESC')->limit(8)->get();
@@ -333,37 +1394,419 @@ public function customerdelete($id){
     
 // this just stock add and info show   
 public function stockaddfuntion(){	
- 
-
  if(Auth::check()){
- 	
     	$ids = Auth::user()->Shop_cat_id;
     	$data = DB::table('catgory_info')->where('Shop_cat_id', $ids)->get();
-        return view('deshboard.stock_add')->with('data', $data);
-    	//$data['posts']=DB::table('catgory_info')->get();
-    	//	return view('deshboard.product_info',$data);
-    		
+      return view('deshboard.stock_add')->with('data', $data);
     }else{
     	return view('login');
     	}
- 
- 
- //if(Auth::check()){return view('deshboard.stock_add');}else{return view('login');}
   }
   
-public function Stock_Info_add(Request $reqs){
-  	
-  
-  
+
+
+
+
+
+
+
+//---this a function is when payable of supplier sime money pay then use ----route:  payabledataloaded------------
+public function Daily_activity_auto_data_loaded(){
+ 
+   
   if(Auth::check()){ 
-  
-  
-     $ShopID = Auth::user()->ShopID;
-  
-      $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
+    $ShopID = Auth::user()->ShopID;
+    $stratf_id = Auth::user()->id;
+    $adminCat = Auth::user()->AdminCat;
+    $cash_credit=0;
+    $cash_debit=0;
+$cash_flows= DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();
+$total_cash_update_info = $cash_flows->count();
+if($total_cash_update_info > 0){
+  foreach($cash_flows as $row)
+     {
+     $date=$row->date;
+     }
+echo json_encode($date);
 
+}else{
+
+  $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->where('cash_credit','>',0)->get();	
+  $total_row_cash_info = $cash_flow_data->count();
+   $cash_flow['cash_credit']=0;
+   $cash_flow['Update_date']=date("Y-m-d");
+   $cash_flow['sent_confim']=1;
+   $cash_flow['cash_debit']=0;
+    if($total_row_cash_info > 0){
+     foreach($cash_flow_data as $row)
+     {
+     $cash_credit+=$row->cash_credit;
+     $cash_debit+=$row->cash_debit;
+     DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->where('id',$row->id )->update($cash_flow);
+     }
+     $cash_flow['date']=date("Y-m-d");
+     $cash_flow['cash_credit']=$cash_credit;
+     $cash_flow['cash_provider_name']='Name';
+     $cash_flow['details']='New day Start';
+     $cash_flow['cash_debit']=$cash_debit;
+     $cash_flow['Outlet_Id']=Auth::user()->ShopID; 
+     $cash_flow['Starf_Name']=Auth::user()->Name; 
+     $cash_flow['Starf_Id']=Auth::user()->id; 
+     if($adminCat=="Admin"){
+      $cash_flow['admin_show']=1;
+     }else{
+      $cash_flow['admin_show']=0;
+     }
+     $cash_flow['sent_confim']=0;
+     $cash_flow['Admin_show_date']=date("Y-m-d");
+     $cash_flow['Update_date']=date("Y-m-d");
+	 $cash_flow['cash_mark']="No mark";
+	 $cash_flow['notifi_meg']=0;
+     DB::table('cash_flow')->insert($cash_flow);   
+     }
+    // echo json_encode("1");
+    }
+ 
+  
+    }else{
+      return view('login');
+      }
+          
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---this a function is when payable of supplier sime money pay then use ----route:  payabledataloaded------------
+  public function Payable_finally(Request $reqs){
+ 
+   
+     if(Auth::check()){ 
+       $ShopID = Auth::user()->ShopID;
+       $stratf_id = Auth::user()->id;
+       $adminCat = Auth::user()->AdminCat;
+	   
+  
+       $suppile_info = DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->get();
+       $total_row_suppile_info = $suppile_info->count();
+
+       $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+    
+
+
+       
+       if($total_row_suppile_info > 0){
+
+        foreach($suppile_info as $row)
+        {
+        $paymenttkamount=$row->paymenttk;
+       
+        }
+
+         $datess['admin_show']=1;  
+         $datess['paymenttk']=$paymenttkamount+$reqs->tk;  
+         $datess['paymentmethod']=$reqs->methedpay;  
+         $datess['payable']=$reqs->payabletk;  
+         $datess['paymentdate']=date("Y-m-d"); 
+         $suppile_info_log['Admin_show']=1; 
+   
+         DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->update($datess);
+
+         DB::table('suppile_info_log')->where('id', $reqs->id)->where('Outlet_Id', $ShopID)->update($suppile_info_log);
+        //----------------------this amount assets--------------
+         if($reqs->methedpay=="other"){
+          $assets['Outlet_id']=$ShopID;
+          $assets['AdminCat']=$adminCat;
+          $assets['Date']=date("Y-m-d");
+          $assets['Info_update']=date("Y-m-d");
+          $assets['Amount']=$reqs->tk;
+          $assets['Amountdetails']="PayableOtherCash";
+          $assets['supplier_id']=$reqs->id;
+          DB::table('assets_and_properity')->insert($assets);
+         }
+         //----------------------this cash insert--------------
+         $cashflow['Outlet_id']=$ShopID; 
+         $cashflow['Admincat']=$adminCat; 
+         $cashflow['debit_tk']=$reqs->tk; 
+         $cashflow['date']=date("Y-m-d"); 
+		    $cashflow['Update_Date']=date("Y-m-d"); 
+         $cashflow['Admin_show_date']=date("Y-m-d"); 
+         $cashflow['stratf_id']=$stratf_id; 
+         $cashflow['details']="Payable Cash"; 
+         $cashflow['Ac_check']=0; 
+         $cashflow['expend_cost']=0;
+
+         if($adminCat=="Admin"){
+          $cashflow['admin_show']=1; 
+         }else{
+          $cashflow['admin_show']=0; 
+         }
+
+         $cashflow['supplier_id']=$reqs->id; 
+		 $cashflow['Name']=Auth::user()->Name;    
+        DB::table('cash_flow_cost_info')->insert($cashflow); 
+       //----------------------this cash insert end--------------
+
+
+
+       //----------------------this insert cash flow system--------------
+       if(count($cash_flow_data) > 0){				
+       
+          foreach($cash_flow_data as $row)
+           {
+           $cashAount=$row->cash_credit;
+           $cashdebit=$row->cash_debit;
+           }
+         //  $cash_flow['cash_credit']=$cashAount-$reqs->tk; 
+           if($cashAount>=$reqs->tk){
+            $cash_flow['cash_credit']=$cashAount-$reqs->tk;
+           }else{
+            $cash_flow['cash_credit']=$cashAount;
+           }
+
+      $cash_flow['details']='Next Sale data loaded';
+      $cash_flow['Update_date']=date("Y-m-d");
+      $cash_flow['cash_debit']=$cashdebit+$reqs->tk;
+
+  
+      if($reqs->methedpay=="cashdrawer"){
+        DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);    
+        echo json_encode("cash flow data show");	
+      }
+          
+      }else{
+
+     $cash_flow['date']=date("Y-m-d");
+     $cash_flow['cash_credit']=0;
+     $cash_flow['cash_provider_name']='Cash not Sent';
+     $cash_flow['details']='NetSales';
+     $cash_flow['cash_debit']=$reqs->tk;;
+     $cash_flow['Outlet_Id']=Auth::user()->ShopID; 
+     $cash_flow['Starf_Name']=Auth::user()->Name; 
+     $cash_flow['Starf_Id']=Auth::user()->id; 
+     
+     if($adminCat=="Admin"){
+      $cash_flow['admin_show']=1;
+     }else{
+      $cash_flow['admin_show']=0;
+     }
+
+     $cash_flow['sent_confim']=0;
+     $cash_flow['Admin_show_date']=date("Y-m-d");
+     $cash_flow['Update_date']=date("Y-m-d");
+	 $cash_flow['cash_mark']="No mark";
+	 $cash_flow['notifi_meg']=0;
+     DB::table('cash_flow')->insert($cash_flow);    	
+     //echo json_encode($cash_flow_data);	
+
+      }
+     //----------------------this insert cash flow system  end--------------
+
+      //  echo json_encode($datess);
+        }
+    
+       }else{
+         return view('login');
+         }
+             
+   } 
+
+
+//---this a function is when payment of supplier some money pay then use ----route:  stockloadfinally------------
+public function Stock_Info_add_finally(Request $reqs){
+  if(Auth::check()){ 
+
+    $ShopID = Auth::user()->ShopID;
+    $stratf_id = Auth::user()->id;
+    $adminCat = Auth::user()->AdminCat;
+
+    $data = DB::table('suppile_info_log')->where('supplier_id', $reqs->id)->where('Outlet_Id', $ShopID)->get();
+    $total_row = $data->count();
+
+    $suppile_info = DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->get();
+    $total_row_suppile_info = $suppile_info->count();
+
+    $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
+    
+
+
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+         $this->input_data_stock_load($row->Barcode,$row->Product_load_numer);
+
+       }
+       
+      }
+      
+    if($total_row_suppile_info > 0){
+
+      
+      $datess['admin_show']=1;  
+      $datess['paymenttk']=$reqs->tk;  
+      $datess['paymentmethod']=$reqs->methedpay;  
+      $datess['payable']=$reqs->payabletk;  
+      $datess['paymentdate']=date("Y-m-d"); 
+
+      $suppile_info_log['Admin_show']=1; 
+      DB::table('suppile_info')->where('id', $reqs->id)->where('ShopID', $ShopID)->update($datess);
+
+      DB::table('suppile_info_log')->where('supplier_id', $reqs->id)->where('Outlet_Id', $ShopID)->update($suppile_info_log);
+    
+    
+    
+      //----------------------this amount assets--------------
+      if($reqs->methedpay=="other"){
+       $assets['Outlet_id']=$ShopID;
+       $assets['AdminCat']=$adminCat;
+       $assets['Date']=date("Y-m-d");
+       $assets['Info_update']=date("Y-m-d");
+       $assets['Amount']=$reqs->tk;
+       $assets['Amountdetails']="PaymentOtherCash";
+       $assets['supplier_id']=$reqs->id; 
+       DB::table('assets_and_properity')->insert($assets);
+      }
+      //----------------------this cash insert--------------
+      $cashflow['Outlet_id']=$ShopID; 
+      $cashflow['Admincat']=$adminCat; 
+      $cashflow['debit_tk']=$reqs->tk; 
+      $cashflow['date']=date("Y-m-d"); 
+	  $cashflow['Update_Date']=date("Y-m-d"); 
+      $cashflow['Admin_show_date']=date("Y-m-d"); 
+      $cashflow['stratf_id']=$stratf_id; 
+      $cashflow['details']="Supplier Cost"; 
+      $cashflow['Ac_check']=0; 
+      $cashflow['expend_cost']=0; 
+  
+       if($adminCat=="Admin"){
+          $cashflow['admin_show']=1; 
+         }else{
+          $cashflow['admin_show']=0; 
+         }
+      
+      $cashflow['supplier_id']=$reqs->id; 
+	  $cashflow['Name']=Auth::user()->Name; 
+       DB::table('cash_flow_cost_info')->insert($cashflow); 
+    //----------------------this insert cash flow system--------------
+
+
+
+
+
+    if(count($cash_flow_data) > 0){	
+    foreach($cash_flow_data as $row)
+    {
+    $cashAount=$row->cash_credit;
+    $cashdebit=$row->cash_debit;
+    }
+
+    if($cashAount>=$reqs->tk){
+      $cash_flow['cash_credit']=$cashAount-$reqs->tk;
+     }else{
+      $cash_flow['cash_credit']=$cashAount;
+     }
+    $cash_flow['details']='Next Sale data loaded';
+    $cash_flow['Update_date']=date("Y-m-d");
+    $cash_flow['cash_debit']=$cashdebit+$reqs->tk;
+
+    if($reqs->methedpay=="cashdrawer"){
+      DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);    
+      echo json_encode($cash_flow);	
+    }
+   
+    
+   }else{
+
+   $cash_flow['date']=date("Y-m-d");
+   $cash_flow['cash_credit']=0;
+   $cash_flow['cash_provider_name']='Cash not Sent';
+   $cash_flow['details']='NetSales';
+   $cash_flow['cash_debit']=$reqs->tk;
+   $cash_flow['Outlet_Id']=Auth::user()->ShopID; 
+   $cash_flow['Starf_Name']=Auth::user()->Name; 
+   $cash_flow['Starf_Id']=Auth::user()->id; 
+
+   if($adminCat=="Admin"){
+    $cash_flow['admin_show']=1;
+   }else{
+    $cash_flow['admin_show']=0;
+   }
+
+
+   $cash_flow['sent_confim']=0;
+   $cash_flow['Admin_show_date']=date("Y-m-d");
+   $cash_flow['cash_mark']="No mark";
+   $cash_flow['notifi_meg']=0;
+   $cash_flow['Update_date']=date("Y-m-d");
+   DB::table('cash_flow')->insert($cash_flow);    	
+    echo json_encode($cash_flow_data);	
+
+  }
+ //----------------------this insert cash flow system  end--------------
+
+   //  echo json_encode($datess);
+     }
+
+   
+  
+    }else{
+    	return view('login');
+    	}
+  	      
+} 
+
+
+
+public function input_data_stock_load($barcode,$Product_load_numer){
+
+  if(Auth::check()){ 
+    $ShopID = Auth::user()->ShopID;
+    $data = DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ShopID)->get();
+    $newdate=date("Y-m-d");
 	  $total_row = $data->count();
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $Total_product=$row->Total_product;
+       } 
+    $datess['Product_show_by_admin']=2;
+    $datess['Product_load_numer']="0";
+    $datess['Total_product']=$Total_product+$Product_load_numer;  
+    $datess['Toral_product_load_count']=$Total_product+$Product_load_numer;  
+    $datess['Update_Date']=$newdate;  
+    DB::table('stock_info')->where('Barcode', $barcode)->where('Outlet_Id', $ShopID)->update($datess);
+    echo json_encode($datess);
 
+      }else{
+       // echo json_encode("data insert fail");
+      }
+      
+    }
+}
+
+public function Stock_Info_add_demo(Request $reqs){
+  if(Auth::check()){ 
+    $ShopID = Auth::user()->ShopID;
+    $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
+	  $total_row = $data->count();
 	  $ndate=date_create($reqs->Expire_date);	
 	  $newdate=date_format($ndate,"Y-m-d");
 
@@ -378,8 +1821,8 @@ public function Stock_Info_add(Request $reqs){
        }
        
        if($Total_product<=0){
-       	 	
-       $datess['Total_product']=$reqs->Product_units;  
+       $datess['Product_show_by_admin']=0;
+       $datess['Product_load_numer']=$reqs->Product_units;  
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;
        $datess['Product_add_user_id']=Auth::user()->id;
@@ -388,14 +1831,14 @@ public function Stock_Info_add(Request $reqs){
        $datess['Expire_date']=$reqs->Expire_date; 
         
         if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
        }
        
       if($reqs->pieces=="empty"){
-	   $datess['pieces']="0";
+	       $datess['pieces']="0";
         }
        else{
 	 $datess['pieces']=$reqs->pieces;
@@ -409,9 +1852,9 @@ public function Stock_Info_add(Request $reqs){
        }
        
        else if($loadeddate==$newdate){
-       		
-       $total_pr=$Total_product+$reqs->Product_units;
-       $datess['Total_product']=$total_pr;  
+       $total_pr=$reqs->Product_units;
+       $datess['Product_show_by_admin']=0; 
+       $datess['Product_load_numer']=$total_pr;  
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;
        $datess['Product_add_user_id']=Auth::user()->id;
@@ -420,7 +1863,7 @@ public function Stock_Info_add(Request $reqs){
 
  
        if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
@@ -445,11 +1888,12 @@ public function Stock_Info_add(Request $reqs){
        }
        
        }else{
-       				     		
+       $datess['Product_show_by_admin']=0; 
        $datess['Product_name']=$reqs->Product_name;
        $datess['Barcode']=$reqs->Barcode;
        $datess['Facility_Product_for_internet']=FALSE;
-       $datess['Total_product']=$reqs->Product_units;  
+       $datess['Product_load_numer']=$reqs->Product_units;  
+       $datess['Total_product']="0";
        $datess['Purches_Price']=$reqs->Purches_Price;  
        $datess['Sales_Price']=$reqs->Sales_Price;
        $datess['Product_add_user_id']=Auth::user()->id; 
@@ -463,12 +1907,11 @@ public function Stock_Info_add(Request $reqs){
        $datess['Catagory']=$reqs->Catagory;
        $datess['Sub_Catagory']=$reqs->Sub_Catagory;
        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
-       $datess['Top_rating_range']=0; 
-       
-       
-         
+       $datess['Top_rating_range']=0;  
+       $datess['Toral_product_load_count']=0; 
+       $datess['Total_sales_count']=0;  
       if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
@@ -490,16 +1933,11 @@ public function Stock_Info_add(Request $reqs){
   
     }else{
     	return view('login');
-    	}
-  	      
+    	}     
 } 
 
-public function customerinfonew(){
-    $data['posts']=DB::table('customer_info')->get();
-     return $data;
-     
-     // return "hello";
-  }
+
+
   
 public function customer_Data_add(Request $req){
         
@@ -530,7 +1968,6 @@ public function customer_Data_add(Request $req){
          // return view('customerinfo')->with('messages','true');
 	}
  
- 
 
  
 //this purpose this product add and show update etc  
@@ -557,7 +1994,7 @@ if ($validator->fails()) {
        $datess['Product_name']=$reqs->Product_name;
           
        if($reqs->Weight=="empty"){
-       	$datess['Weight']=" ";
+       	$datess['Weight']="0";
        }
        else{
        	$datess['Weight']=$reqs->Weight;
@@ -712,9 +2149,6 @@ public function catagoryshow(){
   }
  
  
-    
-    
-    
 // customer info and loging user data info
  		
 public function createnewprofile(){
@@ -726,6 +2160,27 @@ public function createnewprofile(){
     	else{return view('login');}
 	}
 			
+
+  public function product_supplier(){
+    if(Auth::check()){	
+      $id = Auth::user()->id;	
+    //  if()
+   
+     // $data['posts']=DB::table('users')->where('AdminKey',$id)->paginate(9);
+      return view('deshboard.product_supplier');
+    }
+    else{return view('login');}
+}
+  
+
+public function cashflowfun(){
+  if(Auth::check()){	
+    $id = Auth::user()->id;	
+    return view('deshboard.cash_flow');
+  }
+  else{return view('login');}
+}
+
 public function userOnlineStatus(){
         $users = User::all();
         foreach ($users as $user) {
@@ -772,7 +2227,6 @@ public function employeadddemo(Request $require){
             'Mobile' => 'required|min:11',   
         ]);
         
-  
          $date['AdminKey']=Auth::user()->id;
          $date['Shopname']=Auth::user()->Shopname;
          $date['ShopAddress']=Auth::user()->ShopAddress;
@@ -815,7 +2269,6 @@ public function employeadd(Request $require){
         
          $imageName = time().'.'.$require->image->extension();    
          $require->image->move(public_path('images'), $imageName);
-         
          $date['AdminKey']=Auth::user()->id;
          $date['Shopname']=Auth::user()->Shopname;
          $date['ShopAddress']=Auth::user()->ShopAddress;
@@ -896,81 +2349,6 @@ public function customRegistration(Request $require){
     }
 
 
-
-//test purpose 
-public function delete($id){	
-  
-    DB::table('users')->where('Adminid',$id)->delete();
-    return redirect("/post/showdata");
- 
-  }
-
-public function single_data_update(Request $require, $id){
-
-     $date['name']=$require->Name;
-    $date['email']=$require->email;
-    DB::table('users')->where('id',$id)->update($date);
-    return redirect("/post/showdata"); 
-    
-  }
-
-public function single_data_show_update($id){
-    $data['posts']=DB::table('users')->where('Adminid',$id)->get();
-    return view('post/update',$data);
-  }
-
-public function single_data_show($id){
-    $data['posts']=DB::table('users')->where('Adminid',$id)->get();
-    return view('post/show',$data);
-  }
-
-public function Index(Request $require){
-          $date['name']=$require->name;
-         $date['email']=$require->email;    
-        $date['password']=Hash::make($require->password);
-        
-        
-    
-  try {
-            DB::table('users')->insert($date);          
-            return redirect("/post/showdata");
-            
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-            return 'Duplicate Entry';
-              }
-          }
-    }
- 
-public function option_show(){
-    $data['posts']=DB::table('sub_sub_catgory_info')->get();
-    return view('post/show',$data);
-  }
-
-public function datashow(){
-
-    $data['posts']=DB::table('users')->get();
-    return view('post/index',$data);
- 
-  }
-   
-
- 
-     
-     
- // test purpose but main projcet reletive        
-public function systemInfo(Request $req){
-            $dates['company_Id']=$req->company_Id;
-            $dates['company_Name']=$req->company_Name;
-            $dates['date']=$req->date;
-            DB::table('system_info')->insert($dates);          
-            return redirect("/productInfo");
-	}
-  
-
-	
-	
 	
 //this all page show with date pass	
 		
@@ -1015,26 +2393,22 @@ public function productInfo(){
     		}else{return view('login');}
 	}
 		
-public function productInfo_search(Request $request){
+// public function productInfo_search(Request $request){
     	
     	
-    	 if(Auth::check()){	
-    		   $data = DB::table('catgory_info')->get();
-    		$product = DB::table('product_info')->where('Barcode', $request->search)->get();	
-         //  return view('deshboard.product_info')->with('data', $data)->with('product', $product);		
-        echo($product);
-    		}else{return view('login');}
+//     	 if(Auth::check()){	
+//     		   $data = DB::table('catgory_info')->get();
+//     		$product = DB::table('product_info')->where('Barcode', $request->search)->get();	
+//          //  return view('deshboard.product_info')->with('data', $data)->with('product', $product);		
+//        // echo($product);
+//     		}else{return view('login');}
     	
     	
-	}
+// 	}
 		
 		
-				
+
 public function action(Request $request){
-		
-//	$data = DB::table('catgory_info')->get();
-	
-	
 	if(Auth::check()){
 	
 	 $id = Auth::user()->Shop_cat_id;
@@ -1068,15 +2442,23 @@ public function action(Request $request){
        foreach($data as $row)
        {
        //	$actual_link = "https://$_SERVER[HTTP_HOST]/product/";
+
+      
+
+       if(strval($row->Weight)=='0'){
+         $showproduct=$row->Product_name;
+       }else{
+         $showproduct=$row->Product_name."". $row->Weight;
+       }
+
         $output .= '
         <tr>
-      
-       
          <td>'.$row->Product_ID.'</td>
          <td>'.$row->Barcode.'</td>
-         <td>'.$row->Product_name."".$row->Weight.'</td>
+         <td>'.$showproduct.'</td>
         </tr>
         ';
+
        }
       }
       else
@@ -1107,12 +2489,67 @@ public function action(Request $request){
 
 	}
 
-}
+public function stockchack(){
+		
+  //	$data = DB::table('catgory_info')->get();
+    
+    
+    if(Auth::check()){
+    
+    // $id = Auth::user()->Shop_cat_id;
+     $output = '';
+      $ShopID = Auth::user()->ShopID;
+      $addID = Auth::user()->id;
+      $datee=date("Y-m-d");
+      // $tk_show=DB::table('profit_datails')->where('Date', $datee)->get();->where('Product_add_user_id', $datee)
+      $data = DB::table('stock_info')->where('Outlet_Id', $ShopID)->where('Product_add_user_id', $addID)->where('Product_show_by_admin', 0)->orderBy('id', 'desc')->get();
+      $total_row = $data->count();
+      
 
+        if($total_row > 0)
+        {
+         foreach($data as $row)
+         {
 
-/*
- 
-*/
+         if(strval($row->Weight)=='0'){
+           $showproduct=$row->Product_name;
+         }else{
+           $showproduct=$row->Product_name."". $row->Weight;
+         }
+
+        //  if($row->Product_show_by_admin==0){
+          $message=$row->Product_load_numer*$row->Purches_Price;
+          $ddd='<input type="checkbox" id="myChecka" value="'. $row->Barcode.'-'.$row->Product_load_numer.'-'.$row->Purches_Price.'">';
+
+          $output.= '
+          <tr>
+          <td><span onclick="slectted()">'.$showproduct.'</span></td>
+          <td>'.$row->Product_load_numer.'</td>
+          <td>'.$row->Purches_Price.'</td>
+          <td>'.$message.'</td>
+          <td>'.$ddd.'</td>
+         </tr>
+         ';
+         //  }else{
+         // $message='<span style=" color:green; font-weight:bold;">Sent</span>';
+         // $ddd='<input type="checkbox" hidden>';
+         //  }
+         //$ddd='<input type="checkbox" id="myChecka" value="5">';
+       
+         }
+        }
+        else
+        { 
+          $output ='<tr><td align="center" colspan="5">No Data Found</td></tr>';
+        }
+        $data = array('table_data'  =>$output,'total_data'  => $total_row);
+        echo json_encode($data);
+   
+      }
+    }
+  
+  }
+  
 
 
 

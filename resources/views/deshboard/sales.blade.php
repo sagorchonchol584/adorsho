@@ -66,7 +66,7 @@
  position: absolute;
  top:0;
  left:0;
- center:0;
+
  width: 100%;
  height: 100%;
  background-color:hsla(0,0%,0%,0.0);
@@ -87,12 +87,12 @@
 	border: none;
 }
 
-
+/*
 @keyframes fadeIn {
 	
 	0% {
 		
-		scale(.7);
+		scale(0.7);
 		opacity: 0;
 	}
 	45% {
@@ -102,14 +102,16 @@
 	}
 	80% {
 	
-		scale(.95);
+		scale(0.95);
 	}
 	100% {
 		
 		scale(1);
 	}     
   
+ 
 }
+   */
 	.exitdd{
 		height: 50px;
 		width: 100%;
@@ -184,7 +186,7 @@ top:20%;
   <tbody>
     <tr>
       <td>Total price :</td> 
-      <td><span id="totals""></span></td>
+      <td><span id="totals"></span></td>
     </tr>
     <tr id="trs">
       <td >Discount : 
@@ -230,7 +232,6 @@ top:20%;
  
 <div class="box" id="boxtwo">
  <div class="maindailoboax">
- 
   <div class="exitdd">
   	<div class="gggg">
   	<button class="ddd"  onclick="failexit()"><span style="color: white">X</span></button>
@@ -282,49 +283,68 @@ top:20%;
 
 
 <style>
-	.purchh{
-		height: 350px;
-		width: 100%;
 	
-	}
-	
-	
-
+  .boxr {
+  height: 500px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+.popoo{
+    height: 80px;
+    width: 100%;
+    background-color:  #e9e9e9;
+  }
+ .purchestwosss{
+  height: 410px;
+  width: 100%;
+  overflow-y: scroll;
+ }
 </style>
 
-<div class="box" id="purches">
- <div class="purchestwo">
-
+<div class="boxr" id="purches">
+ 
   <div class="exitdd">
-  	<div class="gggg" ">
-  	
-  	<button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
-   </div>
+  	<div class="gggg">
+  	 <button class="ddd" onclick="exittwo()"><span style="color: white">X</span></button>
+    </div>
   </div>
   
-    <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
-<div class="purchh table-wrapper-scroll-y my-custom-scrollbar">
+  <span style="color: black; font-size: 16px; font-weight: 500;">**Purches list**</span>
 
-<table class="table table-striped">
+  <div class="purchestwosss">
+  
+  <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Qty</th>
       <th scope="col">Price</th>
+      <th scope="col">Total</th>
     </tr>
   </thead>
   <tbody id="purschssss">
-  
-   
-   
    
   </tbody>
 </table>
 
-
 </div>
-
+<div class="popoo">
+<div class="col-6 h-80 text-md-end p-4">
+  <span id="discoutchack" style="color: black; font-size: 20px; font-weight: 500;">Discount:8%</span>
+</div>
+<div class="col-6  h-80 text-md-end p-4 color: red;">
+<span id="detailschack" style="color: black; font-size: 20px; font-weight: 500;">Total:38100 TK</span>
+</div>
 </div>
 </div>
 
@@ -355,7 +375,7 @@ top:20%;
 		height: 80px;
 		width: 100%;
 	  background: #FFFFFF;
-	 // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 	}
 	
 	.top_breadcone{
@@ -370,6 +390,7 @@ top:20%;
 		width:500px;
 		float: left;
 		padding-left:8px;	
+  
 		
 	}
 	
@@ -511,13 +532,8 @@ display: block;
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
 		<button  id="ajax" class="btn btn-primary" onclick="continus()">Continuous</button>
-	
-		
 	</div>
-	
 </div>
-
-
 </div>
 </div>
 </div>
@@ -531,15 +547,16 @@ display: block;
 <div class="card saleslist table-wrapper-scroll-y my-custom-scrollbar">		
 <div class="p-2 ">	
 <table class="table table-striped">
-  <thead>
-    <tr>
+  <thead  style="text-align: right">
+    <tr >
       <th scope="col">#</th>
-      <th scope="col">BarCode</th>
+      <th scope="col">Sales Man</th>
       <th scope="col">Date</th>
+    <!--  <th scope="col">Discount</th> -->
       <th scope="col">Sales</th>
     </tr>
   </thead>
-  <tbody id="proftgg">
+  <tbody id="proftgg" style="text-align: right">
    
   </tbody>
 </table>
@@ -548,6 +565,10 @@ display: block;
   
   
 <script>
+
+var detailschack = document.getElementById('detailschack');
+var discoutchack = document.getElementById('discoutchack');
+
 
 tessst();
 
@@ -565,66 +586,74 @@ var purschssss = document.getElementById('purschssss');
     $.ajax({
     type: 'GET', 
     url: '/profitdatails/'+ddd,
-    success: function (data) {
-    	
- 
-      //  console.log("date add refurn value");
-       //  console.log(data);
-        var obj = JSON.parse(data);
-     for(var key in obj){
+    success: function (data, status) {
+    
+    var getdata = JSON.parse(data);
+    
+    
+    // this total show 
+    var objone = getdata.profit_with_discout;
+    for(var key in objone){
+   //  console.log(objone[key].Net_Sale);
+
+
+     detailschack.innerHTML="Total: "+objone[key].Total_sales+"Tk";
+     discoutchack.innerHTML="Discount: "+objone[key].Discount_type;
+     }
+
+  // this details show 
+
+  var obj = getdata.profitdatailsfun;
+
+  for(var key in obj){ 	
+  let nametrr = document.createElement('tr');
      	
-     	// console.log("get data "+ddd);
-     	
-let nametrr = document.createElement('tr');
-     	
-    let siretdr = document.createElement('td');
+  let siretdr = document.createElement('td');
 	let sirespanr = document.createElement('span');
 	sirespanr.innerHTML=key;
 	siretdr.appendChild(sirespanr);
 	nametrr.appendChild(siretdr);
 	
-     	
-     	
-     	
-     	
-     	
-	
+ 
 	let nametdr = document.createElement('td');
-	  let ar = document.createElement('a');
-	  ar.className="link"
-	  var dddr=obj[key].Recive_num;
-        ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
+	let ar = document.createElement('a');
+	ar.className="link"
+	var dddr=obj[key].Recive_num;
+ // ar.href = "{{route('profitdatailsname',"")}}/"+dddr;
 	let namespanr = document.createElement('span');
 	namespanr.innerHTML=obj[key].product_Name;
 	ar.appendChild(namespanr);
-	
 	nametdr.appendChild(ar);
 	nametrr.appendChild(nametdr);	
-	
-	
-	
 
 	let datetdr = document.createElement('td');
 	let datespanr = document.createElement('span');
-	datespanr.innerHTML=obj[key].product_unite;;
+	datespanr.innerHTML=obj[key].product_unite;
 	datetdr.appendChild(datespanr);
 	nametrr.appendChild(datetdr);
 	
-	
-	
-	
 	let saletdr = document.createElement('td');
+  saletdr.style.textAlign="right";
 	let salesspanr = document.createElement('span');
 	salesspanr.innerHTML=obj[key].Sales_price+" tk";
 	saletdr.appendChild(salesspanr);
 	nametrr.appendChild(saletdr);
 
-	purschssss.appendChild(nametrr);	
-	
-	
-	
-     
+	let totals = document.createElement('td');
+  totals.style.textAlign="right";
+	let totalsapn = document.createElement('span');
+	totalsapn.innerHTML=parseInt(obj[key].Sales_price)*parseInt(obj[key].product_unite)+" tk";
+	totals.appendChild(totalsapn);
+	nametrr.appendChild(totals);
+
+
+	purschssss.appendChild(nametrr);	 
+
+
+ 
+
 		}
+ 
     },
     error: function() { 
 
@@ -651,38 +680,37 @@ let nametrr = document.createElement('tr');
 
 
 function tessst(){
+
 	var proft = document.getElementById('proftgg');
 	var name,dates,salest;
+  
     $.ajax({
     type: 'GET', 
     url: '/profitshow',
     success: function (data) {
-    	
- 
-        console.log("date add refurn value");
+     // console.log("date add refurn value");
         // console.log(data);
-        var obj = JSON.parse(data);
+     var obj = JSON.parse(data);
      for(var key in obj){
      	
  let nametr = document.createElement('tr');
      	
-    let siretd = document.createElement('td');
+  let siretd = document.createElement('td');
 	let sirespan = document.createElement('span');
 	sirespan.innerHTML=key;
 	siretd.appendChild(sirespan);
 	nametr.appendChild(siretd);
 	
      	
-     	
-	
+    
 	let nametd = document.createElement('td');
 	let buttons = document.createElement('button');
-    var ddd=obj[key].Recive_number;
+  var ddd=obj[key].Recive_number;
 
-      buttons.innerHTML=obj[key].Names;
-	  buttons.className="link";
-	  buttons.id=ddd;
-	  buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
+  buttons.innerHTML=obj[key].Starf_Name;
+	buttons.className="link";
+	buttons.id=ddd;
+	buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
 	
 	nametd.appendChild(buttons);
 	nametr.appendChild(nametd);	
@@ -695,8 +723,17 @@ function tessst(){
 	datespan.innerHTML=obj[key].Date;;
 	datetd.appendChild(datespan);
 	nametr.appendChild(datetd);
+
+
+
+/*
+  let disc = document.createElement('td');
+	let discspan = document.createElement('span');
+	discspan.innerHTML=obj[key].Discount_type;
+	disc.appendChild(discspan);
+	nametr.appendChild(disc);
 	
-	
+*/
 	
 	
 	let saletd = document.createElement('td');
@@ -760,6 +797,7 @@ var checkboxpises = document.getElementById('checkboxpises');
 
 
 
+
 let cart = {};
 var addd;
 let count = 0;
@@ -773,6 +811,7 @@ let disconttk=0;
 let disconttkPayment=0;
 let nettkbal=0;
 let totaldiscout=0;
+let discount_cat;
 
 
 if (localStorage.getItem("count")) {
@@ -814,29 +853,29 @@ cheackbox();
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 
   		
-function inputfunction(){    
+// function inputfunction(){    
 	
-console.log("working");
+// console.log("working");
 
-const arrayLike = {
-  "a": "a",
-  "d": "b",
-  length: 2,
-};
+// const arrayLike = {
+//   "a": "a",
+//   "d": "b",
+//   length: 2,
+// };
 	
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-            url: 'hhhh',
-            type: 'POST',
-            data: {_token: CSRF_TOKEN, hello:arrayLike},
-            dataType: 'JSON',
-            success: function (data) { 
-              //  $(".writeinfo").append(data.catagory_name); 
-              //	var obj = JSON.parse(data);
-               console.log(data);
-            }
-        });   	
-   }
+// var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+//     $.ajax({
+//             url: 'hhhh',
+//             type: 'POST',
+//             data: {_token: CSRF_TOKEN, hello:arrayLike},
+//             dataType: 'JSON',
+//             success: function (data) { 
+//               //  $(".writeinfo").append(data.catagory_name); 
+//               //	var obj = JSON.parse(data);
+//                console.log(data);
+//             }
+//         });   	
+//    }
        
 
 
@@ -847,7 +886,7 @@ var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
  	if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- 	console.log("true");
+ //	console.log("true");
  	}else{
  		customername.value="";
         customername.disabled = false;
@@ -863,7 +902,7 @@ function cheackbox(){
 if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- 	console.log("true");
+ 	//console.log("true");
  	}else{
  		customername.value="";
         customername.disabled = false;
@@ -879,11 +918,11 @@ function profitshow(){
     url: '/profitshow',
     success: function (data) {
     	
-        console.log("date add refurn value");
+       // console.log("date add refurn value");
         // console.log(data);
         var obj = JSON.parse(data);
      for(var key in obj){
-		console.log(obj[key].Recive_number);
+		//console.log(obj[key].Recive_number);
      
 		}
     },
@@ -932,22 +971,15 @@ disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
 
 
 function printdatashow(){
-		
-		
-	//console.log(netss.innerText);
-		
-		
- let printbody = document.getElementById("printsbody");
+let printbody = document.getElementById("printsbody");
 let printtrtwo = document.createElement('tr');
 let printtrtthree = document.createElement('tr');
 let nettr = document.createElement('tr');
    
-    
+
     for (let id in cart) {
     let item = cart[id];
-    
     let printtr = document.createElement('tr')
-   
    
     let printtdname = document.createElement("td");
     const newBussname = document.createElement('span');
@@ -955,18 +987,11 @@ let nettr = document.createElement('tr');
      printtdname.appendChild(newBussname);
      printtr.appendChild(printtdname); 
    
-   
-   
-   
     let printtd = document.createElement("td");
     const newBuss = document.createElement('span');
      newBuss.textContent =item.qty; 
      printtd.appendChild(newBuss);
      printtr.appendChild(printtd);  
-     
-     
-    
-     
      
     let printtdtk = document.createElement("td");
     const newBusstk = document.createElement('span');
@@ -974,16 +999,11 @@ let nettr = document.createElement('tr');
      printtdtk.appendChild(newBusstk);
      printtr.appendChild(printtdtk);  
       
-      
     let printtdnet = document.createElement("td");
     const newBussnet = document.createElement('span');
      newBussnet.textContent =item.qty*item.price+" Tk"; 
      printtdnet.appendChild(newBussnet);
      printtr.appendChild(printtdnet);  
-     
-     
-    
-     
      printbody.appendChild(printtr);
 	}
 
@@ -1102,7 +1122,7 @@ let nettr = document.createElement('tr');
      
      
      let nettdfour = document.createElement("td");
-      nettdfour.className="tatols"
+     nettdfour.className="tatols"
     const netsapnfour = document.createElement('span');
      netsapnfour.textContent =nettkbal+" Tk"; 
      nettdfour.appendChild(netsapnfour);
@@ -1149,9 +1169,7 @@ let printtrtwo = document.createElement('tr')
     const newBusstk = document.createElement('span');
      newBusstk.textContent =price; 
      printtdtk.appendChild(newBusstk);
-     printtr.appendChild(printtdtk);  
-     
-       
+     printtr.appendChild(printtdtk);    
      printbody.appendChild(printtr);
 		
 }
@@ -1214,6 +1232,7 @@ function totalAc(){
   	}else{
   		let g=Math.round(tatt);
   		totaldiscout=Math.round(dc);
+      discount_cat=disconttk+'%';
   		netss.textContent=g+"Tk";
   		nettkbal=g;
   		correctgg('');
@@ -1231,6 +1250,7 @@ function totalAc(){
   		netss.textContent=tatss+"Tk";
   		nettkbal=tatss;
   		totaldiscout=d;
+      discount_cat=s+'TK';
   		correctgg('');
   	}
   }
@@ -1312,7 +1332,7 @@ $(document).ready(function (e) {
 			}else{
 				orrning("Not Found Data","Plase search Again");
 			}
-			console.log("not found");
+			//console.log("not found");
 			
 		}else{
 					
@@ -1322,11 +1342,11 @@ $(document).ready(function (e) {
 		produ_id=obj[key].Barcode;
 		product_tittle=obj[key].Weight;
 		Image=obj[key].Image; 
-	    Sales_Price=obj[key].Sales_Price;  
-	    pieces=obj[key].pieces; 
-	    purches_Price=obj[key].Purches_Price; 
+	  Sales_Price=obj[key].Sales_Price;  
+	  pieces=obj[key].pieces; 
+	  purches_Price=obj[key].Purches_Price; 
       // console.log(obj[key].Product_name);
-        add(Sales_Price,Product_name,produ_id,Image,product_tittle,purches_Price);
+    add(Sales_Price,Product_name,produ_id,Image,product_tittle,purches_Price);
      
 		}	
 		}	
@@ -1355,7 +1375,7 @@ function check(id,qty){
     type: 'GET', //THIS NEEDS TO BE GET
     url: '/heo/'+id+"/"+qty,
     success: function (data) {
-        console.log("date add refurn value");  
+     //   console.log("date add refurn value");  
        
        // $("#data").append(data);
     },
@@ -1372,8 +1392,8 @@ function purcheschack(id,qty,num){
     url: '/purchers/'+id+"/"+qty+"/"+num,
     success: function (data) {
     	
-        console.log("date add refurn value");
-         console.log(data);
+     //   console.log("date add refurn value");
+    //     console.log(data);
        // $("#data").append(data);
     },
     error: function() { 
@@ -1382,29 +1402,29 @@ function purcheschack(id,qty,num){
 });
     }
     
-    
-    
-    
-    
+ 
+function profit_data_load(discat,dis,sales,amount,num,name){
+	
+$.ajaxSetup({
+          headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+       });
 
-    
-function profit_data_load(dis,sales,amount,num,name){
-	
-	
-	
-    $.ajax({
-    type: 'GET', //THIS NEEDS TO BE GET
-    url: '/profiturl/'+dis+"/"+sales+"/"+amount+"/"+num+"/"+name,
-    success: function (data) {
-    	
-        console.log("date add refurn value");
-         console.log(data);
-       // $("#data").append(data);
-    },
-    error: function() { 
-        // console.log(data);
-    }
-});
+
+$.ajax({
+   type: 'POST', //THIS NEEDS TO BE GET
+   url: '/profiturl/',
+   data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
+   success: function (data) {
+     // console.log(data); 
+   
+   },
+   error: function() { 
+   }
+  });
+
+
     }
 
 
@@ -1442,7 +1462,7 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 	
 	
 	
-	profit_data_load(totaldiscout,nettkbal,profit,num,nameofcoustmor);
+	profit_data_load(discount_cat,totaldiscout,nettkbal,profit,num,nameofcoustmor);
 	
 	for(var key in cart){
 		purcheschack(key,cart[key].qty,num);
@@ -1451,7 +1471,12 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 		   }	
 		   
   //  console.log("uuu"+cart);
-	localStorage.clear();
+//	localStorage.clear();
+  localStorage.removeItem("cart");
+  localStorage.removeItem("sum");
+  localStorage.removeItem("profit");
+  localStorage.removeItem("count");
+
 	document.getElementById("sum").textContent ="0 Tk";
     document.getElementById("count").textContent = "Total Product: 0";
     continubtnone.disabled=true;
@@ -1480,7 +1505,7 @@ function failexit(){
 	document.getElementById('light').style.display='none';
 	document.getElementById('fade').style.display='none';
 	
-	console.log("failexit");
+	//console.log("failexit");
     disinput.value="0";
      location.reload();
    
@@ -1495,11 +1520,20 @@ function add_data(){
 		   }	
 		   
   //  console.log("uuu"+cart);
-	localStorage.clear();
+	localStorage.removeItem("cart");
+  localStorage.removeItem("sum");
+  localStorage.removeItem("profit");
+  localStorage.removeItem("count");
+
+  // localStorage.setItem("cart", JSON.stringify(cart));
+  //  localStorage.setItem("sum", sum); 
+  //  localStorage.setItem("profit", profit);
+  //  localStorage.setItem("count", count);
+
 	document.getElementById("sum").textContent ="0 Tk";
-    document.getElementById("count").textContent = "Total Product: 0";
-    continubtnone.disabled=true;
-    clearbtn.disabled=true;
+  document.getElementById("count").textContent = "Total Product: 0";
+  continubtnone.disabled=true;
+  clearbtn.disabled=true;
    // 
    
 }
@@ -1528,7 +1562,7 @@ let printbody = document.getElementById("printsbody");
     sum += price;
     profit+=prod;
     // console.log("looog"+cart);
-	 console.log("this is single profit"+profit);
+	// console.log("this is single profit"+profit);
 if (ids in cart) {
 	
     cart[ids].qty++;
@@ -1616,7 +1650,7 @@ if (ids in cart) {
 	 
      newButton.addEventListener("click", function(){
       some_function(ids,price);
-      console.log("clear alll");
+     // console.log("clear alll");
      }, false);
 	 
 	 
@@ -1670,6 +1704,7 @@ let printtrtwo = document.createElement('tr')
    
    
     localStorage.setItem("cart", JSON.stringify(cart));
+    
    // console.log(cart);
     
     updateCart();
@@ -1683,7 +1718,7 @@ function updateCart() {
    localStorage.setItem("sum", sum); 
    localStorage.setItem("profit", profit);
    localStorage.setItem("count", count);
-   console.log("this is profit total"+profit);
+  // console.log("this is profit total"+profit);
 }
 
 
@@ -1698,7 +1733,7 @@ function allfuncaliondata(){
     for (let id in cart) {
     let item = cart[id];
     let tr = document.createElement('tr')
-	 tr.id = "n"+id;
+	  tr.id = "n"+id;
 	
 	
 	
@@ -1791,7 +1826,7 @@ function some_function(id,price){
 	 continubtnone.disabled=false;
 	 clearbtn.disabled=false;
 	}
-	console.log("hello mewe");
+	//console.log("hello mewe");
     updateCart();
     check(id,a);
     popups();
