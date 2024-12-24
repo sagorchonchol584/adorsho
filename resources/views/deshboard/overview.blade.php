@@ -126,36 +126,228 @@
  </div>
 </div>
  
- 
+ <style>
+   .barchart{
+      width: 99%;
+      height: 400px;
+      text-align: center;
+   }
+ </style>
 
 <div class="row">
-	<div class="col-9 h-500">	
-		@if(session()->has('success'))	
-		<h2>{{session('success')}}</h2>
-		@endif
-		
-		@auth
-	
-		{{auth()->user()}}
-		@endauth
-	
-		
-	</div>
-	<div class="col-3 h-500">ii</div>
+	<div class="col-9 h-500 border">	
+   <div class="row">
+	<div class="col-6 h-500 border">	
+      <div class="barchart">
+      <canvas id="myChart" style="width:100%; max-width:700px; height: 200px;"></canvas>
+      </div>
+  
+
+   </div>
+	<div class="col-6 h-500 border">
+   <div class="barchart">
+      <canvas id="myChrt" style="width:100%; max-width:500px"></canvas>
+      </div>
+   </div>
 </div>
+
+
+   </div>
+	<div class="col-3 h-500 border">
+   <canvas id="myChrweb"  style="width:100%;max-width:700px"></canvas>
+
+   </div>
+</div>
+
+
+
+
 
 
 <div class="row">
-	<div class="col-4 h-250">ii</div>
-	<div class="col-4 h-250">ii</div>
-	<div class="col-4 h-250">ii</div>
+	<div class="col-9 h-500 border">	
+   <div class="row">
+	<div class="col-6 h-500 border">	
+      <div class="barchart">
+   
+      
+
+      </div>
+  
+
+   </div>
+	<div class="col-6 h-500 border">
+   <div class="barchart">
+    
+   
+
+
+      </div>
+   </div>
 </div>
+
+
+   </div>
+	<div class="col-3 h-500 border">
+  
+   
+   
+
+   </div>
+</div>
+
+
+
+
+
+
 </div>
 
 
 </div>
+
 
 <script>
+
+
+let ctxs = document.getElementById('myChart');
+let ctxsd = document.getElementById('myChrt');
+let myChrweb = document.getElementById('myChrweb');
+let myChart;
+let Jsondata;
+ 
+const datadd = [
+   { "month": "Ian", "income": 1210 },
+    { "month": "Feb", "income": 1920},
+    { "month": "mar", "income": 830 },
+    { "month": "Apr", "income": 1300 },
+    { "month": "Mai", "income": 990 }
+];
+ 
+createChart(datadd, 'bar',ctxs);
+createChart(datadd, 'doughnut',ctxsd);
+createChartweb(datadd, 'radar',myChrweb);
+
+
+function createChart(data, type,ctx){
+   myChart = new Chart(ctx, { 
+      type: type, 
+      data: {
+         labels: data.map(row => row.month),  
+         datasets: [{
+            label: '# Total sale some months',
+            data: data.map(row => row.income),
+            borderWidth: 1,
+            // backgroundColor: [
+            //    'rgba(255, 99, 132, 0.2)',
+            //    'rgba(255, 159, 64, 0.2)',
+            //    'rgba(255, 205, 86, 0.2)',
+            //    'rgba(75, 192, 192, 0.2)',
+            //    'rgba(54, 162, 235, 0.2)',
+            //    'rgba(153, 102, 255, 0.2)',
+            //    'rgba(201, 203, 207, 0.2)'
+            //  ],
+            //  borderColor: [
+            //    'rgb(255, 99, 132)',
+            //    'rgb(255, 159, 64)',
+            //    'rgb(255, 205, 86)',
+            //    'rgb(75, 192, 192)',
+            //    'rgb(54, 162, 235)',
+            //    'rgb(153, 102, 255)',
+            //    'rgb(201, 203, 207)'
+            //  ],
+
+
+       backgroundColor: [
+               '#61bc84',
+               '#8FBC8F',
+               '#c6ffe6',
+               '#FFAD3F',
+               '#e0e0e0'
+             ],
+             borderColor: [
+               '#2E8B57',
+               '#8FBC8F',
+               '#c6ffe6',
+               '#FFAD3F',
+               '#e0e0e0'
+             ],
+
+
+        }]
+
+      },
+      options: {
+         scales: {
+            y: {
+               beginAtZero: true
+            }
+         },     
+         responsive: true,
+         maintainAspectRatio: false,
+      }
+   });
+}
+ 
+
+function createChartweb(data, type,ctx){
+   myChart = new Chart(ctx, { 
+      type: type, 
+      data: {
+         labels: data.map(row => row.month),  
+         datasets: [{
+            label: '# of Income',
+            data: data.map(row => row.income),
+            borderWidth: 1,
+            backgroundColor: [
+               'rgba(255, 99, 132, 0.2)',
+
+             ],
+             borderColor: [
+               'rgb(255, 99, 132)',
+             ],
+
+        }]
+
+      },
+      options: {
+         scales: {
+            y: {
+               beginAtZero: true
+            }
+         },     
+         responsive: true,
+         maintainAspectRatio: false,
+      }
+   });
+}
+ 
+
+function setChartType(chartType){
+   myChart.destroy();
+   createChart(Jsondata, chartType);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	var takss=document.getElementById('takas');
 	var product=document.getElementById('product');
 	var salesproduct=document.getElementById('salesproduct');

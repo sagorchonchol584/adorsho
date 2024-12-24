@@ -20,9 +20,7 @@ use App\Http\Controllers\Postcontroller;
  
  
  
-Route::get('/report', [Postcontroller::class,'report'])->name('report');
-
-
+//Route::get('/report', [Postcontroller::class,'report'])->name('report');
 
 
 
@@ -36,44 +34,32 @@ Route::get('/supplierlist/{id}', [Postcontroller::class,'suplier_list']);
 Route::get('/supplierstates', [Postcontroller::class,'suplierstate'])->name("supplierstatesrounte");
 
 
-Route::get('/cashflowstates', [Postcontroller::class,'cashflowstates'])->name("cashflowstatesroute");
-
-
+//Route::get('/cashflowstates', [Postcontroller::class,'cashflowstates'])->name("cashflowstatesroute");
 //Route::get('/suppliar_info_deshboard', [Postcontroller::class, 'suppliar_all_info_api'])->name('sideshboard');
 
 Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
 
+//---this route is when show_sent_tk_details  ----route:  stockloadfinally------------
+Route::get('/show_sent_tk', [Postcontroller::class,'show_sent_tk_details'])->name("show_sent_route");
 
 
-
-
-
+//---this route is when data_chack_to_sender_data  ----route:  stockloadfinally------------
+Route::get('/data_chack_to_sender_data', [Postcontroller::class,'data_chack_to_sender_data_fun']);
 
 
 //---this route is when admin check expence cost then update  ----route:  stockloadfinally------------
 Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
 
 
-//---this route  expence cost uploaded   ----route:  stockloadfinally------------
-Route::post('/expenceadd', [Postcontroller::class,'expence_add_func']);
-
+//Route::post('/expenceadd', [Postcontroller::class,'expence_add_func']);
 //---this route  expence cost update   ----route:  stockloadfinally------------
-Route::post('/expence_update', [Postcontroller::class,'expence_update_func']);
-
-
+//Route::post('/expence_update', [Postcontroller::class,'expence_update_func']);
 //---this route  expence cost uploaded   ----route:  stockloadfinally------------
-Route::get('/get_data_to_update/{id}', [Postcontroller::class,'get_data_to_update_func']);
-
-
-
+//Route::get('/get_data_to_update/{id}', [Postcontroller::class,'get_data_to_update_func']);
 //---this route  expence cost delete   ----route:  stockloadfinally------------
-Route::get('/get_data_to_delete/{id}', [Postcontroller::class,'get_data_to_delete_func']);
-
-
-
-
+//Route::get('/get_data_to_delete/{id}', [Postcontroller::class,'get_data_to_delete_func']);
 //---this route  expence cost sent cash   ----route:  stockloadfinally------------
-Route::get('/get_data_to_cash_sent/{id}', [Postcontroller::class,'get_data_to_cash_sent_func']);
+//Route::get('/get_data_to_cash_sent/{id}', [Postcontroller::class,'get_data_to_cash_sent_func']);
 
 
 
@@ -95,9 +81,9 @@ Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_
 
 
 
-Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
+//Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
 Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
-Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
+//Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
 
 
 
@@ -106,17 +92,18 @@ Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
 
 
 // test perpos user route
-Route::get('/profitshow', [Postcontroller::class,'profit_show']);
+//Route::get('/profitshow', [Postcontroller::class,'profit_show']);
 
 
 //--------this route is deshboard show all info like sales today, upload info ent------------
-Route::get('/deshboard_all_info_get_data', [Postcontroller::class,'deshboard_all_info_get_data_func']);
+//Route::get('/deshboard_all_info_get_data', [Postcontroller::class,'deshboard_all_info_get_data_func']);
+//Route::get('/profitdatails/{id}', [Postcontroller::class,'profitdatailsfun'])->name('profitdatailsname');
 
 
 
-Route::get('/profitdatails/{id}', [Postcontroller::class,'profitdatailsfun'])->name('profitdatailsname');
-Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
-Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
+//Route::get('/heo/{id}/{qty}', [Postcontroller::class,'removedate'])->name('heess');
+
+//Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
 
 //--------------this route is sales  profite data insert table profit_datails------------
 Route::post('/profiturl', [Postcontroller::class,'profit_add'])->name('profiturls');
@@ -125,16 +112,19 @@ Route::post('/profiturl', [Postcontroller::class,'profit_add'])->name('profiturl
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
-Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
-Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
-Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
+
+
+//Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
+//Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
+
+//Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
 Route::view('/meagge','frontend.message')->name('reg');
 //Route::view('/home','frontend.deshboard')->name('home');
 
 
 //--this route is login users use time show like how much time loging  user for login id--
 Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
-Route::get('/tests', [Postcontroller::class,'testssss'])->name('tests');
+//Route::get('/tests', [Postcontroller::class,'testssss'])->name('tests');
 
 
 
@@ -169,14 +159,14 @@ Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAg
 //user create or regstition  function
 Route::get('/createnewprofile', [Postcontroller::class,'createnewprofile'])->name('createnewprofile');
 Route::get('/productsupplier', [Postcontroller::class,'product_supplier'])->name('product_supplier_page');
-Route::get('/cashflow', [Postcontroller::class,'cashflowfun'])->name('cashflowfun');
+//Route::get('/cashflow', [Postcontroller::class,'cashflowfun'])->name('cashflowfun');
 Route::post('/registaion',[Postcontroller::class,'customRegistration'])->name('regdata');
 Route::post('/employecreate',[Postcontroller::class,'employeadd'])->name('Employee');
 
 
 
 //login function
-Route::get('/login', [Postcontroller::class,'login'])->name('login');
+ Route::get('/login', [Postcontroller::class,'login'])->name('login');
 Route::post('/loginpage',[Postcontroller::class,'loginPageFunc'])->name('loginpage');
 Route::get('/loginout',[Postcontroller::class,'logout'])->name('loginout');
 
@@ -184,10 +174,13 @@ Route::get('/loginout',[Postcontroller::class,'logout'])->name('loginout');
 
 
 //page system  function
-Route::get('/sales', [Postcontroller::class,'sales'])->name('sales');
-Route::get('/home', [Postcontroller::class,'home'])->name('home');
+//Route::get('/sales', [Postcontroller::class,'sales'])->name('sales');
+//Route::get('/home', [Postcontroller::class,'home'])->name('home');
+
+
+
 Route::get('/oder', [Postcontroller::class,'oder'])->name('oder');
-Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView');
+Route::get('/profileView', [Postcontroller::class,'profileView'])->name('profileView')->middleware('auth');
 Route::get('/chonchol',[Postcontroller::class,'datasho'])->name('chonchol');
 
 //Route::post('/reverse-me', function (Request $request) {$reversed = strrev($request->input('reverse_this'));return $reversed;});
@@ -229,3 +222,6 @@ Route::post('/customeradd',[Postcontroller::class,'customer_Data_add'])->name("c
   Route::delete('/post/delete/{id}','delete')->name('delete');
 
 });
+require __DIR__.'/deshboardRoute.php';
+require __DIR__.'/SalesRoute.php';
+require __DIR__.'/ManagementRoute.php';

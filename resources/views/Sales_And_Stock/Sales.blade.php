@@ -585,7 +585,7 @@ var purschssss = document.getElementById('purschssss');
 
     $.ajax({
     type: 'GET', 
-    url: '/profitdatails/'+ddd,
+    url: '/profitdatails/'+ddd, //done
     success: function (data, status) {
     
     var getdata = JSON.parse(data);
@@ -686,7 +686,7 @@ function tessst(){
   
     $.ajax({
     type: 'GET', 
-    url: '/profitshow',
+    url: '/profitshow', //done
     success: function (data) {
      // console.log("date add refurn value");
         // console.log(data);
@@ -911,26 +911,26 @@ if(checkboxpises.checked==true){
 }
 
 
-function profitshow(){
-	var Product_name;
-    $.ajax({
-    type: 'GET', 
-    url: '/profitshow',
-    success: function (data) {
+// function profitshow(){
+// 	var Product_name;
+//     $.ajax({
+//     type: 'GET', 
+//     url: '/profitshow',
+//     success: function (data) {
     	
-       // console.log("date add refurn value");
-        // console.log(data);
-        var obj = JSON.parse(data);
-     for(var key in obj){
-		//console.log(obj[key].Recive_number);
+//        // console.log("date add refurn value");
+//         // console.log(data);
+//         var obj = JSON.parse(data);
+//      for(var key in obj){
+// 		//console.log(obj[key].Recive_number);
      
-		}
-    },
-    error: function() { 
+// 		}
+//     },
+//     error: function() { 
 
-    }
-});
-    }
+//     }
+// });
+//     }
 
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length end
@@ -1184,6 +1184,7 @@ function seletfun(){
 	disinput.max="100000";
 	disconttk=0;
 	totalAc();
+  
 	}else{
 		
 	dis=false;
@@ -1312,7 +1313,7 @@ $(document).ready(function (e) {
 	
 		$.ajax({
         type: 'GET',
-        url: 'getsearch/' + pro_bar.value,
+        url: 'getsearch/' + pro_bar.value, //done
  
         beforeSend: function() { 	
          //  hidddenshow();
@@ -1373,7 +1374,7 @@ allfuncaliondata();
 function check(id,qty){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/heo/'+id+"/"+qty,
+    url: '/heo/'+id+"/"+qty,//done
     success: function (data) {
      //   console.log("date add refurn value");  
        
@@ -1389,7 +1390,7 @@ function check(id,qty){
 function purcheschack(id,qty,num){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/purchers/'+id+"/"+qty+"/"+num,
+    url: '/purchers/'+id+"/"+qty+"/"+num,//done
     success: function (data) {
     	
      //   console.log("date add refurn value");
@@ -1414,7 +1415,7 @@ $.ajaxSetup({
 
 $.ajax({
    type: 'POST', //THIS NEEDS TO BE GET
-   url: '/profiturl/',
+   url: '/profiturl/',  //done
    data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
    success: function (data) {
      // console.log(data); 

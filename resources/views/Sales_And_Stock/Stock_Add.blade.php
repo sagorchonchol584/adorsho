@@ -588,7 +588,7 @@ function fetch_customer_data()
  {
   $.ajax({
   method:'GET',
-   url:"{{ route('stock_show_ronter') }}",
+   url:"{{ route('stock_show_ronter') }}",//done
    dataType:'json',
    success:function(data)
    {
@@ -617,7 +617,7 @@ function fetch_customer_data()
 
 		$.ajax({
         type: 'GET',
-        url: 'barcode/' + idddd.value,
+        url: 'barcode/' + idddd.value,//done
 
         beforeSend: function() { 	
            hidddenshow();
@@ -768,7 +768,7 @@ function fetch_customer_data()
 	
 
 		$.ajax({
-        url: "{{route('stockload')}}",
+        url: "{{route('stockload')}}",//done
 		type: "POST",
 		data:  formData,
 		contentType: false,
@@ -1014,7 +1014,7 @@ function data_tranfer_all_data(barcode,id) {
 
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/stockloadlog/'+barcode+"/"+id,
+     url: '/stockloadlog/'+barcode+"/"+id,//done
      success: function (data) {
 		hiddden();
        console.log("date add refurn value"+data); 
@@ -1024,8 +1024,6 @@ function data_tranfer_all_data(barcode,id) {
       //    console.log(data);
      }
     });
-
-
 
 // $.ajaxSetup({
 //             headers: {
@@ -1140,7 +1138,7 @@ function add_data(){
 			 });
 	 $.ajax({
 		 type: 'POST', //THIS NEEDS TO BE GET
-		 url: '/supplierdataload/',
+		 url: '/supplierdataload/',//done
 		 data: {company_name:suppliername.value,name:propriername.value,mobile:phone.value,address:address.value,unite:unites,totaltk:totaltk}, 
 		 success: function (data) {
 			all_barcode_number(data);

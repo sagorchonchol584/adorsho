@@ -146,6 +146,15 @@ position: relative;
 height: 480px;
 overflow: auto;
 }
+
+
+.sentscroll {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+
+
 .table-wrapper-scroll-y {
 display: block;
 }	
@@ -258,7 +267,7 @@ float: right;
 <div class="col-9 h-120 "> 
 <div class="row">
 <div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="totalsales">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Total Sales</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Sales</span></div>
 </div>
 </div>
 </div>
@@ -313,7 +322,21 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="monthy_suppier_exp">00.00 Tk</span></div>
+
+@if(auth()->user()->AdminCat =='Admin')	               		 
+<div class="col-12 h-70 fs-5 fw-bold">
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="extra_monthy_suppier_exp">00.00 Tk</span> </div>
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="monthy_suppier_exp">00.00 Tk</span> </div>
+</div>
+
+@else
+<div class="col-12 h-70 fs-5 fw-bold pt-4">
+<span class="monthy_suppier_exp">00.00 Tk</span> 
+</div>       
+@endif
+
+
+
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Supplier Expences</span></div>
 </div>
 </div>
@@ -411,9 +434,10 @@ float: right;
      @endif
 
 </div>
-<div class="col-5 h-600 card">
+<div class="col-5 h-700 card">
  <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span >Expence List of days</span></div>
  <hr>
+ 
 <div class="table-wrapper-scroll-y my-custom-scrollbartree">
       <table class="table table-hover" id="section1" style=" font-size:18px;">
        <thead>
@@ -458,17 +482,38 @@ float: right;
         </tr>
 
 
-        <tr >
-         <th> </th>
-	    	 <th class="text-right-side">
-          <button id="cashsentbnt" onclick="confrm_cash_sent()" class="btn btn-primary">Sent </button>
-        </th>
-        </tr>
+  
 
-
-    
        </tbody>
       </table>
+      
+      <div class="container">
+  <div class="row">
+    <div class="col text-right-side">
+    <span class="fw-bolder">All list for sent data</span>
+    </div>
+    <div class="col text-right-side">
+    <button id="cashsentbnt" onclick="confrm_cash_sent()" class="btn btn-primary">Sent </button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="table-wrapper-scroll-y sentscroll">
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">Sender Name</th>
+    <th scope="col">Day </th>
+    <th scope="col">Balance</th>
+    <th scope="col">Remark </th>
+    </tr>
+  </thead>
+  <tbody id="sentk">
+  
+  </tbody>
+</table>
+
+</div>
      </div>
      <button >ALL PAYABLE DUE</button>
 </div>
@@ -582,7 +627,7 @@ function expenccostsent(tks,select){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expenceadd/',
+         url: '/expenceadd/',//done
          data: {tk:tks,selectvale:select}, 
          success: function (data) {
             console.log(data); 
@@ -672,7 +717,7 @@ function confrm_expenc_update_data_sent(amountcash,expens){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expence_update/',
+         url: '/expence_update/',//done
          data: {tk:amountcash,selectvale:expens,id:idsss}, 
          success: function (data) {
             console.log(data); 
@@ -770,7 +815,7 @@ function fetch_customer_data()
  {
   $.ajax({
   method:'GET',
-   url:"{{ route('cashflowstatesroute') }}",
+   url:"{{ route('cashflowstatesroute') }}",//done
    dataType:'json',
    success:function(data)
    {
@@ -796,7 +841,9 @@ function fetch_customer_data()
 
     var monthy_expences = data.monthy_expence.toString().split('.');
     monthy_expences[0] = monthy_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
+
+
+  
     var today_expences = data.today_expence_tk.toString().split('.');
     today_expences[0] = today_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -830,18 +877,24 @@ function fetch_customer_data()
     var todaycash = data.cash_crdits.toString().split('.');
     todaycash[0] = todaycash[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     $('.todaycash').html(todaycash.join('.')+" Tk");
-    $('#Cashid').html(todaycash.join('.')+" Tk");
+
+    $('#Cashid').html(todaycash.join('.')+" Tk");    
+
+    $('#sentk').html(data.cash_sent_any_person_log);
 
    
 
     var monthy_suppier_expence = data.monthy_suppier_exps.toString().split('.');
     monthy_suppier_expence[0] = monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
+    var extra_monthy_suppier_expence = data.extra_monthy_suppier_exps.toString().split('.');
+    extra_monthy_suppier_expence[0] = extra_monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     var today_suppier_expence = data.today_suppier_exps.toString().split('.');
     today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk");
-
+    $('.extra_monthy_suppier_exp').html(extra_monthy_suppier_expence.join('.')+" Tk");
 
     
     $('#supex').html(" - "+today_suppier_expence.join('.')+" Tk");
@@ -858,6 +911,8 @@ if(parseInt(data.not_show_admin)>0){
   $('.invoice').html(" CHECKED");
   $('.invoice').css({"color": "green"});
 }
+
+
 
 
 
@@ -1084,8 +1139,9 @@ function deletdata(id){
      url: '/get_data_to_update/'+id,
      success: function (data) {
 
-
 	var datajos=JSON.parse(data);
+  console.log(datajos.id+"hghghghghghgh");
+
       if(parseInt(datajos.message)==0){
         dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
       }else{
@@ -1101,7 +1157,7 @@ function deletdata(id){
 }
 
 function conformdeleta(id){
-       swal({
+    swal({
    title: "Are you sure?",
    text: "you will not be able to return!",
    icon: "warning",
@@ -1129,7 +1185,7 @@ function conformdeleta(id){
 function datedeleteinfo(id){
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_delete/'+id,
+     url: '/get_data_to_delete/'+id,//done
      success: function (data) {
 	var datajos=JSON.parse(data);
 
