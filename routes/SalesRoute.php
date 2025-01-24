@@ -33,6 +33,5 @@ Route::get('/stockloadlog/{barcode}/{id}', [StockControllor::class,'stockloadlog
 Route::post('/supplierdataload', [StockControllor::class,'supplierdataload']);
 Route::get('/barcode/{id}', [StockControllor::class,'barcodes'])->name('barcodess');
 
-
 });
 

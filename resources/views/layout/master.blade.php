@@ -6,7 +6,7 @@
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
 		<script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"> </script>	
 		<script src="{{ asset('frontend/js/sweetalert.min.js') }}"> </script>	
-	    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+	    <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 		<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -550,7 +550,7 @@
 				<div id="managemntcss">
 				<div class="pagessd">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
-					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width">Category</a></li>
+					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('category') || Request::is('category/*')) bg-primary @endif">Category</a></li>
 					<li><a href="{{ route('stock')}}" class="link-dark rounded menu-width">Stock Add</a></li>
 						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>	
 					</ul>
