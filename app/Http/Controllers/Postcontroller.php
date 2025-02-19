@@ -2210,83 +2210,83 @@ if ($validator->fails()) {
     
  //this all catagory system show   
  
-public function GetSubCatAgainstMain($id){
-	if(Auth::check()){
-    		$ids = Auth::user()->Shop_cat_id;
-        echo json_encode(DB::table('subcatgory_info')->where('Shop_cat_id', $ids)->where('catagory_id', $id)->get());
-		}
-    } 
+// public function GetSubCatAgainstMain($id){
+// 	if(Auth::check()){
+//     		$ids = Auth::user()->Shop_cat_id;
+//         echo json_encode(DB::table('subcatgory_info')->where('Shop_cat_id', $ids)->where('catagory_id', $id)->get());
+// 		}
+//     } 
     
-public function GetSubCatAgainstMainmulti($id){
-	   if(Auth::check()){
-    		$ids = Auth::user()->Shop_cat_id;
-        echo json_encode(DB::table('sub_sub_catgory_info')->where('Shop_cat_id', $ids)->where('sub_catagory_id', $id)->get());
-       }
-	}
+// public function GetSubCatAgainstMainmulti($id){
+// 	   if(Auth::check()){
+//     		$ids = Auth::user()->Shop_cat_id;
+//         echo json_encode(DB::table('sub_sub_catgory_info')->where('Shop_cat_id', $ids)->where('sub_catagory_id', $id)->get());
+//        }
+// 	}
      
-public function catagory_add(Request $request){
+// public function catagory_add(Request $request){
   	
-      $response = array(
-          'catagory_name' =>$request->catagory_name,
-          'date' =>date("Y-m-d"),
-          'Shop_cat_id'=>Auth::user()->Shop_cat_id
-      );
+//       $response = array(
+//           'catagory_name' =>$request->catagory_name,
+//           'date' =>date("Y-m-d"),
+//           'Shop_cat_id'=>Auth::user()->Shop_cat_id
+//       );
 
- 		DB::table('catgory_info')->insert($response);          
-        return response()->json($response);  
-  } 
+//  		DB::table('catgory_info')->insert($response);          
+//         return response()->json($response);  
+//   } 
     
-public function sub_catagory_add(Request $request){	
-  	 for($i=0;$i<count($request->catagory_id);$i++)
- { 
-	 // echo $request->catagory_name[$i].'<br>';        
-       $arr = array(
-       'catagory_id' =>$request->catagory_id[$i],
-       'catagory_name' =>$request->catagory_name[$i],
-       'date' =>date("Y-m-d"),
-       'Shop_cat_id'=>Auth::user()->Shop_cat_id);
-		DB::table('subcatgory_info')->insert($arr); 
- }
-  	      try {	
-        return redirect("productInfo");           
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-            echo('Duplicate Entry');
-              }
-          }      
+// public function sub_catagory_add(Request $request){	
+//   	 for($i=0;$i<count($request->catagory_id);$i++)
+//  { 
+// 	 // echo $request->catagory_name[$i].'<br>';        
+//        $arr = array(
+//        'catagory_id' =>$request->catagory_id[$i],
+//        'catagory_name' =>$request->catagory_name[$i],
+//        'date' =>date("Y-m-d"),
+//        'Shop_cat_id'=>Auth::user()->Shop_cat_id);
+// 		DB::table('subcatgory_info')->insert($arr); 
+//  }
+//   	      try {	
+//         return redirect("productInfo");           
+//           } catch(\Illuminate\Database\QueryException $e){
+//             $errorCode = $e->errorInfo[1];
+//             if($errorCode == '1062'){
+//             echo('Duplicate Entry');
+//               }
+//           }      
     
-  }
+//   }
   
-public function sub_to_sub_catagory_add(Request $request){	
-  	 for($i=0;$i<count($request->catagory_id);$i++)
- { 
-	 // echo $request->catagory_name[$i].'<br>';        
-$arr = array(
-'catagory_id' =>$request->catagory_id[$i],
-'sub_catagory_id' =>$request->sub_catagory_id[$i],
-'sub_catagory_name' =>$request->sub_catagory_name[$i],
-'date' =>date("Y-m-d"),
-'Shop_cat_id'=>Auth::user()->Shop_cat_id);
-		DB::table('sub_sub_catgory_info')->insert($arr); 
- }
-  	      try {	
-        return redirect("productInfo");           
-          } catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062'){
-            echo('Duplicate Entry');
-              }
-          }      
+// public function sub_to_sub_catagory_add(Request $request){	
+//   	 for($i=0;$i<count($request->catagory_id);$i++)
+//  { 
+// 	 // echo $request->catagory_name[$i].'<br>';        
+// $arr = array(
+// 'catagory_id' =>$request->catagory_id[$i],
+// 'sub_catagory_id' =>$request->sub_catagory_id[$i],
+// 'sub_catagory_name' =>$request->sub_catagory_name[$i],
+// 'date' =>date("Y-m-d"),
+// 'Shop_cat_id'=>Auth::user()->Shop_cat_id);
+// 		DB::table('sub_sub_catgory_info')->insert($arr); 
+//  }
+//   	      try {	
+//         return redirect("productInfo");           
+//           } catch(\Illuminate\Database\QueryException $e){
+//             $errorCode = $e->errorInfo[1];
+//             if($errorCode == '1062'){
+//             echo('Duplicate Entry');
+//               }
+//           }      
     
-  }
+//   }
   
-public function catagoryshow(){
-            if(Auth::check()){
-    		$ids = Auth::user()->Shop_cat_id;
-  echo json_encode(DB::table('catgory_info')->where('Shop_cat_id', $ids)->orderBy('id', 'DESC')->limit(10)->get());
-		}
-  }
+// public function catagoryshow(){
+//             if(Auth::check()){
+//     		$ids = Auth::user()->Shop_cat_id;
+//   echo json_encode(DB::table('catgory_info')->where('Shop_cat_id', $ids)->orderBy('id', 'DESC')->limit(10)->get());
+// 		}
+//   }
  
  
 // customer info and loging user data info
@@ -2340,14 +2340,11 @@ public function loginPageFunc(Request $request):RedirectResponse{
     	  
        if (Auth::attempt($credentials)) {
         	 $request->session()->regenerate();
-            return redirect()->intended('overview')->withSuccess('You have Successfully loggedin');
+          //  return redirect()->intended('Deshboard/overview')->withSuccess('You have Successfully loggedin');
+          return redirect()->route('overview');
         }
   
-       // return redirect('login')->with("error",'Oppes! You have entered invalid credentials');
-       
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.', ])->onlyInput('email');
   
 	}   
 		
@@ -2512,9 +2509,9 @@ public function oder(){
     	if(Auth::check()){return view('frontend.oder');}else{return view('login');}
 	}
 	
-public function product(){
-    	if(Auth::check()){return view('frontend.product');}else{return view('login');}
-	}
+// public function product(){
+//     	if(Auth::check()){return view('frontend.product');}else{return view('login');}
+// 	}
 
 public function profileView(){  
         

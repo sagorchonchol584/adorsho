@@ -113,7 +113,6 @@
 </div> 
 </div> 
 
-
      
 <!--This is a follder opening show -->
 <nav aria-label="breadcrumb">
@@ -343,8 +342,8 @@ $("#phone").keydown(function(event) {
 
 
 <div class="row"> 
-<div class="col-8 h-500"> 
-<div class="px-4 col-6 card p-3">
+<div class="col-8 "> 
+<div class="col-6 h-750 card">
   <span class="mx-auto text-capitalize" style="color: green; font-size: 18px;">You can search with Barcode Scan or Manual</span>
     <form id="uploadFormbar">
      <?php echo csrf_field(); ?>
@@ -432,7 +431,7 @@ $("#phone").keydown(function(event) {
 
 
 
-<div class="col-6 h-600 card">
+<div class="col-6 h-750 card">
 <div id="testt">
 <div class="form-group px-5 pt-1">
   <div class="form-group">
@@ -467,11 +466,7 @@ $("#phone").keydown(function(event) {
 
 </div>
 
-<div class="col-4 h-750">
-</br>
-</br>
-
-
+<div class="col-4">
 <div class="card">
 <div class="active_full" id="listss">
 		<div class="searchbar ">
@@ -492,7 +487,7 @@ $("#phone").keydown(function(event) {
 <style>
 .my-custom-scrollbar {
 position: relative;
-height: 520px;
+height: 665px;
 overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -629,7 +624,8 @@ function fetch_customer_data()
 		success: function(data)
 	    {
 		   	 
-		var obj = JSON.parse(data);
+			//	console.log(Product_sent_of_admin);
+		var obj = data;
 		if(obj.message=="Exit"){
 			frame.src = "{{asset('frontend/img/demo.jpg')}}";
 			dailogmess("Not Found Data","Chack this Barcode ?","info");
@@ -641,7 +637,7 @@ function fetch_customer_data()
 		for(var key in obj){
 		Weights=obj[key].Weight;
 		Product_sent_of_admin=obj[key].Product_sent_of_admin;
-		console.log(Product_sent_of_admin);
+	
 		if(parseInt(Weights)==0){
 		  Product_name=obj[key].Product_name;
 		}else{
@@ -1059,13 +1055,13 @@ var partscomvalue = all_sales_price().toString().split('.');
  }  
  
 function all_barcode_number(id){
-	console.log("helllo world");
+	
 	var nodeList = document.querySelectorAll("#myChecka");
     for (let i = 0; i < nodeList.length; i++) {
 		if( nodeList[i].checked == true){
 	    const datastwo = nodeList[i].value.split("-");
 	   data_tranfer_all_data(datastwo[0],id);
-	   console.log("helllo world");
+	 
 		}
     }
 
@@ -1138,7 +1134,7 @@ function add_data(){
 			 });
 	 $.ajax({
 		 type: 'POST', //THIS NEEDS TO BE GET
-		 url: '/supplierdataload/',//done
+		 url: 'supplierdataload/',//done
 		 data: {company_name:suppliername.value,name:propriername.value,mobile:phone.value,address:address.value,unite:unites,totaltk:totaltk}, 
 		 success: function (data) {
 			all_barcode_number(data);

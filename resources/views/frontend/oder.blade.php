@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="col-9 h-500">
 		<a href="{{ route('overview')}}"     class="textand" >home</a>
-		<a href="{{ route('product')}}"  class="textand" >product</a>
+
 		<a href="{{ route('oder')}}"     class="textand" >oder</a>
 		<a href="{{ route('customer')}}" class="textand" >customer</a>
 		<h1>Oder page</h1>
@@ -24,7 +24,7 @@
 <body>
 
 <div class="bgColor">
-<form action="{{route('loadertest')}}" method="post">
+
  <?php echo csrf_field(); ?>
 <div id="targetOuter">
 	<div id="targetLayer"></div>

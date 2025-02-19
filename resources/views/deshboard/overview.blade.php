@@ -374,9 +374,8 @@ function numberWithCommas(number,totals,comvalue) {
 function check(){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/deshboard_all_info_get_data/',
+    url: '{{ route('deshboard-all-info-route') }}',
     success: function (data) {
-      //  console.log("date add refurn value"+data); 
 	  var dategert=JSON.parse(data);
 	  numberWithCommas(dategert.Total_product,dategert.salesproduct,dategert.totalcomvalu); 
 	  product.innerHTML=dategert.total_product;

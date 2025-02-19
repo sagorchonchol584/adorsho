@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Controller;
 
 class StockControllor extends Controller
 {
     //-----------------------Thsi is stock Add page all funcation-------------------
+    
 public function Stock_View(){    
-    return view('Sales_And_Stock.Stock_Add');
+    return view('Management.Stock_Add');
    } 
  
   public function stockchack(){
@@ -276,12 +277,12 @@ public function barcodes($id){
           $reults=DB::table('product_info'.$ids )->where('Barcode', $id)->get();	
     			if(count($reults) === 0){		
     			 $datess['message']='Exit';
-    			 echo json_encode($datess);		 
+         return response()->json($datess);		 
     		    }else{	
-    		    	echo json_encode($reults);
+              return response()->json($reults);
     		    	}
     		}else{
-    			echo json_encode($stockinfo);
+          return response()->json($stockinfo);
     		}
   }
     

@@ -12,7 +12,7 @@ class SalesControllor extends Controller
 
     //---------------This is view page to sales page---------------
     public function sales(){    
-    return view('Sales_And_Stock.Sales');
+    return view('Sales-Market.Sales');
 	}
 	
 

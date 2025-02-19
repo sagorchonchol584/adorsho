@@ -19,16 +19,249 @@
  
 <div class="col-12">
 <!--This is a follder opening show -->
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb"> 
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb col-lg-3 border"> 
     	 <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
    		 <li class="breadcrumb-item"><a class="breade" href="#">Page</a></li>
   		  @foreach(Request::segments() as $segment)
    		 <li  class="breadcrumb-item"> <a href="#" class="breade">{{$segment}} </a> </li>
          @endforeach
     </ol>
+    <ul class="pagination justify-content-end">
+    <li class="page-item">
+      <a class="btn btn-primary m-lg-1" href="{{route('cat-add-route')}}">Add Cat</a>
+    </li>
+  </ul>
 </nav>
 </div>
+
+
+
+
+<!--This is a pop loading deing  -->
+<style>
+.maindailoboax {
+  padding: 5px;
+  height: 460px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+ 
+}
+
+.black_overlaya {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+ 
+}
+
+.white_contenta {
+ display: none;
+ position: absolute;
+ top:0;
+ left:0;
+ width: 100%;
+ height: 100%;
+ background-color:hsla(0,0%,0%,0.0);
+ z-index: 1002;
+}
+.tittle_name{
+	text-align: center;
+  width: 90%;
+  float: left;
+}
+	
+.close_pop_up{
+	text-align: right;
+  width: 10%;
+  float: left;
+}
+.close_pop_up_btn{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	border: none;
+}
+.exitdd{
+		height: 50px;
+		width: 100%;
+	  background-color:#F5F5F5;
+	   
+	}
+
+.mainedd{
+		height: 260px;
+		width: 100%;
+		border-top: 1px solid #a6a6a6ff;
+		background-color: #FFFFFF;
+	}
+
+.butttons{
+		height: 40px;
+		width: 100%;
+		text-align: right;
+		padding-top: 5px;
+	}
+
+.info{
+		height: 90px;
+		width: 100%;
+	}
+
+.tkinfo{
+		height: 40px;
+		width: 100%;
+		padding: 5px 10px 10px 0px;
+    text-align: right;
+}
+
+.my-custom-scrollbar {
+position: relative;
+height: 253px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}	
+
+.inputtsupper{
+width: 50%;
+height: 60px;
+float: left;
+}
+
+.inputtsuppertwo{
+  width: 50%;
+height: 60px;
+float: right;
+}
+
+.stceted{
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  border: 1px solid #555500ff;
+  border-radius: 10px;
+}
+</style>
+
+
+
+
+<div id="fadea" class="black_overlaya"></div>
+<div id="lighta" class="white_contenta"> 
+
+
+
+<div class="maindailoboax" id="maindailoboax">
+  <div class="exitdd">
+    <diV class="tittle_name">
+    <span style="font-size:20px; font-weight:bold";>This is all product by suppliers</span>
+    </diV>
+  	<div class="close_pop_up" >
+    <button class="close_pop_up_btn" onclick="pop_custom_off()"><span style="color: white" >X</span></button>
+   </div>
+  </div> 
+<div class="mainedd">
+  <div class="table-wrapper-scroll-y my-custom-scrollbar  border-dark">
+<table class="table table-hover  p-2">
+  <thead>
+    <tr >
+      <th scope="col" style="text-align:left">
+        <img src="{{url('images/1701069398.jpg') }}">
+      </th>
+       <th scope="col">Unite</th>
+    </tr>
+  </thead>
+  <tbody class="supplierlist">
+    
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="info  border">
+  <div class="inputtsupper">
+   <div class="input-group border">
+    <div class="col-12">
+      <h4 class="align-middle">middle</h4>
+    </div>
+   </div>
+  </div> 
+
+  <div class="inputtsuppertwo">
+   <div class="col-12">
+     <input type="number" value="" id="supplierpayment" class="form-control" visible="none">
+    </div>
+  </div>
+
+</div>
+
+<div class="butttons">
+	<button id="paymentbtm" type="button" onclick="datatranfer()" class="btn btn-primary">Sent</button>&nbsp;
+</div>
+</div>
+
+</div>
+
+
+
+
+<script>
+  function pop_custom_on(){
+		document.getElementById('fadea').style.display='block';
+		document.getElementById('lighta').style.display='block';
+		document.getElementById('maindailoboax').style.display='block';
+    document.getElementById('payableid').style.display='none';
+}
+
+// function pop_custom_payable(){
+// 		document.getElementById('fadea').style.display='block';
+// 		document.getElementById('lighta').style.display='block';
+// 		document.getElementById('maindailoboax').style.display='none';
+//     document.getElementById('payableid').style.display='block';
+// }
+
+
+function pop_custom_off(){
+		document.getElementById('lighta').style.display='none';
+		document.getElementById('fadea').style.display='none';
+		document.getElementById('maindailoboax').style.display='none';
+   // clearlyalldata();
+   document.getElementById('payableid').style.display='none';
+   $('.cashs').html(" ");
+   $('.cashspay').html(" ");
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<button onclick="pop_custom_on()">show</button>
 
 <div class="row">
 <div class="col-12 h-60"></div>
@@ -148,6 +381,9 @@ let maintwo=document.createElement("div");
  //--------------------------------------------------
  let child44=document.createElement("div");
     child44.className='clot44';
+    child44.addEventListener("click", function () {
+      updatedata(id);
+    });
     let child44two=document.createElement("div");
     child44two.className='clo1';
 
@@ -157,7 +393,7 @@ let maintwo=document.createElement("div");
 
     let par44=document.createElement("span");
     let icon44=document.createElement('i');
-    icon44.setAttribute('onclick',' testison()');
+    //icon44.setAttribute('onclick',' updatedata(this)');
     icon44.className='bx bx-edit-alt bx-sm';
 
     par44.innerHTML="Edit";
@@ -297,7 +533,7 @@ maindivtwo.setAttribute('class' ,'catagorysshowclass');
  
 // //--------------------------------------------------
 
-var datalist='<div id="maintwosub'+item.id+'" class="fixmainsub"><div class="togle" id="mainids'+item.id+'" ><div class="child1andtwo" id="'+item.id+'"  onclick="sub_funcation(this)"><div class="clot1"><i class="bx bx-chevron-up-circle bx-md" id="icon'+item.id+'" style="color: var(--bg-100); transition: 0.3s;"></i></div><div class="clot2" id="'+item.id+'"><span>'+item.catagory_name_s+'</span></div></div><div class="clot3"><span>'+item.id+'</span></div><div class="clot4"><span>'+item.Shop_cat_id+'</span></div><div class="clot6"><span>'+item.date+'</span></div><div class="clot44"><div class="clo1"><i onclick=" testison()" class="bx bx-edit-alt bx-sm"></i></div><div></div><span>Edit</span></div><div class="clot5"><i onclick=" testison()" class="bx bx-trash-alt bx-sm deleta"></i></div></div></div>';
+var datalist='<div id="maintwosub'+item.id+'" class="fixmainsub"><div class="togle" id="mainids'+item.id+'" ><div class="child1andtwo" id="'+item.id+'"  onclick="sub_funcation(this)"><div class="clot1"><i class="bx bx-chevron-up-circle bx-md" id="icon'+item.id+'" style="color: var(--bg-100); transition: 0.3s;"></i></div><div class="clot2" id="'+item.id+'"><span>'+item.catagory_name_s+'</span></div></div><div class="clot3"><span>'+item.id+'</span></div><div class="clot4"><span>'+item.Shop_cat_id+'</span></div><div class="clot6"><span>'+item.date+'</span></div><div class="clot44"><div class="clo1"><i onclick=" updatedata('+item.id+')" class="bx bx-edit-alt bx-sm"></i></div><div></div><span>Edit</span></div><div class="clot5"><i onclick=" testison()" class="bx bx-trash-alt bx-sm deleta"></i></div></div></div>';
 setTimeout(function(){
   $('#catagorysshow'+idget).append(datalist);  
 }, 20);
@@ -330,7 +566,7 @@ maindivtwo.setAttribute('class' ,'catagorysshowclass_sub');
    // ----------this a sub to sub catagory items----
     filteredCategories.forEach(item => {
       console.log(item.id);
-      var datalist='<div id="maintwosub'+item.id+'" class="fixmainsub-sub"><div class="togle" id="mainids'+item.id+'" ><div class="child1andtwo" id="'+item.id+'"  onclick="sub_funcation(this)"><div class="clot1"><i class="bx bx-chevron-up-circle bx-md" id="icon'+item.id+'" style="color: var(--bg-100); transition: 0.3s;"></i></div><div class="clot2" id="'+item.id+'"><span>'+item.sub_catagory_name+'</span></div></div><div class="clot3"><span>'+item.id+'</span></div><div class="clot4"><span>'+item.Shop_cat_id+'</span></div><div class="clot6"><span>'+item.date+'</span></div><div class="clot44"><div class="clo1"><i onclick=" testison()" class="bx bx-edit-alt bx-sm"></i></div><div></div><span>Edit</span></div><div class="clot5"><i onclick=" testison()" class="bx bx-trash-alt bx-sm deleta"></i></div></div></div>';
+      var datalist='<div id="maintwosub'+item.id+'" class="fixmainsub-sub"><div class="togle" id="mainids'+item.id+'" ><div class="child1andtwo" id="'+item.id+'"  onclick="sub_funcation(this)"><div class="clot1"><i class="bx bx-chevron-up-circle bx-md" id="icon'+item.id+'" style="color: var(--bg-100); transition: 0.3s;"></i></div><div class="clot2" id="'+item.id+'"><span>'+item.sub_catagory_name+'</span></div></div><div class="clot3"><span>'+item.id+'</span></div><div class="clot4"><span>'+item.Shop_cat_id+'</span></div><div class="clot6"><span>'+item.date+'</span></div><div class="clot44"><div class="clo1"><i onclick=" updatedata('+item.id+')" class="bx bx-edit-alt bx-sm"></i></div><div></div><span>Edit</span></div><div class="clot5"><i onclick=" testison()" class="bx bx-trash-alt bx-sm deleta"></i></div></div></div>';
 $('#catagorysshow_sub'+idget).append(datalist);  
 maindiv.appendChild(maindivtwo);
 
@@ -345,7 +581,7 @@ maindiv.appendChild(maindivtwo);
 
 
 $.ajax({
-    url: '/get-all-data-to-categorys',
+    url: '{{route('get-all-data-to-catagories')}}',
     type: 'GET',
     success:function(data){
      // datasave=JSON.parse(data);
@@ -372,8 +608,10 @@ function catagorymain(data){
 });
 }
 
-function  testison(){
-  console.log('selllo bangldesh');
+function  updatedata(id){
+
+
+  console.log('Helllo bangldesh'+id);
 }
 
 function catagorycolis(value){

@@ -61,15 +61,22 @@
 		display: inline-flex;
 		padding: .1875rem .5rem;
 		margin-top: .125rem;
-		margin-left: 1.25rem;
+		margin-left: 1px;
 		text-decoration: none;
 	}
 
 	.link_line{
-		background-color: #e0f3ff;
+		background-color:var(--accent-100);
 		height: auto;
 		width: 3px;
 		margin-left: 40px;
+	
+	}
+
+		
+	.menu-width{
+		width: 150px;
+	
 	}
 		
 	:root{
@@ -87,8 +94,8 @@
 
 	body{
 		position: relative;
+		background-color: white;
 		transition: .5s;
-		background: white;
 		padding-left: 100px;
 	    margin: var(--header-height) 0 0 0;
 	}
@@ -104,7 +111,7 @@
 		top: 0;
 		left: 0;
 		display: flex;
-		background-color: #FAFBFC;
+	
 		z-index: 1;
 		transition: .5s;
 		height: 60px;
@@ -248,17 +255,14 @@
 	
 	.head-main:hover{
 		
-		background: #e0f3ff;
+		background-color:var(--accent-100);
 		border-radius: 5px;
 	}
 	
 	.desh-boad{
 		font-weight: bold;
 	}
-	
-	.menu-width{
-		width: 150px;
-	}
+
 		
  .kek{
 		
@@ -431,9 +435,9 @@
 </svg>
 
 
-<header class="header body-pd " id="header">
+<header class="header body-pd  " id="header">
 
-<div class="ami" id="icons" ><h5>{{auth()->user()->Shopname}}</h5></div>
+<div class="ami " id="icons" ><h5>{{auth()->user()->Shopname}}</h5></div>
 		<div class="header_toggle">
 		
 		<div class="hh h-25">
@@ -451,12 +455,10 @@
   	
   </div>
   
-  	<div class="onetoess border">
-  	
-  	
+  	<div class="onetoess ">
   		<nav class="navbar">
         <div class="container-fluid"> 
-                <ul class="nav navbar-nav ms-auto">        	
+                <ul class="nav navbar-nav ms-auto ">        	
                     <li class="nav-item dropdown">       
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 							<span style="font-weight: bold;">{{auth()->user()->Name}} </span> 
@@ -479,15 +481,15 @@
 	</header>
 
 
-<body id="body-pd" class="body-pd">
+<body id="body-pd" class="body-pd ">
 	<div class="l-navbar shows" id="nav-bar">
-		<nav class="nav">
+		<nav class="nav ">
 			<div>
 			
 			<div class="" style="width: 250px;">
 				<ul class="list-unstyled ps-0">
 					<li class="mb-1">					
-					<p  id="menu" class="text-primary fw-bold url-size">MENU</p>
+					<p  id="menu" class="my-text-color fw-bold url-size">MENU</p>
 			<div class="head-dec">
 			
 				<div id="test" class=" head-main align-items-center"  onclick="Deshbord()">
@@ -497,13 +499,13 @@
 		          </div>
 			   </div>
 				
-
+			
 			 	<div id="Deshboard">
 			 	  <div class="deshbo">
-					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line Deshboard">
-						<li><a href="{{ route('overview')}}" class="link-dark rounded menu-width"> Overview</a></li>
-						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width "> Cash Flow</a></li>   
-						<li><a href="{{ route('reports')}}" class="link-dark rounded menu-width">Reports</a></li>
+					<ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small link_line ">
+						<li><a href="{{ route('overview')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/overview') || Request::is('Deshboard/overview/*')) acticecust @endif"> Overview</a></li>
+						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/cashflow') || Request::is('Deshboard/cashflow*')) acticecust @endif"> Cash Flow</a></li>   
+						<li><a href="{{ route('reports')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/reports') || Request::is('Deshboard/reports*')) acticecust @endif">Reports</a></li>
 						
 						
 					</ul>
@@ -517,7 +519,7 @@
 			 <li class="mb-1">				
 			<div class="head-dec">
             <div class=" head-main align-items-center" onclick="Pages('hello')" id="pages">
-						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#speedometer2"/></svg><span  id="pagec" class="desh"> Sales & Stock</span>
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#speedometer2"/></svg><span  id="pagec" class="desh"> Sales & Market</span>
 						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
 					</div>
 				</div>
@@ -526,12 +528,9 @@
 				<div id="Page">
 				<div class="pagess">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
-					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width">Sales</a></li>
-					<li><a href="{{ route('stock')}}" class="link-dark rounded menu-width">Stock Add</a></li>
-						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>	
-						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>			
-					
-						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width"> just use perpose</a></li>
+					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/sales') || Request::is('SalesMarket/sales*')) acticecust @endif"">Sales</a></li>		
+					<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>			
+					<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width"> just use perpose</a></li>
 					</ul>
 				 </div>
 				</div>
@@ -550,20 +549,16 @@
 				<div id="managemntcss">
 				<div class="pagessd">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
-					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('category') || Request::is('category/*')) bg-primary @endif">Category</a></li>
-					<li><a href="{{ route('stock')}}" class="link-dark rounded menu-width">Stock Add</a></li>
-						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>	
+					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Stock Add</a></li>
+					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Category</a></li>
+					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Info</a></li>	
 					</ul>
 				 </div>
 				</div>
-						
-
-
-
 					</li>				
 					<li class="mb-1">
 						<li class="border-top my-3">
-							<p id="menu" class="text-primary fw-bold url-size">PROFILE</p>		
+							<p id="menu" class="my-text-color fw-bold url-size">PROFILE</p>		
 					</li>
 
 					<div class="head-dec">

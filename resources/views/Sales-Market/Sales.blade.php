@@ -87,31 +87,6 @@
 	border: none;
 }
 
-/*
-@keyframes fadeIn {
-	
-	0% {
-		
-		scale(0.7);
-		opacity: 0;
-	}
-	45% {
-	
-		scale(1.05);
-		opacity: 1;
-	}
-	80% {
-	
-		scale(0.95);
-	}
-	100% {
-		
-		scale(1);
-	}     
-  
- 
-}
-   */
 	.exitdd{
 		height: 50px;
 		width: 100%;
@@ -686,7 +661,7 @@ function tessst(){
   
     $.ajax({
     type: 'GET', 
-    url: '/profitshow', //done
+    url: '{{ route('profitshow') }}', //done
     success: function (data) {
      // console.log("date add refurn value");
         // console.log(data);
@@ -1390,7 +1365,7 @@ function check(id,qty){
 function purcheschack(id,qty,num){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/purchers/'+id+"/"+qty+"/"+num,//done
+    url: '/SalesMarket/purchers/'+id+"/"+qty+"/"+num,//done
     success: function (data) {
     	
      //   console.log("date add refurn value");
@@ -1415,7 +1390,7 @@ $.ajaxSetup({
 
 $.ajax({
    type: 'POST', //THIS NEEDS TO BE GET
-   url: '/profiturl/',  //done
+   url: '{{ route('profiturls') }}',  //done
    data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
    success: function (data) {
      // console.log(data); 

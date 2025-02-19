@@ -32,23 +32,42 @@ Route::get('/supplierlist/{id}', [Postcontroller::class,'suplier_list']);
 
 
 Route::get('/supplierstates', [Postcontroller::class,'suplierstate'])->name("supplierstatesrounte");
+Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
+Route::get('/show_sent_tk', [Postcontroller::class,'show_sent_tk_details'])->name("show_sent_route");
+Route::get('/data_chack_to_sender_data', [Postcontroller::class,'data_chack_to_sender_data_fun']);
+Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
+Route::post('/stockloadfinally', [Postcontroller::class, 'Stock_Info_add_finally']);
+Route::post('/payabledataloaded', [Postcontroller::class, 'Payable_finally']);
+Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_data_loaded']);
+Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
+Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
+Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
+
+//--------------this route is sales  profite data insert table profit_datails------------
+Route::post('/profiturl', [Postcontroller::class,'profit_add'])->name('profiturls');
+Route::view('/meagge','frontend.message')->name('reg');
+//--stock inforamtion route --
+Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
 
 
 //Route::get('/cashflowstates', [Postcontroller::class,'cashflowstates'])->name("cashflowstatesroute");
+
+
+
 //Route::get('/suppliar_info_deshboard', [Postcontroller::class, 'suppliar_all_info_api'])->name('sideshboard');
 
-Route::post('/chackingtwo', [Postcontroller::class,'chackingfuntwo']);
+
 
 //---this route is when show_sent_tk_details  ----route:  stockloadfinally------------
-Route::get('/show_sent_tk', [Postcontroller::class,'show_sent_tk_details'])->name("show_sent_route");
+
 
 
 //---this route is when data_chack_to_sender_data  ----route:  stockloadfinally------------
-Route::get('/data_chack_to_sender_data', [Postcontroller::class,'data_chack_to_sender_data_fun']);
+
 
 
 //---this route is when admin check expence cost then update  ----route:  stockloadfinally------------
-Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
+
 
 
 //Route::post('/expenceadd', [Postcontroller::class,'expence_add_func']);
@@ -64,25 +83,24 @@ Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
 
 
 
-//--stock inforamtion route --
-Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+
 
 
 
 //---this a function is when payment of supplier some money pay then use ----route:  stockloadfinally------------
-Route::post('/stockloadfinally', [Postcontroller::class, 'Stock_Info_add_finally']);
+
 
 //---this a function is when payable of supplier some money pay then use ----route:  payabledataloaded------------
-Route::post('/payabledataloaded', [Postcontroller::class, 'Payable_finally']);
+
 
 
 //---this a function is when start day then auto info get and loaded ----route:  daily_activity_load------------
-Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_data_loaded']);
+
 
 
 
 //Route::post('/stockload', [Postcontroller::class, 'Stock_Info_add_demo'])->name('stockload');
-Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
+
 //Route::post('/supplierdataload', [Postcontroller::class,'supplierdataload']);
 
 
@@ -105,52 +123,61 @@ Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogf
 
 //Route::get('/purchers/{id}/{qty}/{num}', [Postcontroller::class,'purcher_add'])->name('purchersrouter');
 
-//--------------this route is sales  profite data insert table profit_datails------------
-Route::post('/profiturl', [Postcontroller::class,'profit_add'])->name('profiturls');
 
 
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
-Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
+
 
 
 //Route::get('/stock_show', [Postcontroller::class,'stockchack'])->name('stock_show_ronter');;
 //Route::get('/barcode/{id}', [Postcontroller::class,'barcodes'])->name('barcodess');
 
 //Route::get('/getsearch/{id}', [Postcontroller::class,'searchidcan'])->name('getsearch');
-Route::view('/meagge','frontend.message')->name('reg');
+
 //Route::view('/home','frontend.deshboard')->name('home');
 
 
 //--this route is login users use time show like how much time loging  user for login id--
-Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
+
 //Route::get('/tests', [Postcontroller::class,'testssss'])->name('tests');
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
 //--product add route this --
-Route::get('/product', [Postcontroller::class,'product'])->name('product');
-Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
-Route::get('/productdeletedata/{id}',[Postcontroller::class,'productdelete'])->name('productdeleteda');
-Route::post('/prsearch',[Postcontroller::class,'productInfo_search'])->name('pro_info_search');
-Route::post('/productloaddata', [Postcontroller::class,'product_add'])->name('loader');
-Route::post('/productloaddatatest', [Postcontroller::class,'product_add_test'])->name('loadertest');
-Route::post('/imagesss', [Postcontroller::class,'imagesss'])->name('loaderimage');
+//Route::get('/product', [Postcontroller::class,'product'])->name('product');
+// Route::get('/productInfo', [Postcontroller::class,'productInfo'])->name('product_info');
+// Route::get('/productdeletedata/{id}',[Postcontroller::class,'productdelete'])->name('productdeleteda');
+// Route::post('/prsearch',[Postcontroller::class,'productInfo_search'])->name('pro_info_search');
+// Route::post('/productloaddata', [Postcontroller::class,'product_add'])->name('loader');
+// Route::post('/productloaddatatest', [Postcontroller::class,'product_add_test'])->name('loadertest');
+// Route::post('/imagesss', [Postcontroller::class,'imagesss'])->name('loaderimage');
 
 
 
 
 
 //--catagory route --
-Route::post('/catagoryloaddata', [Postcontroller::class,'catagory_add'])->name('loader_catagory');
-Route::post('/subcatagoryloaddata', [Postcontroller::class,'sub_catagory_add'])->name('sub_loader_catagory');
-Route::post('/subtosubcatagoryloaddata', [Postcontroller::class,'sub_to_sub_catagory_add'])->name('sub_to_sub_loader_catagory');
-Route::get('/catagoryshowdata', [Postcontroller::class,'catagoryshow']);
+
+//Route::post('/catagoryloaddata', [Postcontroller::class,'catagory_add'])->name('loader_catagory');
+// Route::post('/subcatagoryloaddata', [Postcontroller::class,'sub_catagory_add'])->name('sub_loader_catagory');
+// Route::post('/subtosubcatagoryloaddata', [Postcontroller::class,'sub_to_sub_catagory_add'])->name('sub_to_sub_loader_catagory');
+//Route::get('/catagoryshowdata', [Postcontroller::class,'catagoryshow']);
 //--this is product catagory add ,you can selete to sub catagory loading data route this --
-Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainstMain']);
-Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
+// Route::get('GetSubCatAgainstMain/{id}', [Postcontroller::class,'GetSubCatAgainstMain']);
+// Route::get('GetSubCatAgainstMainmulti/{id}', [Postcontroller::class,'GetSubCatAgainstMainmulti']);
 
 
 
@@ -222,6 +249,6 @@ Route::post('/customeradd',[Postcontroller::class,'customer_Data_add'])->name("c
   Route::delete('/post/delete/{id}','delete')->name('delete');
 
 });
-require __DIR__.'/deshboardRoute.php';
-require __DIR__.'/SalesRoute.php';
-require __DIR__.'/ManagementRoute.php';
+require __DIR__.'/Deshboard/deshboardRoute.php';
+require __DIR__.'/Salesmaket/SalesRoute.php';
+require __DIR__.'/Management/ManagementRoute.php';

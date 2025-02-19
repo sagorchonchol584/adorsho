@@ -17,7 +17,7 @@
    
    
  
-<div class="col-8 h-700">
+<div class="col-12 h-700">
 <!--This is a follder opening show -->
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb"> 
@@ -74,257 +74,20 @@
 	
 	}
 	
-	
-</style>
-
-
-
-
-<div class="p-5 col-6 card ">
-
-
-<form id="gg"  method="post">
-<?php echo csrf_field(); ?>
-  <div class="form-group">
-      <label for="exampleInputName">Barcode</label>
-      <input type="text" class="form-control" id="Barcode" name="Barcode" aria-describedby="emailHelp" placeholder="Barcode" required>
-  </div> <br/>
- </form>
-<form id="uploadForm"  method="post">
-<?php echo csrf_field(); ?>
-  <div class="form-group">
-    <label for="exampleInputName">Product Name</label>
-    <input type="text"  class="form-control" id="productname"  name="Product_name" placeholder="Product name"  required>
-  </div> <br/>
- 
- 
-<div class="form-group">
-  <label for="exampleInputName">Weight</label>
-	<div class="input-group mb-2">
-	   <div class="input-group-prepend">
-          <div class="input-group-text"><span class="text-primary" id="weightshow"> ± </span></div>
-       </div>
-	          <input type="number" class="form-control" id="Weight" name="Weight" placeholder="Weight" >
-	   <div class="input-group-prepend">
-          <div class="input-group-text"><span class="text-primary" id="weightshow">gm</span></div>
-       </div>
-   </div>
-</div><br/> 
-
-
- 
- <div id="adddome">
-     <label for="exampleInputName"> Product Catagory </label>   
-	<select class="form-control" id="sub_category_name">
-   		  <option selected>Choose...</option>
-  		      @foreach($data as $categories)
-  		  <option value="{{$categories->id}}">{{$categories->catagory_name}}</option>
-   		      @endforeach
-	</select>
-	</br>
-	
-	<label for="exampleInputName"> Sub Catagory </label>   
-	 <select class="form-control formselect required" placeholder="Select Sub Category" id="sub_category">
-	        <option selected>Choose...</option>
-	 </select>
-	 </br>
-	 
-	<label for="exampleInputName"> Sub to Sub Catagory </label>   
-	 <select class="form-control" id="subtosutcatagory">
-            <option selected>Choose...</option>
-     </select>
-  </div>
-</div>
-
- <div class="col-6 h-600 card">
-	<div id="testt">
-	 <div class="form-group p-5">
-	   <br>
-     	<div class="form-group">
-		   <label for="exampleFormControlTextarea1">Product Image</label>
- 		    <img  class="border" id="frame" src="{{asset('frontend/img/demo.jpg')}}" class="img-fluid" width="150px" height="157px" />
-        </div>
-	     <br>
-	   <div class="form-group">
-   		    <label for="exampleFormControlTextarea1">Image</label>
-    	    <input class="form-control" type="file" id="Productimage"  onchange="preview()" name="Productimage" >
-       </div>
-       
-  	   <div id="targetLayer"></div>
-		<br>
-	   <button type="submit" id="inputdd" class="btn btn-primary">Submit</button>
-      </form>
-     </div>
-           <div class="addvist border animate-charcter">
-           	<h2>Product image must be backgroud white</h2>
-           </div>
-    </div>	
- </div>
-</div>
-<style>
-	
-.addvist{	
+	.addvist{	
 	text-align: center;
 	height: 170px;
 	background-color: #ffffffff;
 }
 </style>
 
+
+
+
 		
-<div class="col-4 h-650">
-<br>
-<br>
-
-  <div class="card">
-			  <div class="active_full" id="listss">
-				<div class="searchbar">
-			       <div class="input-group rounded col-5">
-  					 <input type="text" name="search" id="search" class="form-control" placeholder="Search" />		 
- 				  </div>
-				   <div class="input-group rounded col-7 p-1">
-  					<h6 class="">Search With Barcode or Product name</h6>
- 				  </div>
-		        </div>
-		      </div>
-  
-<!-- <script>
-var inputtt=document.getElementById("search");
- 
-	   $(document).ready(function (e) {
-	$("#searchs").on('submit',(function(e) {
-		e.preventDefault();		
-		
-		if(inputtt.value=="")
-	    { emptys();  }
-		else{
-		 		
-	   $("#showsstwo").hide();
-       $("#showss").hide();
-		 		
-		 				 		 		 
-	    const formData = new FormData(this);	
-  	
-	    $.ajax({
-        url: "{{route('pro_info_search')}}",
-		type: "POST",
-		data:  formData,
-	    contentType:false,
-        processData:false,
-		success: function(data)
-	    {
-	    //	console.log(data);
-	     tablecreat();
-		},
-	  	error: function() 
-    	{
-    	} 	        
-        });
-        
-        inputtt.value="";
-        
-    
-        }
-        
-        }));
-        });   
-        
-	function emptys(){
-		    swal({
-		 	      title: "Search Field Empty",
-		  	     text: "Chack tha Search bar field ?",
-		 	      icon: "error",
-		        });
-}
-	
-	
-
-
-	
-	
-	
-</script> -->
 
 
 
-
-<div class="headto " id="ddd">
-     <div id="showss">
-        
-<div class="container box">
-   <div class="panel panel-default">
-    <div class="panel-body">
-     <div class="table-responsive">
-<style>
-
-.my-custom-scrollbar {
-position: relative;
-height: 520px;
-overflow: auto;
-}
-.table-wrapper-scroll-y {
-display: block;
-}	
-      </style>
-      
-      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-striped table-bordered" id="section1" >
-       <thead >
-        <tr>
-         <th>S.R</th>
-         <th>Barcode</th>
-         <th>Product Name</th>
-        </tr>
-       </thead>
-       <tbody class="hello">
-       </tbody>
-      </table>
-     </div>
-    </div>    
-   </div>
-  </div> 
-  </div>
-
-<script>
-
-$(document).ready(function(){
-fetch_customer_data();
- 
- function fetch_customer_data(query ='')
- {
-  $.ajax({
-   url:"{{ route('live_search.action') }}",
-   method:'GET',
-   data:{query:query},
-   dataType:'json',
-   success:function(data)
-   {
-    $('.hello').html(data.table_data);
-    $('#total_records').text(data.total_data);
-   }
-  })
- }
-
- $(document).on('keyup', '#search', function(){
-  var query = $(this).val();
-  fetch_customer_data(query);
- });
-
-});
-
-
-</script>
-
-       
-       
-       
-       
-       
-       
-      </div>
-        <div class="d-flex justify-content-center p-1"></div>	
-   </div>
- </div>
-</div>
 
 
 <div class="row">
@@ -404,7 +167,7 @@ fetch_customer_data();
 		 </div>		
 		<div class="form-group p-5"></div>
    </div>
-
+   </div>
 <script>
 
 
@@ -418,9 +181,9 @@ fetch_customer_data();
                 $('#sub_category').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                 type: 'GET',
-                url: 'GetSubCatAgainstMain/' + id,
-                success: function (response) {
-                var response = JSON.parse(response);
+                url: 'GetSubCatAgainstMain'+ id,
+                success: function (responses) {
+                var response = responses;
                // console.log(response);   
                 $('#sub_category').empty();
                 $('#sub_category').append(`<option value="0" disabled selected>Select Sub Category*</option>`);
@@ -436,28 +199,28 @@ fetch_customer_data();
 //[2]--------- Sub to Sub Catagory		
 
 	
-	   $(document).ready(function () {
-            $('#sub_category').on('change', function () {
-            let id = $(this).val();
+// 	   $(document).ready(function () {
+//             $('#sub_category').on('change', function () {
+//             let id = $(this).val();
             
-            $('#subtosutcatagory').empty();
-            $('#subtosutcatagory').append(`<option value="0" disabled selected>Processing...</option>`);
+//             $('#subtosutcatagory').empty();
+//             $('#subtosutcatagory').append(`<option value="0" disabled selected>Processing...</option>`);
             
-            $.ajax({
-            type: 'GET',
-            url: 'GetSubCatAgainstMainmulti/' + id,
-            success: function (response) {
-            var response = JSON.parse(response);
+//             $.ajax({
+//             type: 'GET',
+//             url: 'GetSubCatAgainstMainmulti' + id,
+//             success: function (response) {
+//             var response = JSON.parse(response);
             
-            $('#subtosutcatagory').empty();
-            $('#subtosutcatagory').append(`<option value="0" disabled selected>Select Sub Category*</option>`);
-            response.forEach(element => {
-                $('#subtosutcatagory').append(`<option value="${element['id']}">${element['sub_catagory_name']}</option>`);
-                });
-            }
-        });
-    });
-});
+//             $('#subtosutcatagory').empty();
+//             $('#subtosutcatagory').append(`<option value="0" disabled selected>Select Sub Category*</option>`);
+//             response.forEach(element => {
+//                 $('#subtosutcatagory').append(`<option value="${element['id']}">${element['sub_catagory_name']}</option>`);
+//                 });
+//             }
+//         });
+//     });
+// });
 	
 
 	      	
@@ -477,163 +240,15 @@ fetch_customer_data();
    	var subtosutcatagory=document.getElementById('subtosutcatagory');
     var btn=document.getElementById('btnss'); 
     
-     var inputdd=document.getElementById('inputdd'); 
      var formFile=document.getElementById('Productimage'); 
    
      var dd=document.getElementById('uploadForm'); 
      var seleteclear=document.getElementById('adddome'); 
      
- product_barcode.focus();
-   
-     $(document).ready(function (e) {
-	$("#uploadForm").on('submit',(function(e) {
-		e.preventDefault();		
-		
-		
-		
-		if(!formFile.value==""){
-	  //------this image vailded chack-----
-		var reader = new FileReader();
-		var size = formFile.files[0].size;
-		var extn = formFile.files[0].type.split('/')[1];
-	    var maxSize = 100000;
-	  	var valid = ["gif", "png", "jpg", "jpeg","webp"];
-	    if (!valid.includes(extn)){
-		 
-	
-		 errrrr("invaild "+extn);
-	     // console.log("image formet not match");
-		  
-          }
-		  else if(size > maxSize){
-		  
-		 errrrr("Image size less then 100kb");
-		   
-		  }
-		  else
-		  {
-	  //------this image vailded chack-----
-		 
-	
-	}
-	
-			
-		//----------------------------------
-	  const formData = new FormData(this);
-		
-	   formData.append("Barcode", product_barcode.value);
-	   formData.append("Catagory", sub_category_name.value);  
-       formData.append("Sub_Catagory", sub_category.value); 
-       formData.append("Sub_to_sub_catagory", subtosutcatagory.value);
-       
 
+   
 
-       if(placehol.value===""){
-       	 formData.append("Weight", "empty");
-			console.log("empty");
-       }else{
-       	 formData.append("Weight", "± "+placehol.value+" gm");
-       }
-       
-      
-			
-				
-		$.ajax({
-        url: "{{route('loader')}}",
-		type: "POST",
-		data:  formData,
-		contentType: false,
-        processData:false,      
-		success: function(data)
-	    {  	    	
-		//$("#targetLayer").html(data);	
-		console.log(data);
-		const obj = JSON.parse(data);	
-		
-		
-		if(obj.message=="Exit"){
-	 //   console.log(obj.message);	
-		orrning("Barcode allready exit");
-	
-		}else{	
-		    successfull("Product Load");
-             allclear();
-             //document.getElementById("showss").innerHTML.reload;
-		}
-		
-		},
-	  	error: function() 
-    	{
-    	} 	        
-        });							
-		
-        //------this image vailded chack-----
-          //console.log("all right");
-		  
-		  }
-         //------this image vailded chack-----
  
-		//----------------------------------
-		
-	
-        }));});   
-        
-        
-  
-    
-        
-    $(document).ready(function (e) {
-	$("#gg").on('submit',(function(e) {
-		e.preventDefault();		
-		
-	console.log("ok")
-	productname.focus();
-        }));});   
-        
-     
-        
-        
-        
-        
-        
-        
-         
-   inputdd.onclick = function() {
-   	
-     if(product_barcode.value == ""){
-      	errrrr("Bar Code Empty");  	
-      }else if(productname.value == ""){
-      	errrrr("Product Name Empty");  
-      }else if(sub_category_name.selectedIndex=="0"){
-      	errrrr("Choose Catagory Empty");
-      }else if( sub_category.selectedIndex=="0"){
-      	errrrr("Choose Sub-Catagory Empty");
-      }else if( formFile.value==""){
-      	errrrr("Not Image load");
-      }else{  }	
- };  
-       
- 
-   
-   function allclear(){
-     	  formFile.value="";
-          frame.src = "{{asset('frontend/img/demo.jpg')}}";   
-          seleteclear.innerHTML=seleteclear.innerHTML; 
-         
-          productname.value=""; 
-     	  placehol.value="";
-     	  product_barcode.value="";
-   }
-   
-  	
-   	 function preview() {
-                frame.src = URL.createObjectURL(event.target.files[0]);
-              //  console.log('hello');
-            } 
-              
-              
-   
-      
             
 //[4]-----------this add catagory and show catgoral all data			
 
@@ -658,7 +273,7 @@ fetch_customer_data();
 	function inputfunction(){    	
            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
        	    $.ajax({
-                    url: 'catagoryloaddata',
+                    url: '{{route('loader_catagory')}}',
                     type: 'POST',
                     data: {_token: CSRF_TOKEN, catagory_name:cat.value},
                     dataType: 'JSON',
@@ -677,9 +292,9 @@ fetch_customer_data();
        function show(){
 			    $.ajax({
                 type: 'GET',
-                url: 'catagoryshowdata',
+                url: '{{route('catagory_showdata')}}',
                 success: function (response) {
-                const myBooks = JSON.parse(response);     
+                const myBooks = response;     
         
 			    let col = [];
 			    for (let i = 0; i < myBooks.length; i++) {
@@ -721,7 +336,11 @@ fetch_customer_data();
 			    divShowData.innerHTML = "";
 			    divShowData.appendChild(table);
 			    //  response.forEach(element => {$('#named').append(`${element['catagory_name']}`); });
-			                }                
+			              
+			
+			
+			
+			}                
 			            });
 		            }
 		
@@ -785,22 +404,24 @@ fetch_customer_data();
     var catgor=document.getElementById('subcatload');
     var subcatgor=document.getElementById('sub_category_two');
     
-    
+	     
+
                 $(document).ready(function () {
                 $('#subcatload').on('change', function () {
                 let id = $(this).val();
+				console.log(id);
                 $('#sub_category_two').empty();
                 $('#sub_category_two').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                 type: 'GET',
                 url: 'GetSubCatAgainstMain/' + id,
-                success: function (response) {
-                var response = JSON.parse(response);
+                success: function (responsed) {
+                var response = responsed;
                // console.log(response);   
                 $('#sub_category_two').empty();
                 $('#sub_category_two').append(`<option value="0" disabled selected>Select Sub Category*</option>`);
                 response.forEach(element => {
-                    $('#sub_category_two').append(`<option value="${element['id']}">${element['catagory_name']}</option>`);
+                    $('#sub_category_two').append(`<option value="${element['id']}">${element['catagory_name_s']}</option>`);
                     });
                 }
             });
