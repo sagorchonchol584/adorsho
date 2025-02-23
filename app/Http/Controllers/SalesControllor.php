@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 
 class SalesControllor extends Controller
@@ -166,8 +167,8 @@ class SalesControllor extends Controller
 //----this function is sales  profite data insert table profit_datails----route name //profiturl--------
   public function profit_add(Request $reqs){
 
-       $ids = Auth::user()->id;
-        $outlet_Id_user = Auth::user()->ShopID;
+    $ids = Auth::user()->id;
+     $outlet_Id_user = Auth::user()->ShopID;
      $datechack=date("Y-m-d");
      $cashAount=0;
      $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$ids )->where('Outlet_Id', $outlet_Id_user)->get();	
@@ -182,14 +183,25 @@ class SalesControllor extends Controller
      $profitdata['Names']=$reqs->namekey; 
      $profitdata['show_key']=0; 
      $profitdata['Date']=date("Y-m-d");   
-         $profitdata['Admin_Id']=Auth::user()->AdminKey;
-         $profitdata['Starf_Id']=Auth::user()->id;    
-         $profitdata['Starf_Name']=Auth::user()->Name; 
-         $profitdata['Outlet_Id']=Auth::user()->ShopID;    
-         $profitdata['Outlet_Name']=Auth::user()->Shopname; 
+     $profitdata['Admin_Id']=Auth::user()->AdminKey;
+     $profitdata['Starf_Id']=Auth::user()->id;    
+     $profitdata['Starf_Name']=Auth::user()->Name; 
+     $profitdata['Outlet_Id']=Auth::user()->ShopID;    
+     $profitdata['Outlet_Name']=Auth::user()->Shopname; 
      $profitdata['Discount_type']=$reqs->discatkey;    
      DB::table('profit_datails')->insert($profitdata);    	
-       echo json_encode($profitdata);		
+ //    echo json_encode($profitdata);		
+
+
+ // this is for transaction monitor by any personal 
+ $details='Product Sales Transaction by '.Auth::user()->Name;
+ // this way to indenty for debit==0, credit==1; update==2 this insurt data for all transaction
+ Transaction::create(['details' => $details,'amount_catagorise' => 1, 'amount_trans' => $reqs->saleskey+$reqs->diskey,'shop_id' => $outlet_Id_user, 'shatf_id' =>$ids]);
+
+ echo json_encode($details);	
+
+
+
 
 
     if(count($cash_flow_data) > 0){				
@@ -203,7 +215,7 @@ class SalesControllor extends Controller
     $cash_flow['details']='Next Sale data loaded';
     $cash_flow['Update_date']=date("Y-m-d");
    DB::table('cash_flow')->where('Starf_Id',$ids)->where('Outlet_Id', $outlet_Id_user)->update($cash_flow);    
-    echo json_encode($cash_flow);	
+  //  echo json_encode($cash_flow);	
         
       
     }else{
@@ -223,9 +235,15 @@ class SalesControllor extends Controller
    $cash_flow['cash_mark']="No mark";
    $cash_flow['notifi_meg']=0;
    DB::table('cash_flow')->insert($cash_flow);    	
-   echo json_encode($cash_flow_data);	
+   //echo json_encode($cash_flow_data);	
     }
-    }  
 
+
+ 
+
+  
+
+
+    }  
 
 }

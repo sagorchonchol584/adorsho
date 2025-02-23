@@ -7,7 +7,7 @@
 <div class="top_breadc">
 	<div class="top_breadcone"><i class='bx bxs-dashboard bx-lg card' ></i></div>
 	  <div class="top_breadctwo">
-	    <span class="breade_color">Supplier page</span>
+	    <span class="breade_color">CashFlow page</span>
 		<p class="breaderr">This is product supplier page add information whole store.</p>   
       </div>
 </div>	
@@ -20,7 +20,6 @@
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
-    <li class="breadcrumb-item"><a class="breade" href="#">Supplier</a></li>
     @foreach(Request::segments() as $segment)
     <li  class="breadcrumb-item"> <a href="#" class="breade">{{$segment}} </a> </li>
     @endforeach
@@ -28,6 +27,10 @@
 </nav>
 </div>
 </div>
+
+
+          
+
 
 <!--This is a pop loading deing  -->
 <style>
@@ -611,7 +614,7 @@ function expenccostsent(tks,select){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expenceadd/',//done
+         url: '{{ Route('expenceaddroute') }}',//done
          data: {tk:tks,selectvale:select}, 
          success: function (data) {
             console.log(data); 
@@ -701,7 +704,7 @@ function confrm_expenc_update_data_sent(amountcash,expens){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expence_update/',//done
+         url: '{{ route('expence-update-route') }}',//done
          data: {tk:amountcash,selectvale:expens,id:idsss}, 
          success: function (data) {
             console.log(data); 
@@ -763,11 +766,9 @@ console.log("hello");
 
 function cash_sent_any_prsonal(id){
 
-
-  console.log("id :"+id);
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_cash_sent/'+id,
+     url: '/Deshboard/get-data-to-cash-sent/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
 
@@ -870,7 +871,7 @@ function fetch_customer_data()
 
     var monthy_suppier_expence = data.monthy_suppier_exps.toString().split('.');
     monthy_suppier_expence[0] = monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-     console.log('this all supplier data'+data.monthy_suppier_exps);
+   //  console.log('this all supplier data'+data.monthy_suppier_exps);
     var extra_monthy_suppier_expence = data.extra_monthy_suppier_exps.toString().split('.');
     extra_monthy_suppier_expence[0] = extra_monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -951,7 +952,7 @@ function updatedata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_update/'+id,
+     url: '/Deshboard/get-data-to-update/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
       if(datajos.message=="exitdata"){
@@ -982,13 +983,13 @@ function deletdata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_update/'+id,
+     url: '/Deshboard/get-data-to-delete-check/'+id,
      success: function (data) {
 
 	var datajos=JSON.parse(data);
-  console.log(datajos.id+"hghghghghghgh");
+  console.log(datajos.message);
 
-      if(parseInt(datajos.message)==0){
+      if(parseInt(datajos.message)===0){
         dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
       }else{
         console.log("whats happend")
@@ -1031,10 +1032,10 @@ function conformdeleta(id){
 function datedeleteinfo(id){
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_delete/'+id,//done
+     url: '/Deshboard/get-data-to-delete/'+id,//done
      success: function (data) {
-	var datajos=JSON.parse(data);
-
+	
+    var datajos=JSON.parse(data);
      console.log(datajos);
      fetch_customer_data();
        

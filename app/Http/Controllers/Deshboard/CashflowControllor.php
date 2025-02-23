@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use App\Models\Transaction;
 
 class CashflowControllor extends Controller
 {
@@ -70,6 +70,14 @@ class CashflowControllor extends Controller
         $cashflow['supplier_id']=0; 
         $cashflow['Name']=Auth::user()->Name; 
         DB::table('cash_flow_cost_info')->insert($cashflow);  
+
+
+        // this is for transaction monitor by any personal 
+  $details='Expence add by '.Auth::user()->Name.' insert form '.$reqs->selectvale;
+  // this way to indenty for debit==0, credit==1; this insurt data for all transaction
+  Transaction::create(['details' => $details,'amount_catagorise' => 0, 'amount_trans' => $reqs->tk,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
+
+
         }
     
        }
@@ -84,9 +92,10 @@ class CashflowControllor extends Controller
       $cashcash_credit_get=0;
       $cashcash_credit=0;
       $cashcash_debit=0;
-      $cashcash_debit_tk=0;
+      $cashcash_debit_trans=0;
       $getname="";
       $nameget='';
+      $nameget_id='';
   
       $cash_flow_cost_info_get=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id )->where('Outlet_id', $ShopID)->where('Ac_check', 0)->get();	
   
@@ -131,6 +140,7 @@ class CashflowControllor extends Controller
         foreach($users as $row)
         {
           $nameget=$row->Name;
+          $nameget_id=$row->id;
         }
       }
   
@@ -193,8 +203,25 @@ class CashflowControllor extends Controller
         
     $users_upadate['Notifi_meg']=1;
     DB::table('users')->where('id',$id)->update($users_upadate); 
-  
+
   }
+
+  // this is for transaction monitor by any personal 
+  $details='Balance Transfer by '.Auth::user()->Name.' to  '.$nameget.' because Balance close for todays ';
+  // this way to indenty for debit==0, credit==1; update==2 this insurt data for all transaction
+  Transaction::create(['details' => $details,'amount_catagorise' => 0, 'amount_trans' => $cashcash_credit,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
+
+  //echo json_encode('transaction');	
+
+// this is for transaction monitor by any personal 
+$detailsa='Balance Transfer by '.$nameget.' to  '.Auth::user()->Name.' because Balance close for todays ';
+// this way to indenty for debit==0, credit==1; update==2 this insurt data for all transaction
+Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_trans' => $cashcash_credit,'shop_id' => $ShopID, 'shatf_id' =>$nameget_id]);
+
+
+
+
+
      }
    
   
@@ -205,8 +232,8 @@ class CashflowControllor extends Controller
       $adminCat = Auth::user()->AdminCat;
       $cashdebitupdate=0;
       $cashdebitupdatedata=0;
-  
-      $expenceupdate=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->where('admin_show', 0)->get();
+      $cashdebitupdateaddtrans=0;
+      $expenceupdate=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->get();
       $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
   
       if(count($expenceupdate) > 0){	
@@ -215,6 +242,8 @@ class CashflowControllor extends Controller
        // $cashAount=$row->cash_credit;
         $cashdebitupdateadd=$rowc->debit_tk;
         }
+
+        $cashdebitupdateaddtrans=$cashdebitupdateadd;
         $cashdebitupdate=$cashdebitupdateadd-$reqs->tk;
   
         if($cashdebitupdate>0){
@@ -223,10 +252,13 @@ class CashflowControllor extends Controller
           $cashdebitupdatedata=$cashdebitupdate*-1;
         }
         
-        echo json_encode($cashdebitupdate);	
+       
+      }else{
+
+        
       }
   
-  
+      echo json_encode($reqs->id);	
       
       
       if(count($cash_flow_data) > 0){	
@@ -261,9 +293,16 @@ class CashflowControllor extends Controller
     $cashflow['details']=$reqs->selectvale;
     DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $reqs->id)->update($cashflow);  
   
+   }   
   
-   }
+
+    // this is for transaction monitor by any personal 
+    $details='Expence Update add by '.Auth::user()->Name.' insert form '.$reqs->selectvale.' befor amount was '.$cashdebitupdateaddtrans;
+    // this way to indenty for debit==0, credit==1; update==2 this insurt data for all transaction
+    Transaction::create(['details' => $details,'amount_catagorise' => 2, 'amount_trans' => $reqs->tk,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
   
+    echo json_encode($cashdebitupdateaddtrans);	
+
   
      }
    
@@ -454,7 +493,7 @@ class CashflowControllor extends Controller
               $fromDate = Carbon::parse(date("Y-m-d"));
               $days = $toDate->diffInDays($fromDate);
               
-           if($days==0){
+          if($days==0){
             $mesadd="Today";
            }else{
             $mesadd=$days." Days";
@@ -466,7 +505,6 @@ class CashflowControllor extends Controller
           
           }else{
             $admin_not_show_dat++;
-            
             $adminshow='<span style=color:red; onclick="updatedata('.$row->id.')"><i class="bx bx-edit bx-sm" ></i></span> <span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
             $dddcash='<input type="checkbox" id="cashfun" value="'. $row->id.'">';
            }
@@ -698,8 +736,9 @@ class CashflowControllor extends Controller
         echo json_encode($data_sent);
       }
     }else{
-      $data_sent=array("message"=>0);
+      $data_sent=array("message"=>'exitdata');
       echo json_encode($data_sent);
+    
     }
      // echo json_encode($reqs->id);Admincat
   
@@ -711,39 +750,132 @@ class CashflowControllor extends Controller
       $ShopID = Auth::user()->ShopID;
       $statechek = Auth::user()->AdminCat;
       $stratf_id = Auth::user()->id;
-      $cashdebitupdatedata=0;
-      $cashcash_credit=0;
-      $cashcash_debit=0;
-  
-     
-   
-    $expenceupdate=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->get();
-    $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->get();	
-  
-    if(count($expenceupdate) > 0){	
-      foreach($expenceupdate as $rowc)
-      {
-      $cashdebitupdatedata=$rowc->debit_tk;
+      $expene_check=0;
+      $supperiD=0;
+      $which_data='';
+    $info_check=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->get();
+
+    if($info_check->count() > 0){
+      foreach($info_check as $dataget){
+        $expene_check= $dataget->expend_cost;
+        $supperiD=$dataget->supplier_id;
+        $which_data=$dataget->details;
       }
-    }
+
       
-    if(count($cash_flow_data) > 0){	
-      foreach($cash_flow_data as $rowc)
-      {
-      $cashcash_credit=$rowc->cash_credit;
-      $cashcash_debit=$rowc->cash_debit;
-      }
-    }
-   
-    $cash_flow['cash_credit']=$cashcash_credit+$cashdebitupdatedata;
-    $cash_flow['cash_debit']=$cashcash_debit-$cashdebitupdatedata;
-   DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flow);   
+if($expene_check===1){
   
-  $showdata=DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
-   $data_sent=array("message"=>$showdata);
-   echo json_encode($cash_flow);
-  //echo json_encode($cashdebitupdatedata);
+  $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
+  $cash_credit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_credit');	
+  $cash_debit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_debit');	
+  $cash_flowdat['cash_credit']=$cash_credit+$debit_tk;
+  $cash_flowdat['cash_debit']=$cash_debit-$debit_tk;
+  DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flowdat);   
+  DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
+  $data_sent=array("message"=>'this is expences data');
+  
+
+ 
+   $details='Delete expence by '.Auth::user()->Name.' Where form '.$which_data;
+  // this way to indenty for debit==0, credit==1; this insurt data for all transaction
+  Transaction::create(['details' => $details,'amount_catagorise' => 1, 'amount_trans' => $debit_tk,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
+  echo json_encode($data_sent);
+}else{
+
+ 
+   $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
+  $cash_credit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_credit');	
+  $cash_debit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_debit');	
+  $cash_flowdat['cash_credit']=$cash_credit+$debit_tk;
+  $cash_flowdat['cash_debit']=$cash_debit-$debit_tk;
+  DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flowdat);   
+  DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
+
+
+  $paymenttk_get=DB::table('suppile_info')->where('Stratf_id',$stratf_id)->where('ShopID', $ShopID)->where('id', $supperiD)->value('paymenttk');
+   $payablek_get=DB::table('suppile_info')->where('Stratf_id',$stratf_id)->where('ShopID', $ShopID)->where('id', $supperiD)->value('payable');
+
+
+  $suppile_info_data['payable']=$payablek_get+$debit_tk;
+  $suppile_info_data['paymenttk']=$paymenttk_get-$debit_tk;
+  $suppile_info_data['updated_at']=now();
+  DB::table('suppile_info')->where('Stratf_id',$stratf_id)->where('ShopID', $ShopID)->where('id', $supperiD)->update($suppile_info_data);  
+
+
+  $details='Delete supplier or payable balance by '.Auth::user()->Name.' Where form '.$which_data;
+  // this way to indenty for debit==0, credit==1; this insurt data for all transaction
+  Transaction::create(['details' => $details,'amount_catagorise' => 1, 'amount_trans' => $debit_tk,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
+
+
+
+  $data_sent=array("message"=>$suppile_info_data);
+  echo json_encode($data_sent);
+ 
+
+}
+
+
+
+      // if($expene_check==1){
+
+      //   $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
+      //    $cash_credit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_credit');	
+      //    $cash_debit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_debit');	
+      //    $cash_flowdat['cash_credit']=$cash_credit+$debit_tk;
+      //    $cash_flowdat['cash_debit']=$cash_debit-$debit_tk;
+      //    DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flowdat);   
+      //    DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
+      //    $data_sent=array("message"=>'succesufull delete');
+       
+   
+      // }
+      // else
+      // {
+   
+      //   $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
+      //    $cash_credit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_credit');	
+      //    $cash_debit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_debit');	
+      //    $cash_flowdat['cash_credit']=$cash_credit+$debit_tk;
+      //    $cash_flowdat['cash_debit']=$cash_debit-$debit_tk;
+      //    DB::table('cash_flow')->where('Starf_Id',$stratf_id)->where('Outlet_Id', $ShopID)->update($cash_flowdat);   
+      //    DB::table('cash_flow_cost_info')->where('Outlet_Id', $ShopID)->where('Admincat', $statechek)->where('id', $id)->delete();
+      //    $suppile_info=DB::table('suppile_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('supplier_id');
+      //    $data_sent=array("message"=>'succesufull delete');
+      //  }
+
+
+
+
+    }
+    else
+    {
+      $data_sent=array("message"=>0);
+      echo json_encode($data_sent);
+
+    }
+
      }
   
-  
+
+
+     public function get_data_to_delete_check($id){
+     
+      $ShopID = Auth::user()->ShopID;
+      $stratf_id = Auth::user()->id;
+
+    $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
+
+    if($debit_tk===null){
+      $data_sent=array("message"=>0);
+     
+    }else{
+      $data_sent=array("message"=>1);
+    }
+
+    echo json_encode($data_sent);
+     }
+
+
+
+
 }

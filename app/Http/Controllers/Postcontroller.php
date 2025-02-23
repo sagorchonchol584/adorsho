@@ -61,13 +61,7 @@ public function stockloadlogfuncation($barcode,$id){
   //  echo json_encode($id); 
 }
   
-public function chackingfuntwo(Request $reqs){
 
-$test=array('test'=>$reqs->catagory_name);
-echo json_encode($test);
-$pizza  = $reqs->catagory_name;
-
-}
 
 
 
@@ -1164,46 +1158,7 @@ public function supplierdataload(Request $reqs){
  }
 }
 
-// public function report(){
-//     return view('deshboard.report');
-//   }
-       
-// public function removedate($id,$qty){
 
-//    // $datess['message']=$id;
-//    // $datess['messagefff']=$qty;
-      
-//   if(Auth::check()){
-//     	$ids = Auth::user()->Shop_cat_id;
-//     	$outlet_Id_user = Auth::user()->ShopID;
-    				
-// 	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
-//     		if(count($stockinfo) === 0){				
-//     			 $datess['message']='Exit';
-//     			 echo json_encode($datess);	   
-//     		}else{
-
-    	
-    		
-//            foreach($stockinfo as $row)
-//            {
-//            $Total_product=$row->Total_product;
-//            $total_sales_count=$row->Total_sales_count;
-//            }
-           
-//            	$productt=$Total_product+$qty;
-//              $datesss['Total_sales_count']=$total_sales_count-$qty; 
-//            	$datesss['Total_product']=$productt; 
-//            	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
-//            	echo json_encode($stockinfo);
-           
-//     		}		
-//        }
- 
-//   }
-  
-   
- //product purcher add  data 
  
  public function purcher_add($id, $qty,$num){
  	  if(Auth::check()){
@@ -1249,98 +1204,6 @@ public function supplierdataload(Request $reqs){
  
 
   
-// //----this function is sales  profite data insert table profit_datails----route name //profiturl--------
-//   public function profit_add(Request $reqs){
-//  	  if(Auth::check()){
-
-//       	$ids = Auth::user()->id;
-//        	$outlet_Id_user = Auth::user()->ShopID;
-//         $datechack=date("Y-m-d");
-//         $cashAount=0;
-//         $cash_flow_data=DB::table('cash_flow')->where('Starf_Id',$ids )->where('Outlet_Id', $outlet_Id_user)->get();	
-    
-
-//         $profitdata['Recive_number']=$reqs->numkey; 
-//         $profitdata['totaldiscout']=$reqs->diskey; 	
-//         $profitdata['Profit']=$reqs->amountkey;   	
-//         $profitdata['Net_Profit']=$reqs->amountkey-$reqs->diskey; 	
-//         $profitdata['Total_sales']=$reqs->saleskey+$reqs->diskey; 	
-//         $profitdata['Net_Sale']=$reqs->saleskey; 
-//         $profitdata['Names']=$reqs->namekey; 
-//         $profitdata['show_key']=0; 
-//         $profitdata['Date']=date("Y-m-d");   
-// 		    $profitdata['Admin_Id']=Auth::user()->AdminKey;
-// 		    $profitdata['Starf_Id']=Auth::user()->id;    
-// 		    $profitdata['Starf_Name']=Auth::user()->Name; 
-// 		    $profitdata['Outlet_Id']=Auth::user()->ShopID;    
-// 		    $profitdata['Outlet_Name']=Auth::user()->Shopname; 
-//         $profitdata['Discount_type']=$reqs->discatkey;    
-//         DB::table('profit_datails')->insert($profitdata);    	
-//       	echo json_encode($profitdata);		
-
-
-//        if(count($cash_flow_data) > 0){				
-       
-//            foreach($cash_flow_data as $row)
-//             {
-//             $cashAount=$row->cash_credit;
-//             }
-
-//        $cash_flow['cash_credit']=$cashAount+$reqs->saleskey;
-//        $cash_flow['details']='Next Sale data loaded';
-//        $cash_flow['Update_date']=date("Y-m-d");
-//       DB::table('cash_flow')->where('Starf_Id',$ids)->where('Outlet_Id', $outlet_Id_user)->update($cash_flow);    
-//        echo json_encode($cash_flow);	
-       	
-         
-//        }else{
-
-//       $cash_flow['date']=date("Y-m-d");
-//       $cash_flow['cash_credit']=$reqs->saleskey;
-//       $cash_flow['cash_provider_name']='Cash not Sent';
-//       $cash_flow['details']='NetSales';
-//       $cash_flow['cash_debit']=0;
-//       $cash_flow['Outlet_Id']=Auth::user()->ShopID; 
-//       $cash_flow['Starf_Name']=Auth::user()->Name; 
-//       $cash_flow['Starf_Id']=Auth::user()->id; 
-//       $cash_flow['admin_show']=0;
-//       $cash_flow['sent_confim']=0;
-//       $cash_flow['Admin_show_date']=date("Y-m-d");
-//       $cash_flow['Update_date']=date("Y-m-d"); 
-// 	  $cash_flow['cash_mark']="No mark";
-// 	  $cash_flow['notifi_meg']=0;
-//       DB::table('cash_flow')->insert($cash_flow);    	
-//       echo json_encode($cash_flow_data);	
-
-//        }
-
-
-//     }
- 
-//  }  
- 
- 
-// public function profit_show(){
-// if(Auth::check()){
-
-//   $AdminCat = Auth::user()->AdminCat;
-//   $Starf_Id = Auth::user()->id;
-//   $ids = Auth::user()->ShopID;
-//   $datee=date("Y-m-d");
-
-//   if($AdminCat=="Admin"){
-//     $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->get();
-//      echo json_encode($profit_show);
-//   }else{
-//     $profit_show=DB::table('profit_datails')->where('Outlet_Id', $ids)->orderBy('id', 'DESC')->where('Date', $datee)->where('Starf_Id', $Starf_Id)->get();
-//     echo json_encode($profit_show);
-//   }
-// }
-// else{
-//   $datess['message']="Please contract administration ";
-//   echo json_encode($datess);
-// }
-// }
 
 
 
@@ -1417,65 +1280,7 @@ public function deshboard_all_info_get_data_func(){
 
 */
   
-// public function profitdatailsfun($id){
-  
-//     if(Auth::check()){	
-//     	$outlet_Id_user = Auth::user()->ShopID;
-// 	       $profitdatailsfun=DB::table('purches_list')->where('Outlet_Id', $outlet_Id_user)->where('Recive_num', $id)->get();	
-// 	    $profit_with_discout=DB::table('profit_datails')->where('Outlet_Id', $outlet_Id_user)->where('Recive_number', $id)->get();	
 
-// 	    if(count($profitdatailsfun) === 0 && count($profit_with_discout) === 0){				
-//     			 $profitdatailsfun['message']='Exit';
-//     		echo json_encode($profitdatailsfun);	   
-//     		}
-//     		else
-//     		{
-
-//           $all_data = array("profit_with_discout"=>$profit_with_discout,"profitdatailsfun"=>$profitdatailsfun);
-//           echo json_encode($all_data);
-      
-//     		}
-    		
-// 		 }else{return view('login');}
-//   }
-    
-// public function searchidcan($id){
-	
-// 	  if(Auth::check()){
-//     	$ids = Auth::user()->Shop_cat_id;
-//     	$outlet_Id_user = Auth::user()->ShopID;
-    				
-// 	  $stockinfo=DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->get();			
-//     		if(count($stockinfo) === 0){				
-//     			 $datess['message']='Exit';
-//     			 echo json_encode($datess);	   
-//     		}else{
-//          	foreach($stockinfo as $row)
-//           {
-//            $Total_product=$row->Total_product;
-//            $total_sales_count=$row->Total_sales_count;
-//           }
-           
-//            if($Total_product<=0){
-//            	  $datess['message']='Exit';
-//            	  $datess['data']='NO';
-//     			  echo json_encode($datess);	 
-//            }else{
-           	
-//            	$productt=$Total_product-1;
-             
-//            	$datesss['Total_product']=$productt; 
-//             $datesss['Total_sales_count']=$total_sales_count+1; 
-//            	DB::table('stock_info')->where('Barcode', $id)->where('Outlet_Id', $outlet_Id_user)->update($datesss);
-//            	echo json_encode($stockinfo);
-           	
-//            }
-//     		}
-	
-    		
-    			
-//        }
-//   }
   
 public function barcodes($id){
 
@@ -1942,141 +1747,6 @@ public function input_data_stock_load($barcode,$Product_load_numer){
     }
 }
 
-// public function Stock_Info_add_demo(Request $reqs){
-//   if(Auth::check()){ 
-//     $ShopID = Auth::user()->ShopID;
-//     $data = DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->get();
-// 	  $total_row = $data->count();
-// 	  $ndate=date_create($reqs->Expire_date);	
-// 	  $newdate=date_format($ndate,"Y-m-d");
-
-//       if($total_row > 0)
-//       {
-//        foreach($data as $row)
-//        {
-//         $Total_product=$row->Total_product;
-//         $loadeddate=$row->Expire_date;
-//         $shopidload=$row->Outlet_Id;
-//         $barcodes=$row->Barcode;
-//        }
-       
-//        if($Total_product<=0){
-//        $datess['Product_show_by_admin']=0;
-//        $datess['Product_load_numer']=$reqs->Product_units;  
-//        $datess['Purches_Price']=$reqs->Purches_Price;  
-//        $datess['Sales_Price']=$reqs->Sales_Price;
-//        $datess['Product_add_user_id']=Auth::user()->id;
-//        $datess['Update_Date']=date("Y-m-d");
-//        $datess['Descount_rate']=$reqs->Descount_rate; 
-//        $datess['Expire_date']=$reqs->Expire_date; 
-        
-//         if($reqs->Weight=="empty"){
-//        	$datess['Weight']="0";
-//        }
-//        else{
-//        	$datess['Weight']=$reqs->Weight;
-//        }
-       
-//       if($reqs->pieces=="empty"){
-// 	       $datess['pieces']="0";
-//         }
-//        else{
-// 	 $datess['pieces']=$reqs->pieces;
-//        }
-       
-       
-//        DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-//       echo json_encode($datess); 	
-//       //echo json_encode("working this funcation");
-    
-//        }
-       
-//        else if($loadeddate==$newdate){
-//        $total_pr=$reqs->Product_units;
-//        $datess['Product_show_by_admin']=0; 
-//        $datess['Product_load_numer']=$total_pr;  
-//        $datess['Purches_Price']=$reqs->Purches_Price;  
-//        $datess['Sales_Price']=$reqs->Sales_Price;
-//        $datess['Product_add_user_id']=Auth::user()->id;
-//        $datess['Update_Date']=date("Y-m-d");
-//        $datess['Descount_rate']=$reqs->Descount_rate; 
-
- 
-//        if($reqs->Weight=="empty"){
-//        	$datess['Weight']="0";
-//        }
-//        else{
-//        	$datess['Weight']=$reqs->Weight;
-//        }
-
-//       if($reqs->pieces=="empty"){
-// 	   $datess['pieces']="0";
-//         }
-//        else{
-// 	 $datess['pieces']=$reqs->pieces;
-//        }
-       
-       
-//       DB::table('stock_info')->where('Barcode', $reqs->Barcode)->where('Outlet_Id', $ShopID)->update($datess); 
-//       echo json_encode($datess);
-	
-//        }else{
-       	 
-//        	 $datess['message']='Exit';
-//     	 echo json_encode($datess);		 
-       	
-//        }
-       
-//        }else{
-//        $datess['Product_show_by_admin']=0; 
-//        $datess['Product_name']=$reqs->Product_name;
-//        $datess['Barcode']=$reqs->Barcode;
-//        $datess['Facility_Product_for_internet']=FALSE;
-//        $datess['Product_load_numer']=$reqs->Product_units;  
-//        $datess['Total_product']="0";
-//        $datess['Purches_Price']=$reqs->Purches_Price;  
-//        $datess['Sales_Price']=$reqs->Sales_Price;
-//        $datess['Product_add_user_id']=Auth::user()->id; 
-//        $datess['Outlet_Id']=Auth::user()->ShopID;
-//        $datess['Outlet_Name']=Auth::user()->Shopname;
-//        $datess['Image']=$reqs->Image;  
-//        $datess['Expire_date']=$reqs->Expire_date;  
-//        $datess['Add_date']=date("Y-m-d");
-//        $datess['Update_Date']=date("Y-m-d");
-//        $datess['Descount_rate']=$reqs->Descount_rate;     
-//        $datess['Catagory']=$reqs->Catagory;
-//        $datess['Sub_Catagory']=$reqs->Sub_Catagory;
-//        $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory;
-//        $datess['Top_rating_range']=0;  
-//        $datess['Toral_product_load_count']=0; 
-//        $datess['Total_sales_count']=0;  
-//       if($reqs->Weight=="empty"){
-//        	$datess['Weight']="0";
-//        }
-//        else{
-//        	$datess['Weight']=$reqs->Weight;
-//        }
-       
-       
-//        if($reqs->pieces=="empty"){
-//        	$datess['pieces']="0";
-//        }
-//        else{
-//        	$datess['pieces']=$reqs->pieces;
-//        }
-      
-// 	   DB::table('stock_info')->insert($datess); 
-	   
-	   
-// 	   echo json_encode($datess);
-//        }
-  
-//     }else{
-//     	return view('login');
-//     	}     
-// } 
-
-
 
   
 public function customer_Data_add(Request $req){
@@ -2301,25 +1971,9 @@ public function createnewprofile(){
 	}
 			
 
-  public function product_supplier(){
-    if(Auth::check()){	
-      $id = Auth::user()->id;	
-    //  if()
-   
-     // $data['posts']=DB::table('users')->where('AdminKey',$id)->paginate(9);
-      return view('deshboard.product_supplier');
-    }
-    else{return view('login');}
-}
+
   
 
-// public function cashflowfun(){
-//   if(Auth::check()){	
-//     $id = Auth::user()->id;	
-//     return view('deshboard.cash_flow');
-//   }
-//   else{return view('login');}
-// }
 
 public function userOnlineStatus(){
         $users = User::all();
@@ -2490,7 +2144,7 @@ public function customRegistration(Request $require){
 //this all page show with date pass	
 		
 public function login(){
-    	if(Auth::check()){return redirect('overview');}else{return view('login');}
+    	if(Auth::check()){return redirect()->route('overview');}else{return view('login');}
 	}
 		
 // public function sales(){    

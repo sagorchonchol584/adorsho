@@ -1393,7 +1393,7 @@ $.ajax({
    url: '{{ route('profiturls') }}',  //done
    data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
    success: function (data) {
-     // console.log(data); 
+      console.log(data); 
    
    },
    error: function() { 

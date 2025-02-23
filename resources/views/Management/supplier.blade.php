@@ -691,26 +691,6 @@ if(inputSelect0.value=="other"){
 }
 
 
-// $.ajaxSetup({
-//             headers: {
-//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//          });
-//  $.ajax({
-//      type: 'POST', //THIS NEEDS TO BE GET
-//      url: '/chackingtwo/',
-//      data: {catagory_name:myArray}, 
-//      success: function (data) {
-//         console.log("date add refurn value"+data); 
-//      },
-//      error: function() { 
-//       // meass.innerHTML="Data failed";
-//       //    console.log(data);
-//      }
-//     });
-
-
-
    }
 
 
@@ -757,23 +737,6 @@ console.log("gggg"+cash_credit_totals);
 }
 
 
-// $.ajaxSetup({
-//             headers: {
-//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//          });
-//  $.ajax({
-//      type: 'POST', //THIS NEEDS TO BE GET
-//      url: '/chackingtwo/',
-//      data: {catagory_name:myArray}, 
-//      success: function (data) {
-//         console.log("date add refurn value"+data); 
-//      },
-//      error: function() { 
-//       // meass.innerHTML="Data failed";
-//       //    console.log(data);
-//      }
-//     });
 
 
 
@@ -788,7 +751,7 @@ function datashowwite(id){
   idsforsupplier=id;
   $.ajax({
   method:'GET',
-    url: '/supplierlist/'+id+"/",
+    url: '/Management/supplierlist/'+id,
    dataType:'json',
    success:function(data)
    {
@@ -939,7 +902,7 @@ function sentdata(){
          });
  $.ajax({
      type: 'POST', //THIS NEEDS TO BE GET
-     url: '/stockloadfinally/',
+     url: '{{ route('stockloadfinallyroute') }}',
      data: {id:idsforsupplier,tk:supplierpayment.value,payabletk:payabletksa,methedpay:inputSelect0.value}, 
      success: function (data) {
         console.log(data); 
@@ -967,7 +930,7 @@ $.ajaxSetup({
        });
 $.ajax({
    type: 'POST', //THIS NEEDS TO BE GET
-   url: '/payabledataloaded/',
+   url: '{{ route('payabledataloadedroute') }}',
    data: {id:payabaleId,tk:payablepayment.value,payabletk:extrapayabletks,methedpay:Selectpayable.value}, 
    success: function (data) {
       console.log(data); 

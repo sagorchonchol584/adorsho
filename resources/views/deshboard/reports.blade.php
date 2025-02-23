@@ -77,10 +77,13 @@
 <div class="col-12 h-1000">
 
 <!-- Button trigger modal -->
-<button type="button" onclick="suss()" >
+<button type="button" onclick="test()" >
   Launch static backdrop modal
 </button>
 
+<button type="button" onclick="shoetest()" >
+ show
+</button>
 
 
 
@@ -142,6 +145,42 @@ swal("Write something here:", {
 		
 		
 		}
+
+
+function test(){
+	
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '{{ route('transication') }}',
+     success: function (data) {
+     console.log(data);  
+     },
+     error: function() { 
+
+     }
+    });
+	
+			
+	}
+
+
+
+	function shoetest(){
+	
+	$.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '{{ route('transicationshow') }}',
+     success: function (data) {
+     console.log(data);  
+     },
+     error: function() { 
+
+     }
+    });
+	
+			
+	}
+
 
 </script>
 

@@ -552,6 +552,7 @@
 					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Stock Add</a></li>
 					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Category</a></li>
 					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Info</a></li>	
+					<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width  @if(Request::is('Management/supplier') || Request::is('Management/supplier/*')) acticecust @endif"> Suplier Pages</a></li>
 					</ul>
 				 </div>
 				</div>
@@ -575,7 +576,7 @@
 								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>     
 		                   		 @endif
 								<li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
-								<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width "> Suplier Pages</a></li>  
+								  
 								<li><a href="{{route('profileView')}}" class="link-dark rounded menu-width">Profile</a></li>
 								<li><a href="#" class="link-dark rounded menu-width">Settings</a></li>
 								<li><a href="{{route('loginout')}}" class="link-dark rounded menu-width">Sign out</a></li>
@@ -918,7 +919,7 @@ function disableDarkModeac(){
 
 
 function enablepage(){	
-  var wrapper = document.querySelector('.fff');
+  var wrapper = document.querySelector('.pagess');
 	  pagese.style.height = wrapper.clientHeight+"px";
       localStorage.setItem("collapsac_page", "Page");      
 }
@@ -945,7 +946,7 @@ function disableDeshboard(){
 
 
 function enableManagemnt(){	
-      var wrapper = document.querySelector('.deshbo');
+      var wrapper = document.querySelector('.pagessd');
 	  Managementddd.style.height =  wrapper.clientHeight+"px";
       localStorage.setItem("managementkey", "Management");      
 }

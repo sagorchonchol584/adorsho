@@ -519,7 +519,7 @@ display: block;
 
       </div>
         <div class="text-sm-end p-1 ">
-			<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="dataloadedfun()">Sent</button>
+		<button  type="button"  id="datasent" class="btn btn-primary text-sm-end" onclick="dataloadedfun()">Sent</button>
 		</div>	
    </div>
  </div>
@@ -546,10 +546,8 @@ display: block;
     var available=document.getElementById('available');   
     var esxpire_date=document.getElementById('expire_date');	
     var inputdd=document.getElementById('inputdd'); 
-
 	var allselect=document.getElementById("allselected");
 	var datasent=document.getElementById("datasent");
-
 	var product=document.getElementById('product');
 	var totals=document.getElementById('totals');
 	var propriername=document.getElementById('propriername');
@@ -589,7 +587,7 @@ function fetch_customer_data()
    {
     $('.hello').html(data.table_data);
   //  $('#total_records').text(data.total_data);
-   //   console.log(data.total_data);
+     console.log(data.total_data);
       button_chack_for_sent();
 
 	  if(parseInt(data.total_data)==0){
@@ -1118,7 +1116,9 @@ function datatranfer() {
 if(suppliername.value!=="" && phone.value!=="" && address.value!=="" && propriername.value!=="" || paymetstk.value!==""){
 	confram();
 	
-}else{
+}
+else
+{
 	dailogmess("Empty you field","Please Chack Your field","info");
 }
 
@@ -1134,7 +1134,7 @@ function add_data(){
 			 });
 	 $.ajax({
 		 type: 'POST', //THIS NEEDS TO BE GET
-		 url: 'supplierdataload/',//done
+		 url: '{{ route('supplier-dataload-routes') }}',//done
 		 data: {company_name:suppliername.value,name:propriername.value,mobile:phone.value,address:address.value,unite:unites,totaltk:totaltk}, 
 		 success: function (data) {
 			all_barcode_number(data);

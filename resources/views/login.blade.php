@@ -67,7 +67,7 @@
 							Don’t have an account?
 						</span>
 
-						<a class="txt2" href="{{route('reg')}}">
+						<a class="txt2" >
 							Sign Up
 						</a>
 					</div>

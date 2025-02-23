@@ -4,6 +4,7 @@ use App\Http\Controllers\Management\CatagorisCrontrollor;
 use App\Http\Controllers\Management\StockControllor;
 use App\Http\Controllers\Management\ProductControllor;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Management\SupplierControllor;
 
 
 
@@ -30,12 +31,13 @@ Route::get('GetSubCatAgainstMainmulti/{id}', [CatagorisCrontrollor::class,'GetSu
 
 
 //-----------------Stock Aad page  oute and controller user StockControllor-------------------------------
+
 Route::get('/stock',[StockControllor::class,"Stock_View"])->name('stock');
 Route::get('/stock_show', [StockControllor::class,'stockchack'])->name('stock_show_ronter');
 Route::get('/barcode/{id}', [StockControllor::class,'barcodes'])->name('barcodess');
 Route::post('/stockload', [StockControllor::class, 'Stock_Info_add_demo'])->name('stockload');
 Route::get('/stockloadlog/{barcode}/{id}', [StockControllor::class,'stockloadlogfuncation']);
-Route::post('/supplierdataload', [StockControllor::class,'supplierdataload']);
+Route::post('/supplierdataload', [StockControllor::class,'supplierdataload'])->name('supplier-dataload-routes');
 Route::get('/barcode/{id}', [StockControllor::class,'barcodes'])->name('barcodess');
 
 
@@ -50,5 +52,10 @@ Route::post('/productloaddata', [ProductControllor::class,'product_add'])->name(
 
 
 
-
+//-----------------Supper  page  oute and controller user ProductCrontrollor-------------------------------
+Route::get('/supplier', [SupplierControllor::class,'product_supplier'])->name('product_supplier_page');
+Route::get('/supplierlist/{id}', [SupplierControllor::class,'suplier_list']); //----
+Route::get('/supplierstates', [SupplierControllor::class,'suplierstate'])->name("supplierstatesrounte"); //-----
+Route::post('/payabledataloaded', [SupplierControllor::class, 'Payable_finally'])->name('payabledataloadedroute');  //----
+Route::post('/stockloadfinally', [StockControllor::class, 'Stock_Info_add_finally'])->name('stockloadfinallyroute'); 
 });

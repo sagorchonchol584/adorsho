@@ -28,21 +28,30 @@ Route::controller(DeshboardContro::class)->middleware('auth')->group(function(){
     //---this route  judt show page 
     Route::get('/cashflow', [CashflowControllor::class,'cashflowfun'])->name('cashflowfun');
     //---this route  expence cost uploaded   ----route:  stockloadfinally------------
-    Route::post('/expenceadd', [CashflowControllor::class,'expence_add_func']);   
+    Route::post('/expenceadd', [CashflowControllor::class,'expence_add_func'])->name('expenceaddroute');   
     //---this route  expence cost sent cash   ----route:  stockloadfinally------------
-    Route::get('/get_data_to_cash_sent/{id}', [CashflowControllor::class,'get_data_to_cash_sent_func']);
+    Route::get('/get-data-to-cash-sent/{id}', [CashflowControllor::class,'get_data_to_cash_sent_func']);
     //---this route  expence cost update   ----route:  stockloadfinally------------
-    Route::post('/expence_update', [CashflowControllor::class,'expence_update_func']);
+    Route::post('/expence-update', [CashflowControllor::class,'expence_update_func'])->name('expence-update-route');
     Route::get('/cashflowstates', [CashflowControllor::class,'cashflowstates'])->name("cashflowstatesroute");
     //---this route  expence cost uploaded   ----route:  stockloadfinally------------
-    Route::get('/get_data_to_update/{id}', [CashflowControllor::class,'get_data_to_update_func']);
+    Route::get('/get-data-to-update/{id}', [CashflowControllor::class,'get_data_to_update_func']);
     //---this route  expence cost delete   ----route:  stockloadfinally------------
-    Route::get('/get_data_to_delete/{id}', [CashflowControllor::class,'get_data_to_delete_func']); 
-
-
+    Route::get('/get-data-to-delete/{id}', [CashflowControllor::class,'get_data_to_delete_func']); 
+    //---this route  delete check   ----route:  ------------
+    Route::get('/get-data-to-delete-check/{id}', [CashflowControllor::class,'get_data_to_delete_check']); 
 
 //------------------------------------------report ------------------------------------------
     
    Route::get('/reports', [ReportsControllor::class,'reports'])->name('reports');
+
+   Route::get('/transication', [ReportsControllor::class,'transication_fun'])->name('transication');
+
+   Route::get('/transicationshow', [ReportsControllor::class,'show_fun'])->name('transicationshow');
+
+
+
+
+
   });
  
