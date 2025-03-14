@@ -1317,8 +1317,8 @@ public function barcodes($id){
     
 public function customerinfo(){	
   if(Auth::check()){
-     $data['posts']=DB::table('customer_info')->orderBy('total_purches_count', 'DESC')->limit(45)->paginate(9);
-     $datatwo['poststwo']=DB::table('customer_info')->orderBy('id', 'DESC')->limit(8)->get();
+     $data['posts']=DB::table('customers')->orderBy('total_purches_count', 'DESC')->limit(45)->paginate(9);
+     $datatwo['poststwo']=DB::table('customers')->orderBy('id', 'DESC')->limit(8)->get();
     return view('frontend.customer',$data, $datatwo)->with('messages','false');
   }else{
     return view('login');
@@ -1327,7 +1327,7 @@ public function customerinfo(){
    
 public function customerdelete($id){	
   
-    DB::table('customer_info')->where('id',$id)->delete();
+    DB::table('customers')->where('id',$id)->delete();
     return redirect("customerinfo");
  
   }
@@ -1772,7 +1772,7 @@ public function customer_Data_add(Request $req){
            $dates['Outlet_Name']="56"; 
            $dates['Device_Info']="965";   
                 
-           DB::table('customer_info')->insert($dates);          
+           DB::table('customers')->insert($dates);          
            return redirect("customerinfo");
            // echo("hello nabd");
          // return view('customerinfo')->with('messages','true');

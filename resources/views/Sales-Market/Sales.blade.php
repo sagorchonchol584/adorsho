@@ -137,12 +137,60 @@ top:20%;
 	background-color: red;
 }
 
+.customerbox {
+  height: 580px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+
+.boxr {
+  height: 580px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+.
+
+
+.popoo{
+    height: 80px;
+    width: 100%;
+    background-color:  #e9e9e9;
+  }
+ .purchestwosss{
+  height: 410px;
+  width: 100%;
+  overflow-y: scroll;
+ }
+
+
 </style>
     
     
     
 
 <div id="light" class="white_content"> 
+
+
+
 <div class="box" id="boxx">
  <div class="maindailoboax">
   <div class="exitdd">
@@ -179,11 +227,10 @@ top:20%;
       <td><span id="nets"></span></td>
     </tr> 
      <tr>
-    
       <td>Payment A :</td> 
       <td> <input type="number" value="" id="Payment" style="width: 100%; font-size: 20px; font-weight: bold;" min="0" max="99"/></td>
-    </tr>  <tr>
-    
+     </tr> 
+     <tr>
       <td>States :</td> 
       <td><span id="States" style="color: red; font-weight:bold; font-size:20px ">gggg</span></td>
     </tr>
@@ -197,12 +244,11 @@ top:20%;
 </div>
 
 <div class="butttons">
-	<button id="paymentbtm" type="button" onclick="finnall()" class="btn btn-primary">Continus</button>&nbsp;
+	<button id="paymentbtm" type="button" onclick="finnall()" class="btn btn-primary">Next</button>&nbsp;
 </div>
 
   </div>
   </div>
- 
  
  
 <div class="box" id="boxtwo">
@@ -257,34 +303,6 @@ top:20%;
 </div>
 
 
-<style>
-	
-  .boxr {
-  height: 500px;
-  width: 600px;
-  margin: auto;
-  border: 1px solid #555500ff;
-  text-align: center;
-  border-radius: 9px;
-  background: white;
-  position: relative;
-  top:20%;
-  text-align: center;
-  border-radius: 5px;
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-.popoo{
-    height: 80px;
-    width: 100%;
-    background-color:  #e9e9e9;
-  }
- .purchestwosss{
-  height: 410px;
-  width: 100%;
-  overflow-y: scroll;
- }
-</style>
-
 <div class="boxr" id="purches">
  
   <div class="exitdd">
@@ -323,6 +341,56 @@ top:20%;
 </div>
 </div>
 
+
+<div class="customerbox" id="customerid">
+ 
+  <div class="exitdd">
+  	<div class="gggg">
+  	 <button class="ddd" onclick="exittwocustomer()"><span style="color: white">X</span></button>
+    </div>
+  </div>
+  <span style="color: black; font-size: 16px; font-weight: 500;">**Create Customer Profiles**</span>
+  <div class="purchestwosss">
+<!-- -------start------------ -->
+ 
+<div class="container-fluid">
+<form action="{{route('customerdateAdd')}}" id="myForm" method="post">
+  <?php echo csrf_field(); ?>
+  <div class="form-group">
+    <input type="text" class="form-control" id="Name" name="customer_name" aria-describedby="emailHelp" placeholder="Name" required>
+  </div> <br/>
+  
+  <div class="form-group">
+    <input type="phone" min="11" class="form-control" id="mobile" maxlength="11" name="mobile" placeholder="Mobile"  required>
+  </div><br/>
+  
+   <div class="form-group">
+    <input type="text" class="form-control" id="address" name="address" placeholder="address" required>
+  </div><br/>
+
+
+</div>
+
+
+ 
+
+
+
+
+
+
+<!-- -------end------------ -->
+</div>
+<div class="popoo">
+<div class="col-6 h-80 text-md-end p-4">
+    
+</div>
+<div class="col-6  h-80 text-md-end p-4 color: red;">
+<button type="submit" class="btn btm-primary-cus">Add</button>
+</form>
+</div>
+</div>
+</div>
 
 
 
@@ -373,7 +441,26 @@ top:20%;
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	}
 	
-</style>
+
+        .suggestion-list {
+            position: absolute;
+            background: white;
+            width: 100%;
+            border: 1px solid #ddd;
+            max-height: 300px;  /* Set the maximum height to 300px */
+            overflow-y: auto;   /* Add vertical scrolling if content exceeds 300px */
+            z-index: 1000;
+        }
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+        .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
 
 <div class="row">
 <div class="card">
@@ -398,20 +485,34 @@ top:20%;
 		<div class="col-3">
 		<div class="custom float-right">
 			<span  style=" font-size: 18px; font-weight: 600;">Customer Name: </span>
-			   <input type="checkbox"  id="checkboxpises" class="form-check-input" style="width: 25px; height: 25px;">
+			   <input type="checkbox"  id="checkboxpises" class="form-check-input" style="width: 25px; height: 25px; background-color:var(--primary-100);">
 		</div>	  
 		</div>
 		
 		<div class="col-3">
 			<div class="p-2 float-right">
-				 <form id="searchid">
-				<?php echo csrf_field(); ?>
-				<input class="form-control" name="customername" id="customername" type="text" class="inputFile"/>
-			 </form>	
+
+		  <div class="position-relative">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="customername" id="customername" placeholder="Customer Name" aria-label="Customer Name" aria-describedby="basic-addon2">
+         <div class="input-group-append">
+           <button class="btn btm-primary-cus" id='btmcustomer' onclick="customer_data()" type="button">
+           <i class='bx bxs-user-plus bx-sm'></i>
+           </button>
+         </div>
+         </div>
+       <div id="suggestions" class="suggestion-list"></div>
+
+  
+        </div>
+			
+		
+		
 		</div>
 			
 		</div>
 			<hr>
+
 		</div>
 		
 	</div>
@@ -502,11 +603,11 @@ display: block;
 
 <div class="tatols">
 </div>
-<button class="btn btn-outline-primary" id="clearbtn" onclick="confram()">Clear</button>
+<button class="btn btm-secentd-cus" id="clearbtn" onclick="confram()">Clear</button>
 <div class="float-right" >
 		<span style=" font-size: 22px; font-weight: 600; ">Total Price:</span>
 		<span id="sum" style=" font-size: 22px; font-weight: 600;"></span>&nbsp&nbsp&nbsp&nbsp
-		<button  id="ajax" class="btn btn-primary" onclick="continus()">Continuous</button>
+		<button  id="ajax" class="btn btm-primary-cus" onclick="continus()">Next</button>
 	</div>
 </div>
 </div>
@@ -521,11 +622,12 @@ display: block;
 
 <div class="card saleslist table-wrapper-scroll-y my-custom-scrollbar">		
 <div class="p-2 ">	
+  <span>Today is sales</span>
 <table class="table table-striped">
   <thead  style="text-align: right">
     <tr >
       <th scope="col">#</th>
-      <th scope="col">Sales Man</th>
+      <th scope="col">Name</th>
       <th scope="col">Date</th>
     <!--  <th scope="col">Discount</th> -->
       <th scope="col">Sales</th>
@@ -541,6 +643,21 @@ display: block;
   
 <script>
 
+
+
+function customer_data(){
+  document.getElementById('customerid').style.display='block';
+  document.getElementById('light').style.display='block';
+  document.getElementById('fade').style.display='block';
+  document.getElementById('purches').style.display='none';
+  document.getElementById('boxtwo').style.display='none';
+  document.getElementById('boxx').style.display='none';
+
+}
+
+
+
+
 var detailschack = document.getElementById('detailschack');
 var discoutchack = document.getElementById('discoutchack');
 
@@ -548,30 +665,27 @@ var discoutchack = document.getElementById('discoutchack');
 tessst();
 
 function purchesdatashow(ddd){
-	
+
 document.getElementById('light').style.display='block';
 document.getElementById('fade').style.display='block';
 document.getElementById('purches').style.display='block';
 document.getElementById('boxtwo').style.display='none';
 document.getElementById('boxx').style.display='none';
-
-
+document.getElementById('customerid').style.display='none';
 var purschssss = document.getElementById('purschssss');
-
     $.ajax({
     type: 'GET', 
-    url: '/profitdatails/'+ddd, //done
+    url: '{{ route('profitdatailsname') }}', //done
+    data:{product_id:ddd},
     success: function (data, status) {
     
     var getdata = JSON.parse(data);
     
+    console.log(getdata);
     
     // this total show 
     var objone = getdata.profit_with_discout;
     for(var key in objone){
-   //  console.log(objone[key].Net_Sale);
-
-
      detailschack.innerHTML="Total: "+objone[key].Total_sales+"Tk";
      discoutchack.innerHTML="Discount: "+objone[key].Discount_type;
      }
@@ -682,7 +796,7 @@ function tessst(){
 	let buttons = document.createElement('button');
   var ddd=obj[key].Recive_number;
 
-  buttons.innerHTML=obj[key].Starf_Name;
+  buttons.innerHTML=obj[key].Names;
 	buttons.className="link";
 	buttons.id=ddd;
 	buttons.setAttribute("onClick", "purchesdatashow("+ddd+")");
@@ -768,7 +882,7 @@ var States = document.getElementById('States');
 var Payment = document.getElementById('Payment');
 var customername = document.getElementById('customername');
 var checkboxpises = document.getElementById('checkboxpises');
-
+//var btmcustomer = document.getElementById('btmcustomer');
 
 
 
@@ -787,10 +901,14 @@ let disconttkPayment=0;
 let nettkbal=0;
 let totaldiscout=0;
 let discount_cat;
+let cusmter_id=0;
+
+
+
+
 
 
 if (localStorage.getItem("count")) {
-	
     count = parseInt(localStorage.getItem("count"));
     if(count<=0)
 	{
@@ -799,13 +917,12 @@ if (localStorage.getItem("count")) {
 	}else{
 	 continubtnone.disabled=false;
 	 clearbtn.disabled=false;
-	}
-    
+	}   
 }else{
-	
 	continubtnone.disabled=true;
 	clearbtn.disabled=true;
 }
+
 
 
 if (localStorage.getItem("sum")) {
@@ -824,6 +941,63 @@ if (localStorage.getItem("cart")) {
 }
 
 cheackbox();
+
+
+// this search custmer data
+$(document).ready(function() {
+        $("#customername").on("keyup", function() {
+                let query = $(this).val();
+                
+                // If the query length is greater than 1, fetch matching customers
+                if (query.length > 1) {
+                    $.ajax({
+                        url: "{{ route('search.customer') }}",  // Adjust URL if needed
+                        type: "GET",
+                        data: {  mobile: query },
+                        success: function(data) {
+                            let suggestions = "";
+                            if (data.length > 0) {
+                                data.forEach(customer => {
+                                    suggestions += `
+                                        <div class='suggestion-item' data-name='${customer.customer_name}' data-id='${customer.id}'>
+                                            <div>${customer.customer_name}</div>
+                                            <div>(${customer.mobile})</div>
+                                        </div>
+                                    `;
+                                });
+                            } else {
+                                suggestions = "<div class='suggestion-item'>No results found</div>";
+                                cusmter_id=0;
+                            }
+
+                            $("#suggestions").html(suggestions).show();  // Show suggestions
+                        }
+                    });
+                } else {
+                    $("#suggestions").hide();  // Hide suggestions if query is too short
+                }
+            });
+
+            // Select item from suggestions
+            $(document).on("click", ".suggestion-item", function() {
+                $("#customername").val($(this).data("name"));
+                cusmter_id=$(this).data("id");
+                console.log(cusmter_id)
+                $("#suggestions").hide();
+            });
+
+            // Hide suggestions when clicking outside
+            $(document).on("click", function(e) {
+                if (!$(e.target).closest("#customername, #suggestions").length) {
+                    $("#suggestions").hide();
+                }
+            });
+        });
+
+
+
+
+
 
 //this a test purpose ,this succssfull methoth,,,route name length,,,and controlar function name length
 
@@ -861,10 +1035,11 @@ cheackbox();
  	if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- //	console.log("true");
+     $("#btmcustomer").attr('disabled','disabled');
  	}else{
  		customername.value="";
-        customername.disabled = false;
+    customername.disabled = false;
+    $("#btmcustomer").removeAttr('disabled');
  	}
  	
  }
@@ -872,12 +1047,16 @@ cheackbox();
 
 
 function cheackbox(){
-	
+
+
+  $("#suggestions").hide();
+  $("#btmcustomer").attr('disabled','disabled');
+
 	checkboxpises.checked=true; 
 if(checkboxpises.checked==true){
  		customername.value="Unknown";
  		customername.disabled = true;
- 	//console.log("true");
+ 	
  	}else{
  		customername.value="";
         customername.disabled = false;
@@ -916,7 +1095,23 @@ function finnall(){
 	
 	document.getElementById('boxx').style.display='none';
 	document.getElementById('boxtwo').style.display='block';
-    printdatashow();
+   printdatashow();
+ 
+ 
+//    cusmter_id_value=cusmter_id;
+//     $.ajax({
+//     type: 'GET',
+//     url:'{{ route('customer.data.check')}}',
+//     data: {customer_name:customername.value,customer_id:cusmter_id_value},
+//     success: function (data) {
+//     console.log(data);
+//     },
+//     error: function() { 
+      
+//     }
+// });
+
+
     purchedata();
 }
 
@@ -1362,24 +1557,23 @@ function check(id,qty){
     }
     
     
-function purcheschack(id,qty,num){
+function purcheschack(id,qty,num,cus_name,cus_id){
     $.ajax({
     type: 'GET', //THIS NEEDS TO BE GET
-    url: '/SalesMarket/purchers/'+id+"/"+qty+"/"+num,//done
+   // url: '/SalesMarket/purchers/'+id+"/"+qty+"/"+num,//done
+    url:'{{ route('purchersrouter') }}',
+    data: {id_get:id,guality:qty,number:num,customer_name:cus_name,customer_id:cus_id},
     success: function (data) {
-    	
-     //   console.log("date add refurn value");
-    //     console.log(data);
-       // $("#data").append(data);
+
     },
     error: function() { 
-        // console.log(data);
+      
     }
 });
     }
     
  
-function profit_data_load(discat,dis,sales,amount,num,name){
+function profit_data_load(discat,dis,sales,amount,num,name,customer_id){
 	
 $.ajaxSetup({
           headers: {
@@ -1391,7 +1585,7 @@ $.ajaxSetup({
 $.ajax({
    type: 'POST', //THIS NEEDS TO BE GET
    url: '{{ route('profiturls') }}',  //done
-   data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name}, 
+   data: {discatkey:discat,diskey:dis,saleskey:sales,amountkey:amount,numkey:num,namekey:name,id:customer_id}, 
    success: function (data) {
       console.log(data); 
    
@@ -1407,20 +1601,52 @@ $.ajax({
 function continus(){
 	
 	
+  if(checkboxpises.checked==true){
+ 	
+console.log('true')
+
+
 document.getElementById('light').style.display='block';
 document.getElementById('fade').style.display='block';
 popups();
 disinput.value="0";
 totalAc();
-
 document.body.style.overflow= "hidden";
 Payment.focus();
 document.getElementById('boxtwo').style.display='none';
 document.getElementById('boxx').style.display='block';
- document.getElementById('purches').style.display='none';
+document.getElementById('purches').style.display='none';
+document.getElementById('customerid').style.display='none';
+
+}else{
  
+let query = $("#customername").val();
+console.log('false'+query);
+if(query===''){
+console.log('Empty is data');
+customername.classList='form-control is-invalid';
+ orrning("Please Fillup Customer Name","Please Customer Name");
+ }else{
+
+
+document.getElementById('light').style.display='block';
+document.getElementById('fade').style.display='block';
+popups();
+disinput.value="0";
+totalAc();
+document.body.style.overflow= "hidden";
+Payment.focus();
+document.getElementById('boxtwo').style.display='none';
+document.getElementById('boxx').style.display='block';
+document.getElementById('purches').style.display='none';
+document.getElementById('customerid').style.display='none';
+console.log('Fillup is data');
+
+
+}
  
- 
+}
+
 }
 
 
@@ -1434,15 +1660,16 @@ if(nameofcoustmor==""){
 var minm = 100000000000; 
 var maxm = 999999999999;       
 var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
+
+//let customername = $("#customername").val();
+cusmter_id_value=cusmter_id;
+profit_data_load(discount_cat,totaldiscout,nettkbal,profit,num,nameofcoustmor,cusmter_id_value);
 	
-	
-	
-	
-	profit_data_load(discount_cat,totaldiscout,nettkbal,profit,num,nameofcoustmor);
-	
+
 	for(var key in cart){
-		purcheschack(key,cart[key].qty,num);
-		var ffff=document.getElementById("n"+key);
+		purcheschack(key,cart[key].qty,num,nameofcoustmor,cusmter_id_value);
+   // purcheschack(key,cart[key].qty,num);
+	var ffff=document.getElementById("n"+key);
      	ffff.remove();
 		   }	
 		   
@@ -1452,11 +1679,10 @@ var num= Math.floor(Math.random() * (maxm - minm + 1)) + minm;
   localStorage.removeItem("sum");
   localStorage.removeItem("profit");
   localStorage.removeItem("count");
-
 	document.getElementById("sum").textContent ="0 Tk";
-    document.getElementById("count").textContent = "Total Product: 0";
-    continubtnone.disabled=true;
-    clearbtn.disabled=true;
+  document.getElementById("count").textContent = "Total Product: 0";
+  continubtnone.disabled=true;
+  clearbtn.disabled=true;
     
    
 }
@@ -1473,7 +1699,14 @@ function exittwo(){
 
 	document.getElementById('light').style.display='none';
 	document.getElementById('fade').style.display='none';
-    location.reload();
+  location.reload();
+}
+
+function exittwocustomer(){
+
+document.getElementById('light').style.display='none';
+document.getElementById('fade').style.display='none';
+;
 }
 
 

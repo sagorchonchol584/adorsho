@@ -528,7 +528,8 @@
 				<div id="Page">
 				<div class="pagess">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
-					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/sales') || Request::is('SalesMarket/sales*')) acticecust @endif"">Sales</a></li>		
+					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/sales') || Request::is('SalesMarket/sales*')) acticecust @endif">Sales</a></li>		
+					<li><a href="{{ route('salesreturnview')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/SalesReturn') || Request::is('SalesMarket/SalesReturn*')) acticecust @endif">Sales Return</a></li>
 					<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>			
 					<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width"> just use perpose</a></li>
 					</ul>
@@ -1126,6 +1127,9 @@ $.ajax({
 	}
 });
 }
+
+
+
 
 
 </script>

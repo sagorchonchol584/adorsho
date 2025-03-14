@@ -259,7 +259,18 @@ function datachack( datec,datecc){
     
       <th scope="row"></th>
       <td>{{$post->customer_name}}</td>
-      <td><span id="dayid" style="color: gray;"> <script> document.write(oo+" Days ago"); </script></span></td>
+      <td><span id="dayid" style="color: gray;"> <script>
+      
+      if(oo===0){
+        document.write("Today");
+    
+      }else{
+          document.write(oo+" Days ago");
+      }
+      
+      
+      
+      </script></span></td>
       <td><span style="color: green; font-weight: bold;">
        <script>
        

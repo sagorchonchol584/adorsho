@@ -15,11 +15,10 @@ class MyService
         $statechek = Auth::user()->AdminCat;
         $stratf_id = Auth::user()->id;
         $stratf_name = Auth::user()->Name;
-$dd=Transaction::get();
-      $debit= Transaction::where('shatf_id',$stratf_id)->where('shop_id',$ShopID)->where('amount_catagorise',0)->sum('amount_trans');
-     $credit= Transaction::where('shatf_id',$stratf_id)->where('shop_id',$ShopID)->where('amount_catagorise',1)->sum('amount_trans');
-
-echo $dd;
+        $dd=Transaction::get();
+        $debit= Transaction::where('shatf_id',$stratf_id)->where('shop_id',$ShopID)->where('amount_catagorise',0)->sum('amount_trans');
+        $credit= Transaction::where('shatf_id',$stratf_id)->where('shop_id',$ShopID)->where('amount_catagorise',1)->sum('amount_trans');
+        echo $dd;
 
     }
 }

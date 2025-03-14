@@ -28,7 +28,7 @@ body{
 [class*='col-']
 {
 	float: left;
-	border: 1px solid rgb(7, 206, 7);
+	border: 1px solid rgb(253, 253, 253);
 }
 .row:after
 {
@@ -47,6 +47,7 @@ background-color: var(--accent-100);
 	color: var(--primary-000);
 }
 
+
 .my-bg-color{
 	background-color: var(--primary-100);
 	
@@ -55,6 +56,40 @@ background-color: var(--accent-100);
 .my-bg-color-sce{
 	background-color: var(--primary-300);
 }
+
+
+.btm-primary-cus{
+	background-color: var(--primary-100);
+	color: white;
+}
+
+.btm-primary-cus:hover{
+	background-color: var(--primary-000);
+	color: white;
+}
+
+
+.btm-secentd-cus{
+	background-color: var(--accent-100);
+	color: white;
+}
+
+.btm-secentd-cus:hover{
+	background-color: var(--primary-100);
+	color: white;
+}
+
+
+.border-cus-top{
+	border-top: 1px solid var(--accent-200);
+}
+
+
+.border-cus-right{
+	border-left: 1px solid var(--accent-200);
+}
+
+
 .col-1{
 	width: 15%;
 	
@@ -138,6 +173,9 @@ background-color: var(--accent-100);
 	height: 450px;
 }
 
+.h-710{
+	height: 700px;
+}
 .h-750{
 	height: 750px;
 }

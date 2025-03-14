@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 
 
-class SalesControllor extends Controller
+class SalesControllorOLd extends Controller
 {
 
     //---------------This is view page to sales page---------------
