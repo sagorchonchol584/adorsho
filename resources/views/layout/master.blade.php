@@ -494,7 +494,7 @@
 			
 				<div id="test" class=" head-main align-items-center"  onclick="Deshbord()">
 				<svg class="bi me-2" width="20" height="20"> <use xlink:href="#home"/></svg>
-				<span  id="deshbdsd" class="desh"> Deshboard</span>
+				<span  id="deshbdsd" class="desh"> Dashboard</span>
 					<i class='bx bx-chevron-down bx-sm float-right '></i>
 		          </div>
 			   </div>
@@ -741,7 +741,7 @@ display: block;
 
 
 <div class="mainedd-master">
-<div class="col-12 h-80 fw-bold p-1" ><span style="font-size: 20px;" >Today is Expends Our shop</span></div>
+<div class="col-12 h-80 fw-bold p-1" ><span style="font-size: 20px;" >Cash Sent To Anther Staff</span></div>
 
 <div class="col-12 h-60">
 
@@ -822,7 +822,7 @@ function conformdeleta(){
  })
  .then((willDelete) => {
    if (willDelete) {
-     swal("Data has Deleted ", {
+     swal("Data has Saved ", {
        icon: "success",
      }).then(function(){
 		

@@ -35,6 +35,9 @@ Route::get('/return-data-update',[SalesControllor::class, 'return_data_update'])
 
 Route::get('/SalesReturn', [SalesControllor::class, 'salesreturnslist'])->name('salesreturnview');
 
+
+Route::get('/return-view-for-reason', [SalesControllor::class, 'returnview'])->name('returnview');
+
 // this route jsut test perpose 
 
 Route::get('/testAnyurl', [SalesControllor::class,'testAnyurlfun'])->name('testAnyurl');

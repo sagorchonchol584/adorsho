@@ -37,6 +37,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\EmployeeActivity::class,
+
+            //----this add myself
+       
+           // \Illuminate\Auth\Middleware\Authenticate::class, // This should be here
+            \App\Http\Middleware\cash_credit_provider::class,
+            
+
+
         ],
 
         'api' => [

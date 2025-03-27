@@ -309,8 +309,14 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="montyexpence">00.00 Tk</span></div>
+
+
+<div class="col-12 h-70 fs-5 fw-bold">
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="montyexpence">00.00 Tk</span> </div>
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="returntk">00.00 Tk</span> </div>
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Expences </span></div>
+</div>
+
 </div>
 </div>
 </div>
@@ -466,6 +472,11 @@ float: right;
         <tr >
          <th>Total Expence</th>
 	    	 <th class="text-right-side"><span id="expenc"> </span></th>
+        </tr>
+
+        <tr >
+         <th>Retrun Balence</th>
+	    	 <th class="text-right-side"><span id="returnsproduct"> </span></th>
         </tr>
         
         <tr  class="table-secondary">
@@ -833,9 +844,18 @@ function fetch_customer_data()
     today_expences[0] = today_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 
-    $('.montyexpence').html(monthy_expences.join('.')+" Tk");
+
+    
+    $('.montyexpence').html(monthy_expences.join('.')+" Tk <small style='color:gray'>(Expence)</small>");
+    $('.returntk').html(data.monthy_return+" Tk <small style='color:gray'>(Return)</small>");
+
     $('#expenc').html(" - "+today_expences.join('.')+" Tk");
     $('#expenc').css("color", "red");
+
+
+    $('#returnsproduct').html(" - "+data.today_return_tk+" Tk");
+    $('#returnsproduct').css("color", "red");
+
 
 
  
@@ -878,8 +898,8 @@ function fetch_customer_data()
     var today_suppier_expence = data.today_suppier_exps.toString().split('.');
     today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk");
-    $('.extra_monthy_suppier_exp').html(extra_monthy_suppier_expence.join('.')+" Tk");
+    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Cash drower)</small>");
+    $('.extra_monthy_suppier_exp').html(extra_monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Own Cash)</small>");
 
     
     $('#supex').html(" - "+today_suppier_expence.join('.')+" Tk");

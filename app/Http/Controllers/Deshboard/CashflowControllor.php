@@ -320,8 +320,10 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
        $monthy_suppier_exps_tk=0;
        $today_suppier_exps_tk=0;
        $today_expence_tk=0;
+       $today_return_tk=0;
        $total_pay_tk_months=0;
        $total_expence_tk_months=0;
+       $total_return_tk_months=0;
        $cureentyears=date('Y');
        $curentmonths=date('m');
        $ShopID = Auth::user()->ShopID;
@@ -350,8 +352,8 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
       Carbon::now()->startOfMonth(), 
       Carbon::now()->endOfMonth()
   ])->limit(100)->orderBy('id', 'DESC')->get();
+ 
   $total_row_log = $datas->count();
-  
   
         //----thhis cah show api  
       $cashflow = DB::table('cash_flow')->where('Outlet_Id', $ShopID)->where('Starf_Id', $Starf_Id)->get();
@@ -446,9 +448,11 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
           if($row->expend_cost===0){
             $today_suppier_exps_tk+=$row->debit_tk;
            }
-           else
+           else if($row->expend_cost===1)
            {
             $today_expence_tk+=$row->debit_tk;
+           }else{
+            $today_return_tk+=$row->debit_tk;
            }
         
           }else{
@@ -460,8 +464,10 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
   
               if($row->expend_cost===0){
                 $monthy_suppier_exps_tk+=$row->debit_tk;
-               }else{
+               }else if($row->expend_cost===1){
                 $total_expence_tk_months+=$row->debit_tk;
+               }else{
+                $total_return_tk_months+=$row->debit_tk;
                }
   
              }
@@ -687,11 +693,9 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
                   }
                   
   
-  
-  
-  
-  
-  
+
+
+
   
           $data = array(
           'table_data'  =>$output,
@@ -700,9 +704,11 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
           'monthy_suppier_exps' => $monthy_suppier_exps_tk,
           'today_suppier_exps' => $today_suppier_exps_tk,
           'today_expence_tk' => $today_expence_tk,
+          'today_return_tk' => number_format($today_return_tk),
           'months_pay' => $total_pay_tk_months,
           'cashflow_log' =>$outputlog,
           'monthy_expence' => $total_expence_tk_months,
+          'monthy_return' => number_format($total_return_tk_months),
           'cash_crdits' => $cash_flow,
           'totalsates' => $Total_salestk,
           'setectvalue' => $selectid,

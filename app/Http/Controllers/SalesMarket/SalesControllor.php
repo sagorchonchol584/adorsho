@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SalesMarket;
 
 use App\Http\Controllers\Controller;
+use App\Models\Returnmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,13 @@ class SalesControllor extends Controller
         public function profitdatailsfun(Request $res){
       
                 $outlet_Id_user = Auth::user()->ShopID;
+                $purshes_data_list='';
+                $proft_show[]='';
+
                $profitdatailsfun=DB::table('purches_list')->where('Outlet_Id', $outlet_Id_user)->where('Recive_num', $res->product_id)->get();	
                 $profit_with_discout=DB::table('profit_datails')->where('Outlet_Id', $outlet_Id_user)->where('Recive_number',$res->product_id)->get();	
         
+
                 if(count($profitdatailsfun) === 0 && count($profit_with_discout) === 0){				
                          $profitdatailsfun['message']='Exit';
                     echo json_encode($profitdatailsfun);	   
@@ -36,7 +41,32 @@ class SalesControllor extends Controller
               
                     }      
                  
-          }
+// if(count($profitdatailsfun)> 0 && count($profit_with_discout)> 0 ){
+ 
+//   foreach($profitdatailsfun as $prw){
+//             $purshes_data_list.='
+//             <tr>
+//             <td>'.$prw->product_Name.'</td>
+//             <td>'.$prw->product_unite.'</td>
+//             <td>'.$prw->product_Price.'</td>
+//             <td>'.$prw->product_unite*$prw->product_Price.'</td>
+//             </tr>';
+//             }
+
+//             foreach($profit_with_discout as $pcrw){
+//               $proft_show[]=['total_sales'=>$pcrw->Total_sales,'Descount_show'=>$pcrw->totaldiscout];
+//               }
+
+//           }else{
+//             $purshes_data_list='<tr><td align="center" colspan="5">Not found data in sales list </td></tr>';
+//           }
+//        //   $all_data = array("profit_with_discout"=>$purshes_data_list,"profitdatailsfun"=>$proft_show);
+          
+//        return response()->json($proft_show);
+                   
+        
+
+}
         
     
         public function profit_show(){
@@ -195,6 +225,7 @@ class SalesControllor extends Controller
          $profitdata['Discount_type']=$reqs->discatkey; 
          $profitdata['Return_amount']=0; 
          $profitdata['Return_profit']=0;
+         $profitdata['Return_count']=0;
          DB::table('profit_datails')->insert($profitdata);    	
      //    echo json_encode($profitdata);		
     
@@ -296,48 +327,84 @@ class SalesControllor extends Controller
         }
 
 
-public function testAnyurlfun(){
-
-  $custormer_id=11;
-
-  if($custormer_id > 0){
-  
-   $total_purches_count_add=0;
-   $datafind= Customer::where('Outlet_Id',Auth::user()->ShopID)->where('id', $custormer_id)->get();
-  // echo json_encode('condition ok'. $datafind);	
-   if(count($datafind) > 0){
-  foreach( $datafind as $datacust){
-    $total_purches_count_add=$datacust->total_purches_count;
-        }
-  $dataupdata['last_purches_date']=date("Y-m-d");
-  $dataupdata['last_price_cost']=1200;
-  $dataupdata['total_purches_count']=$total_purches_count_add+1;
-   Customer::where('id',$custormer_id)->update($dataupdata);
-   }
-  return response()->json($datafind);
-  }
-}
 
 
 
 public function salesreturns(Request $request){
 
 $all_data_show='';
-$sale_list=DB::table('purches_list')->where('Outlet_Id',Auth::user()->ShopID)->where('Recive_num',$request->recivednumber)->get();
+$all_custmore_data='';
+
+$sale_list=DB::table('purches_list')
+->where('Outlet_Id',Auth::user()->ShopID)
+->where('Recive_num',$request->recivednumber)
+->get();
+
+$profit_data=DB::table('profit_datails')
+->where('Outlet_Id',Auth::user()->ShopID)
+->where('Recive_number',$request->recivednumber)
+->get();
+
+
+
+// ->where(function ($query) {
+//   $query->whereColumn('product_unite', 'return_product')
+//         ->orWhereColumn('return_product', '<=', 'product_unite');
+// })
+// ->get();
+
+
 if(count($sale_list)> 0 ){
   foreach($sale_list as $rows){
     $all_data_show.='<tr>
-    <th scope="row" onclick="return_update_fun(\''.$rows->id.','.$rows->product_Name.','.$rows->product_unite.','.$rows->product_Price*$rows->product_unite.'\')">'.$rows->product_Name.'</th>
+    <th scope="row" onclick="return_update_fun(\''.$rows->id.','.$rows->product_Name.','.$rows->product_unite.','.$rows->Sales_price*$rows->product_unite.','.$rows->return_product.'\')">'.$rows->product_Name.'</th>
     <td>'.$rows->product_unite.'</td>
-    <td>'.$rows->product_Price.'</td>
-    <td>'.$rows->product_Price*$rows->product_unite.'</td>
+    <td>'.$rows->return_product.'</td>
+    <td>'.$rows->return_product*$rows->Sales_price.'</td>
+    <td>'.$rows->product_unite-$rows->return_product.'</td>
     </tr>';
   }
 }else{
     $all_data_show='<tr><td align="center" colspan="5">Not found data in sales list </td></tr>';
 }
 
-return response() ->json($all_data_show);
+if(count($profit_data)>0){
+  foreach($profit_data as $rw){
+
+$all_custmore_data='<tr>
+<td> <strong>'.'Customer Name: '.'</strong></td>
+<td>'.$rw->Names.'</td>
+</tr>
+
+<tr>
+<td><strong>'.'Recived Number: '.'</strong></td>
+<td>'.$rw->Recive_number.'</td>
+</tr>
+
+<tr>
+<td><strong>'.'Purches Date : '.'</strong></td>
+<td>'.$rw->Date.'</td>
+</tr>
+
+<tr>
+<td><strong>'.'Return Count : '.'</strong></td>
+<td>'.$rw->Return_count.'</td>
+</tr>
+
+<tr>
+<td><strong>'.'Return Amount: '.'</strong></td>
+<td>'.$rw->Return_amount+$rw->Return_profit.'Tk</td>
+</tr>';
+
+  }
+}
+
+
+
+
+$datashow=['listofreturn'=>$all_data_show,'custmorinfo'=>$all_custmore_data];
+
+return response() ->json($datashow);
 //echo json_encode( $all_data_show);
 }
 
@@ -346,9 +413,11 @@ return response() ->json($all_data_show);
 public function salesreturnslist(){
 
   $returnlist=0;
+  $custmore_count=[];
+  $totalpice=0;
+  $counts=0;
   $sale_list=DB::table('purches_list')
-  ->where('Outlet_Id',Auth::user()
-  ->ShopID)
+  ->where('Outlet_Id',Auth::user()->ShopID)
   ->where('return_product','>', 0)
   ->get();
   
@@ -356,11 +425,28 @@ public function salesreturnslist(){
   if(count($sale_list)> 0 ){
     foreach($sale_list as $rows){
       $returnlist+=$rows->return_product;
+      $custmore_count[]=$rows->Recive_num;
+      $totalpice+=$rows->return_product * $rows->Sales_price;
     }
+
+  //  $countsfun = array_count_values($custmore_count);
+   // dd($custmore_count);
+
+    if(empty($custmore_count)){
+      $countsfun=0;
+    //  dd($countsfun);
+     }else{
+      $countsfun = array_count_values($custmore_count);
+      $counts=count($countsfun);
+    //  dd($countsfun);
+     }
+  //  // $counts =0;
   }else{
   
   }
- return view('Sales-Market.Sales-return', compact('sale_list'),['returnlist' =>$returnlist]);;
+
+ 
+ return view('Sales-Market.Sales-return', compact('sale_list'),['returnlist' =>$returnlist,'total_customer_count'=> $counts,'nowmonth'=>date('F'),'Total_return_price'=>$totalpice]);;
   }
   
 
@@ -371,24 +457,36 @@ public function salesreturnslist(){
     $recived_number=0;
     $product_price=0;
     $return_profit=0;
-   
+    $return_product=0;
+    $customrey_id=0;
+    $returnvalue=0;
+
+
+    //---that is profit variable
+    $reurn_tk=0;
+    $return_profit_profit=0;
+    $return_count=0;
     $sale_list=DB::table('purches_list')
     ->where('Outlet_Id',Auth::user()->ShopID)
     ->where('id', $request->product_id)
     ->get();
+
+
 
 if(count($sale_list)>0){
   foreach($sale_list as $rows){
     $recived_number=$rows->Recive_num;
     $product_price=$rows->product_Price * $request->number;
     $return_profit=$rows->profit_to_Pruduct;
+    $customrey_id=$rows->customer_id;
+    $return_product=$rows->return_product;
   }
 
 
 //this is puchers update when customer product return 
     $purches_array['Return_recived_date']=date("Y-m-d"); 
     $purches_array['Return_recived_name']=Auth::user()->Name;
-    $purches_array['return_product']=$request->number;
+    $purches_array['return_product']=$return_product+$request->number;
     DB::table('purches_list')
     ->where('Outlet_Id',Auth::user()->ShopID)
     ->where('id', $request->product_id)
@@ -396,8 +494,27 @@ if(count($sale_list)>0){
 
 
 //this is profit  update when customer product return 
-    $profitdata['Return_profit']=$return_profit; 	
-    $profitdata['Return_amount']=$product_price; 	
+    $profit_data=DB::table('profit_datails')
+    ->where('Outlet_Id',Auth::user()->ShopID)
+    ->where('Recive_number', $recived_number)
+    ->get();
+
+
+if(count($profit_data)>0){
+  foreach($profit_data as $rws){
+    $reurn_tk=$rws->Return_amount;
+    $return_profit_profit=$rws->Return_profit;
+    $return_count=$rws->Return_count;
+  }
+}
+
+$profitdata['Return_profit']=$return_profit_profit+$return_profit; 	
+$profitdata['Return_amount']=$reurn_tk+$product_price; 
+$profitdata['Return_count']=$return_count+1;
+
+
+
+
     DB::table('profit_datails')
     ->where('Outlet_Id',Auth::user()->ShopID)
     ->where('Recive_number', $recived_number)
@@ -405,17 +522,105 @@ if(count($sale_list)>0){
 
 
 
-    // $dataupdata['coustmore_retun_count']=date("Y-m-d");
-    // $dataupdata['last_price_cost']=1200;
-    // $dataupdata['total_purches_count']=$total_purches_count_add+1;
-    // Customer::where('id',$custormer_id)->update($dataupdata);
+    $custmorydata=Customer::where('id', $customrey_id)->get();
+    if(count($custmorydata)>0){
+            foreach($custmorydata as $rowcustm)
+            {
+              $returnvalue=$rowcustm->coustmore_retun_count;
+            }
+          $dataupdata['coustmore_retun_date']=date("Y-m-d");
+          $dataupdata['coustmore_retun_count']=$returnvalue+1;
+         Customer::where('id',$customrey_id)->update($dataupdata);
+    }
+
+
+    $datafind = DB::table('cash_flow')
+    ->where('Outlet_Id', Auth::user()->ShopID)
+    ->where('Starf_Id', Auth::user()->id)
+    ->value('cash_credit');
+
+
+    $updatacash_creat['cash_credit']=$datafind-($product_price+$return_profit);
+    $datafind = DB::table('cash_flow')
+    ->where('Outlet_Id', Auth::user()->ShopID)
+    ->where('Starf_Id', Auth::user()->id)
+    ->update($updatacash_creat);
+
+
+
+
+    $ShopID = Auth::user()->ShopID;
+    $stratf_id = Auth::user()->id;
+    $adminCat = Auth::user()->AdminCat;
+  
+    
+    $cashflow['Outlet_id']=Auth::user()->ShopID; 
+    $cashflow['Admincat']=Auth::user()->AdminCat;
+    $cashflow['debit_tk']=$product_price+$return_profit; 
+    $cashflow['date']=date("Y-m-d");
+    $cashflow['Update_Date']=date("Y-m-d"); 	
+    $cashflow['Admin_show_date']=date("Y-m-d"); 
+    $cashflow['stratf_id']= Auth::user()->id;
+    $cashflow['details']='Product Return';
+    $cashflow['Ac_check']=0; 
+    $cashflow['expend_cost']=2;//this product return (2) if expense you shoud write 1
+
+    if($adminCat=="Admin"){
+      $cashflow['admin_show']=1; 
+     }else{
+      $cashflow['admin_show']=0; 
+     }
+
+    $cashflow['supplier_id']=0; 
+    $cashflow['Name']=Auth::user()->Name; 
+    DB::table('cash_flow_cost_info')->insert($cashflow);  
+
+
+    // this is for transaction monitor by any personal 
+$details='Expence add by '.Auth::user()->Name.' Product Return to Sales , product Id '.$request->product_id;
+// this way to indenty for debit==0, credit==1; this insurt data for all transaction
+Transaction::create(['details' => $details,'amount_catagorise' => 0, 'amount_trans' =>($product_price+$return_profit),'shop_id' => Auth::user()->ShopID, 'shatf_id' => Auth::user()->id]);
+
+
+Returnmark::create(['details'=>$request->return_reason,'received_number' => $recived_number, 'Product_id' => $request->product_id, 'date' =>date("Y-m-d"), 'Starf_Id' => Auth::user()->id,'Outlet_Id'=>Auth::user()->ShopID]);
+
+
 
 
 
 }
-    return response()->json($product_price);
+   return response()->json($product_price);
   }
 
+
+public function returnview(Request $request){
+  $datagetview='';
+$dataget=Returnmark::where('Product_id',$request->idvaule)->get();
+if(count($dataget)>0){
+  $datagetview=Returnmark::where('Product_id',$request->idvaule)->value('details');
+}else{
+  $datagetview='Not input this product reason';
+}
+return response()->json($datagetview);
+  
+}
+
+
+
+public function testAnyurlfun(){
+  $month= date('n');
+  $year=date('Y');
+  
+  $sale_list=DB::table('purches_list')
+  ->where('Outlet_Id',Auth::user()->ShopID)
+  ->whereYear('Return_recived_date', $year)
+  ->whereMonth('Return_recived_date', $month)
+  ->where('return_product','>', 0)
+  ->get();
+
+ 
+ dd($sale_list);
+}
 
     }
     

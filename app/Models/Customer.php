@@ -22,6 +22,7 @@ class Customer extends Model
         'customer_behebihar',
         'coustmore_sale_id',
         'coustmore_retun_count',
+        'coustmore_retun_date',
         'Admin_Id',
         'Starf_Id',
         'Starf_Name',

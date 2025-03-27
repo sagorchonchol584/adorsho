@@ -32,22 +32,46 @@
 <div class="container card">
     <div class="row">
         <div class="col-12 h-50 p-3">
-            <div class="col-md-3">
+            <div class="col-md-3 border">
                 <div class="input-group">
-                  <input type="text" class="form-control" id="searchsalerecived" placeholder="Recived num" value="775836136309">
+                  <input type="text" class="form-control" id="searchsalerecived" placeholder="Recived num" value="392148648591">
                   <div class="input-group-prepend">
                     <button class="btn btm-primary-cus" id="submitbtn">Search</button>
                   </div>
+                  
                 </div>
               </div>
+
+              <div class="col-md-9 border">
+                <div class="input-group justify-content-end">
+               <span class="fs-4">To</span>
+                <div class="form-group mx-sm-3 mb-2">
+                  <label for="inputPassword2" class="sr-only">Password</label>
+                  <input type="text" class="form-control" id="searchsalerecived" placeholder="Start Date">
+                </div>
+                <span class="fs-4">From</span>
+                <div class="form-group mx-sm-3 mb-2">
+                  <label for="inputPassword2" class="sr-only">Password</label>
+                  <input type="text" class="form-control" id="searchsalerecived" placeholder="End Date">
+                </div>
+                
+                  <div class="input-group-prepend">
+                    <button class="btn btm-primary-cus" id="submitbtn">Search</button>
+                  </div>  
+                </div>
+              </div>
+
+            
+
+             
         </div>
     </div>
 </div>
 
 <style>
-    .my-custom-scrollbar {
+.my-custom-scrollbartable {
 position: relative;
-height: 450px;
+height: 500px;
 overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -212,20 +236,29 @@ float: right;
   <tbody class="supplierlist">
     
   </tbody>
+  
 </table>
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Return for Reason</label>
+    <textarea class="form-control" id="retrunreason" rows="5"></textarea>
+  </div>
 </div>
 </div>
 
-<div class="info  border">
+<div class="info ">
   <div class="tkinfo">
     <div class="col-4"> <span class="cashs"></span></div>
-    <div class="col-8">  <h4 id="infomag"></h4></div>
+    <div class="col-8">  <h4 id="infomag">
+    </h4></div>
 
   </div>
   <div class="inputtsupper">
   <div class="input-group ">
-  <span class="stceted p-1 fs-5" id="inputGroupSelect03"> </span>
+  <span class="stceted p-1 fs-5" id="inputGroupSelect03">   
+</span>
+
 </div>
+
 
   </div> 
   <div class="inputtsuppertwo">
@@ -246,6 +279,21 @@ float: right;
 //recivednumberlist();
 let product_qty=0;
 let product_id=0;
+let return_product=0;
+let product_avablie=0;
+let product_price=0;
+
+let balance=0;
+
+if (Number.isInteger(parseInt({{ $cashCredit }}))) {
+     balance=parseInt({{ $cashCredit }});
+  
+} else {
+    console.log("Value is NOT an integer.");
+    errorfunt('Please check cashcredit balance ','And again try it','warning');;
+}
+
+
 $(document).ready(function () {
 
 function recivednumbercheck() {
@@ -256,7 +304,10 @@ $.ajax({
     data:{recivednumber:datacheck},
     success: function (data) {
        // console.log(data);
-        $('#saladatashow').html(data);
+        $('#saladatashow').html(data.listofreturn);
+        $('#custmoreinfo').html(data.custmorinfo);
+
+
        
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -272,7 +323,7 @@ $("#submitbtn").click(function () {
  
 
     recivednumbercheck();
-    $("#searchsalerecived").val('775836136309');
+    $("#searchsalerecived").val('392148648591');
     
 });
 });
@@ -289,14 +340,16 @@ function errorfunt(tittle,sectittle,mess){
 
 
 
-function returndataupdate(value_p,product_id) {
+function returndataupdate(value_p,product_id,input_retrunreason) {
 
 $.ajax({
     type: 'GET', 
     url: '{{route('returndataupdate')}}',
-    data:{number:value_p,product_id:product_id},
+    data:{number:value_p,product_id:product_id,return_reason:input_retrunreason},
     success: function (data) {
-   $('#retun_data').val('');
+   $('#retun_data').val('');  
+    $('#retrunreason').val('');
+
   console.log(data)
        
     },
@@ -313,16 +366,20 @@ $.ajax({
 
 function return_update_fun(text) {
 
- // console.log(text) 757,Deshi Shosha 11111,5,600---->id,Name,qty,price---0,1,2,3
+ 
+
+ // console.log(text) 757,Deshi Shosha 11111,5,600---->id,Name,qty,price---0,1,2,3,4
   pop_custom_on();
   const myArray = text.split(",");
   product_qty=myArray[2];
   product_id=myArray[0];
-
+  return_product=myArray[4];
+  product_price=myArray[3];
+  product_avablie=parseInt(product_qty)-parseInt(return_product);
 var showdata='<tr><th scope=row>'+myArray[1]+'</th><th style="text-align:right">'+myArray[3]+'</th></tr>';
 
   $('.supplierlist').html(showdata);
-  $('#inputGroupSelect03').html('Total product: '+myArray[2])
+  $('#inputGroupSelect03').html('Total product: '+product_avablie)
  
 }
 
@@ -347,21 +404,101 @@ function pop_custom_off(){
 
 function datatranfer(){
  
-  let input_value_for_return=$('#retun_data').val();
+
+  let input_value_for_return=$('#retun_data').val();  
+  let input_retrunreason=$('#retrunreason').val();
+
+
+  console.log(input_value_for_return);
+
   if(input_value_for_return===''){
    $('#retun_data').attr('class','form-control is-invalid');
   }else{
-if(product_qty>=input_value_for_return && input_value_for_return>0){
+if(product_avablie>=input_value_for_return && input_value_for_return>0){
 
-  returndataupdate(input_value_for_return,product_id);
+  if(balance>parseInt(product_price)){
+  confram(input_value_for_return,product_id,input_retrunreason);
   pop_custom_off();
+  }else{
+    errorfunt('Please check your Cash less then return porduct','And again try it','warning');
+  }
 
 }else{
-  errorfunt('Your input number is wrong or mistake','And again try it','warning');;
+  errorfunt('Your input number is wrong or mistake','And again try it','warning');
 }
   }
  
+
+
+
+
 }
+
+
+function confram(input_value_for_return,product_id,input_retrunreason){
+
+swal({
+  title: "Are you sure?",
+  text: "Sales is Return, not be able to recover this imaginary data!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Your Product Return succssfull ", {
+      icon: "success",
+    }).then(function(){
+   //  console.log("deleta data");
+    location.reload();
+    });
+    returndataupdate(input_value_for_return,product_id,input_retrunreason);
+
+  } else {
+    swal("Do you want Exit ?",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+	}
+			
+
+function return_product_view(id){
+
+
+// fetch('{{route('returnview') }}')
+// .then(response => response.json())  
+// .then(data => {           
+// console.log(data);
+  
+//             })
+// .catch(error => console.error('Error:', error));
+
+ // errorfunt('Internal Server Error or 500','And again try it','warning');;
+
+
+$.ajax({
+  type: 'GET', 
+    url: '{{route('returnview')}}',
+    data:{idvaule:id},
+    success: function (data) {
+
+      errorfunt(data,'Product Retrun info','info');
+  console.log(data)
+       
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+       // errorfunt();;
+      }
+});
+        
+
+
+}
+
 
 </script>
 
@@ -370,21 +507,22 @@ if(product_qty>=input_value_for_return && input_value_for_return>0){
 
 
 
-<div class="container card showsale">
-    <div class="row border-cus-top  h-710">
-        <div class="col-8 ">
+<div class="container card showsale ">
+    <div class="row border-cus-top  h-710 ">
+        <div class="col-8">
         <p class="text-center p-3 fw-bold fs-4 lh-1">**This Month Sales Return list**</p>
     
         <hr>
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
-
+<div class="table-wrapper-scroll-y my-custom-scrollbartable ">
  <table class="table">
   <thead>
     <tr>
       <th scope="col">Name</th>
+      <th scope="col">Total Product</th>
       <th scope="col">Total Retrun</th>
-      <th scope="col">Price</th>
-      <th scope="col">Total TK</th>
+      <th scope="col">Retrun TK</th>
+      <th scope="col">Sales</th>
+ 
     </tr>
   </thead>
   <tbody id="saladatashow">
@@ -392,10 +530,11 @@ if(product_qty>=input_value_for_return && input_value_for_return>0){
   @if ($sale_list && count($sale_list) > 0) 
     @foreach ($sale_list as $show)
         <tr>
-            <td scope="row" >{{ $show->product_Name }}</td>
+            <td scope="row" onclick="return_product_view({{ $show->id }})" class="border"><bold>{{ $show->product_Name }}</bold></td>
+            <td>{{ $show->product_unite }}</td>
             <td>{{ $show->return_product }}</td>
-            <td>{{ $show->product_Price }}</td>
-            <td>{{ $show->product_Price * $show->return_product }}</td>
+            <td>{{ $show->return_product * $show->Sales_price }}</td>
+            <td>{{ $show->product_unite - $show->return_product }}</td>
         </tr>
     @endforeach
 @else
@@ -415,22 +554,23 @@ if(product_qty>=input_value_for_return && input_value_for_return>0){
         </div>
         <div class="col-4 border-cus-right">
 
-        <p class="text-center p-3 fw-bold fs-4 lh-1">Total Return {{$returnlist}}</p>
+        <p class="text-center p-3 fw-bold fs-4 lh-1">Total Product {{$returnlist}} Return</p>
+        
         <hr>
         <table class="table">
-  <tbody>
-    <!-- <tr>
-      <td>Name</td>
-      <td>sagor</td>
+  <tbody id="custmoreinfo">
+    <tr>
+      <td><strong>Total Customer :</strong> </td>
+      <td><span>{{ $total_customer_count }} Persons</span></td>
     </tr>
     <tr>
-      <td>Sales Date</td>
-      <td>12-06-2024</td>
+      <td><strong>Month :</strong></td>
+      <td><span>{{ $nowmonth }}</span></td>
     </tr>
     <tr>
-      <td>Net price</td>
-      <td>1200</td>
-    </tr> -->
+      <td><strong>Totol Return :</strong></td>
+      <td><span>{{ $Total_return_price }} Tk</span></td>
+    </tr>
   </tbody>
 </table>
         </div>

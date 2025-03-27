@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->text('customer_behebihar')->nullable();
             $table->unsignedBigInteger('coustmore_sale_id')->nullable();
             $table->integer('coustmore_retun_count')->default(0);
+            $table->date('coustmore_retun_date')->nullable();
             $table->unsignedBigInteger('Admin_Id')->nullable();
             $table->unsignedBigInteger('Starf_Id')->nullable();
             $table->string('Starf_Name')->nullable();

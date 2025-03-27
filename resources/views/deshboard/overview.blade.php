@@ -20,7 +20,7 @@
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
-    <li class="breadcrumb-item"><a class="breade" href="#">Deshboard</a></li>
+    
     @foreach(Request::segments() as $segment)
     <li  class="breadcrumb-item"> <a href="#" class="breade">{{$segment}} </a> </li>
     @endforeach

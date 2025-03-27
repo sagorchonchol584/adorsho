@@ -12,7 +12,7 @@ Route::controller(DeshboardContro::class)->middleware('auth')->group(function(){
 
 
 
-  Route::prefix('Deshboard')->middleware('auth')->group(function(){
+  Route::prefix('Dashboard')->middleware('auth')->group(function(){
 
 
 //---------------------------- Overview with controllor OverviewControllor ----------------------
