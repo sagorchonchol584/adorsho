@@ -42,21 +42,20 @@
                 </div>
               </div>
 
-              <div class="col-md-9 border">
+              <div class="col-md-9">
                 <div class="input-group justify-content-end">
-               <span class="fs-4">To</span>
+               <span class="fs-4">Start</span>
                 <div class="form-group mx-sm-3 mb-2">
-                  <label for="inputPassword2" class="sr-only">Password</label>
-                  <input type="text" class="form-control" id="searchsalerecived" placeholder="Start Date">
+                  
+                  <input type="date" class="form-control" id="from_date" placeholder="End Date">
                 </div>
-                <span class="fs-4">From</span>
+                <span class="fs-4">End</span>
                 <div class="form-group mx-sm-3 mb-2">
-                  <label for="inputPassword2" class="sr-only">Password</label>
-                  <input type="text" class="form-control" id="searchsalerecived" placeholder="End Date">
+                <input type="date" class="form-control" id="to_date" placeholder="Start Date">
                 </div>
                 
                   <div class="input-group-prepend">
-                    <button class="btn btm-primary-cus" id="submitbtn">Search</button>
+                    <button class="btn btm-primary-cus" id="datesearch">Search</button>
                   </div>  
                 </div>
               </div>
@@ -294,7 +293,6 @@ if (Number.isInteger(parseInt({{ $cashCredit }}))) {
 }
 
 
-$(document).ready(function () {
 
 function recivednumbercheck() {
     let datacheck = $("#searchsalerecived").val();
@@ -307,7 +305,6 @@ $.ajax({
         $('#saladatashow').html(data.listofreturn);
         $('#custmoreinfo').html(data.custmorinfo);
 
-
        
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -316,17 +313,120 @@ $.ajax({
         errorfunt('Internal Server Error or 500','And again try it','warning');;
       }
 })
+
+
 }
+
+
 
 
 $("#submitbtn").click(function () {
  
-
     recivednumbercheck();
     $("#searchsalerecived").val('392148648591');
     
 });
+
+
+$("#datesearch").click(function () {
+  var todate=$("#to_date").val();
+  var fromdate=$("#from_date").val();
+
+  if(todate==='' || fromdate===''){
+    errorfunt('Please check  Date To / From','And again try it','warning');
+  }else{
+
+    if(todate>=fromdate){
+
+      const fromDates = new Date(fromdate); // Your start date
+        const toDates = new Date(todate);   // Your end date
+       const timeDiff = toDates- fromDates; 
+       const daysDiff = timeDiff / (1000 * 60 * 60 * 24); 
+      confram_date(todate,fromdate,daysDiff);
+    }else{
+      errorfunt('Invaild Your input Date','Please again try it','warning');
+    }
+ 
+  }
 });
+
+
+$(document).ready(function() {
+    const today = new Date().toISOString().split('T')[0];
+    console.log(today)
+    $('#to_date').attr('max', today);
+    $('#from_date').attr('max', today);
+    
+    $('#to_date').change(function() {
+      if (new Date(this.value) > new Date()) {
+        errorfunt("Don't Allow Future Date",'Plase check Start date','warning');
+        $(this).val('');
+      }
+    });
+
+    $('#from_date').change(function() {
+      if (new Date(this.value) > new Date()) {
+        errorfunt("Don't Allow Future Date",'Plase check End date','warning');
+        $(this).val('');
+      }
+    });
+
+  });
+
+function date_to_check(start,end) {
+    let datacheck = $("#searchsalerecived").val();
+$.ajax({
+    type: 'GET', 
+    url: '{{ route('sales_start_end_date') }}', //done
+    data:{startDate:start,endDate:end},
+    success: function (data) {
+console.log(data)
+$('#saladatashow').html(data.listofreturn);
+    
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+        errorfunt('Internal Server Error or 500','And again try it','warning');;
+      }
+})
+
+
+}
+
+
+
+function confram_date(to_date,from_date,dates){
+
+swal({
+  title: "Are you sure?",
+  text: "Start "+to_date+' To End '+from_date+" and "+dates+' Days',
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Your Product Return succssfull ", {
+      icon: "success",
+    }).then(function(){
+   //  console.log("deleta data");
+  //  location.reload();
+    });
+ date_to_check(from_date,to_date);
+
+  } else {
+    swal("Do you want Exit ?",{
+    	closeOnClickOutside: false,
+    });
+  }
+});
+
+	}
+
+
+
+
 
 function errorfunt(tittle,sectittle,mess){
   swal({
@@ -527,14 +627,14 @@ $.ajax({
   </thead>
   <tbody id="saladatashow">
   
-  @if ($sale_list && count($sale_list) > 0) 
-    @foreach ($sale_list as $show)
+  @if ($dateshow && count($dateshow) > 0) 
+    @foreach ($dateshow as $show)
         <tr>
-            <td scope="row" onclick="return_product_view({{ $show->id }})" class="border"><bold>{{ $show->product_Name }}</bold></td>
-            <td>{{ $show->product_unite }}</td>
-            <td>{{ $show->return_product }}</td>
-            <td>{{ $show->return_product * $show->Sales_price }}</td>
-            <td>{{ $show->product_unite - $show->return_product }}</td>
+            <td scope="row" onclick="return_product_view({{ $show['id'] }})" class="border"><bold>{{ $show['product_Name'] }}</bold></td>
+            <td>{{ $show['product_unite'] }}</td>
+            <td>{{ $show['return_product'] }}</td>
+            <td>{{ $show['return_product']  * $show['Sales_price'] }}</td>
+            <td>{{ $show['product_unite'] - $show['return_product']  }}</td>
         </tr>
     @endforeach
 @else
@@ -567,10 +667,13 @@ $.ajax({
       <td><strong>Month :</strong></td>
       <td><span>{{ $nowmonth }}</span></td>
     </tr>
+
     <tr>
       <td><strong>Totol Return :</strong></td>
       <td><span>{{ $Total_return_price }} Tk</span></td>
     </tr>
+
+   
   </tbody>
 </table>
         </div>

@@ -506,9 +506,17 @@ Transaction::create(['details' => $detailsa,'amount_catagorise' => 1, 'amount_tr
            }
       
            if($row->admin_show == 1){
-            $adminshow='<span style=color:green;><i class="bx bx-check  bx-sm"></i></span>';
-            $dddcash='<span style=color:green;><i class="bx bx-check bx-sm"> <i class="bx bx-edit bx-sm" onclick="updatedata('.$row->id.')"></i><span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
-          
+            
+             if($row->expend_cost == 2){
+              $adminshow='<span style=color:green;><i class="bx bx-check  bx-sm"></i></span>';
+              $dddcash='<span style=color:green;><i class="bx bx-check bx-sm"> <i class="bx bx-edit bx-sm" onclick="updatedata('.$row->id.')"></i><span style=color:red; onclick="deletdata('.$row->id.')"></span>';
+             }
+             else
+             {
+              $adminshow='<span style=color:green;><i class="bx bx-check  bx-sm"></i></span>';
+              $dddcash='<span style=color:green;><i class="bx bx-check bx-sm"> <i class="bx bx-edit bx-sm" onclick="updatedata('.$row->id.')"></i><span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
+             }
+
           }else{
             $admin_not_show_dat++;
             $adminshow='<span style=color:red; onclick="updatedata('.$row->id.')"><i class="bx bx-edit bx-sm" ></i></span> <span style=color:red; onclick="deletdata('.$row->id.')"><i class="bx bxs-x-circle bx-sm" ></i></span>';
@@ -786,9 +794,12 @@ if($expene_check===1){
   // this way to indenty for debit==0, credit==1; this insurt data for all transaction
   Transaction::create(['details' => $details,'amount_catagorise' => 1, 'amount_trans' => $debit_tk,'shop_id' => $ShopID, 'shatf_id' => $stratf_id]);
   echo json_encode($data_sent);
+}else if($expene_check===2){ 
+
+  $data_sent=array("message"=>0);
+  echo json_encode($data_sent);
 }else{
 
- 
    $debit_tk=DB::table('cash_flow_cost_info')->where('stratf_id',$stratf_id)->where('Outlet_Id', $ShopID)->where('id', $id)->value('debit_tk');
   $cash_credit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_credit');	
   $cash_debit=DB::table('cash_flow')->where('Starf_Id',$stratf_id )->where('Outlet_Id', $ShopID)->value('cash_debit');	
@@ -857,7 +868,6 @@ if($expene_check===1){
     {
       $data_sent=array("message"=>0);
       echo json_encode($data_sent);
-
     }
 
      }

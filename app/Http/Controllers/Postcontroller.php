@@ -1339,7 +1339,7 @@ public function stockaddfuntion(){
  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
     	$data = DB::table('catgory_info')->where('Shop_cat_id', $ids)->get();
-      return view('deshboard.stock_add')->with('data', $data);
+      return view('SalesMarket.stock_add')->with('data', $data);
     }else{
     	return view('login');
     	}

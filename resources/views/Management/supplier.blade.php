@@ -453,7 +453,7 @@ float: right;
       <table class="table table-striped table-bordered" id="section1" >
        <thead>
         <tr>
-         <th><span class="name"></span></th>
+         <th><span class="name">Barcode</span></th>
          <th><span class="product">Product Name</span></th>
 		     <th><span class="unite">Unites</span></th>
 		     <th><span class="Prices">Prices</span></th>
@@ -495,6 +495,10 @@ float: right;
 </div>
 </div>
 
+</div>
+
+<div id="printable-content">
+<div id="bardodess"></div>
 </div>
 
 
@@ -705,9 +709,9 @@ if(payabletks>=tks){
     extrapayabletks=payabletks-tks;
     conframpayable();
     pop_custom_off();
-
-  }else{
-console.log("gggg"+cash_credit_totals);
+  }else
+  {
+    console.log("gggg"+cash_credit_totals);
   if(cash_credit_totals>=tks){
     extrapayabletks=payabletks-tks;
     conframpayable();
@@ -715,13 +719,7 @@ console.log("gggg"+cash_credit_totals);
   }else{
     dailogmess("Not Enough Cash","Please Sales More ","info");
   }
-
 }
-
-
-
-
-
 
 
 }else{
@@ -735,10 +733,6 @@ console.log("gggg"+cash_credit_totals);
   dailogmess("Please fillup cash field","Empty field","info");
  
 }
-
-
-
-
 
    }
 
@@ -986,6 +980,112 @@ function datashowpayable(id,unite,payable,paymenttk,totaltk){
 
 
 }
+
+
+function barcodeprint(data){
+
+  const name = data.getAttribute('data-name');
+  const price = data.getAttribute('data-price');
+  const barcode = data.getAttribute('data-barcode');
+  const units = data.getAttribute('data-units');
+  console.log(name);
+  printWithOptions(name,price,barcode,units)
+}
+
+
+
+
+
+
+
+function printWithOptions(Product_name,Sales_Price,Barcode,numbe) {
+    
+    $('#product_barcode').val("");
+    $('.barcoderstable').html("<tr><td align='center' colspan='5'>Barcode Create Successfully</td></tr>");
+   try{
+            
+           for(let i=0; i<numbe;i++){
+            $('#bardodess').append('<div class="barcode-container"><div class="product-info"><div class="product-name">'+Product_name+'</div><div class="product-price">$'+Sales_Price+'</div></div><svg id="barcode"><br></svg><span style="font-size:7px;">www.adarshashop.com</span></div>');
+
+               JsBarcode("#barcode", Barcode,{
+               format: "EAN13",
+               width: 1.1,
+               height: 35,
+               displayValue: true, 
+               margin: 0,
+               lineColor: "#000",
+               });
+
+           }
+
+           }catch(error) {
+                   console.error("Barcode generation failed:", error);
+                   dailogmess("Barcode Number Problem","Please Check Barcode","info");
+                   return false; // Failed
+               }
+
+       // Open print dialog with a print-friendly version
+       const printWindow = window.open('', '', 'width=800,height=600');
+       printWindow.document.write(`
+           <html>
+           <head>
+   <style>
+    body{margin:0 auto; padding:0px;}
+   .barcode-container {
+   text-align: center;
+   font-family: Arial, sans-serif;
+   width: 144px;
+   height:96px;
+   position: relative;	
+}
+
+.product-name {
+   font-size: 10px;
+   margin-bottom: 0px;
+   margin-left: 0px;
+   font-weight: bold;
+   height: 20px;
+   padding-top: 1px;
+   overflow: hidden;
+}
+
+.product-price {
+   font-size: 12px;
+   font-weight: 600;
+   height: 15px;
+   z-index: 2;
+
+}
+
+.barcode{
+position: absolute;
+top: 20;
+}
+       </style>
+           </head>
+           <body>
+               ${document.getElementById('printable-content').innerHTML}
+               <script>
+               
+                   window.onload = function() {
+                       setTimeout(function() {
+                           window.print();
+                           window.close();
+                           ${location.reload()}
+                       }, 200);
+                   };
+               <\/script>
+           </body>
+           </html>
+       `);
+       printWindow.document.close();
+   }
+
+
+
+
+
+
 
 </script>
 

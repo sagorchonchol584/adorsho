@@ -127,6 +127,7 @@
 
 
 
+
 <div id="fade" class="black_overlay"></div>
 <div id="light" class="white_content"> 
 <div class="box" id="boxx"></div>
@@ -458,6 +459,159 @@ $("#phone").keydown(function(event) {
 <br><br>
   </form>
 
+  <script src="{{ asset('frontend/js/barcode23.js') }}"> </script>	
+
+
+  <input type="text" class="form-control" id="bar"  name="Product_name" placeholder="barcode" >
+
+    <div id="printable-content">
+	<div id="bardodess"></div>
+    </div>
+
+
+<style>
+ 
+	@page {
+            size: auto;
+            margin: 0mm;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+</style>
+
+
+<script>
+
+function barcodee(){
+
+
+	var bar= $('#bar').val();
+
+	$.ajax({
+        type: 'GET',
+        url: 'productInfosearch/' + bar,//done
+		success: function(data)
+	    {
+
+		data.forEach(element => {
+
+
+			$('#bardodess').append('<div class="barcode-container"><div class="product-info"><div class="product-name">'+element.Product_name+'</div><div class="product-price">$'+element.Sales_Price+'</div></div><svg id="barcode"><br></svg><span style="font-size:7px;">www.adarshashop.com</span></div>');
+
+JsBarcode("#barcode", element.Barcode, {
+	format: "EAN13",
+	width: 1.1,
+	height: 35,
+	displayValue: true, 
+	margin: 0,
+	lineColor: "#000",
+});
+
+printWithOptions();
+
+		
+		});
+		
+		}});
+
+
+
+
+
+
+
+
+	
+	
+}
+
+
+// for(let i=0;i<2;i++){
+// 	barcodee(i)
+// }
+
+
+
+function printWithOptions() {
+	
+            // Open print dialog with a print-friendly version
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write(`
+                <html>
+                <head>
+        <style>
+         body{margin:0 auto; padding:0px;}
+		.barcode-container {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        width: 144px;
+		height:96px;
+	    position: relative;	
+    }
+
+    .product-name {
+		font-size: 10px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		font-weight: bold;
+		height: 20px;
+		padding-top: 1px;
+		overflow: hidden;
+    }
+
+    .product-price {
+        font-size: 12px;
+		font-weight: 600;
+		height: 15px;
+		z-index: 2;
+	
+    }
+
+	.barcode{
+	 position: absolute;
+     top: 20;
+	}
+            </style>
+                </head>
+                <body>
+                    ${document.getElementById('printable-content').innerHTML}
+                    <script>
+                        window.onload = function() {
+                            setTimeout(function() {
+                                window.print();
+                                window.close();
+                            }, 200);
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+
+
+		// padding-bottom: 16px;
+
+
+
+
+
+
+</script>
+<button onclick="barcodee()">pdf</button>
+
+
+
+
 </div>
 
 
@@ -523,6 +677,7 @@ display: block;
 		</div>	
    </div>
  </div>
+
 </div>
 <style>
 

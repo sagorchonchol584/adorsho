@@ -36,7 +36,7 @@ use App\Http\Controllers\Postcontroller;
 
 
 //-----------this use for test purpose ---this has sale and markett -------------------
-Route::get('/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
+Route::get('/SalesMarket/Stockadd', [Postcontroller::class, 'stockaddfuntion'])->name('stockadd');
 
 
 

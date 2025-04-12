@@ -27,6 +27,7 @@ Route::post('/profiturl', [SalesControllor::class,'profit_add'])->name('profitur
 Route::get('/sales-returns', [SalesControllor::class, 'salesreturns'])->name('sales.retruns');
 //Route::get('/sales-returns-list', [SalesControllor::class, 'salesreturnslist'])->name('salereturnlist');
 
+Route::get('/sales-start-end-date', [SalesControllor::class, 'start_end_check'])->name('sales_start_end_date');
 
 Route::get('/search-customer', [SalesControllor::class, 'searchCustomer'])->name('search.customer');
 Route::get('/customer-data-check', [SalesControllor::class, 'CustomerDatacheck'])->name('customer.data.check');

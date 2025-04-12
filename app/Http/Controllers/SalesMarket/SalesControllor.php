@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use App\Models\Customer;
-
+use Carbon\Carbon;
 class SalesControllor extends Controller
 {
    
@@ -408,12 +408,45 @@ return response() ->json($datashow);
 //echo json_encode( $all_data_show);
 }
 
+public function start_end_check(Request $request){
+  $all_data_show='';
 
+  $sale_list = DB::table('purches_list')
+      ->where('Outlet_Id', Auth::user()->ShopID)
+      ->whereBetween('Return_recived_date', [$request->startDate, $request->endDate]) // Correct order
+      ->get();
+
+
+
+
+  if(count($sale_list)> 0 ){
+    foreach($sale_list as $rows){
+      $all_data_show.='<tr>
+      <th scope="row" onclick="return_product_view(\''.$rows->id.'\')">'.$rows->product_Name.'</th>
+      <td>'.$rows->product_unite.'</td>
+      <td>'.$rows->return_product.'</td>
+      <td>'.$rows->return_product*$rows->Sales_price.'</td>
+      <td>'.$rows->product_unite-$rows->return_product.'</td>
+      </tr>';
+    }
+  }else{
+      $all_data_show='<tr><td align="center" colspan="5">Not found data in sales list </td></tr>';
+  }
+  
+   $datashow=['listofreturn'=>$all_data_show];
+
+   return response() ->json($datashow);
+  //echo json_encode( $all_data_show);
+
+}
 
 public function salesreturnslist(){
 
   $returnlist=0;
+  $years=date('Y');
+  $months=date('m');
   $custmore_count=[];
+  $dateshow=[];
   $totalpice=0;
   $counts=0;
   $sale_list=DB::table('purches_list')
@@ -424,9 +457,31 @@ public function salesreturnslist(){
 
   if(count($sale_list)> 0 ){
     foreach($sale_list as $rows){
+
+      $date_check = explode('-',$rows->Return_recived_date);
+      $month = $date_check[1];
+      $year  = $date_check[0];
+
+
+    //   try {
+    //     $returnDate = Carbon::createFromFormat('Y-m-d', $rows->Return_recived_date);
+    //     $month = $returnDate->month;
+    //     $year = $returnDate->year;
+    // } catch (\Exception $e) {
+    //     // Handle invalid date format
+    //     continue;
+    // }
+
+    
+      if($year.$month==$years.$months){
+
+      $dateshow[]=['id'=>$rows->id,'product_Name'=>$rows->product_Name,'product_unite'=>$rows->product_unite,'return_product'=>$rows->return_product,'Sales_price'=>$rows->Sales_price];
+
+
       $returnlist+=$rows->return_product;
       $custmore_count[]=$rows->Recive_num;
       $totalpice+=$rows->return_product * $rows->Sales_price;
+       }
     }
 
   //  $countsfun = array_count_values($custmore_count);
@@ -446,7 +501,7 @@ public function salesreturnslist(){
   }
 
  
- return view('Sales-Market.Sales-return', compact('sale_list'),['returnlist' =>$returnlist,'total_customer_count'=> $counts,'nowmonth'=>date('F'),'Total_return_price'=>$totalpice]);;
+ return view('Sales-Market.Sales-return', compact('dateshow'),['returnlist' =>$returnlist,'total_customer_count'=> $counts,'nowmonth'=>date('F'),'Total_return_price'=>$totalpice]);;
   }
   
 
@@ -460,6 +515,7 @@ public function salesreturnslist(){
     $return_product=0;
     $customrey_id=0;
     $returnvalue=0;
+    $detailsinfo='';
 
 
     //---that is profit variable
@@ -581,8 +637,9 @@ $details='Expence add by '.Auth::user()->Name.' Product Return to Sales , produc
 // this way to indenty for debit==0, credit==1; this insurt data for all transaction
 Transaction::create(['details' => $details,'amount_catagorise' => 0, 'amount_trans' =>($product_price+$return_profit),'shop_id' => Auth::user()->ShopID, 'shatf_id' => Auth::user()->id]);
 
+if($request->return_reason===NULL  ){ $detailsinfo='No input';}else{$detailsinfo=$request->return_reason;}
 
-Returnmark::create(['details'=>$request->return_reason,'received_number' => $recived_number, 'Product_id' => $request->product_id, 'date' =>date("Y-m-d"), 'Starf_Id' => Auth::user()->id,'Outlet_Id'=>Auth::user()->ShopID]);
+Returnmark::create(['details'=>$detailsinfo,'received_number' => $recived_number, 'Product_id' => $request->product_id, 'date' =>date("Y-m-d"), 'Starf_Id' => Auth::user()->id,'Outlet_Id'=>Auth::user()->ShopID]);
 
 
 

@@ -27,6 +27,10 @@ class ProductControllor extends Controller
 	}
 		
 
+
+
+
+  
     public function productdelete($id){	
   
         DB::table('product_info')->where('Product_ID',$id)->delete();

@@ -5,6 +5,7 @@ use App\Http\Controllers\Management\StockControllor;
 use App\Http\Controllers\Management\ProductControllor;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Management\SupplierControllor;
+use App\Http\Controllers\Management\BarcodedesignControllor;
 
 
 
@@ -51,6 +52,9 @@ Route::post('/productloaddata', [ProductControllor::class,'product_add'])->name(
 
 
 
+//Barcode manager
+Route::get('/productInfosearch/{id}', [BarcodedesignControllor::class,'searchproduct']);
+Route::get('/Barcode-manages', [BarcodedesignControllor::class,'Barcodepage'])->name('barcodemange');
 
 //-----------------Supper  page  oute and controller user ProductCrontrollor-------------------------------
 Route::get('/supplier', [SupplierControllor::class,'product_supplier'])->name('product_supplier_page');
@@ -58,4 +62,10 @@ Route::get('/supplierlist/{id}', [SupplierControllor::class,'suplier_list']); //
 Route::get('/supplierstates', [SupplierControllor::class,'suplierstate'])->name("supplierstatesrounte"); //-----
 Route::post('/payabledataloaded', [SupplierControllor::class, 'Payable_finally'])->name('payabledataloadedroute');  //----
 Route::post('/stockloadfinally', [StockControllor::class, 'Stock_Info_add_finally'])->name('stockloadfinallyroute'); 
+
+
+
+
+
+
 });

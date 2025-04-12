@@ -779,7 +779,7 @@ function cash_sent_any_prsonal(id){
 
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/Deshboard/get-data-to-cash-sent/'+id,
+     url: '/Dashboard/get-data-to-cash-sent/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
 
@@ -898,7 +898,7 @@ function fetch_customer_data()
     var today_suppier_expence = data.today_suppier_exps.toString().split('.');
     today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Cash drower)</small>");
+    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Cash Drawer)</small>");
     $('.extra_monthy_suppier_exp').html(extra_monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Own Cash)</small>");
 
     
@@ -972,7 +972,7 @@ function updatedata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/Deshboard/get-data-to-update/'+id,
+     url: '/Dashboard/get-data-to-update/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
       if(datajos.message=="exitdata"){
@@ -1003,7 +1003,7 @@ function deletdata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/Deshboard/get-data-to-delete-check/'+id,
+     url: '/Dashboard/get-data-to-delete-check/'+id,
      success: function (data) {
 
 	var datajos=JSON.parse(data);
@@ -1052,7 +1052,7 @@ function conformdeleta(id){
 function datedeleteinfo(id){
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/Deshboard/get-data-to-delete/'+id,//done
+     url: '/Dashboard/get-data-to-delete/'+id,//done
      success: function (data) {
 	
     var datajos=JSON.parse(data);

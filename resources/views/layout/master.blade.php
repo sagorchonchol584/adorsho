@@ -9,6 +9,7 @@
 	    <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 		<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="{{ asset('frontend/js/barcode23.js') }}"> </script>	
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	
@@ -16,7 +17,110 @@
 <style>
 	
 	
+	.maindailoboax-master {
+  height: 530px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+ 
+}
+
+.black_overlaya-master {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+ 
+}
+
+.white_contenta-master {
+ display: none;
+ position: absolute;
+ top:0;
+ left:0;
+ width: 100%;
+ height: 100%;
+ background-color:hsla(0,0%,0%,0.0);
+ z-index: 1002;
+}
+
+.ddd-master{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	border: none;
+}
+
+.exitdd-master{
+	height: 50px;
+	width: 100%;
+	background-color:#F5F5F5;
+    text-align: right;
+	   
+	}
+.mainedd-master{
+		height: 10px;
+		width: 100%;
+		border-top: 1px solid #a6a6a6ff;
+		background-color: #FFFFFF;
+	}
+.butttons-master{
+		height: 40px;
+		width: 100%;
+		text-align: right;
+		padding-top: 5px;
+	}
+
+
+.info-master{
+		height: 90px;
+		width: 100%;
+	}
+
+  .tkinfo-master{
+		height: 40px;
+		width: 100%;
+		padding: 5px 10px 10px 0px;
+    text-align: right;
+	}
+
 	
+.inputtsupper-master{
+width: 50%;
+height: 60px;
+float: left;
+}
+
+.inputtsuppertwo-master{
+  width: 50%;
+height: 60px;
+float: right;
+
+}
+
+.my-custom-scrollbar-master {
+position: relative;
+height: 250px;
+overflow: auto;
+}
+.table-wrapper-scroll-y-master {
+display: block;
+}
 	
 
 	/* collaspe icon */
@@ -111,8 +215,8 @@
 		top: 0;
 		left: 0;
 		display: flex;
-	
-		z-index: 1;
+	    background-color:var(--accent-100);
+		z-index: 5;
 		transition: .5s;
 		height: 60px;
 		box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,.03),
@@ -503,9 +607,9 @@
 			 	<div id="Deshboard">
 			 	  <div class="deshbo">
 					<ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small link_line ">
-						<li><a href="{{ route('overview')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/overview') || Request::is('Deshboard/overview/*')) acticecust @endif"> Overview</a></li>
-						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/cashflow') || Request::is('Deshboard/cashflow*')) acticecust @endif"> Cash Flow</a></li>   
-						<li><a href="{{ route('reports')}}" class="link-dark rounded menu-width @if(Request::is('Deshboard/reports') || Request::is('Deshboard/reports*')) acticecust @endif">Reports</a></li>
+						<li><a href="{{ route('overview')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/overview') || Request::is('Dashboard/overview/*')) acticecust @endif"> Overview</a></li>
+						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/cashflow') || Request::is('Dashboard/cashflow*')) acticecust @endif"> Cash Flow</a></li>   
+						<li><a href="{{ route('reports')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/reports') || Request::is('Dashboard/reports*')) acticecust @endif">Reports</a></li>
 						
 						
 					</ul>
@@ -554,6 +658,7 @@
 					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Category</a></li>
 					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Info</a></li>	
 					<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width  @if(Request::is('Management/supplier') || Request::is('Management/supplier/*')) acticecust @endif"> Suplier Pages</a></li>
+					<li> <a href="{{ route('barcodemange')}}" class="link-dark rounded menu-width  @if(Request::is('Management/barcodemange') || Request::is('Management/barcodemange/*')) acticecust @endif"> Barcode </a></li>
 					</ul>
 				 </div>
 				</div>
@@ -621,113 +726,7 @@
 	<!--Container Main end-->
 
 
-<style>
-.maindailoboax-master {
-  height: 530px;
-  width: 600px;
-  margin: auto;
-  border: 1px solid #555500ff;
-  text-align: center;
-  border-radius: 9px;
-  background: white;
-  position: relative;
-  top:20%;
-  text-align: center;
-  border-radius: 5px;
-  animation: fadeIn 0.5s ease-in-out forwards;
- 
-}
 
-.black_overlaya-master {
-  display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1001;
-  -moz-opacity: 0.8;
-  opacity: .70;
-  filter: alpha(opacity=80);
- 
-}
-
-.white_contenta-master {
- display: none;
- position: absolute;
- top:0;
- left:0;
- width: 100%;
- height: 100%;
- background-color:hsla(0,0%,0%,0.0);
- z-index: 1002;
-}
-
-.ddd-master{
-	width: 30px;
-	height: 30px;
-	background-color: red;
-	border: none;
-}
-
-.exitdd-master{
-	height: 50px;
-	width: 100%;
-	background-color:#F5F5F5;
-    text-align: right;
-	   
-	}
-.mainedd-master{
-		height: 10px;
-		width: 100%;
-		border-top: 1px solid #a6a6a6ff;
-		background-color: #FFFFFF;
-	}
-.butttons-master{
-		height: 40px;
-		width: 100%;
-		text-align: right;
-		padding-top: 5px;
-	}
-
-
-.info-master{
-		height: 90px;
-		width: 100%;
-	}
-
-  .tkinfo-master{
-		height: 40px;
-		width: 100%;
-		padding: 5px 10px 10px 0px;
-    text-align: right;
-	}
-
-	
-.inputtsupper-master{
-width: 50%;
-height: 60px;
-float: left;
-}
-
-.inputtsuppertwo-master{
-  width: 50%;
-height: 60px;
-float: right;
-
-}
-
-.my-custom-scrollbar-master {
-position: relative;
-height: 250px;
-overflow: auto;
-}
-.table-wrapper-scroll-y-master {
-display: block;
-}
-
-</style>
 
 <div id="fadeaallmaster" class="black_overlaya-master"></div>
 <div id="lightaallmaster" class="white_contenta-master"> 
