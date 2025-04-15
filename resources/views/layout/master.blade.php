@@ -17,7 +17,7 @@
 <style>
 	
 	
-	.maindailoboax-master {
+.maindailoboax-master {
   height: 530px;
   width: 600px;
   margin: auto;
@@ -421,7 +421,15 @@ display: block;
    overflow: hidden;
    }
    
-
+   #ecommerscss{
+  -moz-transition: height .5s;
+  -ms-transition: height .5s;
+  -o-transition: height .5s;
+  -webkit-transition: height .5s;
+   transition: height .5s;
+   height: 0;
+   overflow: hidden;
+	}
 	.two{
 		width: 100%;
 		height: 100%;
@@ -635,7 +643,6 @@ display: block;
 					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/sales') || Request::is('SalesMarket/sales*')) acticecust @endif">Sales</a></li>		
 					<li><a href="{{ route('salesreturnview')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/SalesReturn') || Request::is('SalesMarket/SalesReturn*')) acticecust @endif">Sales Return</a></li>
 					<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>			
-					<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width"> just use perpose</a></li>
 					</ul>
 				 </div>
 				</div>
@@ -645,7 +652,7 @@ display: block;
 				<li class="mb-1">				
 			<div class="head-dec">
             <div class=" head-main align-items-center" onclick="mangemantfunt()" id="manage">
-						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#speedometer2"/></svg><span  id="mangepage" class="desh"> Management</span>
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#tools"/></svg><span  id="mangepage" class="desh"> Management</span>
 						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
 					</div>
 				</div>
@@ -656,12 +663,37 @@ display: block;
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
 					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Stock Add</a></li>
 					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Category</a></li>
-					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Info</a></li>	
+					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Add</a></li>	
 					<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width  @if(Request::is('Management/supplier') || Request::is('Management/supplier/*')) acticecust @endif"> Suplier Pages</a></li>
 					<li> <a href="{{ route('barcodemange')}}" class="link-dark rounded menu-width  @if(Request::is('Management/barcodemange') || Request::is('Management/barcodemange/*')) acticecust @endif"> Barcode </a></li>
 					</ul>
 				 </div>
 				</div>
+
+
+
+				<!--  E-commers -->
+	
+				<li class="mb-1">				
+			<div class="head-dec">
+            <div class=" head-main align-items-center" onclick="ecommersfunt()" id="manage">
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#bootstrap"/></svg><span  id="ecommers" class="desh"> E-commers </span>
+						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
+					</div>
+				</div>
+
+
+				<div id="ecommerscss">
+				<div class="commerpagessd">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
+					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Product List</a></li>
+					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Oder List</a></li>
+					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Header & Footer</a></li>	
+					</ul>
+				 </div>
+				</div>
+
+
 					</li>				
 					<li class="mb-1">
 						<li class="border-top my-3">
@@ -670,7 +702,7 @@ display: block;
 
 					<div class="head-dec">
                          <div class="head-main align-items-center"  id="ac" onclick="Acountd()">
-							<svg class="bi me-2" width="20" height="20"> <use xlink:href="#home"/></svg>
+							<svg class="bi me-2" width="20" height="20"> <use xlink:href="#toggles2"/></svg>
 							<span  id="acc" class="desh"> Account</span>
 							<i class='bx bx-chevron-down bx-sm float-right '></i>
 						</div>
@@ -883,25 +915,29 @@ function pop_custom_offmaster(){
 
 
 
-auto_loaddes();
+         auto_loaddes();
 
         let darkModeAc = localStorage.getItem("collapsac"); 
         let pagrAc = localStorage.getItem("collapsac_page"); 
         let deshboardAc = localStorage.getItem("collapsac_deshboard");
+
 		let mangagementmemorize = localStorage.getItem("managementkey");
+		let ecommersmemorize = localStorage.getItem("Ecommerskey");
+
         
-        
-	     var growDivAC = document.getElementById('Account');
-         var pagese = document.getElementById('Page');
-         var edeshboard = document.getElementById('Deshboard');
-         var Managementddd = document.getElementById('managemntcss');
-         
+	    var growDivAC = document.getElementById('Account');
+        var pagese = document.getElementById('Page');
+        var edeshboard = document.getElementById('Deshboard');
+
+        var Managementddd = document.getElementById('managemntcss');
+        var ecommertddd = document.getElementById('ecommerscss');
          
         var text_change = document.getElementById("acc");
         var text_change_page = document.getElementById("pagec"); 
         var text_change_deshboard = document.getElementById("deshbdsd");
+
 		var text_change_mangepage = document.getElementById("mangepage");
-        
+        var text_change_ecommers = document.getElementById("ecommers");
         
 
 function enableDarkModeac(){
@@ -951,10 +987,26 @@ function enableManagemnt(){
       localStorage.setItem("managementkey", "Management");      
 }
 
+
 function disableManagement(){	
     Managementddd.style.height = 0;   
     localStorage.setItem("managementkey", "disabled");    
 }
+
+
+
+function enableecommer(){	
+      var wrapper = document.querySelector('.commerpagessd');
+	  ecommertddd.style.height =  wrapper.clientHeight+"px";
+      localStorage.setItem("Ecommerskey", "Ecommers");      
+}
+
+
+function disableecommer(){	
+    ecommertddd.style.height = 0;   
+    localStorage.setItem("Ecommerskey", "disabled");    
+}
+
 
 
 
@@ -984,6 +1036,16 @@ if (mangagementmemorize === "Management") {
 	enableManagemnt();
 	text_change_mangepage.style.fontWeight = "bold";
 }
+
+
+// this to chenge ecommer
+if (ecommersmemorize === "Ecommers") {
+	enableecommer();
+	text_change_ecommers.style.fontWeight = "bold";
+	
+}
+
+
 
 
 
@@ -1040,6 +1102,22 @@ function mangemantfunt(){
 	  }
 console.log("bangladesh")
 }
+
+//-------ecommers
+function ecommersfunt(){
+
+	ecommersmemorize = localStorage.getItem("Ecommerskey"); 
+   if (ecommersmemorize === "disabled") {
+	enableecommer();
+	text_change_ecommers.style.fontWeight = "bold";
+  } else {
+	disableecommer();
+	 text_change_ecommers.style.fontWeight = "normal";
+  }
+console.log("Ecommers")
+}
+
+
 
 
 document.addEventListener("DOMContentLoaded", function(event) {

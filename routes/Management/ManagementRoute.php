@@ -48,8 +48,9 @@ Route::get('/barcode/{id}', [StockControllor::class,'barcodes'])->name('barcodes
 Route::get('/productInfo', [ProductControllor::class,'productInfo'])->name('product_info');
 Route::get('/productdeletedata/{id}',[ProductControllor::class,'productdelete'])->name('productdeleteda'); //this know how to use 
 Route::post('/productloaddata', [ProductControllor::class,'product_add'])->name('loader');
+Route::get('/live_search_product/action', [ProductControllor::class,'action'])->name('live_search_product.action');
 
-
+Route::get('/update-data-check', [ProductControllor::class,'updata_data_chece'])->name('dataupdate');
 
 
 //Barcode manager
@@ -62,6 +63,10 @@ Route::get('/supplierlist/{id}', [SupplierControllor::class,'suplier_list']); //
 Route::get('/supplierstates', [SupplierControllor::class,'suplierstate'])->name("supplierstatesrounte"); //-----
 Route::post('/payabledataloaded', [SupplierControllor::class, 'Payable_finally'])->name('payabledataloadedroute');  //----
 Route::post('/stockloadfinally', [StockControllor::class, 'Stock_Info_add_finally'])->name('stockloadfinallyroute'); 
+
+
+
+
 
 
 

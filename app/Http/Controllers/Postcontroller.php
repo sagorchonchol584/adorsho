@@ -606,6 +606,9 @@ public function suplierstate(){
      $me="";
      $cash_flow=0;
 
+     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+      
+
 //----------------thsi show recently update data  uploaded--------
       $INVOICEDUE = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 0)->get();
       $total_row_count =  $INVOICEDUE->count();
@@ -741,7 +744,7 @@ public function suplierstate(){
           {
            foreach($datas as $row)
            {
-            $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
+            $ddd='<img  src="'. $base_url.'product/'.$row->Image.'" width="50" height="60">';
            
             $outputlog.= '
             <tr>
@@ -1339,7 +1342,7 @@ public function stockaddfuntion(){
  if(Auth::check()){
     	$ids = Auth::user()->Shop_cat_id;
     	$data = DB::table('catgory_info')->where('Shop_cat_id', $ids)->get();
-      return view('SalesMarket.stock_add')->with('data', $data);
+      return view('Sales-Market.stock_add')->with('data', $data);
     }else{
     	return view('login');
     	}
@@ -2199,86 +2202,89 @@ public function productInfo(){
 		
 		
 
-public function action(Request $request){
-	if(Auth::check()){
+// public function action(Request $request){
+// 	if(Auth::check()){
 	
-	 $id = Auth::user()->Shop_cat_id;
-	 $ShopID = Auth::user()->ShopID;
-     if($request->ajax())
-     {
-      $output = '';
-      $query = $request->get('query');
-      if($query != '')
-      {
-       $data = DB::table('product_info'.$id)
-        ->where('Outlet_Id', $ShopID)
-         ->where('Barcode', 'like', '%'.$query.'%')
-         ->orWhere('Product_name', 'like', '%'.$query.'%')
-         ->get();
+// 	 $id = Auth::user()->Shop_cat_id;
+// 	 $ShopID = Auth::user()->ShopID;
+//      if($request->ajax())
+//      {
+//       $output = '';
+//       $query = $request->get('query');
+//       if($query != '')
+//       {
+//        $data = DB::table('product_info'.$id)
+//         ->where('Outlet_Id', $ShopID)
+//          ->where('Barcode', 'like', '%'.$query.'%')
+//          ->orWhere('Product_name', 'like', '%'.$query.'%')
+//          ->get();
          
-      }
-      else
-      {
-       $data = DB::table('product_info'.$id)
-         ->where('Outlet_Id', $ShopID)
-         ->orderBy('Product_ID', 'desc')
-         ->get();
-      }
+//       }
+//       else
+//       {
+//        $data = DB::table('product_info'.$id)
+//          ->where('Outlet_Id', $ShopID)
+//          ->orderBy('Product_ID', 'desc')
+//          ->get();
+//       }
       
-      $total_row = $data->count();
+//       $total_row = $data->count();
       
       
-      if($total_row > 0)
-      {
-       foreach($data as $row)
-       {
-       //	$actual_link = "https://$_SERVER[HTTP_HOST]/product/";
+//       if($total_row > 0)
+//       {
+//        foreach($data as $row)
+//        {
+//        //	$actual_link = "https://$_SERVER[HTTP_HOST]/product/";
 
       
 
-       if(strval($row->Weight)=='0'){
-         $showproduct=$row->Product_name;
-       }else{
-         $showproduct=$row->Product_name."". $row->Weight;
-       }
+//        if(strval($row->Weight)=='0'){
+//          $showproduct=$row->Product_name;
+//        }else{
+//          $showproduct=$row->Product_name."". $row->Weight;
+//        }
 
-        $output .= '
-        <tr>
-         <td>'.$row->Product_ID.'</td>
-         <td>'.$row->Barcode.'</td>
-         <td>'.$showproduct.'</td>
-        </tr>
-        ';
+//         $output .= '
+//         <tr>
+//          <td>'.$row->Product_ID.'</td>
+//          <td>'.$row->Barcode.'</td>
+//          <td>'.$showproduct.'</td>
+//          <td><span class="my-text-color"><i class="bx bx-edit bx-sm" onclick="pop_custom_on()"></i></span></td>
+//          <td><span style="color:red";><i class="bx bxs-x-circle bx-sm" onclick="pop_custom_on()"></i></span></td>
+  
+//         </tr>
+//         ';
 
-       }
-      }
-      else
-      {
+//        }
+//       }
+//       else
+//       {
       	
       	
-       $output = '
-       <tr>
-        <td align="center" colspan="5">No Data Found</td>
-       </tr>
-       ';
-      }
+//        $output = '
+//        <tr>
+//         <td align="center" colspan="5">No Data Found</td>
+//        </tr>
+//        ';
+//       }
       
       
-      $data = array(
-       'table_data'  => $output,
-       'total_data'  => $total_row
-      );
+//       $data = array(
+//        'table_data'  => $output,
+//        'total_data'  => $total_row
+//       );
 
-      echo json_encode($data);
+//       echo json_encode($data);
       
 	
-		}
+// 		}
 		
 		
-		//echo("hello");		
-}
+// 		//echo("hello");		
+// }
 
-	}
+// 	}
 
 public function stockchack(){
 		

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use League\CommonMark\Extension\Table\Table;
 
 
 class ProductControllor extends Controller
@@ -16,27 +17,23 @@ class ProductControllor extends Controller
    
 
 
-    public function productInfo(){
-    	
-    		$id = Auth::user()->Shop_cat_id;
-    		$data = DB::table('catgory_info')->where('Shop_cat_id', $id)->get();
-    		$product = DB::table('product_info'.$id)->orderBy('Product_ID', 'DESC')->limit(11)->get();
-           return view('management.product_info')->with('data', $data)->with('product', $product);
+  public function productInfo(){
+    
+      $id = Auth::user()->Shop_cat_id;
+      $data = DB::table('catgory_info')->where('Shop_cat_id', $id)->get();
+      $product = DB::table('product_info'.$id)->orderBy('Product_ID', 'DESC')->limit(11)->get();
+          return view('management.product_info')->with('data', $data)->with('product', $product);
 
-    		
-	}
-		
-
-
-
-
+      
+}
   
-    public function productdelete($id){	
-  
-        DB::table('product_info')->where('Product_ID',$id)->delete();
-        return redirect("productInfo");
-     
-      }  
+
+  public function productdelete($id){	
+
+      DB::table('product_info')->where('Product_ID',$id)->delete();
+      return redirect("productInfo");
+    
+    }  
      
       
       
@@ -91,6 +88,110 @@ public function product_add(Request $reqs){
                     
       } 
 
+
+
+      public function action(Request $request){
+        if(Auth::check()){
+        
+         $id = Auth::user()->Shop_cat_id;
+         $ShopID = Auth::user()->ShopID;
+           if($request->ajax())
+           {
+            $output = '';
+            $query = $request->get('query');
+            if($query != '')
+            {
+             $data = DB::table('product_info'.$id)
+              ->where('Outlet_Id', $ShopID)
+               ->where('Barcode', 'like', '%'.$query.'%')
+               ->orWhere('Product_name', 'like', '%'.$query.'%')
+               ->get();
+               
+            }
+            else
+            {
+             $data = DB::table('product_info'.$id)
+               ->where('Outlet_Id', $ShopID)
+               ->orderBy('Product_ID', 'desc')
+               ->get();
+            }
+            
+            $total_row = $data->count();  
+            
+            if($total_row > 0)
+            {
+             foreach($data as $row)
+             {
+    
+             if(strval($row->Weight)=='0'){
+               $showproduct=$row->Product_name;
+             }else{
+               $showproduct=$row->Product_name."". $row->Weight;
+             }
+      
+              $output .= '
+              <tr>
+               <td>'.$row->Product_ID.'</td>
+               <td>'.$row->Barcode.'</td>
+               <td>'.$showproduct.'</td>
+               <td><span class="my-text-color"><i class="bx bx-edit bx-sm" onclick="pop_custom_on(\''.addslashes($row->Product_ID).'\')"></i></span></td>
+               <td><span style="color:red";><i class="bx bxs-x-circle bx-sm" onclick="pop_custom_onggg()"></i></span></td>
+        
+              </tr>
+              ';
+      
+             }
+            }
+            else
+            {
+              
+              
+             $output = '
+             <tr>
+              <td align="center" colspan="5">No Data Found</td>
+             </tr>
+             ';
+            }
+            
+            
+            $data = array(
+             'table_data'  => $output,
+             'total_data'  => $total_row
+            );
+      
+            echo json_encode($data);
+            
+        
+          }
+          
+          
+          //echo("hello");		
+      }
+      
+        }
+      
+public function updata_data_chece(Request $request){
+  $id = Auth::user()->Shop_cat_id;
+  $product=DB::table('product_info'.$id)->where('Product_ID',$request->product_id)->get();
+
+if(count($product)>0){
+
+  foreach($product as $rows){
+
+    echo $rows->Catagory;
+    echo $rows->Sub_Catagory;
+    echo $rows->Sub_to_sub_catagory;
+
+  }
+
+
+}else{
+
+
+}
+
+ //return response()->json( $product);
+}
 
 
 }

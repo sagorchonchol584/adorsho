@@ -80,6 +80,7 @@ class SupplierControllor extends Controller
            $Starf_Id = Auth::user()->id;
            $me="";
            $cash_flow=0;
+           $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
       
       //----------------thsi show recently update data  uploaded--------
             $INVOICEDUE = DB::table('suppile_info')->where('ShopID', $ShopID)->where('admin_show', 0)->get();
@@ -216,23 +217,18 @@ class SupplierControllor extends Controller
                 {
                  foreach($datas as $row)
                  {
-                  $ddd='<img  src="http://127.0.0.1:8000/product/'.$row->Image.'" width="50" height="60">';
+                  $ddd='<img  src="'.$base_url.'/product/'.$row->Image.'" width="50" height="60">';
                  
+                  $datae=$row->Product_load_numer;
+                 
+            
                   $outputlog.= '
                   <tr>
                   <td>'.$ddd.'</td>
                   <td>'.$row->Product_name.'</td>
                   <td>'.$row->Product_load_numer.'</td>
                   <td>'.$row->Purches_Price.'</td>   
-                  <td><svg id="barcode"></svg><script>  JsBarcode("#barcode", '.$row->Barcode.',{
-               format: "EAN13",
-               width: 1.1,
-               height: 35,
-               displayValue: true, 
-               margin: 0,
-               lineColor: "#000",
-               });</script>
-               </div></td> 
+             
                   <td><span class=" my-text-color"  data-price="'.$row->Purches_Price.'" data-name="'.$row->Product_name.'" data-units="'.$row->Product_load_numer.'" data-barcode="'.$row->Barcode.'" onClick="barcodeprint(this)"><i class="bx bx-barcode bx-md"></i></span></td> 
                  </tr>
                  ';

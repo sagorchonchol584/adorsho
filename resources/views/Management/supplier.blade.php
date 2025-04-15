@@ -453,7 +453,7 @@ float: right;
       <table class="table table-striped table-bordered" id="section1" >
        <thead>
         <tr>
-         <th><span class="name">Barcode</span></th>
+        
          <th><span class="product">Product Name</span></th>
 		     <th><span class="unite">Unites</span></th>
 		     <th><span class="Prices">Prices</span></th>
@@ -989,7 +989,8 @@ function barcodeprint(data){
   const barcode = data.getAttribute('data-barcode');
   const units = data.getAttribute('data-units');
   console.log(name);
-  printWithOptions(name,price,barcode,units)
+  printWithOptions(name,price,barcode,units);
+  
 }
 
 

@@ -66,7 +66,7 @@ Route::post('/cashshowadmin', [Postcontroller::class,'cashshowadminfunction']);
 
 Route::get('/daily_activity_load', [Postcontroller::class, 'Daily_activity_auto_data_loaded']);
 Route::get('/stockloadlog/{barcode}/{id}', [Postcontroller::class,'stockloadlogfuncation']);
-Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
+// Route::get('/live_search/action', [Postcontroller::class,'action'])->name('live_search.action');
 Route::get('status', [Postcontroller::class, 'userOnlineStatus']);
 
 
