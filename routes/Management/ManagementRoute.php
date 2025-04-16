@@ -51,6 +51,9 @@ Route::post('/productloaddata', [ProductControllor::class,'product_add'])->name(
 Route::get('/live_search_product/action', [ProductControllor::class,'action'])->name('live_search_product.action');
 
 Route::get('/update-data-check', [ProductControllor::class,'updata_data_chece'])->name('dataupdate');
+Route::get('/product-data-delete', [ProductControllor::class,'data_delets'])->name('deletedata');
+
+Route::get('/update-data-send', [ProductControllor::class,'update_data'])->name('updatedata');
 
 
 //Barcode manager

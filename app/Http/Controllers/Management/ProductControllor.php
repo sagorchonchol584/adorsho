@@ -51,8 +51,8 @@ public function product_add(Request $reqs){
             
     } else {
               
-             $imageName = time().'.'.$reqs->Productimage->extension();  
-             $naaa=time();    
+           $imageName = time().'.'.$reqs->Productimage->extension();  
+           $naaa=time();    
            $datess['Barcode']=$reqs->Barcode;
            $datess['Product_name']=$reqs->Product_name;
               
@@ -67,6 +67,7 @@ public function product_add(Request $reqs){
            $datess['Catagory']=$reqs->Catagory;
            $datess['Sub_Catagory']=$reqs->Sub_Catagory;
            $datess['Sub_to_sub_catagory']=$reqs->Sub_to_sub_catagory; 
+           $datess['Description']=$reqs->Description; 
            $datess['Create_date']=date("Y-m-d");    
            $datess['Update_date']=date("Y-m-d");   
            $datess['Product_add_user_id']=Auth::user()->id;
@@ -135,7 +136,7 @@ public function product_add(Request $reqs){
                <td>'.$row->Barcode.'</td>
                <td>'.$showproduct.'</td>
                <td><span class="my-text-color"><i class="bx bx-edit bx-sm" onclick="pop_custom_on(\''.addslashes($row->Product_ID).'\')"></i></span></td>
-               <td><span style="color:red";><i class="bx bxs-x-circle bx-sm" onclick="pop_custom_onggg()"></i></span></td>
+               <td><span style="color:red";><i class="bx bxs-x-circle bx-sm" onclick="deleteproduct(\''.addslashes($row->Product_ID).'\')"></i></span></td>
         
               </tr>
               ';
@@ -172,25 +173,49 @@ public function product_add(Request $reqs){
       
 public function updata_data_chece(Request $request){
   $id = Auth::user()->Shop_cat_id;
-  $product=DB::table('product_info'.$id)->where('Product_ID',$request->product_id)->get();
+  $domain = $_SERVER['HTTP_HOST'];
+  $product=DB::table('product_info'.strval($id))->where('Product_ID',$request->product_id)->get();
 
 if(count($product)>0){
 
   foreach($product as $rows){
 
-    echo $rows->Catagory;
-    echo $rows->Sub_Catagory;
-    echo $rows->Sub_to_sub_catagory;
+  $Image='product/'.strval($rows->Image);
+  $Barcode= $rows->Barcode;
+  $Product_name= $rows->Product_name;
+  $weightd= $rows->Weight;
+
+    $Catagory=DB::table('catgory_info')->where('id',$rows->Catagory)->value('catagory_name');
+    $Sub_Catagory=DB::table('subcatgory_info')->where('id',$rows->Sub_Catagory)->value('catagory_name_s');
+    $Sub_to_sub_catagory=DB::table('sub_sub_catgory_info')->where('id',$rows->Sub_to_sub_catagory)->value('sub_catagory_name');
 
   }
 
+  $Catagorydata=DB::table('catgory_info')->get();
+  $subcatgory_info=DB::table('subcatgory_info')->get();
+  $sub_sub_catgory_info=DB::table('sub_sub_catgory_info')->get();
+
+  
+$alldata=['catagory'=>$Catagorydata, 'subcat'=>$subcatgory_info,'sub_to_sub_cat'=>$sub_sub_catgory_info,'cat_id'=>[ $Catagory,$Sub_Catagory,$Sub_to_sub_catagory],'product_info_data'=>[$Barcode,$Product_name,$weightd,$Image]];
 
 }else{
 
 
 }
 
- //return response()->json( $product);
+ return response()->json($alldata);
+}
+
+
+public function data_delets(Request $request){
+  $id = Auth::user()->Shop_cat_id;
+  $ShopID = Auth::user()->ShopID;
+  $showdata= DB::table('product_info'.strval($id))->where('Product_ID',$request->product_id)->where('Outlet_Id', $ShopID)->delete();
+ return response()->json($showdata);
+}
+
+public function update_data(Request $request) {
+  return response()->json($request->description);
 }
 
 
