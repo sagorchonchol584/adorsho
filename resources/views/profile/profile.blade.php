@@ -174,7 +174,7 @@
               </form>
             </div> 
         </div>
-	 <a href="{{ route('home')}}"  class="btn btn-primary" >Home</a>
+	 <a href="{{ route('overview')}}"  class="btn btn-primary" >Home</a>
       
 		</div>
 		</div>	

@@ -6,8 +6,10 @@
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
 		<script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"> </script>	
 		<script src="{{ asset('frontend/js/sweetalert.min.js') }}"> </script>	
-	    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+	    <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
 		<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="{{ asset('frontend/js/barcode23.js') }}"> </script>	
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	
@@ -15,7 +17,110 @@
 <style>
 	
 	
+.maindailoboax-master {
+  height: 530px;
+  width: 600px;
+  margin: auto;
+  border: 1px solid #555500ff;
+  text-align: center;
+  border-radius: 9px;
+  background: white;
+  position: relative;
+  top:20%;
+  text-align: center;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out forwards;
+ 
+}
+
+.black_overlaya-master {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+ 
+}
+
+.white_contenta-master {
+ display: none;
+ position: absolute;
+ top:0;
+ left:0;
+ width: 100%;
+ height: 100%;
+ background-color:hsla(0,0%,0%,0.0);
+ z-index: 1002;
+}
+
+.ddd-master{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	border: none;
+}
+
+.exitdd-master{
+	height: 50px;
+	width: 100%;
+	background-color:#F5F5F5;
+    text-align: right;
+	   
+	}
+.mainedd-master{
+		height: 10px;
+		width: 100%;
+		border-top: 1px solid #a6a6a6ff;
+		background-color: #FFFFFF;
+	}
+.butttons-master{
+		height: 40px;
+		width: 100%;
+		text-align: right;
+		padding-top: 5px;
+	}
+
+
+.info-master{
+		height: 90px;
+		width: 100%;
+	}
+
+  .tkinfo-master{
+		height: 40px;
+		width: 100%;
+		padding: 5px 10px 10px 0px;
+    text-align: right;
+	}
+
 	
+.inputtsupper-master{
+width: 50%;
+height: 60px;
+float: left;
+}
+
+.inputtsuppertwo-master{
+  width: 50%;
+height: 60px;
+float: right;
+
+}
+
+.my-custom-scrollbar-master {
+position: relative;
+height: 250px;
+overflow: auto;
+}
+.table-wrapper-scroll-y-master {
+display: block;
+}
 	
 
 	/* collaspe icon */
@@ -60,15 +165,22 @@
 		display: inline-flex;
 		padding: .1875rem .5rem;
 		margin-top: .125rem;
-		margin-left: 1.25rem;
+		margin-left: 1px;
 		text-decoration: none;
 	}
 
 	.link_line{
-		background-color: #e0f3ff;
+		background-color:var(--accent-100);
 		height: auto;
 		width: 3px;
 		margin-left: 40px;
+	
+	}
+
+		
+	.menu-width{
+		width: 150px;
+	
 	}
 		
 	:root{
@@ -86,8 +198,8 @@
 
 	body{
 		position: relative;
+		background-color: white;
 		transition: .5s;
-		background: white;
 		padding-left: 100px;
 	    margin: var(--header-height) 0 0 0;
 	}
@@ -103,8 +215,8 @@
 		top: 0;
 		left: 0;
 		display: flex;
-		background-color: #FAFBFC;
-		z-index: 1;
+	    background-color:var(--accent-100);
+		z-index: 5;
 		transition: .5s;
 		height: 60px;
 		box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,.03),
@@ -247,17 +359,14 @@
 	
 	.head-main:hover{
 		
-		background: #e0f3ff;
+		background-color:var(--accent-100);
 		border-radius: 5px;
 	}
 	
 	.desh-boad{
 		font-weight: bold;
 	}
-	
-	.menu-width{
-		width: 150px;
-	}
+
 		
  .kek{
 		
@@ -302,8 +411,25 @@
    overflow: hidden;
    }
 	
-	
-
+   #managemntcss {
+  -moz-transition: height .5s;
+  -ms-transition: height .5s;
+  -o-transition: height .5s;
+  -webkit-transition: height .5s;
+   transition: height .5s;
+   height: 0;
+   overflow: hidden;
+   }
+   
+   #ecommerscss{
+  -moz-transition: height .5s;
+  -ms-transition: height .5s;
+  -o-transition: height .5s;
+  -webkit-transition: height .5s;
+   transition: height .5s;
+   height: 0;
+   overflow: hidden;
+	}
 	.two{
 		width: 100%;
 		height: 100%;
@@ -421,28 +547,9 @@
 </svg>
 
 
-<script>
+<header class="header body-pd  " id="header">
 
-/*
-document.addEventListener("keydown", e => {
-    if(e.key === "A" || e.key === "a" ) {
-      console.log("jghdfjghj");
-      window.location.href = "{{ route('sales')}}";
-      e.preventDefault()
-    }
-    
-     if(e.key === "H" || e.key === "h" ) {
-      console.log("jghdfjghj");
-      window.location.href = "{{ route('home')}}";
-      e.preventDefault()
-    }
-    
-  })*/
-</script>
-
-<header class="header body-pd " id="header">
-
-<div class="ami" id="icons" ><h5>{{auth()->user()->Shopname}}</h5></div>
+<div class="ami " id="icons" ><h5>{{auth()->user()->Shopname}}</h5></div>
 		<div class="header_toggle">
 		
 		<div class="hh h-25">
@@ -460,12 +567,10 @@ document.addEventListener("keydown", e => {
   	
   </div>
   
-  	<div class="onetoess border">
-  	
-  	
+  	<div class="onetoess ">
   		<nav class="navbar">
         <div class="container-fluid"> 
-                <ul class="nav navbar-nav ms-auto">        	
+                <ul class="nav navbar-nav ms-auto ">        	
                     <li class="nav-item dropdown">       
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 							<span style="font-weight: bold;">{{auth()->user()->Name}} </span> 
@@ -488,36 +593,32 @@ document.addEventListener("keydown", e => {
 	</header>
 
 
-
-<body id="body-pd" class="body-pd">
+<body id="body-pd" class="body-pd ">
 	<div class="l-navbar shows" id="nav-bar">
-		<nav class="nav">
+		<nav class="nav ">
 			<div>
-			
-	
 			
 			<div class="" style="width: 250px;">
 				<ul class="list-unstyled ps-0">
 					<li class="mb-1">					
-					<p  id="menu" class="text-primary fw-bold url-size">MENU</p>
+					<p  id="menu" class="my-text-color fw-bold url-size">MENU</p>
 			<div class="head-dec">
 			
 				<div id="test" class=" head-main align-items-center"  onclick="Deshbord()">
 				<svg class="bi me-2" width="20" height="20"> <use xlink:href="#home"/></svg>
-				<span  id="deshbdsd" class="desh"> Deshboard</span>
+				<span  id="deshbdsd" class="desh"> Dashboard</span>
 					<i class='bx bx-chevron-down bx-sm float-right '></i>
 		          </div>
 			   </div>
 				
-
+			
 			 	<div id="Deshboard">
 			 	  <div class="deshbo">
-					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line Deshboard">
-						<li><a href="{{ route('home')}}" class="link-dark rounded menu-width"> Overview</a></li>
-						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width "> Cash Flow</a></li>   
-						<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>
-						<li><a href="{{ route('report')}}" class="link-dark rounded menu-width">Reports</a></li>
-						<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width">Sales</a></li>
+					<ul class=" btn-toggle-nav list-unstyled fw-normal pb-1 small link_line ">
+						<li><a href="{{ route('overview')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/overview') || Request::is('Dashboard/overview/*')) acticecust @endif"> Overview</a></li>
+						<li> <a href="{{ route('cashflowfun')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/cashflow') || Request::is('Dashboard/cashflow*')) acticecust @endif"> Cash Flow</a></li>   
+						<li><a href="{{ route('reports')}}" class="link-dark rounded menu-width @if(Request::is('Dashboard/reports') || Request::is('Dashboard/reports*')) acticecust @endif">Reports</a></li>
+						
 						
 					</ul>
 					</div>
@@ -527,10 +628,10 @@ document.addEventListener("keydown", e => {
 				
 				
 				
-					<li class="mb-1">				
+			 <li class="mb-1">				
 			<div class="head-dec">
             <div class=" head-main align-items-center" onclick="Pages('hello')" id="pages">
-						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#speedometer2"/></svg><span  id="pagec" class="desh"> Page</span>
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#speedometer2"/></svg><span  id="pagec" class="desh"> Sales & Market</span>
 						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
 					</div>
 				</div>
@@ -539,22 +640,69 @@ document.addEventListener("keydown", e => {
 				<div id="Page">
 				<div class="pagess">
 					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
-					    <li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
-						<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width">Product Info</a></li>				
-						<li><a href="{{ route('tests')}}" class="link-dark rounded menu-width">Stock Add</a></li>
-						<li><a href="{{ route('stockadd')}}" class="link-dark rounded menu-width">test</a></li>
+					<li><a href="{{ route('sales')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/sales') || Request::is('SalesMarket/sales*')) acticecust @endif">Sales</a></li>		
+					<li><a href="{{ route('salesreturnview')}}" class="link-dark rounded menu-width @if(Request::is('SalesMarket/SalesReturn') || Request::is('SalesMarket/SalesReturn*')) acticecust @endif">Sales Return</a></li>
+					<li><a href="{{ route('oder')}}" class="link-dark rounded menu-width">oder</a></li>			
 					</ul>
 				 </div>
 				</div>
-									
+						
+				<!--  mangemnt -->
+	
+				<li class="mb-1">				
+			<div class="head-dec">
+            <div class=" head-main align-items-center" onclick="mangemantfunt()" id="manage">
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#tools"/></svg><span  id="mangepage" class="desh"> Management</span>
+						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
+					</div>
+				</div>
+
+
+				<div id="managemntcss">
+				<div class="pagessd">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
+					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Stock Add</a></li>
+					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Category</a></li>
+					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Product Add</a></li>	
+					<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width  @if(Request::is('Management/supplier') || Request::is('Management/supplier/*')) acticecust @endif"> Suplier Pages</a></li>
+					<li> <a href="{{ route('barcodemange')}}" class="link-dark rounded menu-width  @if(Request::is('Management/barcodemange') || Request::is('Management/barcodemange/*')) acticecust @endif"> Barcode </a></li>
+					</ul>
+				 </div>
+				</div>
+
+
+
+				<!--  E-commers -->
+	
+				<li class="mb-1">				
+			<div class="head-dec">
+            <div class=" head-main align-items-center" onclick="ecommersfunt()" id="manage">
+						<svg class="bi me-2" width="20" height="20"> <use xlink:href="#bootstrap"/></svg><span  id="ecommers" class="desh"> E-commers </span>
+						<i class='bx bx-chevron-down bx-sm float-right' id="rote"></i>
+					</div>
+				</div>
+
+
+				<div id="ecommerscss">
+				<div class="commerpagessd">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line fff">	
+					<li><a href="{{ route('stock')}}" class="link-dark  menu-width @if(Request::is('Management/stock') || Request::is('Management/stock/*')) acticecust @endif">Product List</a></li>
+					<li><a href="{{ route('categorycheck')}}" class="link-dark rounded menu-width @if(Request::is('Management/category') || Request::is('Management/category/*')) acticecust @endif">Oder List</a></li>
+					<li><a href="{{ route('product_info')}}" class="link-dark rounded menu-width @if(Request::is('Management/productInfo') || Request::is('Management/productInfo/*')) acticecust @endif">Header & Footer</a></li>	
+					</ul>
+				 </div>
+				</div>
+
+
 					</li>				
 					<li class="mb-1">
 						<li class="border-top my-3">
-							<p id="menu" class="text-primary fw-bold url-size">PROFILE</p>		
-						</li>
+							<p id="menu" class="my-text-color fw-bold url-size">PROFILE</p>		
+					</li>
+
 					<div class="head-dec">
                          <div class="head-main align-items-center"  id="ac" onclick="Acountd()">
-							<svg class="bi me-2" width="20" height="20"> <use xlink:href="#home"/></svg>
+							<svg class="bi me-2" width="20" height="20"> <use xlink:href="#toggles2"/></svg>
 							<span  id="acc" class="desh"> Account</span>
 							<i class='bx bx-chevron-down bx-sm float-right '></i>
 						</div>
@@ -563,15 +711,17 @@ document.addEventListener("keydown", e => {
 						<div class="Acountss">		
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small link_line">
 								@if(auth()->user()->AdminCat =='Admin')	
-								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>             
+								<li> <a href="{{ route('createnewprofile')}}" class="link-dark rounded menu-width "> New Employee</a></li>     
 		                   		 @endif
-								<li> <a href="{{ route('product_supplier_page')}}" class="link-dark rounded menu-width "> Suplier Pages</a></li>  
+								<li><a href="{{ route('customer')}}" class="link-dark rounded menu-width">Customer Add</a></li>	
+								  
 								<li><a href="{{route('profileView')}}" class="link-dark rounded menu-width">Profile</a></li>
 								<li><a href="#" class="link-dark rounded menu-width">Settings</a></li>
 								<li><a href="{{route('loginout')}}" class="link-dark rounded menu-width">Sign out</a></li>
 							</ul>
 							</div>
 						</div>	
+						
 					</li>
 				</ul>
 			</div>
@@ -580,11 +730,15 @@ document.addEventListener("keydown", e => {
 
 			
 			</div>
+		
 		</nav>
+
+		
 	</div>
+
+
 	<!--Container Main start-->
 	<div class="height-100 bg-light">		
-		
 		<section class="bg-gray">
 			<div class="container-fluid">
 				<div class="row">
@@ -602,6 +756,145 @@ document.addEventListener("keydown", e => {
 	</div>
 	
 	<!--Container Main end-->
+
+
+
+
+<div id="fadeaallmaster" class="black_overlaya-master"></div>
+<div id="lightaallmaster" class="white_contenta-master"> 
+
+<div class="maindailoboax-master" id="maindailoboaxallmaster">
+  <div class="exitdd-master">
+    
+    <button class="ddd-master" onclick="pop_custom_offmaster()"><span style="color: white" >X</span></button>
+   
+  </div> 
+
+
+<div class="mainedd-master">
+<div class="col-12 h-80 fw-bold p-1" ><span style="font-size: 20px;" >Cash Sent To Anther Staff</span></div>
+
+<div class="col-12 h-60">
+
+<div class="table-wrapper-scroll-y-master my-custom-scrollbar-master">
+      <table class="table table-striped table-bordered" id="section1" >
+       <thead>
+        <tr>
+         
+         <th>Name</th>
+         <th>Days</th>
+		 <th>Balance</th>
+        </tr>
+       </thead>
+       <tbody class="sssss">
+
+       </tbody>
+      </table>
+</div>
+
+<div class="info-master">
+  <div class="tkinfo-master">
+	<h4 id="infomag-master"></h4>
+  </div>
+  <div class="inputtsupper-master">
+  </div> 
+  <div class="inputtsuppertwo-master">
+  </div>
+</div>
+<div class="butttons-master">
+	<button id="cashbtm" type="button" onclick="all_data_chack()" class="btn btn-primary">Sent</button>&nbsp;
+</div>
+</div>
+</div>
+
+@if(auth()->user()->Notifi_meg =='1')	
+<script>
+
+fetch_customer_data();
+function fetch_customer_data()
+ {
+  $.ajax({
+  method:'GET',
+   url:"{{ route('cashflowstatesroute') }}",
+   dataType:'json',
+   success:function(data)
+   {
+    $('.sssss').html(data.cash_sent_any_person_show); 
+
+//	console.log(data.cash_sent_any_person_show)
+   // all_cash_sent_fuc(data.totalsates, data.today_suppier_exps, data.today_expence_tk, data.cash_crdits);
+   // total_sales=data.totalsates;
+   }
+  })
+}
+
+
+function all_data_chack(){
+	pop_custom_offmaster();
+	conformdeleta();
+}
+
+   pop_custom_onmaster();
+function pop_custom_onmaster(){
+		document.getElementById('fadeaallmaster').style.display='block';
+		document.getElementById('lightaallmaster').style.display='block';
+		document.getElementById('maindailoboaxallmaster').style.display='block';
+		document.body.style.overflow ="hidden";
+}
+
+
+function conformdeleta(){
+    swal({
+   title: "Are you sure?",
+   text: "you will not be able to return!",
+   icon: "warning",
+   buttons: true,
+   dangerMode: true,
+ })
+ .then((willDelete) => {
+   if (willDelete) {
+     swal("Data has Saved ", {
+       icon: "success",
+     }).then(function(){
+		
+		datachack();
+     });
+ 
+   } else {
+     swal("Do you want Exit ?",{
+       closeOnClickOutside: false,
+     }).then((mee)=>{
+       //---------this pop alert---------
+     });
+   }
+ });
+}
+
+function datachack(){
+  $.ajax({
+     type: 'GET', //THIS NEEDS TO BE GET
+     url: '/data_chack_to_sender_data/',
+     success: function (data) {
+	//var datajos=JSON.parse(data);
+	location.reload();
+     console.log(data);
+     fetch_customer_data();
+       
+     },
+     error: function() { 
+
+     }
+    });
+}
+
+
+</script>	
+				       
+ @endif
+
+	<!--Container Main end-->
+
+		
 </body>
 </div>
 
@@ -610,25 +903,41 @@ document.addEventListener("keydown", e => {
 
 <script>
 
-auto_loaddes();
+
+function pop_custom_offmaster(){
+		document.getElementById('fadeaallmaster').style.display='none';
+		document.getElementById('lightaallmaster').style.display='none';
+		document.getElementById('maindailoboaxallmaster').style.display='none';
+}
+
+
+
+
+
+
+         auto_loaddes();
 
         let darkModeAc = localStorage.getItem("collapsac"); 
         let pagrAc = localStorage.getItem("collapsac_page"); 
         let deshboardAc = localStorage.getItem("collapsac_deshboard");
+
+		let mangagementmemorize = localStorage.getItem("managementkey");
+		let ecommersmemorize = localStorage.getItem("Ecommerskey");
+
         
-        
-        
-	     var growDivAC = document.getElementById('Account');
-         var pagese = document.getElementById('Page');
-         var edeshboard = document.getElementById('Deshboard');
-         
-         
+	    var growDivAC = document.getElementById('Account');
+        var pagese = document.getElementById('Page');
+        var edeshboard = document.getElementById('Deshboard');
+
+        var Managementddd = document.getElementById('managemntcss');
+        var ecommertddd = document.getElementById('ecommerscss');
          
         var text_change = document.getElementById("acc");
         var text_change_page = document.getElementById("pagec"); 
         var text_change_deshboard = document.getElementById("deshbdsd");
-        
-        
+
+		var text_change_mangepage = document.getElementById("mangepage");
+        var text_change_ecommers = document.getElementById("ecommers");
         
 
 function enableDarkModeac(){
@@ -646,7 +955,7 @@ function disableDarkModeac(){
 
 
 function enablepage(){	
-  var wrapper = document.querySelector('.fff');
+  var wrapper = document.querySelector('.pagess');
 	  pagese.style.height = wrapper.clientHeight+"px";
       localStorage.setItem("collapsac_page", "Page");      
 }
@@ -655,8 +964,6 @@ function disablepage(){
     pagese.style.height = 0;   
     localStorage.setItem("collapsac_page", "disabled");    
 }
-
-
 
 
 
@@ -671,6 +978,35 @@ function disableDeshboard(){
     edeshboard.style.height = 0;   
     localStorage.setItem("collapsac_deshboard", "disabled");    
 }
+
+
+
+function enableManagemnt(){	
+      var wrapper = document.querySelector('.pagessd');
+	  Managementddd.style.height =  wrapper.clientHeight+"px";
+      localStorage.setItem("managementkey", "Management");      
+}
+
+
+function disableManagement(){	
+    Managementddd.style.height = 0;   
+    localStorage.setItem("managementkey", "disabled");    
+}
+
+
+
+function enableecommer(){	
+      var wrapper = document.querySelector('.commerpagessd');
+	  ecommertddd.style.height =  wrapper.clientHeight+"px";
+      localStorage.setItem("Ecommerskey", "Ecommers");      
+}
+
+
+function disableecommer(){	
+    ecommertddd.style.height = 0;   
+    localStorage.setItem("Ecommerskey", "disabled");    
+}
+
 
 
 
@@ -694,6 +1030,21 @@ if (deshboardAc === "Deshboard") {
 	enableDeshboard();
 	text_change_deshboard.style.fontWeight = "bold";
 }
+
+
+if (mangagementmemorize === "Management") {
+	enableManagemnt();
+	text_change_mangepage.style.fontWeight = "bold";
+}
+
+
+// this to chenge ecommer
+if (ecommersmemorize === "Ecommers") {
+	enableecommer();
+	text_change_ecommers.style.fontWeight = "bold";
+	
+}
+
 
 
 
@@ -726,7 +1077,7 @@ function Pages(){
 
  //  localStorage.clear();
 function Acountd(){	
-		
+
 	darkModeAc = localStorage.getItem("collapsac"); 
 	   if (darkModeAc === "disabled") {
       enableDarkModeac();
@@ -736,6 +1087,34 @@ function Acountd(){
       text_change.style.fontWeight = "normal";
 	  }
 	 
+}
+
+
+function mangemantfunt(){
+
+	mangagementmemorize = localStorage.getItem("managementkey"); 
+	   if (mangagementmemorize === "disabled") {
+		enableManagemnt()
+      text_change_mangepage.style.fontWeight = "bold";
+	  } else {
+		 disableManagement()
+		 text_change_mangepage.style.fontWeight = "normal";
+	  }
+console.log("bangladesh")
+}
+
+//-------ecommers
+function ecommersfunt(){
+
+	ecommersmemorize = localStorage.getItem("Ecommerskey"); 
+   if (ecommersmemorize === "disabled") {
+	enableecommer();
+	text_change_ecommers.style.fontWeight = "bold";
+  } else {
+	disableecommer();
+	 text_change_ecommers.style.fontWeight = "normal";
+  }
+console.log("Ecommers")
 }
 
 
@@ -827,6 +1206,9 @@ $.ajax({
 }
 
 
+
+
+
 </script>
 
 
@@ -834,6 +1216,9 @@ $.ajax({
 <script>
 	
 </script>			 -->
+
+
+
 
 @endif
 </body>

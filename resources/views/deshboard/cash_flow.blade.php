@@ -7,7 +7,7 @@
 <div class="top_breadc">
 	<div class="top_breadcone"><i class='bx bxs-dashboard bx-lg card' ></i></div>
 	  <div class="top_breadctwo">
-	    <span class="breade_color">Supplier page</span>
+	    <span class="breade_color">CashFlow page</span>
 		<p class="breaderr">This is product supplier page add information whole store.</p>   
       </div>
 </div>	
@@ -20,7 +20,6 @@
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb"> 
     <li class="breadcrumb-item"><i class='bx bx-home bx-sm' ></i></li>
-    <li class="breadcrumb-item"><a class="breade" href="#">Supplier</a></li>
     @foreach(Request::segments() as $segment)
     <li  class="breadcrumb-item"> <a href="#" class="breade">{{$segment}} </a> </li>
     @endforeach
@@ -28,6 +27,10 @@
 </nav>
 </div>
 </div>
+
+
+          
+
 
 <!--This is a pop loading deing  -->
 <style>
@@ -138,14 +141,23 @@ overflow: auto;
 
 .my-custom-scrollbartree {
 position: relative;
-height: 550px;
+height: 600px;
 overflow: auto;
 }
 .my-custom-scrollbartwo {
 position: relative;
-height: 480px;
+height: 500px;
 overflow: auto;
 }
+
+
+.sentscroll {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+
+
 .table-wrapper-scroll-y {
 display: block;
 }	
@@ -192,8 +204,8 @@ float: right;
 <div class="col-12 h-80 fw-bold p-1" ><span style="font-size: 20px;" >Today is Expends Our shop</span></div>
 
 <div class="col-12 h-60">
-<div class="col-6 h-60 ttt"><span style="font-size: 20px;" >Details :</span></div>
-<div class="col-6 h-60">
+<div class="col-4 h-60 ttt"><span style="font-size: 20px;" >Details :</span></div>
+<div class="col-8 h-60">
 <div class="input-group ">
   <select class="stceted" id="expens">
     <option value="select" selected>--Selected Cost--</option>
@@ -209,8 +221,8 @@ float: right;
 </div>
 
 <div class="col-12 h-60">
-<div class="col-6 h-60 ttt"><span style="font-size: 20px;" >Amount :</span></div>
-<div class="col-6 h-60">
+<div class="col-4 h-60 ttt"><span style="font-size: 20px;" >Amount :</span></div>
+<div class="col-8 h-60">
 <input type="number" class="form-control" aria-label="Large" id="hiddenamout" hidden>
 <input type="number" class="form-control" aria-label="Large" id="amountcash">
 </div>
@@ -245,7 +257,7 @@ float: right;
 <div class="row">
 <div class="col-12 h-750">
 <div class="row">
-<div class="col-12 h-120 card">
+<div class="col-12 h-120 card border">
 <!------------------This is a top info bar ------------------>
 <div class="row">
 <div class="col-2 h-120"> 
@@ -258,7 +270,7 @@ float: right;
 <div class="col-9 h-120 "> 
 <div class="row">
 <div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="totalsales">00.00 Tk</span></div>
-<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Total Sales</span></div>
+<div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Sales</span></div>
 </div>
 </div>
 </div>
@@ -266,7 +278,7 @@ float: right;
 </div>
 
 
-<div class="col-2 h-120">
+<div class="col-2 h-120 border">
 
 <div class="row">
 <div class="col-3 h-120 p-3"> 
@@ -288,7 +300,7 @@ float: right;
 
 
 
-<div class="col-4 h-120">
+<div class="col-4 h-120 border">
 
 <div class="row">
 <div class="col-3 h-120 p-3"> 
@@ -297,23 +309,43 @@ float: right;
 
 <div class="col-9 h-120 "> 
 <div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="montyexpence">00.00 Tk</span></div>
+
+
+<div class="col-12 h-70 fs-5 fw-bold">
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="montyexpence">00.00 Tk</span> </div>
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="returntk">00.00 Tk</span> </div>
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Expences </span></div>
+</div>
+
 </div>
 </div>
 </div>
 </div>
 
-<div class="col-4 h-120">
+<div class="col-4 h-120 border">
 
 <div class="row">
 <div class="col-3 h-120 p-3"> 
 <div class="cerlll p-2" ><i class='bx bx-money bx-lg'></i> </div>  
 </div>
 
-<div class="col-9 h-120 "> 
-<div class="row">
-<div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="monthy_suppier_exp">00.00 Tk</span></div>
+<div class="col-9 h-120  "> 
+<div class="row ">
+
+@if(auth()->user()->AdminCat =='Admin')	               		 
+<div class="col-12 h-70 fs-5 fw-bold">
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="extra_monthy_suppier_exp">00.00 Tk</span> </div>
+<div class="col-12 h-50 fs-6 fw-bold  "><span class="monthy_suppier_exp">00.00 Tk</span> </div>
+</div>
+
+@else
+<div class="col-12 h-70 fs-5 fw-bold pt-4">
+<span class="monthy_suppier_exp">00.00 Tk</span> 
+</div>       
+@endif
+
+
+
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Monthly Supplier Expences</span></div>
 </div>
 </div>
@@ -323,12 +355,12 @@ float: right;
 
 <div class="col-4 h-120">
 
-<div class="row">
+<div class="row border">
 <div class="col-3 h-120 p-3"> 
 <div class="cerlll p-2" ><i class='bx bxs-file-blank bx-lg'></i> </div>  
 </div>
 
-<div class="col-9 h-120 "> 
+<div class="col-9 h-120  "> 
 <div class="row">
 <div class="col-12 h-70 fs-5 fw-bold  pt-4"><span class="invoice">00.00 Tk</span></div>
 <div class="col-12 h-50 fs-6 fw-bold  pt-1"><span>Notification</span></div>
@@ -350,7 +382,7 @@ float: right;
 <!------------------This is a top info bar ------------------>
 
 </div>
-<div class="col-12 h-600 card">
+<div class="col-12 h-650 card">
 <div class="row">
 <div class="col-7 h-600 ">
 
@@ -411,9 +443,10 @@ float: right;
      @endif
 
 </div>
-<div class="col-5 h-600 card">
+<div class="col-5 h-650 card">
  <div style="width: 100%; text-align:center; font-size:20px; font-weight:bold;"> <span >Expence List of days</span></div>
  <hr>
+ 
 <div class="table-wrapper-scroll-y my-custom-scrollbartree">
       <table class="table table-hover" id="section1" style=" font-size:18px;">
        <thead>
@@ -440,37 +473,55 @@ float: right;
          <th>Total Expence</th>
 	    	 <th class="text-right-side"><span id="expenc"> </span></th>
         </tr>
+
+        <tr >
+         <th>Retrun Balence</th>
+	    	 <th class="text-right-side"><span id="returnsproduct"> </span></th>
+        </tr>
         
         <tr  class="table-secondary">
          <th scope="col">Net Cash </th>
 	    	 <th class="text-right-side bderre"><span id="Cashid"> </span></th>
         </tr>
-       
-
         <tr >
          <th>Sent Balance </th>
 	    	 <th class="text-right-side">
          <select class="stceted_cash_sent" id="cashid">
-   
          </select>
-
          </th>
         </tr>
-
-
-        <tr >
-         <th> </th>
-	    	 <th class="text-right-side">
-          <button id="cashsentbnt" onclick="confrm_cash_sent()" class="btn btn-primary">Sent </button>
-        </th>
-        </tr>
-
-
-    
        </tbody>
       </table>
+      
+  <div class="container">
+  <div class="row">
+    <div class="col text-right-side">
+    <span class="fw-bolder">All list for sent data</span>
+    </div>
+    <div class="col text-right-side">
+    <button id="cashsentbnt" onclick="confrm_cash_sent()" class="btn btn-primary">Sent </button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="table-wrapper-scroll-y sentscroll">
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">Sender Name</th>
+    <th scope="col">Day </th>
+    <th scope="col">Balance</th>
+    <th scope="col">Remark </th>
+    </tr>
+  </thead>
+  <tbody id="sentk">
+  
+  </tbody>
+</table>
+
+</div>
      </div>
-     <button >ALL PAYABLE DUE</button>
+
 </div>
 </div>
 </div>
@@ -558,14 +609,6 @@ function expencedata(){
    }
  
 
-
-
-
-
-
-  
-
-
 }
 
 
@@ -582,7 +625,7 @@ function expenccostsent(tks,select){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expenceadd/',
+         url: '{{ Route('expenceaddroute') }}',//done
          data: {tk:tks,selectvale:select}, 
          success: function (data) {
             console.log(data); 
@@ -672,7 +715,7 @@ function confrm_expenc_update_data_sent(amountcash,expens){
              });
      $.ajax({
          type: 'POST', //THIS NEEDS TO BE GET
-         url: '/expence_update/',
+         url: '{{ route('expence-update-route') }}',//done
          data: {tk:amountcash,selectvale:expens,id:idsss}, 
          success: function (data) {
             console.log(data); 
@@ -734,11 +777,9 @@ console.log("hello");
 
 function cash_sent_any_prsonal(id){
 
-
-  console.log("id :"+id);
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_cash_sent/'+id,
+     url: '/Dashboard/get-data-to-cash-sent/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
 
@@ -770,7 +811,7 @@ function fetch_customer_data()
  {
   $.ajax({
   method:'GET',
-   url:"{{ route('cashflowstatesroute') }}",
+   url:"{{ route('cashflowstatesroute') }}",//done
    dataType:'json',
    success:function(data)
    {
@@ -796,14 +837,25 @@ function fetch_customer_data()
 
     var monthy_expences = data.monthy_expence.toString().split('.');
     monthy_expences[0] = monthy_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
+
+
+  
     var today_expences = data.today_expence_tk.toString().split('.');
     today_expences[0] = today_expences[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 
-    $('.montyexpence').html(monthy_expences.join('.')+" Tk");
+
+    
+    $('.montyexpence').html(monthy_expences.join('.')+" Tk <small style='color:gray'>(Expence)</small>");
+    $('.returntk').html(data.monthy_return+" Tk <small style='color:gray'>(Return)</small>");
+
     $('#expenc').html(" - "+today_expences.join('.')+" Tk");
     $('#expenc').css("color", "red");
+
+
+    $('#returnsproduct').html(" - "+data.today_return_tk+" Tk");
+    $('#returnsproduct').css("color", "red");
+
 
 
  
@@ -830,18 +882,24 @@ function fetch_customer_data()
     var todaycash = data.cash_crdits.toString().split('.');
     todaycash[0] = todaycash[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     $('.todaycash').html(todaycash.join('.')+" Tk");
-    $('#Cashid').html(todaycash.join('.')+" Tk");
+
+    $('#Cashid').html(todaycash.join('.')+" Tk");    
+
+    $('#sentk').html(data.cash_sent_any_person_log);
 
    
 
     var monthy_suppier_expence = data.monthy_suppier_exps.toString().split('.');
     monthy_suppier_expence[0] = monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+   //  console.log('this all supplier data'+data.monthy_suppier_exps);
+    var extra_monthy_suppier_expence = data.extra_monthy_suppier_exps.toString().split('.');
+    extra_monthy_suppier_expence[0] = extra_monthy_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     var today_suppier_expence = data.today_suppier_exps.toString().split('.');
     today_suppier_expence[0] = today_suppier_expence[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk");
-
+    $('.monthy_suppier_exp').html(monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Cash Drawer)</small>");
+    $('.extra_monthy_suppier_exp').html(extra_monthy_suppier_expence.join('.')+" Tk <small style='color:gray'>(Own Cash)</small>");
 
     
     $('#supex').html(" - "+today_suppier_expence.join('.')+" Tk");
@@ -859,71 +917,11 @@ if(parseInt(data.not_show_admin)>0){
   $('.invoice').css({"color": "green"});
 }
 
-
-
-    // if(showpayablelist==false){
-    //   $('.cashflow_log').html(data.cashflow_log);
-    // }else{
-    //   $('.cashflow_log').html(data.payableyear);
-    // }
-  
     cashaviable=data.cash_crdits;
 
    }
   });
  }
-
-
-// function datatranfer() {
-
-// let tks=parseInt(supplierpayment.value);
-// if(supplierpayment.value!==""){
-// if(total_price>=tks){
-//  payabletksa=total_price-tks;
-// confram();
-// pop_custom_off();
-// }else{
-//   dailogmess("Don't Less Then Total Tk","Please Check Total Tk","info");
-//   supplierpayment.value="";
-// }
-
-//   console.log("worring");
-// }else
-// {
-//   dailogmess("Please fillup cash field","Empty field","info");
- 
-// }
-
-//    }
-
-
-
-// function datashowwite(id){
-//   pop_custom_on();
-//   idsforsupplier=id;
-//   $.ajax({
-//   method:'GET',
-//     url: '/supplierlist/'+id+"/",
-//    dataType:'json',
-//    success:function(data)
-//    {
-//   $('.supplierlist').html(data.table_data);
-//   // console.log(data.table_data); 
-//   total_price=data.total_data;
-//   if(data.admincat=="Admin"){
-//     inputSelect0.options[2].disabled = false;
-//   }else{
-//    inputSelect0.options[2].disabled = true;
-//    console.log(data.admincat);
-//   }
-
-// 	 var partscomvalue = total_price.toString().split('.');
-//     partscomvalue[0] = partscomvalue[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-//    $('#infomag').html("Total Tk:"+partscomvalue.join('.'));
-//    }
-//   });
-// }
 
 
 function pop_custom_on(){
@@ -951,82 +949,6 @@ function dailogmess(mess,messtwo,messtheree){
 		 }     
 		  
 
-// function confram(){
- 
-// swal({
-//   title: "Are you sure?",
-//   text: "you will not be able to recover this imaginary data!",
-//   icon: "warning",
-//   buttons: true,
-//   dangerMode: true,
-// })
-// .then((willDelete) => {
-//   if (willDelete) {
-//     swal("Your data Sent ", {
-//       icon: "success",
-//     }).then(function(){
-//       sentdata();
-
-//     });
-
-//   } else {
-//     swal("Do you want Exit ?",{
-//     	closeOnClickOutside: false,
-//     }).then((mee)=>{
-
-//       //---------this pop alert---------
-//       clearlyalldata();
-//     });
-//   }
-// });
-
-// 	}
-
-
-//   function clearlyalldata(){
-//     supplierpayment.disabled=true;
-  
-//     supplierpayment.placeholder=" ";
-//     supplierpayment.value="";
-//     inputSelect0.options[0].selected = true
-//   }
-
-// function sentdata(){
-
-//   console.log("internet data sent");
-//   $.ajaxSetup({
-//             headers: {
-//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//          });
-//  $.ajax({
-//      type: 'POST', //THIS NEEDS TO BE GET
-//      url: '/stockloadfinally/',
-//      data: {id:idsforsupplier,tk:supplierpayment.value,payabletk:payabletksa,methedpay:inputSelect0.value}, 
-//      success: function (data) {
-//         console.log(data); 
-//      //   location.reload();
-//      clearlyalldata()
-//      },
-//      error: function() { 
-//       // meass.innerHTML="Data failed";
-//       //    console.log(data);
-//      }
-//     });
-
-//     fetch_customer_data();
-// }
-
-
-// function showpayablelist(){
-//   showpayablelist=true;
-// }
-
-
-
-
-
-
 
 function all_cash_sent_fuc(sale,supplier,expens,cash){
   total_sales=sale;
@@ -1050,7 +972,7 @@ function updatedata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_update/'+id,
+     url: '/Dashboard/get-data-to-update/'+id,
      success: function (data) {
 	var datajos=JSON.parse(data);
       if(datajos.message=="exitdata"){
@@ -1081,12 +1003,13 @@ function deletdata(id){
   //cashbtm.onclick =expencedata(2);
 	$.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_update/'+id,
+     url: '/Dashboard/get-data-to-delete-check/'+id,
      success: function (data) {
 
-
 	var datajos=JSON.parse(data);
-      if(parseInt(datajos.message)==0){
+  console.log(datajos.message);
+
+      if(parseInt(datajos.message)===0){
         dailogmess("This Data is Not Your or Not Today","Please Try Another Data And Same Day","info");
       }else{
         console.log("whats happend")
@@ -1101,7 +1024,7 @@ function deletdata(id){
 }
 
 function conformdeleta(id){
-       swal({
+    swal({
    title: "Are you sure?",
    text: "you will not be able to return!",
    icon: "warning",
@@ -1129,10 +1052,10 @@ function conformdeleta(id){
 function datedeleteinfo(id){
   $.ajax({
      type: 'GET', //THIS NEEDS TO BE GET
-     url: '/get_data_to_delete/'+id,
+     url: '/Dashboard/get-data-to-delete/'+id,//done
      success: function (data) {
-	var datajos=JSON.parse(data);
-
+	
+    var datajos=JSON.parse(data);
      console.log(datajos);
      fetch_customer_data();
        
