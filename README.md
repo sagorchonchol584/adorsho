@@ -132,9 +132,15 @@ This project is open-source and available under the **MIT License**.
 
 ## 👤 Author
 
-**Md Sagor**
+**Md Sagor (chonchol) **
 Full Stack Developer (Laravel & ERP Systems)
 
+🌐 Connect with Me
+
+<p> WhatsApp :<a href="https://wa.me/01768986699">01768-986699</a> <br>
+    Facebook: <a href="https://www.facebook.com/chonchol.msk" target="_blank"> SAGOR CHONCHOL</a> <br>
+    LinkedIn: <a href="https://www.linkedin.com/in/md-sagor-88587b19b/" target="_blank">SAGOR</a>
+    </p>
 ---
 
 ⭐ If you find this project useful, please give it a star on GitHub!
